@@ -55,9 +55,17 @@ button {
   width: 100%;
   flex-wrap: wrap;
 }
-.
+.teamatesHand{  
+  width:33%;
+  flex-wrap: wrap;
+  border: 1px solid blue;
+  justify-content: center;
+}
 .teamatesCard{
   display: block;
+  width: 50%;
+  text-align: center;
+  border: 0.5px dashed green;
 }
 
 .card {
