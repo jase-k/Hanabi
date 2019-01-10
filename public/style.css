@@ -18,6 +18,11 @@ h1 {
 h2{
   text-align: center;
 }
+h3{
+  font-size: .8rem;
+  padding: 3 auto;
+  margin
+}
 p {
   display: inline-flex;
   max-width: 150px;
