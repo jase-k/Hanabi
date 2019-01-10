@@ -4,6 +4,11 @@ const optionalCard = document.getElementById('optional-card');
 const select = document.getElementById('game-init');
 const allCards = document.getElementById('cardHolder');
 const pdrag = document.getElementById('drag');
+const teamContainer = document.getElementById('teamateContainer')
+const teamates = [];
+for(var i =0; i<4; i++){
+ teamates[i] = document.getElementById('player'+(i+1))
+}
 
 function hideClass(element){
   console.log(element);
@@ -21,14 +26,21 @@ selectedPlayers.onchange = (event) =>{
     console.log('Adding Hide Class to Card5');
     optionalCard.style.display = "none";
     toggleClass(select);
-    toggleClass(allCards);  
-  if(event.target.value == 4){
-    toggleClass(
-    }else{
-      }
+    toggleClass(allCards);
+    toggleClass(teamContainer);
+ if(event.target.value == 4){
+     console.log("Toggling this Playe:r",teamates[3])
+    teamates[3].style.display = "none";
+    }
   } else{
       toggleClass(select);
       toggleClass(allCards);
+      toggleClass(teamContainer);
+      teamates[3].style.display = "none";
+      teamates[2].style.display = "none";
+    if(event.target.value == 2){
+      teamates[1].style.display = "none";    
+    }
   }
 }
 
