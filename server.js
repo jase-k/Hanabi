@@ -109,8 +109,7 @@ var firstInstance = [];
   for(var i= 0; i < array.length; i++){
     if(firstInstance.length == 0){
     firstInstance.push(array[i])
-    console.log('first card:', array[i])
-      setCardsLeftToPlayValue(array[i])
+    setCardsLeftToPlayValue(array[i])
     }
 //If any Matches Sets matched.value to True
     for(var j = 0; j < firstInstance.length; j++){
@@ -128,7 +127,10 @@ var firstInstance = [];
   }  
 
 //iterates through the array using the cardsLeftToPlay.value to check if deck is winnable.
+//Totals the cardsLeftToPlay for the first x number of cards. x represents how many cards are dealt 
+// out when the game starts (dependent on the number of players)
 var cardToPlay = 0;
+var handSize = if(numberOfPlayers < 4){numberOfPlayers*5} else
   for(var i= 0; i < array.length; i++){
     if(cardToPlay > 0){
       cardToPlay--
