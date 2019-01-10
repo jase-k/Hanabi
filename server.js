@@ -76,12 +76,14 @@ newGame.playedCards = [];
 newGame.players = [];  
 
   for(var i =0; i < numberOfPlayers; i++){ 
-newGame.players[i] = { 
-  name: null,
-  hand: []
-};
-  }
+      newGame.players[i] = { 
+        name: null,
+        hand: []
+      };
+  };
+  
   response.json(newGame);
+
 });
 
 

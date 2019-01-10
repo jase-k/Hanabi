@@ -57,13 +57,14 @@ button {
 }
 .teamatesHand{  
   width:33%;
+  display: inline-flex;
   flex-wrap: wrap;
   border: 1px solid blue;
   justify-content: center;
 }
 .teamatesCard{
   display: inline-block;
-  width: 50%;
+  width: 49%;
   text-align: center;
   border: 0.5px dashed green;
 }
