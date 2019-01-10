@@ -60,6 +60,7 @@ app.get('/getDreams', function(request, response) {
 app.get('/newgame', function(request, response) {
 
   var gameDeck = [];
+  var numberOfPlayers = request.query.players
   
 function newDeck() {
   var cardColors = ['orange', 'blue', 'black', 'white', 'red']
@@ -88,8 +89,17 @@ function shuffleDeck(array) {
   return shuffleArray
     };
 
-function checkIfWinIsPossible(array){
-      
+function checkIfWinIsPossible(array, numberOfPlayers){
+
+  var lastRound = array.length - numberOfPlayers + 1
+  
+  function stringDoesntContain(x){
+   return 
+  }
+  
+  //Is there a five in the last X Number of Cards
+  array.slice(lastRound).every()
+  
 
   };
   
