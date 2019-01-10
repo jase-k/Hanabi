@@ -61,7 +61,7 @@ app.get('/getDreams', function(request, response) {
 
 
 app.get('/newgame', function(request, response) {
-  
+  console.log(request)
   var newGame = {};
   var numberOfPlayers = request.query.players
   
