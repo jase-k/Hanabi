@@ -88,9 +88,10 @@ function shuffleDeck(array) {
   return shuffleArray
     };
 
+  
 function setCardsLeftToPlayValue(object){
-var value = 5 - object.number
-object.cardsLeftToPlay = value
+  var value = 5 - object.number
+  object.cardsLeftToPlay = value
 }  
   
 function checkIfWinIsPossible(array){
@@ -104,24 +105,38 @@ cardsToPlay has a value greater than zero, the gameDeck is unwinnable.
 var matched = null;
   
 var firstInstance = [];
+
+//sets cardsLeftToPlay.value for array
   for(var i= 0; i < array.length; i++){
     if(firstInstance.length == 0){
     firstInstance.push(array[i])
     console.log('first card:', array[i])
       setCardsLeftToPlayValue(array[i])
     }
+//If any Matches Sets matched.value to True
     for(var j = 0; j < firstInstance.length; j++){
       if(firstInstance[j].color === array[i].color && firstInstance[j].number === array[i].number){
         matched = true
         break; 
       }else{matched = false}
     };
+//if no matched add object to firstInstance String and set CLTP value
+//else start next iteration
     if(matched === false){
-        firstInstance.push(array
+        firstInstance.push(array[i])
         setCardsLeftToPlayValue(array[i])
     }
   }  
-return firstInstance
+
+//iterates through the array using the cardsLeftToPlay.value to check if deck is winnable.
+var cardToPlay = 0;
+  for(var i= 0; i < array.length; i++){
+    if(cardToPlay > 0){
+      cardToPlay--
+    }
+    cardToPlay += array.cardsLeftToPlay  
+  }
+
   
 };
   
