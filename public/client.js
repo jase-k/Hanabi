@@ -39,7 +39,7 @@ selectedPlayers.onchange = (event) =>{
       teamates[3].style.display = "none";
       teamates[2].style.display = "none";
     if(event.target.value == 2){
-      teamates[1].style.display = "none";    
+      teamates[1].style.display = "none";
     }
   }
 }
