@@ -50,6 +50,16 @@ button {
   display: none
 }
 
+
+.teamatesContainer{
+  width: 100%;
+  flex-wrap: wrap;
+}
+.
+.teamatesCard{
+  display: block;
+}
+
 .card {
   height: 400px;
   width: 600px;
