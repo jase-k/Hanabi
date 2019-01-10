@@ -58,7 +58,7 @@ app.get('/getDreams', function(request, response) {
 
 
 app.get('/newgame', function(request, response) {
-
+  var newGame = {}
   var gameDeck = [];
   var numberOfPlayers = request.query.players
   
@@ -88,7 +88,6 @@ function shuffleDeck(array) {
   return shuffleArray
     };
 
-  
 function setCardsLeftToPlayValue(object){
   var value = 5 - object.number
   object.cardsLeftToPlay = value
@@ -144,13 +143,13 @@ if(cardToPlay){return false
                 return true}
 };
   
+ do{ 
+   console.log('Creating Deck...')
+   gameDeck = shuffleDeck(newDeck());
+   console.log('Deck is winnable:', checkIfWinIsPossible(gameDeck))
+ } while(!checkIfWinIsPossible(gameDeck))
   
-  gameDeck = shuffleDeck(newDeck());
-  
-  console.log(checkIfWinIsPossible(gameDeck))
-  console.log(gameDeck.length)
-
-response.json(gameDeck)
+  response.json(newGame);
 })
 
 
