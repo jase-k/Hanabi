@@ -67,7 +67,7 @@ button {
   flex-wrap: wrap;
 }
 .teamatesHand{  
-  width:33%;
+  min-width:25%;
   display: inline-flex;
   flex-wrap: wrap;
   border: 1px solid blue;
