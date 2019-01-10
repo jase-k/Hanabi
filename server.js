@@ -81,7 +81,6 @@ function shuffleDeck(array) {
   var number;  
     for(var i=0; i < array.length;){
     number = Math.floor(Math.random()*array.length)
-      console.log(number)
       shuffleArray.push(array[number])
       array.splice(number, 1)
     }    
@@ -96,16 +95,21 @@ function checkIfWinIsPossible(array, numberOfPlayers){
   function stringDoesntContain(string, x){
    console.log('short string:', string)
     console.log('variable being checked:', x)
+    
     return string.includes("x")
     
   }
   
   //Is there a five in the last X Number of Cards
-var torf =  array.slice(lastRound).every(string => stringDoesntContain(string, 5))
-  console.log(array.slice(lastRound))
+var lastRoundCards =  array.slice(lastRound)
+  console.log(lastRoundCards)
+  
+var torf = lastRoundCards.find(function(element){
+  stringDoesntContain(element, '5')
+  });
   
 return torf
-  };
+    };
   
   
   gameDeck = shuffleDeck(newDeck());
