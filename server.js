@@ -55,6 +55,41 @@ app.get('/getDreams', function(request, response) {
   });
 });
 
+
+
+app.get('/newgame', function(request, response) {
+
+  var gameDeck = [];
+  
+function newDeck() {
+  var cardColors = ['orange', 'blue', 'black', 'white', 'red']
+  var cardNumbers = [1,1,1,2,2,3,3,4,4,5]
+  var array = [];
+ 
+  // loops through both arrays to build the deck
+  for(var i = 0; i < cardColors.length; i++){
+    for(var j =0; j < cardNumbers.length; j++){
+      array.push(cardColors[i]+''+cardNumbers[j])
+    }
+  }
+  return array
+}
+
+  function s
+
+  
+  gameDeck = newDeck();
+
+console.log(gameDeck.length)
+
+response.json(gameDeck)
+})
+
+
+
+
+
+
 // listen for requests :)
 var listener = app.listen(process.env.PORT, function() {
   console.log('Your app is listening on port ' + listener.address().port);
