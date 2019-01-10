@@ -62,7 +62,7 @@ button {
   justify-content: center;
 }
 .teamatesCard{
-  display: block;
+  display: inline-block;
   width: 50%;
   text-align: center;
   border: 0.5px dashed green;
