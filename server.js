@@ -70,7 +70,7 @@ function newDeck() {
   // loops through both arrays to build the deck
   for(var i = 0; i < cardColors.length; i++){
     for(var j =0; j < cardNumbers.length; j++){
-      array.push(cardColors[i]+''+cardNumbers[j])
+      array.push({color: cardColors[i], number: cardNumbers[j]})
     }
   }
   return array
@@ -88,39 +88,28 @@ function shuffleDeck(array) {
   return shuffleArray
     };
 
-function checkIfWinIsPossible(array, numberOfPlayers){
+function createArrayOfFirstInstances(array){
+  var firstInstance = [];
+  for(var i= 0; i < array.length; i++){  
+};
+  
+function checkIfWinIsPossible(array){
+/*We will check the first instance of each card. If it is the first time
+that card appears in the deck the number will be subtracted by 5. The value
+from that operation will be set as it's cardsLeftToPlay value. Then we iterate
+through the array subtracting 1 from cardsToPlay with each card (without going below zero).
+When a card has a cardsLeftToPlay value we add it a cardToPlay value. If at the end of the iteration
+cardsToPlay has a value greater than zero, the gameDeck is unwinnable.
+*/
 
-  var lastRound = array.length - numberOfPlayers + 1
+   
   
-  function stringDoesntContain(string, x){
-   console.log('short string:', string)
-    console.log('variable being checked:', x)
-    var n = string.includes(x)
-    console.log('returning:', n)
-    return n 
-  }
-  
-  //Is there a five in the last X Number of Cards
-var lastRoundCards =  array.slice(lastRound)
-  console.log(lastRoundCards)
-  
-var lastRoundContains5 = lastRoundCards.find(function(element){
-  return stringDoesntContain(element, '5')
-  });
-  if(lastRoundContains5 !== undefined){
-    return false  
-  }
-
-  //Is there a four that will lose us the Game?
-  //The first appearance cannot happen with the (numberOfPlayers and cards left to play)
-  
-  return true
 };
   
   
   gameDeck = shuffleDeck(newDeck());
   
-  console.log(checkIfWinIsPossible(gameDeck, numberOfPlayers))
+  console.log(checkIfWinIsPossible(gameDeck))
   console.log(gameDeck.length)
 
 response.json(gameDeck)
