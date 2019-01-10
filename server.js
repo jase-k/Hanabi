@@ -75,12 +75,28 @@ function newDeck() {
   return array
 }
 
-  function s
+function shuffleDeck(array) {
+  var shuffleArray = [];
+  var number;  
+    for(var i=0; i < array.length;){
+    number = Math.floor(Math.random()*array.length)
+      console.log(number)
+      shuffleArray.push(array[number])
+      array.splice(number, 1)
+    }    
+    
+  return shuffleArray
+    };
 
+function checkIfWinIsPossible(array){
+      
+
+  };
   
-  gameDeck = newDeck();
-
-console.log(gameDeck.length)
+  
+  gameDeck = shuffleDeck(newDeck());
+  
+  console.log(gameDeck.length)
 
 response.json(gameDeck)
 })
