@@ -1,71 +1,91 @@
-/* styles */
-/* called by your view template */
-
-* {
-  box-sizing: border-box;
-}
+/* CSS files add styling rules to your content */
 
 body {
   font-family: "Benton Sans", "Helvetica Neue", helvetica, arial, sans-serif;
-  margin: 2em;
+  margin: 0 0;
 }
 
 h1 {
   font-style: italic;
-  color: #373fff;
+  color: #000000;
+  background-color: red;
+  height: 2rem;
+  width: 100%;
+  margin: 0 0;
+  padding: 20px;
+  text-align: center;
 }
-
-.bold {
-  font-weight: bold;
+h2{
+  text-align: center;
 }
-
 p {
-  max-width: 600px;
+  display: inline-flex;
+  max-width: 150px;
+  margin: 10px;
+  border: 1px solid black;
+  border-radius: 25%;
+  padding: 3px;
+  max-height: 1.2em;
+  flex-wrap: wrap;
 }
-
-form {
-  margin-bottom: 25px;
-  padding: 15px;
-  background-color: cyan;
-  display: inline-block;
+div {
+  display: inline-flex;
+  justify-content: center;
   width: 100%;
-  max-width: 340px;
-  border-radius: 3px;
 }
 
-input {
-  display: block;
-  margin-bottom: 10px;
-  padding: 5px;
-  width: 100%;
-  border: 1px solid lightgrey;
-  border-radius: 3px;
-  font-size: 16px;
+select{
+  padding: 2px;
+  margin: 10px;
 }
-
 button {
-  font-size: 16px;
-  border-radius: 3px;
-  background-color: lightgrey;
-  border: 1px solid grey;
-  box-shadow: 2px 2px teal;
-  cursor: pointer;
+  padding: 20px;
+  text-align: center;
+}
+.game-init{
+  width: 100%;
 }
 
-button:hover {
-  background-color: yellow;
+.hide{
+  display: none
 }
 
-button:active {
-  box-shadow: none;
+.card {
+  height: 400px;
+  width: 600px;
+  border: 2px solid black;
+  flex-direction: column;
+  text-align: center;
+  background-color: black;
+  color: white;
+}
+.card-holder {
+  justify-content: space-around;
+  width: 100%;
+}
+.notes {
+  height: 500px;
+  background-color: rgb(256, 250, 200);
+  color: black;
+  font-size: 1.5rem;
+  display: block;
+ 
+}
+.writing {
+ line-height: 1.1em;
 }
 
-li {
-  margin-bottom: 5px;
+.option-holder{
+  height: auto;
+  background-color: rgb(256, 250, 200);
+  color: black;
+  font-size: 1.5rem;
+  justify-content: center;
+  flex-wrap: wrap;
+  align-items: flex-start;
 }
 
-footer {
-  margin-top: 50px;
-  padding-top: 25px;
-  border-top: 1px solid lightgrey;
+.instructions {
+  min-width: 500px;
+  border: 5px solid red;
 }
