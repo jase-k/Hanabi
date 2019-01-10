@@ -20,8 +20,15 @@ h2{
 }
 h3{
   font-size: .8rem;
-  padding: 3 auto;
-  margin
+  padding-top: 3px;
+  padding-bottom: 3px;
+  margin: 0 auto;
+}
+h4{
+  font-size: .7rem;
+  padding-top: 3px;
+  padding-bottom: 3px;
+  margin: 0 auto;
 }
 p {
   display: inline-flex;
@@ -55,7 +62,6 @@ button {
   display: none
 }
 
-
 .teamatesContainer{
   width: 100%;
   flex-wrap: wrap;
@@ -87,6 +93,11 @@ button {
   justify-content: space-around;
   width: 100%;
 }
+
+.notes {
+  border: 1px solid blue;
+}
+
 .notes {
   height: 500px;
   background-color: rgb(256, 250, 200);
