@@ -112,7 +112,7 @@ var lastRoundContains5 = lastRoundCards.find(function(element){
   }
 
   //Is there a four that will lose us the Game?
-  
+  //The first appearance cannot happen with the (numberOfPlayers and cards left to play)
   
   return true
 };
