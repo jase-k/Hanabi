@@ -6,6 +6,7 @@ var express = require('express');
 var bodyParser = require('body-parser');
 var app = express();
 app.use(bodyParser.urlencoded({ extended: true }));
+const createDeck = require('./cool-file.js')
 
 // we've started you off with Express, 
 // but feel free to use whatever libs or frameworks you'd like through `package.json`.
@@ -61,11 +62,14 @@ app.get('/getDreams', function(request, response) {
 
 app.get('/newgame', function(request, response) {
   
+  var newGame = {};
+  var numberOfPlayers = request.query.players
+  
   
 
   
   response.json(newGame);
-})
+});
 
 
 
