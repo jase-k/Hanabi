@@ -136,8 +136,12 @@ var cardToPlay = 0;
     }
     cardToPlay += array.cardsLeftToPlay  
   }
-
   
+//returns True if the Game is Winnable and False if it is impossible to Win.   
+if(cardToPlay){return false
+              }
+  else{
+                return true}
 };
   
   
