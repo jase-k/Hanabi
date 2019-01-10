@@ -88,10 +88,10 @@ function shuffleDeck(array) {
   return shuffleArray
     };
 
-function createArrayOfFirstInstances(array){
-  var firstInstance = [];
-  for(var i= 0; i < array.length; i++){  
-};
+function setCardsLeftToPlayValue(object){
+var value = 5 - object.number
+object.cardsLeftToPlay = value
+}  
   
 function checkIfWinIsPossible(array){
 /*We will check the first instance of each card. If it is the first time
@@ -101,8 +101,18 @@ through the array subtracting 1 from cardsToPlay with each card (without going b
 When a card has a cardsLeftToPlay value we add it a cardToPlay value. If at the end of the iteration
 cardsToPlay has a value greater than zero, the gameDeck is unwinnable.
 */
-
-   
+var firstInstance = [];
+  for(var i= 0; i < array.length; i++){
+    if(firstInstance.length == 0){
+    firstInstance.push(array[i])
+    console.log('first card:', array[i])
+      setCardsLeftToPlayValue(array[i])
+    }
+    for(var j = 0; j < firstInstance.length; j++){
+      if(firstInstance   
+    }
+  }  
+return firstInstance
   
 };
   
