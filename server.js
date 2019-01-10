@@ -97,20 +97,25 @@ function checkIfWinIsPossible(array, numberOfPlayers){
     console.log('variable being checked:', x)
     var n = string.includes(x)
     console.log('returning:', n)
-    return n
-    
+    return n 
   }
   
   //Is there a five in the last X Number of Cards
 var lastRoundCards =  array.slice(lastRound)
   console.log(lastRoundCards)
   
-var torf = lastRoundCards.find(function(element){
-  stringDoesntContain(element, '5')
+var lastRoundContains5 = lastRoundCards.find(function(element){
+  return stringDoesntContain(element, '5')
   });
+  if(lastRoundContains5 !== undefined){
+    return false  
+  }
+
+  //Is there a four that will lose us the Game?
   
-return torf
-    };
+  
+  return true
+};
   
   
   gameDeck = shuffleDeck(newDeck());
