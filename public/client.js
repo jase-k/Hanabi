@@ -4,7 +4,6 @@ const optionalCard = document.getElementById('optional-card');
 const select = document.getElementById('game-init');
 const allCards = document.getElementById('cardHolder');
 const pdrag = document.getElementById('drag');
-const hideDiv = document.getElementById('hold');
 
 function hideClass(element){
   console.log(element);
@@ -23,13 +22,13 @@ selectedPlayers.onchange = (event) =>{
     optionalCard.style.display = "none";
     toggleClass(select);
     toggleClass(allCards);  
-    toggleClass(instDiv);
-    toggleClass(hideDiv);
+  if(event.target.value == 4){
+    toggleClass(
+    }else{
+      }
   } else{
       toggleClass(select);
       toggleClass(allCards);
-      toggleClass(instDiv);
-      toggleClass(hideDiv);
   }
 }
 
@@ -56,63 +55,3 @@ document.ondragover = (event) => {
   console.log("Something is being Drug") }
 
 
-///////////////////////////////
-// Below Creates Drop Events in Each Card Space
-////////////////////////////////
-var cards = [];
-cards.push(document.getElementById("card1"))
-cards.push(document.getElementById("card2"))
-cards.push(document.getElementById("card3"))
-cards.push(document.getElementById("card4"))
-cards.push(document.getElementById("card5"))
-
-cards.forEach(card =>
-  card.ondrop = (event) => {
-   event.preventDefault();
- // handleDrop(event)
- console.log("Drop");
-  
- event.preventDefault();
- // Get the data, which is the id of the drop target
-  
- var data = event.dataTransfer.getData("text");
-  if(event.target.nodeName == "DIV"){
-     event.target.appendChild(document.getElementById(data));
-    console.log(event)
-  //Adding the Child back into the hold 'DIV'
-    var newp = document.createElement("p")
-    var hold = document.getElementById("hold");
-      newp.innerHTML = event.toElement.lastChild.innerText
-      newp.draggable = "true"
-      newp.id = Math.floor(Math.random()*1000)
-      console.log(newp)
-      hold.appendChild(newp);
-  }
-  
-// Clear the drag data cache (for all formats/types)
- event.dataTransfer.clearData();
-}
-              );
-
-const buttons = document.getElementsByClassName('button')
-const instructionButton = document.getElementById('instructions-button')
-const instDiv =  document.getElementById('instructions')
-
-console.log(buttons)
-
-for(var i =0; i<buttons.length; i++){
-buttons[i].onclick = (event) => {
-    console.log("Button Was Clicked")
-    console.log(event)
-  var sibling = event.target.nextSibling.nextSibling
-  console.log(sibling)  
-  for(var i = 0; i < sibling.childNodes.length;){
-  sibling.removeChild(sibling.childNodes[i]);
-  }
-  }
-}
-
-instructionButton.onclick = (event) =>{
-  console.log("ButtonClicked", instDiv)
-  toggleClass(instDiv);
-}
