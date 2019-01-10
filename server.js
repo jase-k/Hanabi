@@ -95,8 +95,9 @@ function checkIfWinIsPossible(array, numberOfPlayers){
   function stringDoesntContain(string, x){
    console.log('short string:', string)
     console.log('variable being checked:', x)
-    
-    return string.includes("x")
+    var n = string.includes(x)
+    console.log('returning:', n)
+    return n
     
   }
   
