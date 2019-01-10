@@ -1,4 +1,6 @@
-function createDeck(numberOfPlayers){
+const gameCreation = {};
+
+gameCreation.createDeck = function (numberOfPlayers){
     var newGame = {}
     var gameDeck = [];
     
@@ -108,5 +110,16 @@ return gameDeck
 
 };
 
+gameCreation.createId = function () {
+  var text = "";
+  var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
 
-modules = gameCreation
+  for (var i = 0; i < 5; i++)
+  {   text += possible.charAt(Math.floor(Math.random() * possible.length));
+  };
+  return text;
+}
+
+
+
+module.exports = gameCreation

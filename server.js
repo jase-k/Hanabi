@@ -6,7 +6,7 @@ var express = require('express');
 var bodyParser = require('body-parser');
 var app = express();
 app.use(bodyParser.urlencoded({ extended: true }));
-const createDeck = require('./cool-file.js')
+const gameCreation = require('./cool-file.js')
 
 // we've started you off with Express, 
 // but feel free to use whatever libs or frameworks you'd like through `package.json`.
@@ -65,9 +65,17 @@ app.get('/newgame', function(request, response) {
   var newGame = {};
   var numberOfPlayers = request.query.players
   
-  
-
-  
+newGame.id = gameCreation.createId();
+newGame.numberOfPlayers = numberOfPlayers;
+newGame.dateCreated = new Date();
+newGame.score = null;
+newGame.originalDeck = gameCreation.createDeck(numberOfPlayers);
+newGame.playingDeck = newGame.originalDeck;
+newGame.discardedCards = [];
+newGame.playedCards = [];
+  for(var i =1; i <= numberOfPlayers; i++){ 
+newGame.players[i] = [];
+  }
   response.json(newGame);
 });
 
