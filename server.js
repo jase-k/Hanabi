@@ -73,8 +73,13 @@ newGame.originalDeck = gameCreation.createDeck(numberOfPlayers);
 newGame.playingDeck = newGame.originalDeck;
 newGame.discardedCards = [];
 newGame.playedCards = [];
-  for(var i =1; i <= numberOfPlayers; i++){ 
-newGame.players[i] = [];
+newGame.players = [];  
+
+  for(var i =0; i < numberOfPlayers; i++){ 
+newGame.players[i] = { 
+  name: null,
+  hand: []
+};
   }
   response.json(newGame);
 });
