@@ -67,14 +67,16 @@ app.get('/newgame', function(request, response) {
   if(numberOfPlayers == null || numberOfPlayers > 5){
   response.send("Error: Must have 2-5 players")
   }
+  var newDeck = gameCreation.createDeck(numberOfPlayers);
+  
 newGame.id = gameCreation.createId();
 newGame.numberOfPlayers = numberOfPlayers;
 newGame.dateCreated = new Date();
 newGame.score = null;
-newGame.originalDeck = gameCreation.createDeck(numberOfPlayers);
+newGame.originalDeck = newDeck.slice();
 
-  //deals Hand and Returns the rest of the Deck array and Player Hands
-var dealtGame = gameCreation.dealHand(newGame.originalDeck, numberOfPlayers);
+//deals Hand and Returns the rest of the Deck array and Player Hands
+var dealtGame = gameCreation.dealHand(newDeck, numberOfPlayers);
 
 newGame.playingDeck = dealtGame.deck;
 newGame.discardedCards = [];
