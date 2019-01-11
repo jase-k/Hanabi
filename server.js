@@ -64,7 +64,9 @@ app.get('/newgame', function(request, response) {
   console.log(request)
   var newGame = {};
   var numberOfPlayers = request.query.players
-  
+  if(numberOfPlayers == null || numberOfPlayers > 5){
+  response.send("Error: Must have 2-5 players")
+  }
 newGame.id = gameCreation.createId();
 newGame.numberOfPlayers = numberOfPlayers;
 newGame.dateCreated = new Date();

@@ -121,10 +121,12 @@ gameCreation.createId = function () {
 }
 
 gameCreation.dealHand = function (gameDeck, numberOfPlayers){
+var game = {}
 var handSize = 0
-var players = [];
+game.players = [];
+game.deck = gameDeck
   for(var i =0; i < numberOfPlayers; i++){ 
-      players[i] = { 
+      game.players[i] = { 
         name: null,
         hand: []
       };
@@ -138,9 +140,13 @@ if(numberOfPlayers == 2 || numberOfPlayers == 3){
   
 for(var i = 0; i < handSize*numberOfPlayers; i++){
   var index = i % numberOfPlayers
-  players[index].hand.push(i)
+  
+  game.players[index].hand.push(game.deck.shift())
+  
   }
-  console.log(players)
+  console.log(game.deck.length)
+  console.log(JSON.stringify(game.players))
+  return(game)
 }
 
 
