@@ -5,6 +5,10 @@ const select = document.getElementById('game-init');
 const allCards = document.getElementById('cardHolder');
 const pdrag = document.getElementById('drag');
 const teamContainer = document.getElementById('teamateContainer')
+const startGameButton = document.getElementById('startGame')
+const newGameButton = document.getElementById('newGame');
+const joinGameButton = document.getElementById('joinGame');
+const howManyPlayers = document.getElementById('howManyPlayers')
 const teamates = [];
 for(var i =0; i<4; i++){
  teamates[i] = document.getElementById('player'+(i+1))
@@ -19,16 +23,20 @@ function toggleClass(element){
   console.log('toggling Class')
   element.classList.toggle("hide")
 }
+newGameButton.onclick = () => {
+  toggleClass(howManyPlayers)
+  toggleClass(document.getElementById('firstStep'))
+}
 
-selectedPlayers.onchange = (event) =>{
-  console.log('This should be 1-5:', event.target.value)
-  if(event.target.value == 4 || event.target.value == 5){
+startGameButton.onclick = () =>{
+  console.log('This should be 1-5:', selectedPlayers.value)
+  if(selectedPlayers.value == 4 || selectedPlayers.value == 5){
     console.log('Adding Hide Class to Card5');
     optionalCard.style.display = "none";
     toggleClass(select);
     toggleClass(allCards);
     toggleClass(teamContainer);
- if(event.target.value == 4){
+ if(selectedPlayers.value == 4){
      console.log("Toggling this Playe:r",teamates[3])
     teamates[3].style.display = "none";
     }
@@ -38,7 +46,7 @@ selectedPlayers.onchange = (event) =>{
       toggleClass(teamContainer);
       teamates[3].style.display = "none";
       teamates[2].style.display = "none";
-    if(event.target.value == 2){
+    if(selectedPlayers.value == 2){
       teamates[1].style.display = "none";
     }
   }
