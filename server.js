@@ -70,6 +70,7 @@ newGame.numberOfPlayers = numberOfPlayers;
 newGame.dateCreated = new Date();
 newGame.score = null;
 newGame.originalDeck = gameCreation.createDeck(numberOfPlayers);
+gameCreation.dealHand(newGame.originalDeck, numberOfPlayers);
 newGame.playingDeck = newGame.originalDeck;
 newGame.discardedCards = [];
 newGame.playedCards = [];

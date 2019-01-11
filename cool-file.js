@@ -120,7 +120,28 @@ gameCreation.createId = function () {
   return text;
 }
 
-gameCreation.
+gameCreation.dealHand = function (gameDeck, numberOfPlayers){
+var handSize = 0
+var players = [];
+  for(var i =0; i < numberOfPlayers; i++){ 
+      players[i] = { 
+        name: null,
+        hand: []
+      };
+  };
+if(numberOfPlayers == 4 || numberOfPlayers == 5){
+    handSize = 4
+  }
+if(numberOfPlayers == 2 || numberOfPlayers == 3){
+    handSize = 5 
+  }
+  
+for(var i = 0; i < handSize*numberOfPlayers; i++){
+  var index = i % numberOfPlayers
+  players[index].hand.push(i)
+  }
+  console.log(players)
+}
 
 
 
