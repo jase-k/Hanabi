@@ -52,7 +52,12 @@ select{
 }
 button {
   padding: 20px;
+  margin: 10px;
   text-align: center;
+}
+input {
+  height: 1.3rem;
+  margin: auto 10px;
 }
 .game-init{
   width: 100%;

@@ -120,6 +120,8 @@ gameCreation.createId = function () {
   return text;
 }
 
+gameCreation.
+
 
 
 module.exports = gameCreation
