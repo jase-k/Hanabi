@@ -72,18 +72,14 @@ newGame.numberOfPlayers = numberOfPlayers;
 newGame.dateCreated = new Date();
 newGame.score = null;
 newGame.originalDeck = gameCreation.createDeck(numberOfPlayers);
-gameCreation.dealHand(newGame.originalDeck, numberOfPlayers);
-newGame.playingDeck = newGame.originalDeck;
+
+  //deals Hand and Returns the rest of the Deck array and Player Hands
+var dealtGame = gameCreation.dealHand(newGame.originalDeck, numberOfPlayers);
+
+newGame.playingDeck = dealtGame.deck;
 newGame.discardedCards = [];
 newGame.playedCards = [];
-newGame.players = [];  
-
-  for(var i =0; i < numberOfPlayers; i++){ 
-      newGame.players[i] = { 
-        name: null,
-        hand: []
-      };
-  };
+newGame.players = dealtGame.players;  
   
   response.json(newGame);
 

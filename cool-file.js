@@ -146,6 +146,7 @@ for(var i = 0; i < handSize*numberOfPlayers; i++){
   }
   console.log(game.deck.length)
   console.log(JSON.stringify(game.players))
+  
   return(game)
 }
 
