@@ -22,25 +22,7 @@ var sqlite3 = require('sqlite3').verbose();
 var db = new sqlite3.Database(dbFile);
 
 // if ./.data/sqlite.db does not exist, create it, otherwise print records to console
-db.serialize(function(){
-  if (!exists) {
-    db.run('CREATE TABLE Dreams (dream TEXT)');
-    console.log('New table Dreams created!');
-    
-    // insert default dreams
-    db.serialize(function() {
-      db.run('INSERT INTO Dreams (dream) VALUES ("Find and count some sheep"), ("Climb a really tall mountain"), ("Wash the dishes")');
-    });
-  }
-  else {
-    console.log('Database "Dreams" ready to go!');
-    db.each('SELECT * from Dreams', function(err, row) {
-      if ( row ) {
-        console.log('record:', row);
-      }
-    });
-  }
-});
+
 
 db.serialize(() => { 
   db.run('DROP TABLE IF EXISTS Hanabi_Games', error => {
@@ -48,22 +30,15 @@ db.serialize(() => {
       throw error;
     }
   })
-  db.run('CREATE TABLE Hanabi_Games (id TEXT PRIMARY KEY, date DATE)', logNodeError);
-  db.each('SELECT * FROM',
-    (error, row) => {
-      if (error) {
-        throw error;
+  db.run('CREATE TABLE Hanabi_Games (id TEXT PRIMARY KEY, date INTEGER)');
+  db.run('INSERT INTO Hanabi_Games (id, date) VALUES("saske", 50 )')
+  db.each('SELECT * from Hanabi_Games', function(err, row) {
+    console.log("Hanabi Table")  
+    if ( row ) {
+        console.log('record:', row);
       }
-    
-      addClimateRowToObject(row, temperaturesByYear);
-    }, 
-    error => {
-      if (error) {
-        throw error;
-      }
-
-    });
-  });
+    }); 
+});
   
 
 // http://expressjs.com/en/starter/basic-routing.html
