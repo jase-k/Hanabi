@@ -155,12 +155,12 @@ newGame.players = dealtGame.players;
     if(err){ console.log(err)};
         console.log('Last Row Id:', this.lastID)
     newGame.id = this.lastID
-  
+    return newGame
   } );
-return newGame
 }
- createNewRows().then(results => {
-  console.log('Current Game ID:', results.id);
+ var results = createNewRows()
+ console.log(results)
+ console.log('Current Game ID:', results.id);
   
   db.get('SELECT * from HanabiGames WHERE id = '+results.id, function(err, row) {
     console.log("Hanabi Table")  
@@ -168,7 +168,7 @@ return newGame
         console.log('record:', row);
       }
     });
- });
+
   /* db.each('SELECT * from OriginalDeck', function(err, row) {
  console.log('OriginalDeck')
     if(err){
