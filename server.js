@@ -20,7 +20,8 @@ var dbFile = './.data/sqlite.db';
 var exists = fs.existsSync(dbFile);
 var sqlite3 = require('sqlite3').verbose();
 var db = new sqlite3.Database(dbFile);
-var table = 'card1, card2, card3, card4'
+var card1to5 = 'card1, card2, card3, card4, card5'
+var card6to25 = 'card6, card7, card8, card9, card10, card11, card12, card13, card14, card15, card16, card17, card18, card19, card20, card21, card22, card23, card24, card25';
 
 // if ./.data/sqlite.db does not exist, create it, otherwise print records to console
 
@@ -57,12 +58,13 @@ db.serialize(() => {
     }
   })
   db.run('CREATE TABLE HanabiGames (id TEXT PRIMARY KEY, numberOfPlayers INTEGER NOT NULL, dateCreated DATE, score INTEGER, originalDeckId INTEGER, playingDeckId INTEGER, discardedCardsId INTEGER, playedCardsId INTEGER, playersId INTEGER)');
-  db.run('CREATE TABLE OriginalDeck(id INTEGER, gameId TEXT, card1 TEXT, card2 TEXT, card3 TEXT, card4 TEXT)');
+  db.run('CREATE TABLE OriginalDeck(id INTEGER, gameId TEXT, '+card1to5+card6to25+')');
   db.run('CREATE TABLE PlayingDeck(id INTEGER)');
   db.run('CREATE TABLE DiscardedCards(id INTEGER)');
   db.run('CREATE TABLE PlayedCards(id INTEGER)');
-  db.run('CREATE TABLE Players(id INTEGER, gameId TEXT, name TEXT)');
-  db.run('INSERT INTO OriginalDeck(id, gameId, '+table+') VALUES (0000, "sample", "red 5", "blue 3", "white 2", "green 2")');
+  db.run('CREATE TABLE Players(id INTEGER, gameId TEXT, name TEXT, card1 TEXT, card2 TEXT, card3 TEXT, card4 TEXT, card5 TEXT)');
+  db.run('INSERT INTO Players(id, gameId, name, card1, card2, card3, card4) VALUES (0001, "sample", "Jase Kraft", "red 5", "white 3", "orange 2", "blue 1")');
+  db.run('INSERT INTO OriginalDeck(id, gameId, '+card1to5+') VALUES (0000, "sample", "red 5", "blue 3", "white 2", "green 2", NULL)');
   db.run('INSERT INTO HanabiGames (id, numberOfPlayers, dateCreated, originalDeckId, playingDeckId, discardedCardsId, playedCardsId, playersId) VALUES("sample", 5, "2019-01-12T15:08:50.122Z", 0000, 0000, 0000, 0000, 0000)')
   db.each('SELECT * from HanabiGames', function(err, row) {
     console.log("Hanabi Table")  
