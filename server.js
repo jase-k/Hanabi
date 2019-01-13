@@ -126,14 +126,16 @@ app.get('/', function(request, response) {
 
 app.get('/newgame', function(request, response) {
 //  console.log(request)
-  var newGame = {};
   var numberOfPlayers = request.query.players
   if(numberOfPlayers == null || numberOfPlayers > 5){
   response.send("Error: Must have 2-5 players")
   }
   var newDeck = gameCreation.createDeck(numberOfPlayers);
-  
-newGame.id = gameCreation.createId();
+    
+  console.log('<<CREATING A NEW GAME>>')
+
+function createNewRows(numberOfPlayers) {
+  var newGame = {};
 newGame.numberOfPlayers = numberOfPlayers;
 newGame.dateCreated = new Date();
 newGame.score = null;
@@ -146,25 +148,27 @@ newGame.playingDeck = dealtGame.deck;
 newGame.discardedCards = [];
 newGame.playedCards = [];
 newGame.players = dealtGame.players;  
-  
-  console.log('<<CREATING A NEW GAME>>')
 
-  
   db.run('INSERT INTO HanabiGames (numberOfPlayers, originalDeckId, playingDeckId, discardedCardsId, playedCardsId, playersId) VALUES('+newGame.numberOfPlayers+', 0000, 0000, 0000, 0000, 0000)',
          {}, 
          function(err){
     if(err){ console.log(err)};
         console.log('Last Row Id:', this.lastID)
+    newGame.id = this.lastID
+  
   } );
-
-  db.get('SELECT * from HanabiGames', function(err, row) {
+return newGame
+}
+ createNewRows().then(results => {
+  console.log('Current Game ID:', results.id);
+  
+  db.get('SELECT * from HanabiGames WHERE id = '+results.id, function(err, row) {
     console.log("Hanabi Table")  
     if ( row ) {
         console.log('record:', row);
       }
-    console.log(this.lastid)
     });
- 
+ });
   /* db.each('SELECT * from OriginalDeck', function(err, row) {
  console.log('OriginalDeck')
     if(err){
@@ -206,7 +210,7 @@ newGame.players = dealtGame.players;
     }
   });  */
 
-  response.json(newGame);
+  response.json('New GAME Created');
 
 });
 
