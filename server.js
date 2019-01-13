@@ -30,8 +30,8 @@ db.serialize(() => {
       throw error;
     }
   })
-  db.run('CREATE TABLE Hanabi_Games (id TEXT PRIMARY KEY, numberOfPlayers INTEGER NOT NULL, dateCreated DATE, score INTEGER, originalDeck ARRAY, playingDeck ARRAY, discardedCards ARRAY, playedCards ARRAY, players ARRAY)');
-  db.run('INSERT INTO Hanabi_Games (id, numberOfPlayers, dateCreated, originalDeck, playingDeck, discardedCards, playedCards, players) VALUES("sample", 5, "2019-01-12T15:08:50.122Z", [], [{color: red, number: 3},{color: blue, number: 3}])')
+  db.run('CREATE TABLE Hanabi_Games (id TEXT PRIMARY KEY, numberOfPlayers INTEGER NOT NULL, dateCreated DATE, score INTEGER, originalDeckId INTEGER, playingDeckId INTEGER, discardedCardsId INTEGER, playedCardsId INTEGER, playersId INTEGER)');
+  db.run('INSERT INTO Hanabi_Games (id, numberOfPlayers, dateCreated, originalDeckId, playingDeckId, discardedCardsId, playedCardsId, playersId) VALUES("sample", 5, "2019-01-12T15:08:50.122Z", 0000, 0000, 0000, 0000, 0000)')
   db.each('SELECT * from Hanabi_Games', function(err, row) {
     console.log("Hanabi Table")  
     if ( row ) {
