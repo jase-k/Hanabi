@@ -150,13 +150,15 @@ newGame.players = dealtGame.players;
   console.log('<<CREATING A NEW GAME>>')
 db.serialize(() => { 
   
-  db.run('INSERT INTO HanabiGames (numberOfPlayers, originalDeckId, playingDeckId, discardedCardsId, playedCardsId, playersId) VALUES('+newGame.numberOfPlayers+', 0000, 0000, 0000, 0000, 0000)');
+  db.run('INSERT INTO HanabiGames (numberOfPlayers, originalDeckId, playingDeckId, discardedCardsId, playedCardsId, playersId) VALUES('+newGame.numberOfPlayers+', 0000, 0000, 0000, 0000, 0000)',{}, (row) => {
+        console.log('Last Row Id:', row.id)});
 
   db.each('SELECT * from HanabiGames', function(err, row) {
     console.log("Hanabi Table")  
     if ( row ) {
         console.log('record:', row);
       }
+    console.log(this.lastid)
     });
  
   /* db.each('SELECT * from OriginalDeck', function(err, row) {
