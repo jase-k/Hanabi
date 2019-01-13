@@ -27,12 +27,21 @@ var card26to50 = 'card26, card27, card28, card29, card30, card31, card32, card33
 
 
 db.serialize(() => { 
+/*
   db.run('DROP TABLE IF EXISTS HanabiGames', error => {
     if (error) {
       throw error;
     }
   })
-   db.run('DROP TABLE IF EXISTS OriginalDeck', error => {
+     db.run('CREATE TABLE HanabiGames (id INTEGER PRIMARY KEY, numberOfPlayers INTEGER NOT NULL, dateCreated DATE, score INTEGER, originalDeckId INTEGER, playingDeckId INTEGER, discardedCardsId INTEGER, playedCardsId INTEGER, playersId INTEGER)');
+ db.each('SELECT * from HanabiGames', function(err, row) {
+    console.log("Hanabi Table")  
+    if ( row ) {
+        console.log('record:', row);
+      }
+    }); */
+
+  db.run('DROP TABLE IF EXISTS OriginalDeck', error => {
     if (error) {
       throw error;
     }
@@ -57,7 +66,6 @@ db.serialize(() => {
       throw error;
     }
   })
-  db.run('CREATE TABLE HanabiGames (id TEXT PRIMARY KEY, numberOfPlayers INTEGER NOT NULL, dateCreated DATE, score INTEGER, originalDeckId INTEGER, playingDeckId INTEGER, discardedCardsId INTEGER, playedCardsId INTEGER, playersId INTEGER)');
   db.run('CREATE TABLE OriginalDeck(id INTEGER PRIMARY KEY, gameId TEXT, '+card1to5+','+card6to25+','+card26to50+')');
   db.run('CREATE TABLE PlayingDeck(id INTEGER PRIMARY KEY, gameId TEXT, '+card1to5+','+card6to25+','+card26to50+')');
   db.run('CREATE TABLE DiscardedCards(id INTEGER PRIMARY KEY, gameId TEXT, '+card1to5+','+card6to25+')');
@@ -67,12 +75,7 @@ db.serialize(() => {
   db.run('INSERT INTO Players(gameId, name, card1, card2, card3, card4) VALUES ("sample", "Jase Kraft", "red 5", "white 3", "orange 2", "blue 1")');
   db.run('INSERT INTO OriginalDeck(gameId, '+card1to5+') VALUES ("sample", "red 5", "blue 3", "white 2", "green 2", NULL)');
   db.run('INSERT INTO HanabiGames (numberOfPlayers, dateCreated, originalDeckId, playingDeckId, discardedCardsId, playedCardsId, playersId) VALUES(5, "2019-01-12T15:08:50.122Z", 0000, 0000, 0000, 0000, 0000)')
-  db.each('SELECT * from HanabiGames', function(err, row) {
-    console.log("Hanabi Table")  
-    if ( row ) {
-        console.log('record:', row);
-      }
-    });
+  
   db.each('SELECT * from OriginalDeck', function(err, row) {
  console.log('OriginalDeck')
     if(err){
@@ -143,9 +146,59 @@ newGame.playingDeck = dealtGame.deck;
 newGame.discardedCards = [];
 newGame.playedCards = [];
 newGame.players = dealtGame.players;  
- 
-db.run('INSERT INTO HanabiGames(id, numberOfPlayers, dateCreated, originalDeckId, playingDeckId, discardedCardsId, playedCardsId, playersId) VALUES('+newGame.id+', '+newGame.numberOfPlayers+', '+newGame.dateCreated+', 0000, 0000, 0000, 0000, 0000)');
   
+  console.log('<<CREATING A NEW GAME>>')
+db.serialize(() => { 
+
+  db.run('INSERT INTO HanabiGames(numberOfPlayers, dateCreated, originalDeckId, playingDeckId, discardedCardsId, playedCardsId, playersId) VALUES('+newGame.numberOfPlayers+', '+newGame.dateCreated+', 0000, 0000, 0000, 0000, 0000)');
+
+  db.each('SELECT * from HanabiGames', function(err, row) {
+    console.log("Hanabi Table")  
+    if ( row ) {
+        console.log('record:', row);
+      }
+    });
+  db.each('SELECT * from OriginalDeck', function(err, row) {
+ console.log('OriginalDeck')
+    if(err){
+    throw err}
+  if(row){
+    console.log('record:', row) 
+    }
+  });
+  db.each('SELECT * from PlayingDeck', function(err, row) {
+ console.log('PlayingDeck')
+    if(err){
+    throw err}
+  if(row){
+    console.log('record:', row) 
+    }
+  });
+ /* db.each('SELECT * from DiscardedCards', function(err, row) {
+ console.log('DiscardedCards')
+    if(err){
+    throw err}
+  if(row){
+    console.log('record:', row) 
+    }
+  });
+  db.each('SELECT * from PlayedCards', function(err, row) {
+ console.log('PlayedCards')
+    if(err){
+    throw err}
+  if(row){
+    console.log('record:', row) 
+    }
+  });
+  db.each('SELECT * from Players', function(err, row) {
+ console.log('Players')
+    if(err){
+    throw err}
+  if(row){
+    console.log('record:', row) 
+    }
+  });  */
+});
   response.json(newGame);
 
 });
