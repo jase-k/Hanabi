@@ -30,14 +30,29 @@ db.serialize(() => {
       throw error;
     }
   })
+   db.run('DROP TABLE IF EXISTS Original_Deck', error => {
+    if (error) {
+      throw error;
+    }
+  })
   db.run('CREATE TABLE Hanabi_Games (id TEXT PRIMARY KEY, numberOfPlayers INTEGER NOT NULL, dateCreated DATE, score INTEGER, originalDeckId INTEGER, playingDeckId INTEGER, discardedCardsId INTEGER, playedCardsId INTEGER, playersId INTEGER)');
+  db.run('CREATE TABLE Original_Deck(id INTEGER, gameId TEXT, card1 TEXT, card2 TEXT, card3 TEXT, card4 TEXT)');
+  db.run('INSERT INTO Original_Deck(id, gameId, card1, card2, card3, card4) VALUES (0000, "sample", "red 5", "blue 3", "white 2", "green 2")');
   db.run('INSERT INTO Hanabi_Games (id, numberOfPlayers, dateCreated, originalDeckId, playingDeckId, discardedCardsId, playedCardsId, playersId) VALUES("sample", 5, "2019-01-12T15:08:50.122Z", 0000, 0000, 0000, 0000, 0000)')
   db.each('SELECT * from Hanabi_Games', function(err, row) {
     console.log("Hanabi Table")  
     if ( row ) {
         console.log('record:', row);
       }
-    }); 
+    });
+  db.each('SELECT * from Original_Deck', function(err, row) {
+ console.log('Original_Deck')
+    if(err){
+    throw err}
+  if(row){
+    console.log('record:', row) 
+    }
+  });
 });
   
 
