@@ -42,6 +42,30 @@ db.serialize(function(){
   }
 });
 
+db.serialize(() => { 
+  db.run('DROP TABLE IF EXISTS Hanabi_Games', error => {
+    if (error) {
+      throw error;
+    }
+  })
+  db.run('CREATE TABLE Hanabi_Games (id TEXT PRIMARY KEY, date DATE)', logNodeError);
+  db.each('SELECT * FROM',
+    (error, row) => {
+      if (error) {
+        throw error;
+      }
+    
+      addClimateRowToObject(row, temperaturesByYear);
+    }, 
+    error => {
+      if (error) {
+        throw error;
+      }
+
+    });
+  });
+  
+
 // http://expressjs.com/en/starter/basic-routing.html
 app.get('/', function(request, response) {
   response.sendFile(__dirname + '/views/index.html');
