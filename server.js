@@ -112,8 +112,7 @@ db.serialize(() => {
   if(row){
     console.log('record:', row) 
     }
-  });
-  
+  }); 
 });
   
 
@@ -121,19 +120,6 @@ db.serialize(() => {
 app.get('/', function(request, response) {
   response.sendFile(__dirname + '/views/index.html');
 });
-
-// endpoint to get all the dreams in the database
-// currently this is the only endpoint, ie. adding dreams won't update the database
-// read the sqlite3 module docs and try to add your own! https://www.npmjs.com/package/sqlite3
-app.get('/getDreams', function(request, response) {
-  db.all('SELECT * from Dreams', function(err, rows) {
-    response.send(JSON.stringify(rows));
-  });
-});
-
-
-
-
 
 app.get('/newgame', function(request, response) {
   console.log(request)
@@ -157,6 +143,8 @@ newGame.playingDeck = dealtGame.deck;
 newGame.discardedCards = [];
 newGame.playedCards = [];
 newGame.players = dealtGame.players;  
+ 
+db.run('INSERT INTO HanabiGames(id, numberOfPlayers, dateCreated, originalDeckId, playingDeckId, discardedCardsId, playedCardsId, playersId)  VALUES('+newGame.id+', '+newGame.numberOfPlayers+', '+newGame.dateCreated+', 0000, 0000, 0000, 0000, 0000)');
   
   response.json(newGame);
 
