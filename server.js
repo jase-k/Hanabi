@@ -154,12 +154,14 @@ newGame.players = dealtGame.players;
          function(err){
     if(err){ console.log(err)};
         console.log('Last Row Id:', this.lastID)
+   //THIS SCOPE DOESN'T REACH TO THE RETURN FUNCTION
     newGame.id = this.lastID
-    return newGame
   } );
+    console.log('NEW GAME ID BEFORE RETURNING:', newGame.id)
+    return newGame
 }
- var results = createNewRows()
- console.log(results)
+ var results = createNewRows(numberOfPlayers)
+ console.log("RESULTS", results)
  console.log('Current Game ID:', results.id);
   
   db.get('SELECT * from HanabiGames WHERE id = '+results.id, function(err, row) {
