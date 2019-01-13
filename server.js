@@ -74,7 +74,7 @@ db.serialize(() => {
   db.run('INSERT INTO PlayingDeck(gameId) VALUES ("sample")'); 
   db.run('INSERT INTO Players(gameId, name, card1, card2, card3, card4) VALUES ("sample", "Jase Kraft", "red 5", "white 3", "orange 2", "blue 1")');
   db.run('INSERT INTO OriginalDeck(gameId, '+card1to5+') VALUES ("sample", "red 5", "blue 3", "white 2", "green 2", NULL)');
-  db.run('INSERT INTO HanabiGames (numberOfPlayers, dateCreated, originalDeckId, playingDeckId, discardedCardsId, playedCardsId, playersId) VALUES(5, "2019-01-12T15:08:50.122Z", 0000, 0000, 0000, 0000, 0000)')
+//  db.run('INSERT INTO HanabiGames (numberOfPlayers, dateCreated, originalDeckId, playingDeckId, discardedCardsId, playedCardsId, playersId) VALUES(5, "2019-01-12T15:08:50.122Z", 0000, 0000, 0000, 0000, 0000)')
   
   db.each('SELECT * from OriginalDeck', function(err, row) {
  console.log('OriginalDeck')
@@ -125,7 +125,7 @@ app.get('/', function(request, response) {
 });
 
 app.get('/newgame', function(request, response) {
-  console.log(request)
+//  console.log(request)
   var newGame = {};
   var numberOfPlayers = request.query.players
   if(numberOfPlayers == null || numberOfPlayers > 5){
@@ -149,8 +149,8 @@ newGame.players = dealtGame.players;
   
   console.log('<<CREATING A NEW GAME>>')
 db.serialize(() => { 
-
-  db.run('INSERT INTO HanabiGames(numberOfPlayers, dateCreated, originalDeckId, playingDeckId, discardedCardsId, playedCardsId, playersId) VALUES('+newGame.numberOfPlayers+', '+newGame.dateCreated+', 0000, 0000, 0000, 0000, 0000)');
+  
+  db.run('INSERT INTO HanabiGames (numberOfPlayers, originalDeckId, playingDeckId, discardedCardsId, playedCardsId, playersId) VALUES('+newGame.numberOfPlayers+', 0000, 0000, 0000, 0000, 0000)');
 
   db.each('SELECT * from HanabiGames', function(err, row) {
     console.log("Hanabi Table")  
@@ -158,7 +158,8 @@ db.serialize(() => {
         console.log('record:', row);
       }
     });
-  db.each('SELECT * from OriginalDeck', function(err, row) {
+ 
+  /* db.each('SELECT * from OriginalDeck', function(err, row) {
  console.log('OriginalDeck')
     if(err){
     throw err}
@@ -174,7 +175,7 @@ db.serialize(() => {
     console.log('record:', row) 
     }
   });
- /* db.each('SELECT * from DiscardedCards', function(err, row) {
+  db.each('SELECT * from DiscardedCards', function(err, row) {
  console.log('DiscardedCards')
     if(err){
     throw err}
@@ -198,6 +199,7 @@ db.serialize(() => {
     console.log('record:', row) 
     }
   });  */
+  
 });
   response.json(newGame);
 
