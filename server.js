@@ -58,15 +58,15 @@ db.serialize(() => {
     }
   })
   db.run('CREATE TABLE HanabiGames (id TEXT PRIMARY KEY, numberOfPlayers INTEGER NOT NULL, dateCreated DATE, score INTEGER, originalDeckId INTEGER, playingDeckId INTEGER, discardedCardsId INTEGER, playedCardsId INTEGER, playersId INTEGER)');
-  db.run('CREATE TABLE OriginalDeck(id INTEGER, gameId TEXT, '+card1to5+','+card6to25+','+card26to50+')');
-  db.run('CREATE TABLE PlayingDeck(id INTEGER, gameId TEXT, '+card1to5+','+card6to25+','+card26to50+')');
-  db.run('CREATE TABLE DiscardedCards(id INTEGER, gameId TEXT, '+card1to5+','+card6to25+')');
-  db.run('CREATE TABLE PlayedCards(id INTEGER, gameId TEXT, '+card1to5+','+card6to25+')');
-  db.run('CREATE TABLE Players(id INTEGER, gameId TEXT, name TEXT, '+card1to5+')');
-  db.run('INSERT INTO PlayingDeck(id, gameId) VALUES (0001, "sample")'); 
-  db.run('INSERT INTO Players(id, gameId, name, card1, card2, card3, card4) VALUES (0001, "sample", "Jase Kraft", "red 5", "white 3", "orange 2", "blue 1")');
-  db.run('INSERT INTO OriginalDeck(id, gameId, '+card1to5+') VALUES (0000, "sample", "red 5", "blue 3", "white 2", "green 2", NULL)');
-  db.run('INSERT INTO HanabiGames (id, numberOfPlayers, dateCreated, originalDeckId, playingDeckId, discardedCardsId, playedCardsId, playersId) VALUES("sample", 5, "2019-01-12T15:08:50.122Z", 0000, 0000, 0000, 0000, 0000)')
+  db.run('CREATE TABLE OriginalDeck(id INTEGER PRIMARY KEY, gameId TEXT, '+card1to5+','+card6to25+','+card26to50+')');
+  db.run('CREATE TABLE PlayingDeck(id INTEGER PRIMARY KEY, gameId TEXT, '+card1to5+','+card6to25+','+card26to50+')');
+  db.run('CREATE TABLE DiscardedCards(id INTEGER PRIMARY KEY, gameId TEXT, '+card1to5+','+card6to25+')');
+  db.run('CREATE TABLE PlayedCards(id INTEGER PRIMARY KEY, gameId TEXT, '+card1to5+','+card6to25+')');
+  db.run('CREATE TABLE Players(id INTEGER PRIMARY KEY, gameId TEXT, name TEXT, '+card1to5+')');
+  db.run('INSERT INTO PlayingDeck(gameId) VALUES ("sample")'); 
+  db.run('INSERT INTO Players(gameId, name, card1, card2, card3, card4) VALUES ("sample", "Jase Kraft", "red 5", "white 3", "orange 2", "blue 1")');
+  db.run('INSERT INTO OriginalDeck(gameId, '+card1to5+') VALUES ("sample", "red 5", "blue 3", "white 2", "green 2", NULL)');
+  db.run('INSERT INTO HanabiGames (numberOfPlayers, dateCreated, originalDeckId, playingDeckId, discardedCardsId, playedCardsId, playersId) VALUES(5, "2019-01-12T15:08:50.122Z", 0000, 0000, 0000, 0000, 0000)')
   db.each('SELECT * from HanabiGames', function(err, row) {
     console.log("Hanabi Table")  
     if ( row ) {
@@ -144,7 +144,7 @@ newGame.discardedCards = [];
 newGame.playedCards = [];
 newGame.players = dealtGame.players;  
  
-db.run('INSERT INTO HanabiGames(id, numberOfPlayers, dateCreated, originalDeckId, playingDeckId, discardedCardsId, playedCardsId, playersId)  VALUES('+newGame.id+', '+newGame.numberOfPlayers+', '+newGame.dateCreated+', 0000, 0000, 0000, 0000, 0000)');
+db.run('INSERT INTO HanabiGames(id, numberOfPlayers, dateCreated, originalDeckId, playingDeckId, discardedCardsId, playedCardsId, playersId) VALUES('+newGame.id+', '+newGame.numberOfPlayers+', '+newGame.dateCreated+', 0000, 0000, 0000, 0000, 0000)');
   
   response.json(newGame);
 
