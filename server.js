@@ -59,7 +59,7 @@ newGame.discardedCards = [];
 newGame.playedCards = [];
 newGame.players = dealtGame.players;  
 
-Database.newGame(newGame)
+Database.newGame(newGame).then(result => console.log(result))
 
 
   response.json('New GAME Created');

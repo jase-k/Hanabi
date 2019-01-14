@@ -32,6 +32,7 @@ function convertCardArray(array){
 
 
 const Database ={};
+
 /*
 db.serialize(() => { 
 
@@ -40,7 +41,7 @@ db.serialize(() => {
       throw error;
     }
   })
-     db.run('CREATE TABLE HanabiGames (id INTEGER PRIMARY KEY, numberOfPlayers INTEGER NOT NULL, dateCreated DATE, score INTEGER, originalDeckId INTEGER, playingDeckId INTEGER, discardedCardsId INTEGER, playedCardsId INTEGER, playersId INTEGER)');
+     db.run('CREATE TABLE HanabiGames (id INTEGER PRIMARY KEY, numberOfPlayers INTEGER NOT NULL, dateCreated DATE, score INTEGER)');
  db.each('SELECT * from HanabiGames', function(err, row) {
     console.log("Hanabi Table")  
     if ( row ) {
@@ -180,9 +181,6 @@ for(var i = 0; i < object.players.length; i++) {
               currentGame.PlayersId.push(this.lastID)
             console.log("Players id:", currentGame.PlayersId); 
   }); }//Ends INSERT INTO PLAYERS 
-  //===========================================================originalDeckId INTEGER, playingDeckId INTEGER, discardedCardsId INTEGER, playedCardsId INTEGER, playersId INTEGER
-db.run('UPDATE HanabiGames SET originalDeckId = '+currentGame.originalDeckId+', playingDeckId = '+currentGame.playingDeckId+', discardedCardsId= '+currentGame.discardedCardsId+', playedCardsId='+currentGame.playedCardsId+' WHERE id = '+currentGame.gameId ,
-       function(err){if(err){console.log(err)}}); 
 
 db.get('SELECT * from HanabiGames WHERE id = '+currentGame.gameId, 
              function(err, row) {
@@ -203,10 +201,11 @@ db.get('SELECT * from HanabiGames WHERE id = '+currentGame.gameId,
         console.log('record:', row);
       }
     console.log("Current Game's Players' ID", currentGame.playersId)
-            });//Ends SELECT PlayingDeck
+    return currentGame          
+  });//Ends SELECT PlayingDeck
           });//Ends SELECT OriginalDeck
         });//Ends SELECT HanabiGames    
-
+  
 });//Ends INSERT INTO PlayedCards
   });//Ends INSERT INTO DiscardedCars
 });//Ends INSERT INTO PlayingDeck
