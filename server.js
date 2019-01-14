@@ -27,7 +27,7 @@ var card26to50 = 'card26, card27, card28, card29, card30, card31, card32, card33
 // if ./.data/sqlite.db does not exist, create it, otherwise print records to console
 
 /*
-db.all('SELECT * from Players', function(err, rows){
+db.all('SELECT * from PlayingDeck', function(err, rows){
   if(err){throw err}
   rows.forEach(function(row){console.log('record:', row)})
 });
