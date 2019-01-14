@@ -142,12 +142,14 @@ db.serialize(() => {
       }
     */
 function HanabiTable(object) {
-new Promise((resolve, reject) => {
+return new Promise((resolve, reject) => {
   object.currentGame = {}
     db.run('INSERT INTO HanabiGames(numberOfPlayers) VALUES('+object.numberOfPlayers+')',
          {}, 
   function(err){
-    if(err){ console.log(err)};
+    if(err){ console.log(err)
+           reject(console.log('Operation was Rejected at Hanabi Table'))
+           };
       object.currentGame.gameId= this.lastID
     console.log("current game id", object.currentGame.gameId);
       resolve(object)
@@ -155,7 +157,7 @@ new Promise((resolve, reject) => {
   });
 }
 function OriginalDeckTable(object){
-  new Promise((resolve, reject) =>{
+ return new Promise((resolve, reject) =>{
   db.run('INSERT INTO OriginalDeck (gameId,'+createCardString(50)+') VALUES('+object.currentGame.gameId+','+convertCardArray(object.originalDeck)+') ', {}, 
              function(err){
                 if(err){throw err}
@@ -166,7 +168,7 @@ function OriginalDeckTable(object){
   });
 }
 Database.testPromise = function(object){
-  HanabiTable(object).then(object => OriginalDeckTable(object)).then(results => console.log(results))
+  HanabiTable(object).then(object => OriginalDeckTable(object)).then(results => console.log(JSON.stringify(results)))
 }
 Database.newGame = function(object) {
   return new Promise((resolve, reject) => {
