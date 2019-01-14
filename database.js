@@ -22,10 +22,10 @@ function createCardString(number){
 
 function convertCardArray(array){
   var string = ''
-  for(var i = 1; i <= array.length; i++){
-    if(i !== array.length){
-  string += ''+array.color+' '+array.number+','
-      }else{string += ''+array.color+' '+array.number}
+  for(var i = 0; i < array.length; i++){
+    if(i !== array.length-1){
+  string += '"'+array[i].color+''+array[i].number+'",'
+      }else{string += '"'+array[i].color+' '+array[i].number+'"'}
     }
   return string
 }
@@ -78,7 +78,8 @@ db.serialize(() => {
   db.run('CREATE TABLE DiscardedCards(id INTEGER PRIMARY KEY, gameId TEXT, '+createCardString(25)+')');
   db.run('CREATE TABLE PlayedCards(id INTEGER PRIMARY KEY, gameId TEXT, '+createCardString(25)+')');
   db.run('CREATE TABLE Players(id INTEGER PRIMARY KEY, gameId TEXT, name TEXT, '+createCardString(5)+')');
-  db.run('INSERT INTO PlayingDeck(gameId,'+createCardString(50)+') VALUES ("sample", '+convertCardArray(sampleDeck)+')',function(err){if(err){throw err}}); 
+  db.run('INSERT INTO PlayingDeck(gameId, '+createCardString(50)+') VALUES ("sample", '+convertCardArray(sampleDeck)+')',
+         function(err){if(err){throw err}}); 
   db.run('INSERT INTO Players(gameId) VALUES ("sample")');
   db.run('INSERT INTO OriginalDeck(gameId) VALUES ("sample")');
 //  db.run('INSERT INTO HanabiGames (numberOfPlayers, dateCreated, originalDeckId, playingDeckId, discardedCardsId, playedCardsId, playersId) VALUES(5, "2019-01-12T15:08:50.122Z", 0000, 0000, 0000, 0000, 0000)')
