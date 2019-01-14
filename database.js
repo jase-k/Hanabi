@@ -141,35 +141,79 @@ db.serialize(() => {
       hand: []
       }
     */
-function HanabiTable(object) {
+function InsertHanabiRow(object) {
 return new Promise((resolve, reject) => {
-  object.currentGame = {}
+  object.tableIds = {}
     db.run('INSERT INTO HanabiGames(numberOfPlayers) VALUES('+object.numberOfPlayers+')',
          {}, 
   function(err){
     if(err){ console.log(err)
            reject(console.log('Operation was Rejected at Hanabi Table'))
            };
-      object.currentGame.gameId= this.lastID
-    console.log("current game id", object.currentGame.gameId);
+      object.tableIds.gameId= this.lastID
+    console.log("current game id", object.tableIds.gameId);
       resolve(object)
     })
   });
 }
-function OriginalDeckTable(object){
+function InsertOriginalDeckRow(object){
  return new Promise((resolve, reject) =>{
-  db.run('INSERT INTO OriginalDeck (gameId,'+createCardString(50)+') VALUES('+object.currentGame.gameId+','+convertCardArray(object.originalDeck)+') ', {}, 
+  db.run('INSERT INTO OriginalDeck (gameId,'+createCardString(50)+') VALUES('+object.tableIds.gameId+','+convertCardArray(object.originalDeck)+') ', {}, 
              function(err){
                 if(err){throw err}
-              object.currentGame.originalDeckId = this.lastID
-            console.log("originalDeck id:", object.currentGame.originalDeckId);
+              object.tableIds.originalDeckId = this.lastID
+            console.log("originalDeck id:", object.tableIds.originalDeckId);
       resolve(object)
     })
   });
 }
-Database.testPromise = function(object){
-  HanabiTable(object).then(object => OriginalDeckTable(object)).then(results => console.log(JSON.stringify(results)))
+function InsertPlayingDeckRow(object){
+return new Promise((resolve, reject) =>{
+  db.run('INSERT INTO PlayingDeck (gameId,'+createCardString(object.playingDeck.length)+') VALUES('+object.tableIds.gameId+','+convertCardArray(object.playingDeck)+') ', {}, 
+             function(err){
+                if(err){throw err}
+              object.tableIds.playingDeckId = this.lastID
+            console.log("playingDeck id:", object.tableIds.playingDeckId);
+    });
+  })
 }
+function InsertDiscardedCardsRow(object){
+return new Promise ((resolve, reject) =>{
+  db.run('INSERT INTO DiscardedCards (gameId) VALUES('+object.tableIds.gameId+') ', {}, 
+             function(err){
+                if(err){throw err}
+              object.tableIds.DiscardedCardsId = this.lastID
+            console.log("DiscardedCards id:", object.tableIds.DiscardedCardsId);
+    });
+  });
+}
+function InsertPlayedCardsRow(object){
+return new Promise((resolve, reject) => {
+  db.run('INSERT INTO PlayedCards (gameId) VALUES('+object.tableIds.gameId+') ', {}, 
+             function(err){
+                if(err){throw err}
+              object.tableIds.PlayedCardsId = this.lastID
+            console.log("PlayedCards id:", object.tableIds.PlayedCardsId); 
+    });  
+  });
+}
+function InsertPlayersRows(object){
+return new Promise((resolve, reject) => {
+  object.tableIds.playersId =
+  for(var i = 0; i < object.players.length; i++) {
+  db.run('INSERT INTO Players (gameId) VALUES('+object.tableIds.gameId+') ', {}, 
+             (err) => {
+                if(err){throw err}
+              currentGame.PlayersId.push(this.lastID)
+            //console.log("Players id:", currentGame.PlayersId); 
+  }); }
+  });
+}
+
+Database.createRows = function(object){
+  InsertHanabiRow(object).then(object => InsertOriginalDeckRow(object)).then(results => console.log(JSON.stringify(results)))
+}
+
 Database.newGame = function(object) {
   return new Promise((resolve, reject) => {
 var currentGame = {};
@@ -206,7 +250,7 @@ db.run('INSERT INTO PlayedCards (gameId) VALUES('+currentGame.gameId+') ', {},
   currentGame.PlayersId =[];
 for(var i = 0; i < object.players.length; i++) {
   db.run('INSERT INTO Players (gameId) VALUES('+currentGame.gameId+') ', {}, 
-             function(err){
+             (err) => {
                 if(err){throw err}
               currentGame.PlayersId.push(this.lastID)
             //console.log("Players id:", currentGame.PlayersId); 
