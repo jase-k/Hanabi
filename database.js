@@ -164,13 +164,22 @@ db.run('INSERT INTO DiscardedCards (gameId) VALUES('+currentGame.gameId+') ', {}
              function(err){
                 if(err){throw err}
               currentGame.DiscardedCardsId = this.lastID
-            console.log("playingDeck id:", currentGame.DiscardedCardsId);
-db.run('INSERT INTO DiscardedCards (gameId) VALUES('+currentGame.gameId+') ', {}, 
+            console.log("DiscardedCards id:", currentGame.DiscardedCardsId);
+  
+db.run('INSERT INTO PlayedCards (gameId) VALUES('+currentGame.gameId+') ', {}, 
              function(err){
                 if(err){throw err}
-              currentGame.DiscardedCardsId = this.lastID
-            console.log("playingDeck id:", currentGame.DiscardedCardsId);
-  
+              currentGame.PlayedCardsId = this.lastID
+            console.log("PlayedCards id:", currentGame.PlayedCardsId); 
+   
+  currentGame.PlayersId =[];
+for(var i = 0; i < object.players.length; i++) {
+  db.run('INSERT INTO Players (gameId) VALUES('+currentGame.gameId+') ', {}, 
+             function(err){
+                if(err){throw err}
+              currentGame.PlayersId += this.lastID
+            console.log("Players id:", currentGame.PlayersId); 
+  }); }//Ends INSERT INTO PLAYERS 
 db.get('SELECT * from HanabiGames WHERE id = '+currentGame.gameId, 
              function(err, row) {
     console.log("Hanabi Table")  
@@ -189,10 +198,11 @@ db.get('SELECT * from HanabiGames WHERE id = '+currentGame.gameId,
     if ( row ) {
         console.log('record:', row);
       }
-    
+    console.log("Current Game's Players' ID", currentGame.playersId)
             });//Ends SELECT PlayingDeck
           });//Ends SELECT OriginalDeck
         });//Ends SELECT HanabiGames    
+    
 });//Ends INSERT INTO PlayedCards
   });//Ends INSERT INTO DiscardedCars
 });//Ends INSERT INTO PlayingDeck
