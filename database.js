@@ -142,6 +142,7 @@ db.serialize(() => {
       }
     */
 Database.newGame = function(object) {
+  return new Promise((resolve, reject) => {
 var currentGame = {};
   
 db.run('INSERT INTO HanabiGames(numberOfPlayers) VALUES('+object.numberOfPlayers+')',
@@ -201,6 +202,7 @@ db.get('SELECT * from HanabiGames WHERE id = '+currentGame.gameId,
         console.log('record:', row);
       }
     console.log("Current Game's Players' ID", currentGame.playersId)
+    resolve(currentGame)
   });//Ends SELECT PlayingDeck
           });//Ends SELECT OriginalDeck
         });//Ends SELECT HanabiGames    
@@ -210,7 +212,7 @@ db.get('SELECT * from HanabiGames WHERE id = '+currentGame.gameId,
 });//Ends INSERT INTO PlayingDeck
    }); //Ends INSERT INTO OriginalDeck
 });//ENDs all db.run
-
+});
  }
 
 module.exports = Database
