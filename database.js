@@ -10,13 +10,16 @@ var card26to50 = 'card26, card27, card28, card29, card30, card31, card32, card33
 function createCardString(number){
  var string = '' 
   for(var i = 1; i <= number; i++){
-      string += 'card'+number
+      string += 'card'+number+','
   }
   return string
 }
 function convertCardArray(array){
   var string = ''
-  for(var i = 1;
+  for(var i = 1; i <= array.length; i++){
+  string += ''+array.color+' '+array.number+','
+  }
+  return string
 }
 
 
@@ -62,11 +65,11 @@ db.serialize(() => {
       throw error;
     }
   })
-  db.run('CREATE TABLE OriginalDeck(id INTEGER PRIMARY KEY, gameId TEXT, '+card1to5+','+card6to25+','+card26to50+')');
-  db.run('CREATE TABLE PlayingDeck(id INTEGER PRIMARY KEY, gameId TEXT, '+card1to5+','+card6to25+','+card26to50+')');
-  db.run('CREATE TABLE DiscardedCards(id INTEGER PRIMARY KEY, gameId TEXT, '+card1to5+','+card6to25+')');
-  db.run('CREATE TABLE PlayedCards(id INTEGER PRIMARY KEY, gameId TEXT, '+card1to5+','+card6to25+')');
-  db.run('CREATE TABLE Players(id INTEGER PRIMARY KEY, gameId TEXT, name TEXT, '+card1to5+')');
+  db.run('CREATE TABLE OriginalDeck(id INTEGER PRIMARY KEY, gameId TEXT, '+createCardString(50)+')');
+  db.run('CREATE TABLE PlayingDeck(id INTEGER PRIMARY KEY, gameId TEXT, '+createCardString(50)+')');
+  db.run('CREATE TABLE DiscardedCards(id INTEGER PRIMARY KEY, gameId TEXT, '+createCardString(25)+')');
+  db.run('CREATE TABLE PlayedCards(id INTEGER PRIMARY KEY, gameId TEXT, '+createCardString(25)+')');
+  db.run('CREATE TABLE Players(id INTEGER PRIMARY KEY, gameId TEXT, name TEXT, '+createCardString(5)+')');
   db.run('INSERT INTO PlayingDeck(gameId) VALUES ("sample")'); 
   db.run('INSERT INTO Players(gameId, name, card1, card2, card3, card4) VALUES ("sample", "Jase Kraft", "red 5", "white 3", "orange 2", "blue 1")');
   db.run('INSERT INTO OriginalDeck(gameId, '+card1to5+') VALUES ("sample", "red 5", "blue 3", "white 2", "green 2", NULL)');
@@ -135,19 +138,22 @@ db.run('INSERT INTO HanabiGames(numberOfPlayers) VALUES('+object.numberOfPlayers
     if(err){ console.log(err)};
     currentGame.gameId = this.lastID
     console.log("current game id", currentGame.gameId);
-      db.run('INSERT INTO OriginalDeck (gameId,'+createCardString(50)+') VALUES() ', {}, function(err){});
-  
-});
-
-  
-  db.get('SELECT * from HanabiGames WHERE id = '+currentGame.gameId, function(err, row) {
+      db.run('INSERT INTO OriginalDeck (gameId,'+createCardString(50)+') VALUES('+convertCardArray(object.originalDeck)+') ', {}, function(err){
+      
+      db.get('SELECT * from HanabiGames WHERE id = '+currentGame.gameId, function(err, row) {
     console.log("Hanabi Table")  
     if ( row ) {
         console.log('record:', row);
       }
-    });
+    
+        });//Ends SELECT HanabiGames    
+   }); //Ends INSERT INTO OriginalDeck
+});//ENDs all db.run
+
  }
- 
+
+module.exports = Database
+
 /* db.each('SELECT * from OriginalDeck', function(err, row) {
  console.log('OriginalDeck')
     if(err){

@@ -7,6 +7,7 @@ var bodyParser = require('body-parser');
 var app = express();
 app.use(bodyParser.urlencoded({ extended: true }));
 const gameCreation = require('./cool-file.js')
+const Database = require('./database.js')
 
 // we've started you off with Express, 
 // but feel free to use whatever libs or frameworks you'd like through `package.json`.
@@ -32,6 +33,7 @@ var card26to50 = 'card26, card27, card28, card29, card30, card31, card32, card33
 app.get('/', function(request, response) {
   response.sendFile(__dirname + '/views/index.html');
 });
+
 
 app.get('/newgame', function(request, response) {
 //  console.log(request)
