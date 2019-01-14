@@ -26,8 +26,12 @@ var card6to25 = 'card6, card7, card8, card9, card10, card11, card12, card13, car
 var card26to50 = 'card26, card27, card28, card29, card30, card31, card32, card33, card34, card35, card36, card37, card38, card39, card40, card41, card42, card43, card44, card45, card46, card47, card48, card49, card50'
 // if ./.data/sqlite.db does not exist, create it, otherwise print records to console
 
-
-
+/*
+db.all('SELECT * from Players', function(err, rows){
+  if(err){throw err}
+  rows.forEach(function(row){console.log('record:', row)})
+});
+*/
 
 // http://expressjs.com/en/starter/basic-routing.html
 app.get('/', function(request, response) {

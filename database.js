@@ -33,8 +33,17 @@ function convertCardArray(array){
 
 const Database ={};
 
+  //   db.run('CREATE TABLE Players(id INTEGER PRIMARY KEY, gameId TEXT, name TEXT, '+createCardString(5)+')');
+ 
+
 /*
 db.serialize(() => { 
+
+ db.run('DROP TABLE IF EXISTS Players', error => {
+    if (error) {
+      throw error;
+    }
+  })
 
  db.run('DROP TABLE IF EXISTS HanabiGames', error => {
     if (error) {
@@ -69,16 +78,11 @@ db.serialize(() => {
       throw error;
     }
   })
-   db.run('DROP TABLE IF EXISTS Players', error => {
-    if (error) {
-      throw error;
-    }
-  })
+
   db.run('CREATE TABLE OriginalDeck(id INTEGER PRIMARY KEY, gameId TEXT, '+createCardString(50)+')');
   db.run('CREATE TABLE PlayingDeck(id INTEGER PRIMARY KEY, gameId TEXT, '+createCardString(50)+')');
   db.run('CREATE TABLE DiscardedCards(id INTEGER PRIMARY KEY, gameId TEXT, '+createCardString(25)+')');
   db.run('CREATE TABLE PlayedCards(id INTEGER PRIMARY KEY, gameId TEXT, '+createCardString(25)+')');
-  db.run('CREATE TABLE Players(id INTEGER PRIMARY KEY, gameId TEXT, name TEXT, '+createCardString(5)+')');
   db.run('INSERT INTO PlayingDeck(gameId, '+createCardString(50)+') VALUES ("sample", '+convertCardArray(sampleDeck)+')',
          function(err){if(err){throw err}}); 
   db.run('INSERT INTO Players(gameId) VALUES ("sample")');
@@ -208,8 +212,12 @@ return new Promise((resolve, reject) => {
              function(err){
                 if(err){throw err}
               object.tableIds.playersId.push(this.lastID)
-    if(i=object.players.length){resolve(object)}
-            //console.log("Players id:", currentGame.PlayersId); 
+    consol.
+    console.log('Players Length', object.players.length)
+    
+    if(i == object.players.length){
+      resolve(object)}
+            //console.log("Players id:", currentGame.PlayersId);  
   }); }
   });
 }
