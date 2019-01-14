@@ -177,9 +177,11 @@ for(var i = 0; i < object.players.length; i++) {
   db.run('INSERT INTO Players (gameId) VALUES('+currentGame.gameId+') ', {}, 
              function(err){
                 if(err){throw err}
-              currentGame.PlayersId += this.lastID
+              currentGame.PlayersId.push(this.lastID)
             console.log("Players id:", currentGame.PlayersId); 
   }); }//Ends INSERT INTO PLAYERS 
+db.run('UPDATE HanabiGames SET dateCreated = '+object.dateCreated+', originalDeckId = '+currentGame.originalDeckId+', playingDeckId = '+currentGame.playingDeckId+', discardedCardsId= '+currentGame.discardedCardsId+', playedCardsId='+playedCardsId+' WHERE id = '+currentGame.gameId) 
+
 db.get('SELECT * from HanabiGames WHERE id = '+currentGame.gameId, 
              function(err, row) {
     console.log("Hanabi Table")  
@@ -202,7 +204,7 @@ db.get('SELECT * from HanabiGames WHERE id = '+currentGame.gameId,
             });//Ends SELECT PlayingDeck
           });//Ends SELECT OriginalDeck
         });//Ends SELECT HanabiGames    
-    
+
 });//Ends INSERT INTO PlayedCards
   });//Ends INSERT INTO DiscardedCars
 });//Ends INSERT INTO PlayingDeck
