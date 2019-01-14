@@ -180,7 +180,9 @@ for(var i = 0; i < object.players.length; i++) {
               currentGame.PlayersId.push(this.lastID)
             console.log("Players id:", currentGame.PlayersId); 
   }); }//Ends INSERT INTO PLAYERS 
-db.run('UPDATE HanabiGames SET dateCreated = '+object.dateCreated+', originalDeckId = '+currentGame.originalDeckId+', playingDeckId = '+currentGame.playingDeckId+', discardedCardsId= '+currentGame.discardedCardsId+', playedCardsId='+playedCardsId+' WHERE id = '+currentGame.gameId) 
+  //===========================================================originalDeckId INTEGER, playingDeckId INTEGER, discardedCardsId INTEGER, playedCardsId INTEGER, playersId INTEGER
+db.run('UPDATE HanabiGames SET originalDeckId = '+currentGame.originalDeckId+', playingDeckId = '+currentGame.playingDeckId+', discardedCardsId= '+currentGame.discardedCardsId+', playedCardsId='+currentGame.playedCardsId+' WHERE id = '+currentGame.gameId ,
+       function(err){if(err){console.log(err)}}); 
 
 db.get('SELECT * from HanabiGames WHERE id = '+currentGame.gameId, 
              function(err, row) {
