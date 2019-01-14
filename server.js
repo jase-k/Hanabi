@@ -45,7 +45,6 @@ app.get('/newgame', function(request, response) {
     
   console.log('<<CREATING A NEW GAME>>')
 
-function createNewRows(numberOfPlayers) {
   var newGame = {};
 newGame.numberOfPlayers = numberOfPlayers;
 newGame.dateCreated = new Date();
@@ -60,12 +59,7 @@ newGame.discardedCards = [];
 newGame.playedCards = [];
 newGame.players = dealtGame.players;  
 
-
-    console.log('NEW GAME ID BEFORE RETURNING:', newGame.id)
-    return newGame
-}
-  
- var results = createNewRows(numberOfPlayers)
+Database.newGame(newGame)
 
 
   response.json('New GAME Created');

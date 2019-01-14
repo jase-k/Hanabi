@@ -33,9 +33,9 @@ function convertCardArray(array){
 
 const Database ={};
 
-db.serialize(() => { 
+/*db.serialize(() => { 
 
-  db.run('DROP TABLE IF EXISTS HanabiGames', error => {
+ db.run('DROP TABLE IF EXISTS HanabiGames', error => {
     if (error) {
       throw error;
     }
@@ -124,7 +124,7 @@ db.serialize(() => {
     console.log('record:', row) 
     }
   }); 
-});
+}); */
   
 //============================
 // Creating New Game (6 tables)
@@ -141,20 +141,31 @@ db.serialize(() => {
 Database.newGame = function(object) {
 var currentGame = {};
   
-db.run('INSERT INTO HanabiGames(numberOfPlayers) VALUES('+object.numberOfPlayers+', 0000, 0000, 0000, 0000, 0000)',
+db.run('INSERT INTO HanabiGames(numberOfPlayers) VALUES('+object.numberOfPlayers+')',
          {}, 
   function(err){
     if(err){ console.log(err)};
     currentGame.gameId = this.lastID
     console.log("current game id", currentGame.gameId);
-      db.run('INSERT INTO OriginalDeck (gameId,'+createCardString(50)+') VALUES('+convertCardArray(object.originalDeck)+') ', {}, function(err){
-      
-      db.get('SELECT * from HanabiGames WHERE id = '+currentGame.gameId, function(err, row) {
+      db.run('INSERT INTO OriginalDeck (gameId,'+createCardString(50)+') VALUES('+currentGame.gameId+','+convertCardArray(object.originalDeck)+') ', {}, 
+             function(err){
+                if(err){throw err}
+              currentGame.originalDeckId = this.lastID
+        
+      db.get('SELECT * from HanabiGames WHERE id = '+currentGame.gameId, 
+             function(err, row) {
+    console.log("Hanabi Table")  
+    if ( row ) {
+        console.log('record:', row);
+      }
+        db.get('SELECT * from Orginal WHERE id = '+currentGame.gameId, 
+             function(err, row) {
     console.log("Hanabi Table")  
     if ( row ) {
         console.log('record:', row);
       }
     
+          });//Ends SELECT OriginalDeck
         });//Ends SELECT HanabiGames    
    }); //Ends INSERT INTO OriginalDeck
 });//ENDs all db.run
