@@ -209,8 +209,10 @@ function InsertPlayersRows(object){
 return new Promise((resolve, reject) => {
   object.tableIds.playersId = []
   var i = 1
+  var number = object.players[i].hand.length
+  console.log('Number of Cards in Each Hand', number)
     console.log('first i:', i)
-  db.run('INSERT INTO Players (gameId) VALUES('+object.tableIds.gameId+') ', {}, 
+  db.run('INSERT INTO Players (gameId,'+createCardString(number)+') VALUES('+object.tableIds.gameId+','+convertCardArray(object.players[i-1].hand)+') ', {}, 
              function(err){
                 if(err){throw err}
     object.tableIds.playersId.push(this.lastID)
@@ -221,7 +223,7 @@ return new Promise((resolve, reject) => {
       resolve(object)
     }else{ i++
           
-db.run('INSERT INTO Players (gameId) VALUES('+object.tableIds.gameId+') ', {}, 
+db.run('INSERT INTO Players (gameId,'+createCardString(number)+') VALUES('+object.tableIds.gameId+','+convertCardArray(object.players[i-1].hand)+') ', {}, 
              function(err){
                 if(err){throw err}
     object.tableIds.playersId.push(this.lastID)
@@ -231,7 +233,7 @@ db.run('INSERT INTO Players (gameId) VALUES('+object.tableIds.gameId+') ', {},
     if(i == object.players.length){
       resolve(object)
     }else{ i++
-db.run('INSERT INTO Players (gameId) VALUES('+object.tableIds.gameId+') ', {}, 
+db.run('INSERT INTO Players (gameId,'+createCardString(number)+') VALUES('+object.tableIds.gameId+','+convertCardArray(object.players[i-1].hand)+') ', {}, 
              function(err){
                 if(err){throw err}
     object.tableIds.playersId.push(this.lastID)
@@ -241,7 +243,7 @@ db.run('INSERT INTO Players (gameId) VALUES('+object.tableIds.gameId+') ', {},
     if(i == object.players.length){
       resolve(object)
     }else{ i++
-db.run('INSERT INTO Players (gameId) VALUES('+object.tableIds.gameId+') ', {}, 
+db.run('INSERT INTO Players (gameId,'+createCardString(number)+') VALUES('+object.tableIds.gameId+','+convertCardArray(object.players[i-1].hand)+') ', {}, 
              function(err){
                 if(err){throw err}
     object.tableIds.playersId.push(this.lastID)
@@ -251,7 +253,7 @@ db.run('INSERT INTO Players (gameId) VALUES('+object.tableIds.gameId+') ', {},
     if(i == object.players.length){
       resolve(object)
     }else{i++
-db.run('INSERT INTO Players (gameId) VALUES('+object.tableIds.gameId+') ', {}, 
+db.run('INSERT INTO Players (gameId,'+createCardString(number)+') VALUES('+object.tableIds.gameId+','+convertCardArray(object.players[i-1].hand)+') ', {}, 
              function(err){
                 if(err){throw err}
     object.tableIds.playersId.push(this.lastID)
