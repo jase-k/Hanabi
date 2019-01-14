@@ -143,20 +143,31 @@ db.serialize(() => {
     */
 function HanabiTable(object) {
 new Promise((resolve, reject) => {
+  object.currentGame = {}
     db.run('INSERT INTO HanabiGames(numberOfPlayers) VALUES('+object.numberOfPlayers+')',
          {}, 
   function(err){
     if(err){ console.log(err)};
-      object.currentGame.id = this.lastID
-    console.log("current game id", object.currentGame.id);
+      object.currentGame.gameId= this.lastID
+    console.log("current game id", object.currentGame.gameId);
       resolve(object)
     })
   });
 }
 function OriginalDeckTable(object){
-new Promise((resolve, reject)
+  new Promise((resolve, reject) =>{
+  db.run('INSERT INTO OriginalDeck (gameId,'+createCardString(50)+') VALUES('+object.currentGame.gameId+','+convertCardArray(object.originalDeck)+') ', {}, 
+             function(err){
+                if(err){throw err}
+              object.currentGame.originalDeckId = this.lastID
+            console.log("originalDeck id:", object.currentGame.originalDeckId);
+      resolve(object)
+    })
+  });
 }
-
+Database.testPromise = function(object){
+  HanabiTable(object).then(object => OriginalDeckTable(object)).then(results => console.log(results))
+}
 Database.newGame = function(object) {
   return new Promise((resolve, reject) => {
 var currentGame = {};
