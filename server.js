@@ -59,7 +59,7 @@ newGame.discardedCards = [];
 newGame.playedCards = [];
 newGame.players = dealtGame.players;  
   
-  Database.testPromise(newGame)
+Database.createRows(newGame).then(results => console.log(results))
 //Database.newGame(newGame).then(results => console.log(results.gameId))  
                                //Database.getPlayers(results.id))
 

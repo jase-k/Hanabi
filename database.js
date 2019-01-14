@@ -174,6 +174,7 @@ return new Promise((resolve, reject) =>{
                 if(err){throw err}
               object.tableIds.playingDeckId = this.lastID
             console.log("playingDeck id:", object.tableIds.playingDeckId);
+    resolve(object)
     });
   })
 }
@@ -184,6 +185,7 @@ return new Promise ((resolve, reject) =>{
                 if(err){throw err}
               object.tableIds.DiscardedCardsId = this.lastID
             console.log("DiscardedCards id:", object.tableIds.DiscardedCardsId);
+    resolve(object)
     });
   });
 }
@@ -194,24 +196,34 @@ return new Promise((resolve, reject) => {
                 if(err){throw err}
               object.tableIds.PlayedCardsId = this.lastID
             console.log("PlayedCards id:", object.tableIds.PlayedCardsId); 
+    resolve(object)
     });  
   });
 }
 function InsertPlayersRows(object){
 return new Promise((resolve, reject) => {
-  object.tableIds.playersId =
+  object.tableIds.playersId = []
   for(var i = 0; i < object.players.length; i++) {
   db.run('INSERT INTO Players (gameId) VALUES('+object.tableIds.gameId+') ', {}, 
-             (err) => {
+             function(err){
                 if(err){throw err}
-              currentGame.PlayersId.push(this.lastID)
+              object.tableIds.playersId.push(this.lastID)
+    if(i=object.players.length){resolve(object)}
             //console.log("Players id:", currentGame.PlayersId); 
   }); }
   });
 }
 
 Database.createRows = function(object){
-  InsertHanabiRow(object).then(object => InsertOriginalDeckRow(object)).then(results => console.log(JSON.stringify(results)))
+  return new Promise((resolve, reject) =>{
+  InsertHanabiRow(object)
+  .then(object => InsertOriginalDeckRow(object))
+  .then(object => InsertPlayingDeckRow(object))
+  .then(object => InsertDiscardedCardsRow(object))
+  .then(object => InsertPlayedCardsRow(object))
+  .then(object => InsertPlayersRows(object))
+  .then(object => resolve(object))
+  })
 }
 
 Database.newGame = function(object) {
