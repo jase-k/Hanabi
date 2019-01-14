@@ -145,6 +145,7 @@ db.serialize(() => {
       hand: []
       }
     */
+var i;
 function InsertHanabiRow(object) {
 return new Promise((resolve, reject) => {
   object.tableIds = {}
@@ -207,16 +208,19 @@ return new Promise((resolve, reject) => {
 function InsertPlayersRows(object){
 return new Promise((resolve, reject) => {
   object.tableIds.playersId = []
-  for(var i = 0; i < object.players.length; i++) {
+  for(i = 0; i < object.players.length; i++) {
+    console.log('first i:', i)
+    function(){
   db.run('INSERT INTO Players (gameId) VALUES('+object.tableIds.gameId+') ', {}, 
              function(err){
                 if(err){throw err}
-              object.tableIds.playersId.push(this.lastID)
-    consol.
+    object.tableIds.playersId.push(this.lastID)
+    console.log('I =', i)
     console.log('Players Length', object.players.length)
     
     if(i == object.players.length){
-      resolve(object)}
+      resolve(object)
+    }
             //console.log("Players id:", currentGame.PlayersId);  
   }); }
   });
