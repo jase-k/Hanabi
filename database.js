@@ -6,19 +6,27 @@ var db = new sqlite3.Database(dbFile);
 var card1to5 = 'card1, card2, card3, card4, card5'
 var card6to25 = 'card6, card7, card8, card9, card10, card11, card12, card13, card14, card15, card16, card17, card18, card19, card20, card21, card22, card23, card24, card25';
 var card26to50 = 'card26, card27, card28, card29, card30, card31, card32, card33, card34, card35, card36, card37, card38, card39, card40, card41, card42, card43, card44, card45, card46, card47, card48, card49, card50'
+const gameCreation = require('./cool-file.js')
+var sampleDeck = gameCreation.createDeck(5)
 //Create a string of mulitple cards
 function createCardString(number){
  var string = '' 
   for(var i = 1; i <= number; i++){
-      string += 'card'+number+','
-  }
+    if(i !== number){ 
+    string += 'card'+i+','
+      }else{string += 'card'+i}
+    }
+  console.log(string)
   return string
 }
+
 function convertCardArray(array){
   var string = ''
   for(var i = 1; i <= array.length; i++){
+    if(i !== array.length){
   string += ''+array.color+' '+array.number+','
-  }
+      }else{string += ''+array.color+' '+array.number}
+    }
   return string
 }
 
@@ -70,9 +78,9 @@ db.serialize(() => {
   db.run('CREATE TABLE DiscardedCards(id INTEGER PRIMARY KEY, gameId TEXT, '+createCardString(25)+')');
   db.run('CREATE TABLE PlayedCards(id INTEGER PRIMARY KEY, gameId TEXT, '+createCardString(25)+')');
   db.run('CREATE TABLE Players(id INTEGER PRIMARY KEY, gameId TEXT, name TEXT, '+createCardString(5)+')');
-  db.run('INSERT INTO PlayingDeck(gameId) VALUES ("sample")'); 
-  db.run('INSERT INTO Players(gameId, name, card1, card2, card3, card4) VALUES ("sample", "Jase Kraft", "red 5", "white 3", "orange 2", "blue 1")');
-  db.run('INSERT INTO OriginalDeck(gameId, '+card1to5+') VALUES ("sample", "red 5", "blue 3", "white 2", "green 2", NULL)');
+  db.run('INSERT INTO PlayingDeck(gameId,'+createCardString(50)+') VALUES ("sample", '+convertCardArray(sampleDeck)+')',function(err){if(err){throw err}}); 
+  db.run('INSERT INTO Players(gameId) VALUES ("sample")');
+  db.run('INSERT INTO OriginalDeck(gameId) VALUES ("sample")');
 //  db.run('INSERT INTO HanabiGames (numberOfPlayers, dateCreated, originalDeckId, playingDeckId, discardedCardsId, playedCardsId, playersId) VALUES(5, "2019-01-12T15:08:50.122Z", 0000, 0000, 0000, 0000, 0000)')
   
   db.each('SELECT * from OriginalDeck', function(err, row) {
