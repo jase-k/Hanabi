@@ -208,9 +208,8 @@ return new Promise((resolve, reject) => {
 function InsertPlayersRows(object){
 return new Promise((resolve, reject) => {
   object.tableIds.playersId = []
-  for(i = 0; i < object.players.length; i++) {
+  var i = 1
     console.log('first i:', i)
-    function(){
   db.run('INSERT INTO Players (gameId) VALUES('+object.tableIds.gameId+') ', {}, 
              function(err){
                 if(err){throw err}
@@ -220,9 +219,57 @@ return new Promise((resolve, reject) => {
     
     if(i == object.players.length){
       resolve(object)
+    }else{ i++
+          
+db.run('INSERT INTO Players (gameId) VALUES('+object.tableIds.gameId+') ', {}, 
+             function(err){
+                if(err){throw err}
+    object.tableIds.playersId.push(this.lastID)
+    console.log('I =', i)
+    console.log('Players Length', object.players.length)
+    
+    if(i == object.players.length){
+      resolve(object)
+    }else{ i++
+db.run('INSERT INTO Players (gameId) VALUES('+object.tableIds.gameId+') ', {}, 
+             function(err){
+                if(err){throw err}
+    object.tableIds.playersId.push(this.lastID)
+    console.log('I =', i)
+    console.log('Players Length', object.players.length)
+    
+    if(i == object.players.length){
+      resolve(object)
+    }else{ i++
+db.run('INSERT INTO Players (gameId) VALUES('+object.tableIds.gameId+') ', {}, 
+             function(err){
+                if(err){throw err}
+    object.tableIds.playersId.push(this.lastID)
+    console.log('I =', i)
+    console.log('Players Length', object.players.length)
+    
+    if(i == object.players.length){
+      resolve(object)
+    }else{i++
+db.run('INSERT INTO Players (gameId) VALUES('+object.tableIds.gameId+') ', {}, 
+             function(err){
+                if(err){throw err}
+    object.tableIds.playersId.push(this.lastID)
+    console.log('I =', i)
+    console.log('Players Length', object.players.length)
+      resolve(object)
+});
+    }
+});
+    }
+});
+    }
+});
     }
             //console.log("Players id:", currentGame.PlayersId);  
-  }); }
+  });
+     
+    
   });
 }
 
