@@ -32,8 +32,8 @@ function convertCardArray(array){
 
 
 const Database ={};
-
-/*db.serialize(() => { 
+/*
+db.serialize(() => { 
 
  db.run('DROP TABLE IF EXISTS HanabiGames', error => {
     if (error) {
@@ -124,8 +124,10 @@ const Database ={};
     console.log('record:', row) 
     }
   }); 
-}); */
-  
+}); 
+  */
+
+
 //============================
 // Creating New Game (6 tables)
 //============================
@@ -147,20 +149,27 @@ db.run('INSERT INTO HanabiGames(numberOfPlayers) VALUES('+object.numberOfPlayers
     if(err){ console.log(err)};
     currentGame.gameId = this.lastID
     console.log("current game id", currentGame.gameId);
-      db.run('INSERT INTO OriginalDeck (gameId,'+createCardString(50)+') VALUES('+currentGame.gameId+','+convertCardArray(object.originalDeck)+') ', {}, 
+  
+db.run('INSERT INTO OriginalDeck (gameId,'+createCardString(50)+') VALUES('+currentGame.gameId+','+convertCardArray(object.originalDeck)+') ', {}, 
              function(err){
                 if(err){throw err}
               currentGame.originalDeckId = this.lastID
-        
-      db.get('SELECT * from HanabiGames WHERE id = '+currentGame.gameId, 
+            console.log("originalDeck id:", currentGame.originalDeckId);
+db.run('INSERT INTO OriginalDeck (gameId,'+createCardString(50)+') VALUES('+currentGame.gameId+','+convertCardArray(object.originalDeck)+') ', {}, 
+             function(err){
+                if(err){throw err}
+              currentGame.originalDeckId = this.lastID
+            console.log("originalDeck id:", currentGame.originalDeckId);
+  
+db.get('SELECT * from HanabiGames WHERE id = '+currentGame.gameId, 
              function(err, row) {
     console.log("Hanabi Table")  
     if ( row ) {
         console.log('record:', row);
       }
-        db.get('SELECT * from Orginal WHERE id = '+currentGame.gameId, 
+        db.get('SELECT * from OriginalDeck WHERE id = '+currentGame.originalDeckId, 
              function(err, row) {
-    console.log("Hanabi Table")  
+    console.log("original Deck:")  
     if ( row ) {
         console.log('record:', row);
       }
