@@ -26,98 +26,7 @@ var card26to50 = 'card26, card27, card28, card29, card30, card31, card32, card33
 // if ./.data/sqlite.db does not exist, create it, otherwise print records to console
 
 
-db.serialize(() => { 
-/*
-  db.run('DROP TABLE IF EXISTS HanabiGames', error => {
-    if (error) {
-      throw error;
-    }
-  })
-     db.run('CREATE TABLE HanabiGames (id INTEGER PRIMARY KEY, numberOfPlayers INTEGER NOT NULL, dateCreated DATE, score INTEGER, originalDeckId INTEGER, playingDeckId INTEGER, discardedCardsId INTEGER, playedCardsId INTEGER, playersId INTEGER)');
- db.each('SELECT * from HanabiGames', function(err, row) {
-    console.log("Hanabi Table")  
-    if ( row ) {
-        console.log('record:', row);
-      }
-    }); */
 
-  db.run('DROP TABLE IF EXISTS OriginalDeck', error => {
-    if (error) {
-      throw error;
-    }
-  })
-   db.run('DROP TABLE IF EXISTS PlayingDeck', error => {
-    if (error) {
-      throw error;
-    }
-  })
-   db.run('DROP TABLE IF EXISTS DiscardedCards', error => {
-    if (error) {
-      throw error;
-    }
-  })
-   db.run('DROP TABLE IF EXISTS PlayedCards', error => {
-    if (error) {
-      throw error;
-    }
-  })
-   db.run('DROP TABLE IF EXISTS Players', error => {
-    if (error) {
-      throw error;
-    }
-  })
-  db.run('CREATE TABLE OriginalDeck(id INTEGER PRIMARY KEY, gameId TEXT, '+card1to5+','+card6to25+','+card26to50+')');
-  db.run('CREATE TABLE PlayingDeck(id INTEGER PRIMARY KEY, gameId TEXT, '+card1to5+','+card6to25+','+card26to50+')');
-  db.run('CREATE TABLE DiscardedCards(id INTEGER PRIMARY KEY, gameId TEXT, '+card1to5+','+card6to25+')');
-  db.run('CREATE TABLE PlayedCards(id INTEGER PRIMARY KEY, gameId TEXT, '+card1to5+','+card6to25+')');
-  db.run('CREATE TABLE Players(id INTEGER PRIMARY KEY, gameId TEXT, name TEXT, '+card1to5+')');
-  db.run('INSERT INTO PlayingDeck(gameId) VALUES ("sample")'); 
-  db.run('INSERT INTO Players(gameId, name, card1, card2, card3, card4) VALUES ("sample", "Jase Kraft", "red 5", "white 3", "orange 2", "blue 1")');
-  db.run('INSERT INTO OriginalDeck(gameId, '+card1to5+') VALUES ("sample", "red 5", "blue 3", "white 2", "green 2", NULL)');
-//  db.run('INSERT INTO HanabiGames (numberOfPlayers, dateCreated, originalDeckId, playingDeckId, discardedCardsId, playedCardsId, playersId) VALUES(5, "2019-01-12T15:08:50.122Z", 0000, 0000, 0000, 0000, 0000)')
-  
-  db.each('SELECT * from OriginalDeck', function(err, row) {
- console.log('OriginalDeck')
-    if(err){
-    throw err}
-  if(row){
-    console.log('record:', row) 
-    }
-  });
-  db.each('SELECT * from PlayingDeck', function(err, row) {
- console.log('PlayingDeck')
-    if(err){
-    throw err}
-  if(row){
-    console.log('record:', row) 
-    }
-  });
-  db.each('SELECT * from DiscardedCards', function(err, row) {
- console.log('DiscardedCards')
-    if(err){
-    throw err}
-  if(row){
-    console.log('record:', row) 
-    }
-  });
-  db.each('SELECT * from PlayedCards', function(err, row) {
- console.log('PlayedCards')
-    if(err){
-    throw err}
-  if(row){
-    console.log('record:', row) 
-    }
-  });
-  db.each('SELECT * from Players', function(err, row) {
- console.log('Players')
-    if(err){
-    throw err}
-  if(row){
-    console.log('record:', row) 
-    }
-  }); 
-});
-  
 
 // http://expressjs.com/en/starter/basic-routing.html
 app.get('/', function(request, response) {
@@ -149,70 +58,13 @@ newGame.discardedCards = [];
 newGame.playedCards = [];
 newGame.players = dealtGame.players;  
 
-newGame.id =  db.run('INSERT INTO HanabiGames (numberOfPlayers, originalDeckId, playingDeckId, discardedCardsId, playedCardsId, playersId) VALUES('+newGame.numberOfPlayers+', 0000, 0000, 0000, 0000, 0000)',
-         {}, 
-         function(err){
-    if(err){ console.log(err)};
-        console.log('Last Row Id:', this.lastID)
-   //THIS SCOPE DOESN'T REACH TO THE RETURN FUNCTION
-    newGame.id = this.lastID
-    return newGame.id 
-  } );
+
     console.log('NEW GAME ID BEFORE RETURNING:', newGame.id)
     return newGame
 }
   
  var results = createNewRows(numberOfPlayers)
- console.log("RESULTS", results)
- console.log('Current Game ID:', results.id);
-  
-  db.get('SELECT * from HanabiGames WHERE id = '+results.id, function(err, row) {
-    console.log("Hanabi Table")  
-    if ( row ) {
-        console.log('record:', row);
-      }
-    });
 
-  /* db.each('SELECT * from OriginalDeck', function(err, row) {
- console.log('OriginalDeck')
-    if(err){
-    throw err}
-  if(row){
-    console.log('record:', row) 
-    }
-  });
-  db.each('SELECT * from PlayingDeck', function(err, row) {
- console.log('PlayingDeck')
-    if(err){
-    throw err}
-  if(row){
-    console.log('record:', row) 
-    }
-  });
-  db.each('SELECT * from DiscardedCards', function(err, row) {
- console.log('DiscardedCards')
-    if(err){
-    throw err}
-  if(row){
-    console.log('record:', row) 
-    }
-  });
-  db.each('SELECT * from PlayedCards', function(err, row) {
- console.log('PlayedCards')
-    if(err){
-    throw err}
-  if(row){
-    console.log('record:', row) 
-    }
-  });
-  db.each('SELECT * from Players', function(err, row) {
- console.log('Players')
-    if(err){
-    throw err}
-  if(row){
-    console.log('record:', row) 
-    }
-  });  */
 
   response.json('New GAME Created');
 
