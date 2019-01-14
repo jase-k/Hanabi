@@ -1,0 +1,1 @@
+fetch('https://puddle-catcher.glitch.me/newgame?players=3').then(
