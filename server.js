@@ -59,109 +59,14 @@ newGame.discardedCards = [];
 newGame.playedCards = [];
 newGame.players = dealtGame.players;  
   
-Database.newGame(newGame).then(results => console.log(results))
+Database.newGame(newGame).then(results => console.log(results.gameId))  
+                               //Database.getPlayers(results.id))
 
   response.json('New GAME Created');
 
 });
 
-app.post('/test', function(request, response){
- var object = request.body.object;
- function createCardString(number){
- var string = '' 
-  for(var i = 1; i <= number; i++){
-    if(i !== number){ 
-    string += 'card'+i+','
-      }else{string += 'card'+i}
-    }
-  console.log(string)
-  return string
-}
 
-function convertCardArray(array){
-  var string = ''
-  for(var i = 0; i < array.length; i++){
-    if(i !== array.length-1){
-  string += '"'+array[i].color+''+array[i].number+'",'
-      }else{string += '"'+array[i].color+' '+array[i].number+'"'}
-    }
-  return string
-}
-  function create(object){
-var currentGame = {};
-  
-db.run('INSERT INTO HanabiGames(numberOfPlayers) VALUES('+object.numberOfPlayers+')',
-         {}, 
-  function(err){
-    if(err){ console.log(err)};
-    currentGame.gameId = this.lastID
-    console.log("current game id", currentGame.gameId);
-  
-db.run('INSERT INTO OriginalDeck (gameId,'+createCardString(50)+') VALUES('+currentGame.gameId+','+convertCardArray(object.originalDeck)+') ', {}, 
-             function(err){
-                if(err){throw err}
-              currentGame.originalDeckId = this.lastID
-            console.log("originalDeck id:", currentGame.originalDeckId);
-db.run('INSERT INTO PlayingDeck (gameId,'+createCardString(object.playingDeck.length)+') VALUES('+currentGame.gameId+','+convertCardArray(object.playingDeck)+') ', {}, 
-             function(err){
-                if(err){throw err}
-              currentGame.playingDeckId = this.lastID
-            console.log("playingDeck id:", currentGame.playingDeckId);
-db.run('INSERT INTO DiscardedCards (gameId) VALUES('+currentGame.gameId+') ', {}, 
-             function(err){
-                if(err){throw err}
-              currentGame.DiscardedCardsId = this.lastID
-            console.log("DiscardedCards id:", currentGame.DiscardedCardsId);
-  
-db.run('INSERT INTO PlayedCards (gameId) VALUES('+currentGame.gameId+') ', {}, 
-             function(err){
-                if(err){throw err}
-              currentGame.PlayedCardsId = this.lastID
-            console.log("PlayedCards id:", currentGame.PlayedCardsId); 
-   
-  currentGame.PlayersId =[];
-for(var i = 0; i < object.players.length; i++) {
-  db.run('INSERT INTO Players (gameId) VALUES('+currentGame.gameId+') ', {}, 
-             function(err){
-                if(err){throw err}
-              currentGame.PlayersId.push(this.lastID)
-            console.log("Players id:", currentGame.PlayersId); 
-  }); }//Ends INSERT INTO PLAYERS 
-
-db.get('SELECT * from HanabiGames WHERE id = '+currentGame.gameId, 
-             function(err, row) {
-    console.log("Hanabi Table")  
-    if ( row ) {
-        console.log('record:', row);
-      }
- db.get('SELECT * from OriginalDeck WHERE id = '+currentGame.originalDeckId, 
-             function(err, row) {
-    console.log("original Deck:")  
-    if ( row ) {
-        console.log('record:', row);
-      };
-  db.get('SELECT * from PlayingDeck WHERE id = '+currentGame.playingDeckId, 
-             function(err, row) {
-    console.log("playing Deck:")  
-    if ( row ) {
-        console.log('record:', row);
-      }
-    console.log("Current Game's Players' ID", currentGame.playersId)
-    response.send(currentGame)          
-  });//Ends SELECT PlayingDeck
-          });//Ends SELECT OriginalDeck
-        });//Ends SELECT HanabiGames    
-  
-});//Ends INSERT INTO PlayedCards
-  });//Ends INSERT INTO DiscardedCars
-});//Ends INSERT INTO PlayingDeck
-   }); //Ends INSERT INTO OriginalDeck
-});//ENDs all db.run
-
- }
-  
-  create(object)
-})
 
 
 

@@ -141,6 +141,22 @@ db.serialize(() => {
       hand: []
       }
     */
+function HanabiTable(object) {
+new Promise((resolve, reject) => {
+    db.run('INSERT INTO HanabiGames(numberOfPlayers) VALUES('+object.numberOfPlayers+')',
+         {}, 
+  function(err){
+    if(err){ console.log(err)};
+      object.currentGame.id = this.lastID
+    console.log("current game id", object.currentGame.id);
+      resolve(object)
+    })
+  });
+}
+function OriginalDeckTable(object){
+new Promise((resolve, reject)
+}
+
 Database.newGame = function(object) {
   return new Promise((resolve, reject) => {
 var currentGame = {};
@@ -150,8 +166,8 @@ db.run('INSERT INTO HanabiGames(numberOfPlayers) VALUES('+object.numberOfPlayers
   function(err){
     if(err){ console.log(err)};
     currentGame.gameId = this.lastID
-    console.log("current game id", currentGame.gameId);
-  
+    console.log("current game id", currentGame.gameId); 
+
 db.run('INSERT INTO OriginalDeck (gameId,'+createCardString(50)+') VALUES('+currentGame.gameId+','+convertCardArray(object.originalDeck)+') ', {}, 
              function(err){
                 if(err){throw err}
@@ -180,41 +196,31 @@ for(var i = 0; i < object.players.length; i++) {
              function(err){
                 if(err){throw err}
               currentGame.PlayersId.push(this.lastID)
-            console.log("Players id:", currentGame.PlayersId); 
+            //console.log("Players id:", currentGame.PlayersId); 
   }); }//Ends INSERT INTO PLAYERS 
 
-db.get('SELECT * from HanabiGames WHERE id = '+currentGame.gameId, 
-             function(err, row) {
-    console.log("Hanabi Table")  
-    if ( row ) {
-        console.log('record:', row);
-      }
- db.get('SELECT * from OriginalDeck WHERE id = '+currentGame.originalDeckId, 
-             function(err, row) {
-    console.log("original Deck:")  
-    if ( row ) {
-        console.log('record:', row);
-      };
-  db.get('SELECT * from PlayingDeck WHERE id = '+currentGame.playingDeckId, 
-             function(err, row) {
-    console.log("playing Deck:")  
-    if ( row ) {
-        console.log('record:', row);
-      }
-    console.log("Current Game's Players' ID", currentGame.playersId)
     resolve(currentGame)
-  });//Ends SELECT PlayingDeck
-          });//Ends SELECT OriginalDeck
-        });//Ends SELECT HanabiGames    
-  
+   
 });//Ends INSERT INTO PlayedCards
   });//Ends INSERT INTO DiscardedCars
 });//Ends INSERT INTO PlayingDeck
    }); //Ends INSERT INTO OriginalDeck
-});//ENDs all db.run
+  });//ENDs all db.run
 });
  }
 
+Database.getPlayers = (gameId) => {
+return new Promise ((resolve, reject) => {
+
+  db.all('SELECT * FROM Players WHERE gameId ='+gameId, 
+    function(err, rows){
+      if(err){throw err}
+    resolve(rows.forEach(function(row) {console.log(row)
+                               })
+      )
+    });//ENDS db All
+  });
+}
 module.exports = Database
 
 /* db.each('SELECT * from OriginalDeck', function(err, row) {
