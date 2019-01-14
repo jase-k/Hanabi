@@ -155,11 +155,21 @@ db.run('INSERT INTO OriginalDeck (gameId,'+createCardString(50)+') VALUES('+curr
                 if(err){throw err}
               currentGame.originalDeckId = this.lastID
             console.log("originalDeck id:", currentGame.originalDeckId);
-db.run('INSERT INTO OriginalDeck (gameId,'+createCardString(50)+') VALUES('+currentGame.gameId+','+convertCardArray(object.originalDeck)+') ', {}, 
+db.run('INSERT INTO PlayingDeck (gameId,'+createCardString(object.playingDeck.length)+') VALUES('+currentGame.gameId+','+convertCardArray(object.playingDeck)+') ', {}, 
              function(err){
                 if(err){throw err}
-              currentGame.originalDeckId = this.lastID
-            console.log("originalDeck id:", currentGame.originalDeckId);
+              currentGame.playingDeckId = this.lastID
+            console.log("playingDeck id:", currentGame.playingDeckId);
+db.run('INSERT INTO DiscardedCards (gameId) VALUES('+currentGame.gameId+') ', {}, 
+             function(err){
+                if(err){throw err}
+              currentGame.DiscardedCardsId = this.lastID
+            console.log("playingDeck id:", currentGame.DiscardedCardsId);
+db.run('INSERT INTO DiscardedCards (gameId) VALUES('+currentGame.gameId+') ', {}, 
+             function(err){
+                if(err){throw err}
+              currentGame.DiscardedCardsId = this.lastID
+            console.log("playingDeck id:", currentGame.DiscardedCardsId);
   
 db.get('SELECT * from HanabiGames WHERE id = '+currentGame.gameId, 
              function(err, row) {
@@ -167,15 +177,25 @@ db.get('SELECT * from HanabiGames WHERE id = '+currentGame.gameId,
     if ( row ) {
         console.log('record:', row);
       }
-        db.get('SELECT * from OriginalDeck WHERE id = '+currentGame.originalDeckId, 
+ db.get('SELECT * from OriginalDeck WHERE id = '+currentGame.originalDeckId, 
              function(err, row) {
     console.log("original Deck:")  
     if ( row ) {
         console.log('record:', row);
+      };
+  db.get('SELECT * from PlayingDeck WHERE id = '+currentGame.playingDeckId, 
+             function(err, row) {
+    console.log("playing Deck:")  
+    if ( row ) {
+        console.log('record:', row);
       }
     
+            });//Ends SELECT PlayingDeck
           });//Ends SELECT OriginalDeck
         });//Ends SELECT HanabiGames    
+});//Ends INSERT INTO PlayedCards
+  });//Ends INSERT INTO DiscardedCars
+});//Ends INSERT INTO PlayingDeck
    }); //Ends INSERT INTO OriginalDeck
 });//ENDs all db.run
 
