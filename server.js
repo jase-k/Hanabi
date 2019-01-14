@@ -149,17 +149,19 @@ newGame.discardedCards = [];
 newGame.playedCards = [];
 newGame.players = dealtGame.players;  
 
-  db.run('INSERT INTO HanabiGames (numberOfPlayers, originalDeckId, playingDeckId, discardedCardsId, playedCardsId, playersId) VALUES('+newGame.numberOfPlayers+', 0000, 0000, 0000, 0000, 0000)',
+newGame.id =  db.run('INSERT INTO HanabiGames (numberOfPlayers, originalDeckId, playingDeckId, discardedCardsId, playedCardsId, playersId) VALUES('+newGame.numberOfPlayers+', 0000, 0000, 0000, 0000, 0000)',
          {}, 
          function(err){
     if(err){ console.log(err)};
         console.log('Last Row Id:', this.lastID)
    //THIS SCOPE DOESN'T REACH TO THE RETURN FUNCTION
     newGame.id = this.lastID
+    return newGame.id 
   } );
     console.log('NEW GAME ID BEFORE RETURNING:', newGame.id)
     return newGame
 }
+  
  var results = createNewRows(numberOfPlayers)
  console.log("RESULTS", results)
  console.log('Current Game ID:', results.id);
