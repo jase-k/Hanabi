@@ -6,6 +6,19 @@ var db = new sqlite3.Database(dbFile);
 var card1to5 = 'card1, card2, card3, card4, card5'
 var card6to25 = 'card6, card7, card8, card9, card10, card11, card12, card13, card14, card15, card16, card17, card18, card19, card20, card21, card22, card23, card24, card25';
 var card26to50 = 'card26, card27, card28, card29, card30, card31, card32, card33, card34, card35, card36, card37, card38, card39, card40, card41, card42, card43, card44, card45, card46, card47, card48, card49, card50'
+//Create a string of mulitple cards
+function createCardString(number){
+ var string = '' 
+  for(var i = 1; i <= number; i++){
+      string += 'card'+number
+  }
+  return string
+}
+function convertCardArray(array){
+  var string = ''
+  for(var i = 1;
+}
+
 
 const Database ={};
 
@@ -116,14 +129,15 @@ db.serialize(() => {
 Database.newGame = function(object) {
 var currentGame = {};
   
-db.run('INSERT INTO HanabiGames (numberOfPlayers) VALUES('+object.numberOfPlayers+', 0000, 0000, 0000, 0000, 0000)',
+db.run('INSERT INTO HanabiGames(numberOfPlayers) VALUES('+object.numberOfPlayers+', 0000, 0000, 0000, 0000, 0000)',
          {}, 
-         function(err){
+  function(err){
     if(err){ console.log(err)};
     currentGame.gameId = this.lastID
     console.log("current game id", currentGame.gameId);
-   
-  });
+      db.run('INSERT INTO OriginalDeck (gameId,'+createCardString(50)+') VALUES() ', {}, function(err){});
+  
+});
 
   
   db.get('SELECT * from HanabiGames WHERE id = '+currentGame.gameId, function(err, row) {
