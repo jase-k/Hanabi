@@ -1,5 +1,5 @@
-const React = require('react');
-const ReactDOM = require('react-dom');
+//const React = require('react');
+//const ReactDOM = require('react-dom');
 //const API = require('../client/apicalls.js');
 //Retrieves the Select Button From index.html
 const selectedPlayers = document.getElementById('select');
