@@ -39,7 +39,7 @@ function helperFunction(object){
           </h4>
         </div>
       </div>
-      <div id="player2" class="teamatesHand">
+      {object.numberOfPlayers > 2 &&<div id="player2" class="teamatesHand">
         <div>
           Player 2
         </div>
@@ -75,8 +75,8 @@ function helperFunction(object){
             Number
           </h4>
         </div>
-      </div>
-      <div id="player3" class="teamatesHand">
+      </div>}
+      {object.numberOfPlayers > 3 && <div id="player3" class="teamatesHand">
         <div>
           Player 3
         </div>
@@ -112,8 +112,8 @@ function helperFunction(object){
             Number
           </h4>
         </div>
-      </div>
-      <div id="player4" class="teamatesHand">
+      </div>}
+      {object.numberOfPlayers == 5 && <div id="player4" class="teamatesHand">
         <div>
           Player 4
         </div>
@@ -149,7 +149,7 @@ function helperFunction(object){
             Number
           </h4>
         </div>
-      </div>
+      </div>}
       </div>
   )
 }

@@ -9,6 +9,7 @@ const startGameButton = document.getElementById('startGame')
 const newGameButton = document.getElementById('newGame');
 const joinGameButton = document.getElementById('joinGame');
 const howManyPlayers = document.getElementById('howManyPlayers')
+const nameInput = document.getElementById('nameInput')
 const teamates = [];
 for(var i =0; i<4; i++){
  teamates[i] = document.getElementById('player'+(i+1))
@@ -30,27 +31,33 @@ newGameButton.onclick = () => {
 
 startGameButton.onclick = () =>{
   console.log('This should be 1-5:', selectedPlayers.value)
-  if(selectedPlayers.value == 4 || selectedPlayers.value == 5){
-    console.log('Adding Hide Class to Card5');
-    optionalCard.style.display = "none";
-    toggleClass(select);
-    toggleClass(allCards);
-    toggleClass(teamContainer);
- if(selectedPlayers.value == 4){
-     console.log("Toggling this Playe:r",teamates[3])
-    teamates[3].style.display = "none";
+  if(!nameInput.value){
+    alert('Need to Put a Name to start the Game')
+      return
     }
-  } else{
-      toggleClass(select);
-      toggleClass(allCards);
-      toggleClass(teamContainer);
-      teamates[3].style.display = "none";
-      teamates[2].style.display = "none";
-    if(selectedPlayers.value == 2){
-      teamates[1].style.display = "none";
+  if(!
+      if(selectedPlayers.value == 4 || selectedPlayers.value == 5){
+        console.log('Adding Hide Class to Card5');
+        optionalCard.style.display = "none";
+        toggleClass(select);
+        toggleClass(allCards);
+        toggleClass(teamContainer);
+     if(selectedPlayers.value == 4){
+         console.log("Toggling this Playe:r",teamates[3])
+        teamates[3].style.display = "none";
+        }
+      } else{
+          toggleClass(select);
+          toggleClass(allCards);
+          toggleClass(teamContainer);
+          teamates[3].style.display = "none";
+          teamates[2].style.display = "none";
+        if(selectedPlayers.value == 2){
+          teamates[1].style.display = "none";
+      }
     }
   }
-}
+
 
 document.ondragstart = (event) =>{
  // handleDragStart(event)
