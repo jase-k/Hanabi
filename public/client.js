@@ -1,3 +1,6 @@
+//import React from 'react';
+//import ReactDOM from 'react-dom';
+//import API from './apicalls.js';
 //Retrieves the Select Button From index.html
 const selectedPlayers = document.getElementById('select');
 const optionalCard = document.getElementById('optional-card');
@@ -39,7 +42,10 @@ startGameButton.onclick = () =>{
     alert('Select the Number of Players to start the Game')
       return;
     };
-      if(selectedPlayers.value == 4 || selectedPlayers.value == 5){
+  
+ // ReactDOM.render(API.createNewGame(selectedPlayers.value, nameInput.value), document.getElementById('teamateContainer') )
+      
+  /*if(selectedPlayers.value == 4 || selectedPlayers.value == 5){
         console.log('Adding Hide Class to Card5');
         optionalCard.style.display = "none";
         toggleClass(select);
@@ -57,8 +63,8 @@ startGameButton.onclick = () =>{
           teamates[2].style.display = "none";
         if(selectedPlayers.value == 2){
           teamates[1].style.display = "none";
-      }
-    }
+      } 
+    }*/
   }
 
 

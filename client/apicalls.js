@@ -1,7 +1,8 @@
-const 
+import React from 'react';
+import ReactDOM from 'react-dom';
+const API = {}
 
-function helperFunction(object){
-
+API.renderTeamatesHands = function(object){
   return(
   <div class="container">
       <div id="player1" class="teamatesHand">
@@ -155,15 +156,16 @@ function helperFunction(object){
       </div>
   )
 }
-
-fetch('https://puddle-catcher.glitch.me/newgame?players=3').then(response => {
+API.createNewGame = function(numberOfPlayers, name){
+fetch('https://puddle-catcher.glitch.me/newgame?players='+numberOfPlayers).then(response => {
   if(response.ok){
     return response.json();
   }
   throw new Error('Request failed');
 }, networkError => console.log(networkError.message)
   ).then(jsonResponse => {
-  helperFunction(jsonResponse)
+  API.renderTeamatesHand(jsonResponse)
 });
-              
-ReactDOM.render(<teamatesHand />, document.getElementById('teamateContainer')
+}
+
+module.exports = API
