@@ -1,4 +1,4 @@
-import React from 'react'
+//import React from 'react'
 //const ReactDOM = require('react-dom');
 //const API = require('../client/apicalls.js');
 //Retrieves the Select Button From index.html
