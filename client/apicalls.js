@@ -1,3 +1,5 @@
+const 
+
 function helperFunction(object){
 
   return(
@@ -163,4 +165,5 @@ fetch('https://puddle-catcher.glitch.me/newgame?players=3').then(response => {
   ).then(jsonResponse => {
   helperFunction(jsonResponse)
 });
-                                                   
+              
+ReactDOM.render(<teamatesHand />, document.getElementById('teamateContainer')

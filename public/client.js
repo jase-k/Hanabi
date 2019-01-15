@@ -35,7 +35,10 @@ startGameButton.onclick = () =>{
     alert('Need to Put a Name to start the Game')
       return
     }
-  if(!
+  if(!selectedPlayers.value){
+    alert('Select the Number of Players to start the Game')
+      return;
+    };
       if(selectedPlayers.value == 4 || selectedPlayers.value == 5){
         console.log('Adding Hide Class to Card5');
         optionalCard.style.display = "none";
