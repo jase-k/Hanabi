@@ -19,7 +19,7 @@ function helperFunction(object){
             Color
           </h3>
           <h4>
-            Number
+          {object.players[0].hand[0].number}
           </h4>
         </div>
         <div class="teamatesCard">
@@ -27,7 +27,7 @@ function helperFunction(object){
             Color
           </h3>
           <h4>
-            Number
+            {object.players[0].hand[0].number}            
           </h4>
         </div>
         <div class="teamatesCard">
@@ -35,7 +35,7 @@ function helperFunction(object){
             Color
           </h3>
           <h4>
-            Number
+            {object.players[0].hand[0].number}            
           </h4>
         </div>
       </div>
