@@ -7,17 +7,14 @@
   "description": "A simple Node app with SQLite as a database management system, instantly up and running.",
   "main": "server.js",
   "scripts": {
-    "build": "webpack",
-    "start": "webpack && node server.js"
+    "start": "node server.js"
   },
   "dependencies": {
     "express": "^4.16.3",
     "jsx-loader": "^0.13.2",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
-    "webpack": "^4.1.1",
-    "sqlite3": "^4.0.6",
-    "webpack-cli": "^3.2.0"
+    "sqlite3": "^4.0.6"
   },
   "engines": {
     "node": "8.x"
