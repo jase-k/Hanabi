@@ -27,6 +27,7 @@ function toggleClass(element){
   console.log('toggling Class')
   element.classList.toggle("hide")
 }
+
 newGameButton.onclick = () => {
   toggleClass(howManyPlayers)
   toggleClass(document.getElementById('firstStep'))
@@ -43,9 +44,14 @@ startGameButton.onclick = () =>{
       return;
     };
   
- // ReactDOM.render(API.createNewGame(selectedPlayers.value, nameInput.value), document.getElementById('teamateContainer') )
-      
-  /*if(selectedPlayers.value == 4 || selectedPlayers.value == 5){
+var xhr = new XMLHttpRequest;
+var url = "https://puddle-catcher.glitch.me/newgame?";
+
+  xhr.open('Get', url)
+  xhr.send(
+  
+  /*  
+  if(selectedPlayers.value == 4 || selectedPlayers.value == 5){
         console.log('Adding Hide Class to Card5');
         optionalCard.style.display = "none";
         toggleClass(select);
@@ -62,9 +68,9 @@ startGameButton.onclick = () =>{
           teamates[3].style.display = "none";
           teamates[2].style.display = "none";
         if(selectedPlayers.value == 2){
-          teamates[1].style.display = "none";
-      } 
-    }*/
+          teamates[1].style.display = "none"; 
+    }
+      } */
   }
 
 
