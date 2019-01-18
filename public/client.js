@@ -48,7 +48,7 @@ var xhr = new XMLHttpRequest;
 var url = "https://puddle-catcher.glitch.me/newgame?";
 
   xhr.open('Get', url)
-  xhr.send(
+  xhr.send();
   
   /*  
   if(selectedPlayers.value == 4 || selectedPlayers.value == 5){
