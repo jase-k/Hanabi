@@ -49,7 +49,8 @@ const url = "https://puddle-catcher.glitch.me/newgame?players=5";
 
   xhr.responseType ="json";
   xhr.onreadystatechange = () =>{
-    if(xhr.ReadyState ===console.log(xhr.response)
+        if (xhr.readyState === XMLHttpRequest.DONE) {
+            console.log(xhr.response)}
   }
   xhr.open('Get', url)
   xhr.send();
