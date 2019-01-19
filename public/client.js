@@ -47,18 +47,22 @@ startGameButton.onclick = () =>{
  function displayGame(res){
     var newDiv = document.createElement('div')
    var playersHand = []
-for(var i =0; i< res.players[0].hand.length; i++){
-  console.log(res.players[0].hand.length)
-  var div1 = document.createElement('div')
-  var p1 = document.createElement('h3')
-  var p2 = document.createElement('h4')
-  p1.innerHTML = res.players[0].hand[i].color
-  p2.innerHTML = res.players[0].hand[i].number
-  div1.appendChild(p1)
-  div1.appendChild(p2)
-  div1.classList.add("teamatesCard")
-  newDiv.appendChild(div1)
+for(var j = 0; j< res.players.length; j++){
+  var container = document.createElement('div')
+  container.classList.add("containter")
+  for(var i =0; i< res.players[j].hand.length; i++){
+    console.log(res.players[j].hand.length)
+    var div1 = document.createElement('div')
+    var p1 = document.createElement('h3')
+    var p2 = document.createElement('h4')
+    p1.innerHTML = res.players[j].hand[i].color
+    p2.innerHTML = res.players[j].hand[i].number
+    div1.appendChild(p1)
+    div1.appendChild(p2)
+    div1.classList.add("teamatesCard")
+    newDiv.appendChild(div1)
     }
+}
    console.log("New Div", newDiv)
   return newDiv
 }
