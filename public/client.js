@@ -43,19 +43,31 @@ startGameButton.onclick = () =>{
     alert('Select the Number of Players to start the Game')
       return;
     };
+ function displayGame(res){
+var playersHand = []
+  for(var i =0; i< res.players[0].hand.length; i++){
+    playersHand.push('<div><p>'+res.players[0].hand[i].color+'</p><p>'+res.players[0].hand[i].number+'</p></div>')
+    }
+  var strHand = playersHand.join("")
+  console.log("What should be returned", strHand)
+  return '<div>'+strHand+'<div>'
+}
+  
   
 const xhr = new XMLHttpRequest;
 const url = "https://puddle-catcher.glitch.me/newgame?players=5";
-
+console.log("Sent Request..")
   xhr.responseType ="json";
   xhr.onreadystatechange = () =>{
         if (xhr.readyState === XMLHttpRequest.DONE) {
-            console.log(xhr.response)}
+            displayGame(xhr.response)
+        }
+  console.log("Returned")
   }
   xhr.open('Get', url)
   xhr.send();
   
-  
+
   /*  
   if(selectedPlayers.value == 4 || selectedPlayers.value == 5){
         console.log('Adding Hide Class to Card5');
