@@ -61,6 +61,7 @@ for(var j = 0; j< res.players.length; j++){
     div1.appendChild(p2)
     div1.classList.add("teamatesCard")
     newDiv.appendChild(div1)
+    container.appendChild(newDiv)
     }
 }
    console.log("New Div", newDiv)
