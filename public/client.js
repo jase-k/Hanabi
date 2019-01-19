@@ -48,14 +48,15 @@ startGameButton.onclick = () =>{
     var newDiv = document.createElement('div')
    var playersHand = []
 for(var i =0; i< res.players[0].hand.length; i++){
+  var div1 = document.createEl
   var p1 = document.createElement('p')
   var p2 = document.createElement('p')
   p1.innerHTML = res.players[0].hand[i].color
-  p2.innderHTML = res.players[0].hand[i].number
+  p2.innerHTML = res.players[0].hand[i].number
   newDiv.appendChild(p1)
   newDiv.appendChild(p2)
     }
-   console.log(new
+   console.log("New Div", newDiv)
   return newDiv
 }
   
@@ -66,7 +67,7 @@ console.log("Sent Request..")
   xhr.responseType ="json";
   xhr.onreadystatechange = () =>{
         if (xhr.readyState === XMLHttpRequest.DONE) {
-            displayGame(xhr.response)
+            container.appendChild(displayGame(xhr.response))
         }
   console.log("Returned")
   }
