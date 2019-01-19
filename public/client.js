@@ -55,6 +55,7 @@ const url = "https://puddle-catcher.glitch.me/newgame?players=5";
   xhr.open('Get', url)
   xhr.send();
   
+  
   /*  
   if(selectedPlayers.value == 4 || selectedPlayers.value == 5){
         console.log('Adding Hide Class to Card5');
