@@ -48,8 +48,9 @@ startGameButton.onclick = () =>{
     var newDiv = document.createElement('div')
    var playersHand = []
 for(var j = 0; j< res.players.length; j++){
+  if(res.players[j].name == ""){
   var container = document.createElement('div')
-  container.classList.add("containter")
+  container.classList.add("teamatesHand")
   for(var i =0; i< res.players[j].hand.length; i++){
     console.log(res.players[j].hand.length)
     var div1 = document.createElement('div')
@@ -60,17 +61,20 @@ for(var j = 0; j< res.players.length; j++){
     div1.appendChild(p1)
     div1.appendChild(p2)
     div1.classList.add("teamatesCard")
-    newDiv.appendChild(div1)
-    container.appendChild(newDiv)
+    container.appendChild(div1)
     }
+    
+  newDiv.appendChild(container)
 }
+}
+   newDiv.classList.add("container")
    console.log("New Div", newDiv)
   return newDiv
 }
   
   
 const xhr = new XMLHttpRequest;
-const url = "https://puddle-catcher.glitch.me/newgame?players=5";
+const url = "https://puddle-catcher.glitch.me/newgame?players="+selectedPlayers.value;
 console.log("Sent Request..")
   xhr.responseType ="json";
   xhr.onreadystatechange = () =>{
