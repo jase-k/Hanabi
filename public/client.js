@@ -45,10 +45,10 @@ startGameButton.onclick = () =>{
       return;
     };
  function displayGame(res){
-    var newDiv = document.createElement('div')
+   var newDiv = document.createElement('div')
    var playersHand = []
 for(var j = 0; j< res.players.length; j++){
-  if(res.players[j].name == ""){
+  if(res.players[j].name !== nameInput.value){
   var container = document.createElement('div')
   container.classList.add("teamatesHand")
   for(var i =0; i< res.players[j].hand.length; i++){
@@ -65,7 +65,7 @@ for(var j = 0; j< res.players.length; j++){
     }
     
   newDiv.appendChild(container)
-}
+  }
 }
    newDiv.classList.add("container")
    console.log("New Div", newDiv)
@@ -74,7 +74,7 @@ for(var j = 0; j< res.players.length; j++){
   
   
 const xhr = new XMLHttpRequest;
-const url = "https://puddle-catcher.glitch.me/newgame?players="+selectedPlayers.value;
+const url = "https://puddle-catcher.glitch.me/newgame?players="+selectedPlayers.value+"name="+nameInput.value;
 console.log("Sent Request..")
   xhr.responseType ="json";
   xhr.onreadystatechange = () =>{
@@ -109,28 +109,4 @@ console.log("Sent Request..")
     }
       } */
   }
-
-
-document.ondragstart = (event) =>{
- // handleDragStart(event)
-  console.log(event)
-   console.log("dragStart");
-  
-  //Get Element's ID: and whole Element
-  var id = event.srcElement.id
-  var element = document.getElementById(id)
-  
-  // Change the source element's background color to signify drag has started
- element.style.border = "blue";
- 
-  // Set the drag's format and data. Use the event target's id for the data 
- event.dataTransfer.setData("text/plain", id);
-  console.log(id, element)
-  
-};
-
-document.ondragover = (event) => {
- event.preventDefault();
-  console.log("Something is being Drug") }
-
 
