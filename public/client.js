@@ -74,7 +74,7 @@ for(var j = 0; j< res.players.length; j++){
   
   
 const xhr = new XMLHttpRequest;
-const url = "https://puddle-catcher.glitch.me/newgame?players="+selectedPlayers.value+"name="+nameInput.value;
+const url = "https://puddle-catcher.glitch.me/newgame?players="+selectedPlayers.value+"&name="+nameInput.value;
 console.log("Sent Request..")
   xhr.responseType ="json";
   xhr.onreadystatechange = () =>{
