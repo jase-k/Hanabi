@@ -48,13 +48,16 @@ startGameButton.onclick = () =>{
     var newDiv = document.createElement('div')
    var playersHand = []
 for(var i =0; i< res.players[0].hand.length; i++){
-  var div1 = document.createEl
-  var p1 = document.createElement('p')
-  var p2 = document.createElement('p')
+  console.log(res.players[0].hand.length)
+  var div1 = document.createElement('div')
+  var p1 = document.createElement('h3')
+  var p2 = document.createElement('h4')
   p1.innerHTML = res.players[0].hand[i].color
   p2.innerHTML = res.players[0].hand[i].number
-  newDiv.appendChild(p1)
-  newDiv.appendChild(p2)
+  div1.appendChild(p1)
+  div1.appendChild(p2)
+  div1.classList.add("teamatesCard")
+  newDiv.appendChild(div1)
     }
    console.log("New Div", newDiv)
   return newDiv
