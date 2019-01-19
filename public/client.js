@@ -34,6 +34,7 @@ newGameButton.onclick = () => {
 }
 
 startGameButton.onclick = () =>{
+  const container = document.getElementById('interactive-results')
   console.log('This should be 1-5:', selectedPlayers.value)
   if(!nameInput.value){
     alert('Need to Put a Name to start the Game')
@@ -44,13 +45,18 @@ startGameButton.onclick = () =>{
       return;
     };
  function displayGame(res){
-var playersHand = []
-  for(var i =0; i< res.players[0].hand.length; i++){
-    playersHand.push('<div><p>'+res.players[0].hand[i].color+'</p><p>'+res.players[0].hand[i].number+'</p></div>')
+    var newDiv = document.createElement('div')
+   var playersHand = []
+for(var i =0; i< res.players[0].hand.length; i++){
+  var p1 = document.createElement('p')
+  var p2 = document.createElement('p')
+  p1.innerHTML = res.players[0].hand[i].color
+  p2.innderHTML = res.players[0].hand[i].number
+  newDiv.appendChild(p1)
+  newDiv.appendChild(p2)
     }
-  var strHand = playersHand.join("")
-  console.log("What should be returned", strHand)
-  return '<div>'+strHand+'<div>'
+   console.log(new
+  return newDiv
 }
   
   
