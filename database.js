@@ -390,3 +390,16 @@ module.exports = Database
     console.log('record:', row) 
     }
   });  */
+
+
+//============================================
+// Return Game Data from GameId
+//============================================
+async Database.getCurrentGame = (gameId) => {
+  var gameObject = {}
+  gameObject.players = await Database.getPlayers(gameId);
+  console.log("=====CurrentGame======")
+  console.log("Game:", gameObject)
+}
+
+Database.getCurrentGame(56) 
