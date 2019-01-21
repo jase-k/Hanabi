@@ -332,12 +332,16 @@ Database.createRows = function(object){
 // Return Game Data from GameId
 //============================================
 function cardStringToObject(string){
+var object;
+  if(string){
 var array = string.split(" ")
-var object = {
+object = {
     color: array[0],
     number: array[1],
     hints: []
+    }
   }
+  return object
 }
 
 
@@ -354,21 +358,39 @@ return new Promise ((resolve, reject) => {
           id: row.id, 
           name: row.name
         }
-        playerObject.hand = [row.card1, row.card2, row.card3, row.card4, row.card5]
+        playerObject.hand = [cardStringToObject(row.card1), cardStringToObject(row.card2), cardStringToObject(row.card3), cardStringToObject(row.card4), cardStringToObject(row.card5)]
        players.push(playerObject)                 
       })
-        resolve(JSON.stringify(players))    
+        resolve(players)    
     });//ENDS db All
   });
 }
+Database.getPlayingDeck = (gameId) => {
+return new Promise ((resolve, reject) => {
+  var deck = []
+  var cardObject = {};
+
+  db.all('SELECT * FROM PlayingDeck WHERE gameId ='+gameId, 
+    function(err, row){
+      if(err){throw err}
+    for(var i = 0; i < 50; i++){
+     deck.push(cardStringToObject(row['card'+i+1]))
+    }
+        resolve(deck)
+    });//ENDS db All
+  })    
+}
+
+
 
 async function getCurrentGame(gameId){
   var gameObject = {
   players: []
   }
   gameObject.players = await Database.getPlayers(gameId);
+  
   console.log("=====CurrentGame======")
-  console.log("Game:", gameObject)
+  console.log("Game:", JSON.stringify(gameObject))
 }
  
 
