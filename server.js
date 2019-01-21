@@ -74,7 +74,6 @@ Database.createRows(newGame).then(results => response.json(results))
 
 app.get('/game/:gameid/:username', function(request, response){
   
-  ReactDOM.render(< App.js/ >)
 });
 
 
