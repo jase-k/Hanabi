@@ -370,11 +370,12 @@ return new Promise ((resolve, reject) => {
   var deck = []
   var cardObject = {};
 
-  db.all('SELECT * FROM PlayingDeck WHERE gameId ='+gameId, 
+  db.get('SELECT * FROM PlayingDeck WHERE gameId ='+gameId, 
     function(err, row){
       if(err){throw err}
-    for(var i = 0; i < 50; i++){
-     deck.push(cardStringToObject(row['card'+i+1]))
+    
+ for(var i = 1; i <= 50; i++){
+     deck.push(cardStringToObject(row['card'+i]))
     }
         resolve(deck)
     });//ENDS db All
@@ -388,7 +389,7 @@ async function getCurrentGame(gameId){
   players: []
   }
   gameObject.players = await Database.getPlayers(gameId);
-  
+  gameObject.playingDeck = await Database.getPlayingDeck(gameId);
   console.log("=====CurrentGame======")
   console.log("Game:", JSON.stringify(gameObject))
 }
