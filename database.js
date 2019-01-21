@@ -21,7 +21,7 @@ function convertCardArray(array){
   var string = ''
   for(var i = 0; i < array.length; i++){
     if(i !== array.length-1){
-  string += '"'+array[i].color+''+array[i].number+'",'
+  string += '"'+array[i].color+' '+array[i].number+'",'
       }else{string += '"'+array[i].color+' '+array[i].number+'"'}
     }
   return string
@@ -284,58 +284,6 @@ Database.createRows = function(object){
   })
 }
 
-Database.newGame = function(object) {
-  return new Promise((resolve, reject) => {
-var currentGame = {};
-  
-db.run('INSERT INTO HanabiGames(numberOfPlayers) VALUES('+object.numberOfPlayers+')',
-         {}, 
-  function(err){
-    if(err){ console.log(err)};
-    currentGame.gameId = this.lastID
-    console.log("current game id", currentGame.gameId); 
-
-db.run('INSERT INTO OriginalDeck (gameId,'+createCardString(50)+') VALUES('+currentGame.gameId+','+convertCardArray(object.originalDeck)+') ', {}, 
-             function(err){
-                if(err){throw err}
-              currentGame.originalDeckId = this.lastID
-            console.log("originalDeck id:", currentGame.originalDeckId);
-db.run('INSERT INTO PlayingDeck (gameId,'+createCardString(object.playingDeck.length)+') VALUES('+currentGame.gameId+','+convertCardArray(object.playingDeck)+') ', {}, 
-             function(err){
-                if(err){throw err}
-              currentGame.playingDeckId = this.lastID
-            console.log("playingDeck id:", currentGame.playingDeckId);
-db.run('INSERT INTO DiscardedCards (gameId) VALUES('+currentGame.gameId+') ', {}, 
-             function(err){
-                if(err){throw err}
-              currentGame.DiscardedCardsId = this.lastID
-            console.log("DiscardedCards id:", currentGame.DiscardedCardsId);
-  
-db.run('INSERT INTO PlayedCards (gameId) VALUES('+currentGame.gameId+') ', {}, 
-             function(err){
-                if(err){throw err}
-              currentGame.PlayedCardsId = this.lastID
-            console.log("PlayedCards id:", currentGame.PlayedCardsId); 
-   
-  currentGame.PlayersId =[];
-for(var i = 0; i < object.players.length; i++) {
-  db.run('INSERT INTO Players (gameId) VALUES('+currentGame.gameId+') ', {}, 
-             (err) => {
-                if(err){throw err}
-              currentGame.PlayersId.push(this.lastID)
-            //console.log("Players id:", currentGame.PlayersId); 
-  }); }//Ends INSERT INTO PLAYERS 
-
-    resolve(currentGame)
-   
-});//Ends INSERT INTO PlayedCards
-  });//Ends INSERT INTO DiscardedCars
-});//Ends INSERT INTO PlayingDeck
-   }); //Ends INSERT INTO OriginalDeck
-  });//ENDs all db.run
-});
- }
-
 
 
 /* db.each('SELECT * from OriginalDeck', function(err, row) {
@@ -383,13 +331,13 @@ for(var i = 0; i < object.players.length; i++) {
 //============================================
 // Return Game Data from GameId
 //============================================
-async function getCurrentGame(gameId){
-  var gameObject = {
-  players: []
+function cardStringToObject(string){
+var array = string.split(" ")
+var object = {
+    color: array[0],
+    number: array[1],
+    hints: []
   }
-  gameObject.players = await Database.getPlayers(gameId);
-  console.log("=====CurrentGame======")
-  console.log("Game:", gameObject)
 }
 
 
@@ -407,14 +355,23 @@ return new Promise ((resolve, reject) => {
           name: row.name
         }
         playerObject.hand = [row.card1, row.card2, row.card3, row.card4, row.card5]
-        
-                               })
-      
+       players.push(playerObject)                 
+      })
+        resolve(JSON.stringify(players))    
     });//ENDS db All
   });
 }
 
+async function getCurrentGame(gameId){
+  var gameObject = {
+  players: []
+  }
+  gameObject.players = await Database.getPlayers(gameId);
+  console.log("=====CurrentGame======")
+  console.log("Game:", gameObject)
+}
+ 
 
-getCurrentGame(56) 
-
+getCurrentGame(86) 
+ 
 module.exports = Database
