@@ -12,7 +12,7 @@ gameCreation.createDeck = function (numberOfPlayers){
     // loops through both arrays to build the deck
     for(var i = 0; i < cardColors.length; i++){
       for(var j =0; j < cardNumbers.length; j++){
-        array.push({color: cardColors[i], number: cardNumbers[j], hints: {notColor: null, notNumber: null}})
+        array.push({color: cardColors[i], number: cardNumbers[j], hints: []})
       }
     }
     return array

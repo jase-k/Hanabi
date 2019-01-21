@@ -39,13 +39,15 @@ app.get('/', function(request, response) {
 });
 
 
-app.get('/newgame', function(request, response) {
+app.get('/newgame/:numberOfPlayers', function(request, response) {
 //  console.log(request)
-  var numberOfPlayers = request.query.players
+  var numberOfPlayers = request.params.numberOfPlayers
   var name = request.query.name
+
   if(numberOfPlayers == null || numberOfPlayers > 5){
   response.send("Error: Must have 2-5 players")
   }
+  
   var newDeck = gameCreation.createDeck(numberOfPlayers);
     
   console.log('<<CREATING A NEW GAME>>')
@@ -73,6 +75,7 @@ Database.createRows(newGame).then(results => response.json(results))
 
 
 app.get('/game/:gameid/:username', function(request, response){
+
   
 });
 

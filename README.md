@@ -14,7 +14,9 @@ Actions inlcude:
 
 ## New Game
 
-Call `/newgame` returns a game Object *Example Below*:
+Call `/newgame/:numberOfPlayers` *Query:* `name=TEXT`
+
+Returns a game Object *Example Below* :
 
 ```
 {
