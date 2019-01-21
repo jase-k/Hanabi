@@ -8,6 +8,8 @@ var app = express();
 app.use(bodyParser.urlencoded({ extended: true }));
 const gameCreation = require('./cool-file.js')
 const Database = require('./database.js')
+const ReactDOM = require('react-dom')
+const React = require('react')
 
 // we've started you off with Express, 
 // but feel free to use whatever libs or frameworks you'd like through `package.json`.
@@ -70,7 +72,10 @@ Database.createRows(newGame).then(results => response.json(results))
 
 
 
-
+app.get('/game/:gameid/:username', function(request, response){
+  
+  ReactDOM.render(< App.js/ >)
+});
 
 
 // listen for requests :)

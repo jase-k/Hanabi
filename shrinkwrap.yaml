@@ -1,6 +1,7 @@
 dependencies:
   express: 4.16.3
   react: 16.7.0
+  react-dom: 16.7.0
   sqlite3: 4.0.6
 packages:
   /abbrev/1.1.1:
@@ -833,6 +834,17 @@ packages:
     hasBin: true
     resolution:
       integrity: sha512-y3bGgqKj3QBdxLbLkomlohkvsA8gdAiUQlSBJnBhfn+BPxg4bc62d8TcBW15wavDfgexCgccckhcZvywyQYPOw==
+  /react-dom/16.7.0:
+    dependencies:
+      loose-envify: 1.4.0
+      object-assign: 4.1.1
+      prop-types: 15.6.2
+      scheduler: 0.12.0
+    dev: false
+    peerDependencies:
+      react: ^16.0.0
+    resolution:
+      integrity: sha512-D0Ufv1ExCAmF38P2Uh1lwpminZFRXEINJe53zRAbm4KPwSyd6DY/uDoS0Blj9jvPpn1+wivKpZYc8aAAN/nAkg==
   /react/16.7.0:
     dependencies:
       loose-envify: 1.4.0
@@ -1149,4 +1161,5 @@ shrinkwrapVersion: 3
 specifiers:
   express: ^4.16.3
   react: ^16.7.0
+  react-dom: ^16.7.0
   sqlite3: ^4.0.6
