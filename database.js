@@ -336,19 +336,7 @@ for(var i = 0; i < object.players.length; i++) {
 });
  }
 
-Database.getPlayers = (gameId) => {
-return new Promise ((resolve, reject) => {
 
-  db.all('SELECT * FROM Players WHERE gameId ='+gameId, 
-    function(err, rows){
-      if(err){throw err}
-    resolve(rows.forEach(function(row) {console.log(row)
-                               })
-      )
-    });//ENDS db All
-  });
-}
-module.exports = Database
 
 /* db.each('SELECT * from OriginalDeck', function(err, row) {
  console.log('OriginalDeck')
@@ -395,11 +383,38 @@ module.exports = Database
 //============================================
 // Return Game Data from GameId
 //============================================
-async Database.getCurrentGame = (gameId) => {
-  var gameObject = {}
+async function getCurrentGame(gameId){
+  var gameObject = {
+  players: []
+  }
   gameObject.players = await Database.getPlayers(gameId);
   console.log("=====CurrentGame======")
   console.log("Game:", gameObject)
 }
 
-Database.getCurrentGame(56) 
+
+Database.getPlayers = (gameId) => {
+return new Promise ((resolve, reject) => {
+  var players = []
+  var playerObject = {};
+  playerObject.hand = [];
+  db.all('SELECT * FROM Players WHERE gameId ='+gameId, 
+    function(err, rows){
+      if(err){throw err}
+      rows.forEach(function(row){
+        playerObject = {
+          id: row.id, 
+          name: row.name
+        }
+        playerObject.hand = [row.card1, row.card2, row.card3, row.card4, row.card5]
+        
+                               })
+      
+    });//ENDS db All
+  });
+}
+
+
+getCurrentGame(56) 
+
+module.exports = Database
