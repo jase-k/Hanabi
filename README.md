@@ -1,7 +1,13 @@
-# How To Play: 
+# Hanabi Game Server
+This app is used to create a new game deck, and modify the game deck based on an action. 
 
-## Start Game: 
+Actions inlcude: 
+- New Game
+- Give Hint
+- Discard Card
+- Play Card
+- Change Player's Turn
 
-### Set-up: 
-To set-up a new game, click newgame>>startgame. Name and Number of Players are required
+	# Actions:
+####3
 
