@@ -1,5 +1,6 @@
 dependencies:
   express: 4.16.3
+  react: 16.7.0
   sqlite3: 4.0.6
 packages:
   /abbrev/1.1.1:
@@ -500,6 +501,10 @@ packages:
     dev: false
     resolution:
       integrity: sha1-R+Y/evVa+m+S4VAOaQ64uFKcCZo=
+  /js-tokens/4.0.0:
+    dev: false
+    resolution:
+      integrity: sha512-RdJUflcE3cUzKiMqQgsCu06FPu9UdIJO0beYbPhHN4k6apgJtifcoCtT9bcxOpYBtpD2kCM6Sbzg4CausW/PKQ==
   /jsbn/0.1.1:
     dev: false
     resolution:
@@ -527,6 +532,13 @@ packages:
       '0': node >=0.6.0
     resolution:
       integrity: sha1-MT5mvB5cwG5Di8G3SZwuXFastqI=
+  /loose-envify/1.4.0:
+    dependencies:
+      js-tokens: 4.0.0
+    dev: false
+    hasBin: true
+    resolution:
+      integrity: sha512-lyuxPGr/Wfhrlem2CL/UcnUc1zcqKAImBDzukY7Y5F/yQiNdko6+fRLevlw1HgMySw7f611UIY408EtxRSoK3Q==
   /media-typer/0.3.0:
     dev: false
     engines:
@@ -752,6 +764,13 @@ packages:
     dev: false
     resolution:
       integrity: sha512-MtEC1TqN0EU5nephaJ4rAtThHtC86dNN9qCuEhtshvpVBkAW5ZO7BASN9REnF9eoXGcRub+pFuKEpOHE+HbEMw==
+  /prop-types/15.6.2:
+    dependencies:
+      loose-envify: 1.4.0
+      object-assign: 4.1.1
+    dev: false
+    resolution:
+      integrity: sha512-3pboPvLiWD7dkI3qf3KbUe6hKFKa52w+AE0VCqECtf+QHAKgOL37tTaNCnuX1nAAQ4ZhyP+kYVKf8rLmJ/feDQ==
   /proxy-addr/2.0.3:
     dependencies:
       forwarded: 0.1.2
@@ -814,6 +833,17 @@ packages:
     hasBin: true
     resolution:
       integrity: sha512-y3bGgqKj3QBdxLbLkomlohkvsA8gdAiUQlSBJnBhfn+BPxg4bc62d8TcBW15wavDfgexCgccckhcZvywyQYPOw==
+  /react/16.7.0:
+    dependencies:
+      loose-envify: 1.4.0
+      object-assign: 4.1.1
+      prop-types: 15.6.2
+      scheduler: 0.12.0
+    dev: false
+    engines:
+      node: '>=0.10.0'
+    resolution:
+      integrity: sha512-StCz3QY8lxTb5cl2HJxjwLFOXPIFQp+p+hxQfc8WE0QiLfCtIlKj8/+5tjjKm8uSTlAW+fCPaavGFS06V9Ar3A==
   /readable-stream/2.3.6:
     dependencies:
       core-util-is: 1.0.2
@@ -876,6 +906,13 @@ packages:
     dev: false
     resolution:
       integrity: sha512-NqVDv9TpANUjFm0N8uM5GxL36UgKi9/atZw+x7YFnQ8ckwFGKrl4xX4yWtrey3UJm5nP1kUbnYgLopqWNSRhWw==
+  /scheduler/0.12.0:
+    dependencies:
+      loose-envify: 1.4.0
+      object-assign: 4.1.1
+    dev: false
+    resolution:
+      integrity: sha512-t7MBR28Akcp4Jm+QoR63XgAi9YgCUmgvDHqf5otgAj4QvdoBE4ImCX0ffehefePPG+aitiYHp0g/mW6s4Tp+dw==
   /semver/5.6.0:
     dev: false
     hasBin: true
@@ -1111,4 +1148,5 @@ shrinkwrapMinorVersion: 9
 shrinkwrapVersion: 3
 specifiers:
   express: ^4.16.3
+  react: ^16.7.0
   sqlite3: ^4.0.6
