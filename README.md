@@ -21,11 +21,20 @@ Call `/newgame` returns a game Object *Example Below*:
 	numberOfPlayers: INTEGER,
 	dateCreated: DATE,
 	score: NULL, 
-	originalDeck: [ARRAY OF CARDS],
-	playingDeck: [ARRAY OF CARDS],
+	originalDeck: [ARRAY OF CARDS {
+		color: TEXT
+		number: INTEGER
+		hint: [ARRAY OF HINTS: TEXT, TEXT, ...]
+		},
+		{}...]
+	playingDeck: [ARRAY OF CARDS (cards formatted the same as above^^) ],
 	discardedCards: [EMPTY ARRAY],
 	playedCards: [EMPTY ARRAY],
-	players: [ARRAY OF PLAYERS],
+	players: [ARRAY OF PLAYERS {
+		name:
+		hand: [ARRAY OF CARDS]
+		},
+		{}...]
 }
 ```
 
