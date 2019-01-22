@@ -86,12 +86,16 @@ app.get('/game/:gameid/:name', function(request, response){
   var gameId = request.params.gameid
   var name = request.params.name
   
+  //Returning the Game Object and Adding a Failure Message for Debugging 
   Database.getCurrentGame(gameId).then(function(results){
-  var success = false
+     results.message = 'Success!'
+    var failedName = true
     for(var i = 0; i< results.players.length; i++){
-   if(results.players[i].name == name){ success = true }
+   if(results.players[i].name == name){ failedName = false}
   }  
-   if(success){response.json(results)} else 
+   if(failedName){
+     results.message = 'Name Not Found in the Game!'
+     response.json(results)} else {response.json(results)}
   })
   
 });
