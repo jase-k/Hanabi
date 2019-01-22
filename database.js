@@ -239,7 +239,7 @@ return new Promise((resolve, reject) => {
   object.tableIds.playersId = []
   var i = 1
   var number = object.players[i].hand.length
-  db.run('INSERT INTO Players (gameId, name, '+createCardString(number)+') VALUES('+object.tableIds.gameId+','+object.players[0].name+','+convertCardArray(object.players[i-1].hand)+') ', {}, 
+  db.run('INSERT INTO Players (gameId, name , '+createCardString(number)+') VALUES('+object.tableIds.gameId+',"'+object.players[0].name+'",'+convertCardArray(object.players[i-1].hand)+') ', {}, 
              function(err){
                 if(err){throw err}
     object.tableIds.playersId.push(this.lastID)

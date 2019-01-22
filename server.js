@@ -86,7 +86,13 @@ app.get('/game/:gameid/:name', function(request, response){
   var gameId = request.params.gameid
   var name = request.params.name
   
-  Database.getCurrentGame(gameId).then(results => response.json(results))
+  Database.getCurrentGame(gameId).then(function(results){
+  var success = false
+    for(var i = 0; i< results.players.length; i++){
+   if(results.players[i].name == name){ success = true }
+  }  
+   if(success){response.json(results)} else 
+  })
   
 });
 
