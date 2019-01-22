@@ -464,12 +464,10 @@ var playerId;
     }
   },
       function(err, Allrows){
-    db.run('UPDATE Players Set name = $name WHERE id = $id', {$name: name, $id: playerId}, function(err, row){
-    console.log(row)
-    })    
+    db.run('UPDATE Players Set name = $name WHERE id = $id', {$name: name, $id: playerId})    
   })
 }
 
-addPlayer(1, 'Mitch')
+//addPlayer(2, 'Mitch')
  
 module.exports = Database
