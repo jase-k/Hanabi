@@ -23,14 +23,17 @@ function convertCardArray(array){
     if(i !== array.length-1){
   string += '"'+array[i].color+' '+array[i].number+'",'
       }else{string += '"'+array[i].color+' '+array[i].number+'"'}
-    }
+    if(array.hints){
+    string += 'hint'
+    }  
+  }
   console.log(string)
 }
 
 function cardStringToObject(string){
 var object;
   if(string){
-var array = string.split("")
+var array = string.split(" ")
 object = {
     color: array[0],
     number: array[1],
@@ -40,8 +43,12 @@ object = {
   return object
 }
 
-var cardString = [{"color":"black 3","hints":[]},{"color":"white 5","hints":[]},{"color":"white 3","hints":[]}]
-convertCardArray(cardString);
+var cardString = [{"color":"blue","number":"4","hints":['not red', 3, 'not white']},
+                  {"color":"blue","number":"2","hints":['not red', ]},
+                  {"color":"red","number":"4","hints":['red']},
+                  {"color":"black","number":"5","hints":['red']},null]
+
+//convertCardArray(cardString);
 
 const Database ={};
 
@@ -299,6 +306,7 @@ Database.createRows = function(object){
   })
 }
 
+
 /*
 
 db.each('SELECT * from OriginalDeck', function(err, row) {
@@ -360,7 +368,7 @@ return new Promise ((resolve, reject) => {
           id: row.id, 
           name: row.name
         }
-        playerObject.hand = [cardStringToObject(row.card1), cardStringToObject(row.card2), cardStringToObject(row.card3), cardStringToObject(row.card4), cardStringToObject(row.card5)]
+       playerObject.hand = [cardStringToObject(row.card1), cardStringToObject(row.card2), cardStringToObject(row.card3), cardStringToObject(row.card4), cardStringToObject(row.card5)]
        players.push(playerObject)                 
       })
         resolve(players)    
@@ -391,7 +399,7 @@ async function getCurrentGame(gameId){
   players: []
   }
   gameObject.players = await Database.getPlayers(gameId);
-  gameObject.playingDeck = await Database.getPlayingDeck(gameId);
+//  gameObject.playingDeck = await Database.getPlayingDeck(gameId);
   console.log("=====CurrentGame======")
   console.log("Game:", JSON.stringify(gameObject))
 }
