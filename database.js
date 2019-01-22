@@ -449,15 +449,17 @@ return new Promise((resolve, reject) => {
 function addPlayer(gameId, name){
 var playerId;
   console.log(playerId)
-  db.each('SELECT * FROM Players WHERE game_id = $id', 
+  db.each('SELECT * FROM Players WHERE gameId = $id', 
           {$id: gameId}, 
           function(err,row){
-    if(err){console.log(err)}
-    if(playerId == undefined){
+    if(err){console.log("Error at addPlayer SELECT", err)}
+    if(!playerId){
       console.log("Checking Name..")
+      console.log(row.name)
       if(!row.name){
         console.log("Player Row:", row)
         playerId = row.id
+        console.log("Player Id", playerId)
       }
     }
   },
@@ -468,6 +470,6 @@ var playerId;
   })
 }
 
-addPlayer(2, 'Mitch')
+addPlayer(1, 'Mitch')
  
 module.exports = Database
