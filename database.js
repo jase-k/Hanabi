@@ -353,7 +353,7 @@ db.each('SELECT * from OriginalDeck', function(err, row) {
 // Return Game Data from GameId
 //============================================
 
-Database.getPlayers = (gameId) => {
+function getPlayers(gameId){
 return new Promise ((resolve, reject) => {
   var players = []
   var playerObject = {};
@@ -373,7 +373,7 @@ return new Promise ((resolve, reject) => {
     });//ENDS db All
   });
 }
-Database.getPlayingDeck = (gameId) => {
+function getPlayingDeck(gameId){
 return new Promise ((resolve, reject) => {
   var deck = []
   var cardObject = {};
@@ -389,7 +389,7 @@ return new Promise ((resolve, reject) => {
     });//ENDS db All
   })    
 }
-Database.getGameObject = (gameId) => {
+function getGameObject(gameId){
   var object = {};
 return new Promise ((resolve, reject) => {
   db.get('SELECT * FROM HanabiGames WHERE id = $id', {$id: gameId}, function (err, row){
@@ -406,24 +406,53 @@ return new Promise ((resolve, reject) => {
     });
   });
 }
-Database.getPlayedCards = (gameId) => {}
-Database.getDiscardedCards = (gameId) => {}
+function getPlayedCards(gameId){
+return new Promise ((resolve, reject) => {
+  var deck = []
+  var cardObject = {};
+
+  db.get('SELECT * FROM PlayedCards WHERE gameId ='+gameId, 
+    function(err, row){
+      if(err){throw err}
+    
+ for(var i = 1; i <= 25; i++){
+     deck.push(cardStringToObject(row['card'+i]))
+    }
+        resolve(deck)
+    });//ENDS db All
+  })
+}
+function getDiscardedCards(gameId){
+return new Promise ((resolve, reject) => {
+  var deck = []
+  var cardObject = {};
+
+  db.get('SELECT * FROM DiscardedCards WHERE gameId ='+gameId, 
+    function(err, row){
+      if(err){throw err}
+    
+ for(var i = 1; i <= 25; i++){
+     deck.push(cardStringToObject(row['card'+i]))
+    }
+        resolve(deck)
+    });//ENDS db All
+  })
+}
 
 
-async function getCurrentGame(gameId){
+Database.getCurrentGame = async function getCurrentGame(gameId){
+return new Promise((resolve
   var gameObject = {
   players: []
   }
-  gameObject = await Database.getGameObject(gameId)
-  gameObject.playingDeck = await Database.getPlayingDeck(gameId);
+  gameObject = await getGameObject(gameId)
+  gameObject.playingDeck = await getPlayingDeck(gameId);
+  gameObject.playedCards = await getPlayedCards(gameId);
+  gameObject.discardedCards = await getDiscardedCards(gameId);
+  gameObject.players = await getPlayers(gameId);
   
-  gameObject.players = await Database.getPlayers(gameId);
-  
-  console.log("=====CurrentGame======")
-  console.log("Game:", JSON.stringify(gameObject))
+resolve(gameObject)
 }
-  
-
-//getCurrentGame(1) 
+   
  
 module.exports = Database
