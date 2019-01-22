@@ -18,14 +18,19 @@ function createCardString(number){
 }
 
 function convertCardArray(array){
+  console.log(array[0].hints)
   var string = ''
-  for(var i = 0; i < array.length; i++){
+  for(var i = 0; i < array.length; i++){  
+    if(array[i].color){
+      string += '"'+array[i].color+'|'+array[i].number
+      for(var j = 0; j < array[i].hints.length; j++){
+        string += '|'+array[i].hints[j]
+        }
     if(i !== array.length-1){
-  string += '"'+array[i].color+' '+array[i].number+'",'
-      }else{string += '"'+array[i].color+' '+array[i].number+'"'}
-    if(array.hints){
-    string += 'hint'
-    }  
+           string += '",'
+        }else{string += '"'}
+    console.log(string)
+    }
   }
   console.log(string)
 }
@@ -44,11 +49,11 @@ object = {
 }
 
 var cardString = [{"color":"blue","number":"4","hints":['not red', 3, 'not white']},
-                  {"color":"blue","number":"2","hints":['not red', ]},
-                  {"color":"red","number":"4","hints":['red']},
-                  {"color":"black","number":"5","hints":['red']},null]
+                  {"color":"blue","number":"2","hints":['not red', 'white', 'not 3']},
+                  {"color":"red","number":"4","hints":['red', 'not white', 'not 3']},
+                  {"color":"black","number":"5","hints":['red', 'not white', 3]},null]
 
-//convertCardArray(cardString);
+convertCardArray(cardString);
 
 const Database ={};
 
