@@ -453,12 +453,11 @@ var playerId;
           {$id: gameId}, 
           function(err,row){
     if(err){console.log("Error at addPlayer SELECT", err)} 
-    if(!playerId){
+  if(!playerId){
       console.log("Checking Name..")
       console.log(row.name)
       console.log(name)
-      if(!row.name && row.name !== name){
-        if(name !== row.name){console.log("These Rows Match")}
+   if(!row.name && row.name == name){
         console.log("Player Row:", row)
         playerId = row.id
         console.log("Player Id", playerId)
@@ -466,10 +465,11 @@ var playerId;
     }
   },
       function(err, Allrows){
+    
     db.run('UPDATE Players Set name = $name WHERE id = $id', {$name: name, $id: playerId})    
   })
 }
 
-addPlayer(9, 'Mitch')
-//Database.getCurrentGame(9).then(data => console.log(data))
+addPlayer(10, 'Mitch')
+Database.getCurrentGame(10).then(data => console.log(data))
 module.exports = Database
