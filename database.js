@@ -443,6 +443,16 @@ return new Promise((resolve, reject) => {
   });
 };
 
-   
+//===========================================
+// Join a Game 
+//===========================================
+function addPlayer(gameId, name){
+
+  db.each('SELECT * FROM Players WHERE game_id = $id', 
+          {$id: gameId}, 
+          function(err,row){
+      if(!row.name){}
+    })
+}  
  
 module.exports = Database
