@@ -239,8 +239,7 @@ return new Promise((resolve, reject) => {
   object.tableIds.playersId = []
   var i = 1
   var number = object.players[i].hand.length
-  console.log('Number of Cards in Each Hand', number)
-  db.run('INSERT INTO Players (gameId,'+createCardString(number)+') VALUES('+object.tableIds.gameId+','+convertCardArray(object.players[i-1].hand)+') ', {}, 
+  db.run('INSERT INTO Players (gameId, name, '+createCardString(number)+') VALUES('+object.tableIds.gameId+','+object.players[0].name+','+convertCardArray(object.players[i-1].hand)+') ', {}, 
              function(err){
                 if(err){throw err}
     object.tableIds.playersId.push(this.lastID)
@@ -350,7 +349,7 @@ db.each('SELECT * from OriginalDeck', function(err, row) {
 
 
 //============================================
-// Return Game Data from GameId
+// Return Game Data from GameId and Name
 //============================================
 function getGameObject(object){
 return new Promise ((resolve, reject) => {
@@ -370,6 +369,7 @@ return new Promise ((resolve, reject) => {
 function getPlayers(object){
 return new Promise ((resolve, reject) => {
   object.players = []
+  var playerObject = { }
   db.all('SELECT * FROM Players WHERE gameId ='+object.id, 
     function(err, rows){
       if(err){throw err}
