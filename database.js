@@ -24,9 +24,24 @@ function convertCardArray(array){
   string += '"'+array[i].color+' '+array[i].number+'",'
       }else{string += '"'+array[i].color+' '+array[i].number+'"'}
     }
-  return string
+  console.log(string)
 }
 
+function cardStringToObject(string){
+var object;
+  if(string){
+var array = string.split("")
+object = {
+    color: array[0],
+    number: array[1],
+    hints: []
+    }
+  }
+  return object
+}
+
+var cardString = [{"color":"black 3","hints":[]},{"color":"white 5","hints":[]},{"color":"white 3","hints":[]}]
+convertCardArray(cardString);
 
 const Database ={};
 
@@ -284,9 +299,9 @@ Database.createRows = function(object){
   })
 }
 
+/*
 
-
-/* db.each('SELECT * from OriginalDeck', function(err, row) {
+db.each('SELECT * from OriginalDeck', function(err, row) {
  console.log('OriginalDeck')
     if(err){
     throw err}
@@ -331,19 +346,6 @@ Database.createRows = function(object){
 //============================================
 // Return Game Data from GameId
 //============================================
-function cardStringToObject(string){
-var object;
-  if(string){
-var array = string.split(" ")
-object = {
-    color: array[0],
-    number: array[1],
-    hints: []
-    }
-  }
-  return object
-}
-
 
 Database.getPlayers = (gameId) => {
 return new Promise ((resolve, reject) => {
@@ -381,7 +383,7 @@ return new Promise ((resolve, reject) => {
     });//ENDS db All
   })    
 }
-
+Database.getGameObject = (gameId) => {}
 
 
 async function getCurrentGame(gameId){
@@ -393,8 +395,8 @@ async function getCurrentGame(gameId){
   console.log("=====CurrentGame======")
   console.log("Game:", JSON.stringify(gameObject))
 }
- 
+  
 
-getCurrentGame(86) 
+//getCurrentGame(86) 
  
 module.exports = Database
