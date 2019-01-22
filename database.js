@@ -177,7 +177,7 @@ var i;
 function InsertHanabiRow(object) {
 return new Promise((resolve, reject) => {
   object.tableIds = {}
-    db.run('INSERT INTO HanabiGames(numberOfPlayers) VALUES('+object.numberOfPlayers+')',
+    db.run('INSERT INTO HanabiGames(numberOfPlayers, dateCreated) VALUES('+object.numberOfPlayers+',"'+object.dateCreated+'")',
          {}, 
   function(err){
     if(err){ console.log(err)
@@ -401,9 +401,19 @@ return new Promise ((resolve, reject) => {
   })    
 }
 Database.getGameObject = (gameId) => {
-
+  var object = {};
+return new Promise ((resolve, reject) => {
   db.get('SELECT * FROM HanabiGames WHERE id = $id', {$id: gameId}, function (err, row){
-  }
+    if(err){console.log("Error @ Database.getGameObject", err)}
+    console.log(row)
+    object = {
+    id: gameId,
+    score: row.score,
+    dateCreated: row.dateCreated
+    }
+    resolve(object)
+    });
+  });
 }
 
 
@@ -411,6 +421,7 @@ async function getCurrentGame(gameId){
   var gameObject = {
   players: []
   }
+  gameObject = await Database.getGameObject(gameId)
   gameObject.players = await Database.getPlayers(gameId);
   gameObject.playingDeck = await Database.getPlayingDeck(gameId);
   console.log("=====CurrentGame======")

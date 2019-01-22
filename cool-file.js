@@ -110,16 +110,6 @@ return gameDeck
 
 };
 
-gameCreation.createId = function () {
-  var text = "";
-  var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
-
-  for (var i = 0; i < 5; i++)
-  {   text += possible.charAt(Math.floor(Math.random() * possible.length));
-  };
-  return text;
-}
-
 gameCreation.dealHand = function (gameDeck, numberOfPlayers, name){
 var game = {}
 var handSize = 0
