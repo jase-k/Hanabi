@@ -358,7 +358,7 @@ return new Promise ((resolve, reject) => {
   var players = []
   var playerObject = {};
   playerObject.hand = [];
-  db.all('SELECT * FROM Players WHERE gameId ='+gameId, 
+  db.all('SELECT * FROM Players WHERE gameId ='+object.id, 
     function(err, rows){
       if(err){throw err}
       rows.forEach(function(row){
@@ -369,7 +369,7 @@ return new Promise ((resolve, reject) => {
        playerObject.hand = [cardStringToObject(row.card1), cardStringToObject(row.card2), cardStringToObject(row.card3), cardStringToObject(row.card4), cardStringToObject(row.card5)]
        players.push(playerObject)                 
       })
-        resolve(players)    
+        resolve(deck)    
     });//ENDS db All
   });
 }
@@ -378,7 +378,7 @@ return new Promise ((resolve, reject) => {
   var deck = []
   var cardObject = {};
 
-  db.get('SELECT * FROM PlayingDeck WHERE gameId ='+gameId, 
+  db.get('SELECT * FROM PlayingDeck WHERE gameId ='+object.id, 
     function(err, row){
       if(err){throw err}
     
@@ -392,9 +392,8 @@ return new Promise ((resolve, reject) => {
 function getGameObject(gameId){
   var object = {};
 return new Promise ((resolve, reject) => {
-  db.get('SELECT * FROM HanabiGames WHERE id = $id', {$id: gameId}, function (err, row){
+  db.get('SELECT * FROM HanabiGames WHERE id = $id', {$id: object.id}, function (err, row){
     if(err){console.log("Error @ Database.getGameObject", err)}
-    console.log(row)
     object = {
     id: gameId,
     score: row.score,
@@ -411,7 +410,7 @@ return new Promise ((resolve, reject) => {
   var deck = []
   var cardObject = {};
 
-  db.get('SELECT * FROM PlayedCards WHERE gameId ='+gameId, 
+  db.get('SELECT * FROM PlayedCards WHERE gameId ='+object.id, 
     function(err, row){
       if(err){throw err}
     
@@ -427,7 +426,7 @@ return new Promise ((resolve, reject) => {
   var deck = []
   var cardObject = {};
 
-  db.get('SELECT * FROM DiscardedCards WHERE gameId ='+gameId, 
+  db.get('SELECT * FROM DiscardedCards WHERE gameId ='+object.id, 
     function(err, row){
       if(err){throw err}
     
@@ -441,18 +440,18 @@ return new Promise ((resolve, reject) => {
 
 
 Database.getCurrentGame = async function getCurrentGame(gameId){
-return new Promise((resolve
   var gameObject = {
-  players: []
+    id: gameId
   }
-  gameObject = await getGameObject(gameId)
-  gameObject.playingDeck = await getPlayingDeck(gameId);
-  gameObject.playedCards = await getPlayedCards(gameId);
-  gameObject.discardedCards = await getDiscardedCards(gameId);
-  gameObject.players = await getPlayers(gameId);
+  getGameObject(gameObject).then(object => 
+  gameObject.playingDeck = await getPlayingDeck(object);
+  gameObject.playedCards = await getPlayedCards(object);
+  gameObject.discardedCards = await getDiscardedCards(object);
+  gameObject.players = await getPlayers(object);
   
-resolve(gameObject)
-}
+return gameObject
+  }
+
    
  
 module.exports = Database
