@@ -86,8 +86,8 @@ app.get('/game/:gameid/:name', function(request, response){
   var gameId = request.params.gameid
   var name = request.params.name
   
-  var gameObject = Database.getCurrentGame(gameId)
-  console.log(gameObject)
+  Database.getCurrentGame(gameId).then(results => response.json(results))
+  
 });
 
 

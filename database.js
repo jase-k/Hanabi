@@ -352,50 +352,12 @@ db.each('SELECT * from OriginalDeck', function(err, row) {
 //============================================
 // Return Game Data from GameId
 //============================================
-
-function getPlayers(gameId){
-return new Promise ((resolve, reject) => {
-  var players = []
-  var playerObject = {};
-  playerObject.hand = [];
-  db.all('SELECT * FROM Players WHERE gameId ='+object.id, 
-    function(err, rows){
-      if(err){throw err}
-      rows.forEach(function(row){
-        playerObject = {
-          id: row.id, 
-          name: row.name
-        }
-       playerObject.hand = [cardStringToObject(row.card1), cardStringToObject(row.card2), cardStringToObject(row.card3), cardStringToObject(row.card4), cardStringToObject(row.card5)]
-       players.push(playerObject)                 
-      })
-        resolve(deck)    
-    });//ENDS db All
-  });
-}
-function getPlayingDeck(gameId){
-return new Promise ((resolve, reject) => {
-  var deck = []
-  var cardObject = {};
-
-  db.get('SELECT * FROM PlayingDeck WHERE gameId ='+object.id, 
-    function(err, row){
-      if(err){throw err}
-    
- for(var i = 1; i <= 50; i++){
-     deck.push(cardStringToObject(row['card'+i]))
-    }
-        resolve(deck)
-    });//ENDS db All
-  })    
-}
-function getGameObject(gameId){
-  var object = {};
+function getGameObject(object){
 return new Promise ((resolve, reject) => {
   db.get('SELECT * FROM HanabiGames WHERE id = $id', {$id: object.id}, function (err, row){
     if(err){console.log("Error @ Database.getGameObject", err)}
     object = {
-    id: gameId,
+    id: row.id,
     score: row.score,
     dateCreated: row.dateCreated,
     hintsLeft: row.hintsLeft,
@@ -405,52 +367,81 @@ return new Promise ((resolve, reject) => {
     });
   });
 }
-function getPlayedCards(gameId){
+function getPlayers(object){
 return new Promise ((resolve, reject) => {
-  var deck = []
-  var cardObject = {};
+  object.players = []
+  db.all('SELECT * FROM Players WHERE gameId ='+object.id, 
+    function(err, rows){
+      if(err){throw err}
+      rows.forEach(function(row){
+        playerObject = {
+          id: row.id, 
+          name: row.name
+        }
+       playerObject.hand = [cardStringToObject(row.card1), cardStringToObject(row.card2), cardStringToObject(row.card3), cardStringToObject(row.card4), cardStringToObject(row.card5)]
+       object.players.push(playerObject)                 
+      })
+        resolve(object)    
+    });//ENDS db All
+  });
+}
+function getPlayingDeck(object){
+return new Promise ((resolve, reject) => {
+  object.playingDeck = []
+  db.get('SELECT * FROM PlayingDeck WHERE gameId ='+object.id, 
+    function(err, row){
+      if(err){throw err}
+    
+ for(var i = 1; i <= 50; i++){
+     object.playingDeck.push(cardStringToObject(row['card'+i]))
+    }
+        resolve(object)
+    });//ENDS db All
+  })    
+}
 
+function getPlayedCards(object){
+return new Promise ((resolve, reject) => {
+  object.playedCards = []
   db.get('SELECT * FROM PlayedCards WHERE gameId ='+object.id, 
     function(err, row){
       if(err){throw err}
     
  for(var i = 1; i <= 25; i++){
-     deck.push(cardStringToObject(row['card'+i]))
+     object.playedCards.push(cardStringToObject(row['card'+i]))
     }
-        resolve(deck)
+        resolve(object)
     });//ENDS db All
   })
 }
-function getDiscardedCards(gameId){
+function getDiscardedCards(object){
 return new Promise ((resolve, reject) => {
-  var deck = []
-  var cardObject = {};
-
+  object.discardedCards = [];
   db.get('SELECT * FROM DiscardedCards WHERE gameId ='+object.id, 
     function(err, row){
       if(err){throw err}
     
  for(var i = 1; i <= 25; i++){
-     deck.push(cardStringToObject(row['card'+i]))
+     object.discardedCards.push(cardStringToObject(row['card'+i]))
     }
-        resolve(deck)
+        resolve(object)
     });//ENDS db All
   })
 }
 
 
-Database.getCurrentGame = async function getCurrentGame(gameId){
+Database.getCurrentGame = (gameId) => {
+return new Promise((resolve, reject) => { 
   var gameObject = {
     id: gameId
   }
-  getGameObject(gameObject).then(object => 
-  gameObject.playingDeck = await getPlayingDeck(object);
-  gameObject.playedCards = await getPlayedCards(object);
-  gameObject.discardedCards = await getDiscardedCards(object);
-  gameObject.players = await getPlayers(object);
-  
-return gameObject
-  }
+  getGameObject(gameObject).then(object => getPlayingDeck(object))
+  .then(object => getPlayedCards(object))
+  .then(object => getDiscardedCards(object))
+  .then(object => getPlayers(object))
+  .then(object => resolve(object))
+  });
+};
 
    
  
