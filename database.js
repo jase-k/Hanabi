@@ -21,7 +21,7 @@ function convertCardArray(array){
   console.log(array[0].hints)
   var string = ''
   for(var i = 0; i < array.length; i++){  
-    if(array[i].color){
+    if(array[i]){
       string += '"'+array[i].color+'|'+array[i].number
       for(var j = 0; j < array[i].hints.length; j++){
         string += '|'+array[i].hints[j]
@@ -32,18 +32,21 @@ function convertCardArray(array){
     console.log(string)
     }
   }
-  console.log(string)
+  return string
 }
 
 function cardStringToObject(string){
 var object;
   if(string){
-var array = string.split(" ")
+var array = string.split("|")
 object = {
     color: array[0],
     number: array[1],
-    hints: []
-    }
+    hints: []    
+  }
+for(var i = 2; i <array.length; i++){
+    object.hints.push(array[i])
+    }  
   }
   return object
 }
@@ -53,7 +56,11 @@ var cardString = [{"color":"blue","number":"4","hints":['not red', 3, 'not white
                   {"color":"red","number":"4","hints":['red', 'not white', 'not 3']},
                   {"color":"black","number":"5","hints":['red', 'not white', 3]},null]
 
-convertCardArray(cardString);
+var newstring = convertCardArray(cardString);
+var objectnew = cardStringToObject(newstring);
+
+console.log(newstring)
+console.log(objectnew)
 
 const Database ={};
 
