@@ -13,12 +13,10 @@ function createCardString(number){
     string += 'card'+i+','
       }else{string += 'card'+i}
     }
-  console.log(string)
   return string
 }
 
 function convertCardArray(array){
-  console.log(array[0].hints)
   var string = ''
   for(var i = 0; i < array.length; i++){  
     if(array[i]){
@@ -29,7 +27,6 @@ function convertCardArray(array){
     if(i !== array.length-1){
            string += '",'
         }else{string += '"'}
-    console.log(string)
     }
   }
   return string
@@ -59,8 +56,8 @@ var cardString = [{"color":"blue","number":"4","hints":['not red', 3, 'not white
 var newstring = convertCardArray(cardString);
 var objectnew = cardStringToObject(newstring);
 
-console.log(newstring)
-console.log(objectnew)
+//console.log(newstring)
+//console.log(objectnew)
 
 const Database ={};
 
@@ -403,7 +400,11 @@ return new Promise ((resolve, reject) => {
     });//ENDS db All
   })    
 }
-Database.getGameObject = (gameId) => {}
+Database.getGameObject = (gameId) => {
+
+  db.get('SELECT * FROM HanabiGames WHERE id = $id', {$id: gameId}, function (err, row){
+  }
+}
 
 
 async function getCurrentGame(gameId){
@@ -411,12 +412,12 @@ async function getCurrentGame(gameId){
   players: []
   }
   gameObject.players = await Database.getPlayers(gameId);
-//  gameObject.playingDeck = await Database.getPlayingDeck(gameId);
+  gameObject.playingDeck = await Database.getPlayingDeck(gameId);
   console.log("=====CurrentGame======")
   console.log("Game:", JSON.stringify(gameObject))
 }
   
 
-//getCurrentGame(86) 
+getCurrentGame(87) 
  
 module.exports = Database
