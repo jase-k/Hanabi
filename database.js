@@ -456,7 +456,9 @@ var playerId;
     if(!playerId){
       console.log("Checking Name..")
       console.log(row.name)
+      console.log(name)
       if(!row.name && row.name !== name){
+        if(name !== row.name){console.log("These Rows Match")}
         console.log("Player Row:", row)
         playerId = row.id
         console.log("Player Id", playerId)
@@ -468,6 +470,6 @@ var playerId;
   })
 }
 
-addPlayer(2, 'Mitch')
-console.log(Database.getCurrentGame(2))
+addPlayer(9, 'Mitch')
+//Database.getCurrentGame(9).then(data => console.log(data))
 module.exports = Database
