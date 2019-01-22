@@ -452,11 +452,11 @@ var playerId;
   db.each('SELECT * FROM Players WHERE gameId = $id', 
           {$id: gameId}, 
           function(err,row){
-    if(err){console.log("Error at addPlayer SELECT", err)}
+    if(err){console.log("Error at addPlayer SELECT", err)} 
     if(!playerId){
       console.log("Checking Name..")
       console.log(row.name)
-      if(!row.name){
+      if(!row.name && row.name !== name){
         console.log("Player Row:", row)
         playerId = row.id
         console.log("Player Id", playerId)
@@ -468,6 +468,6 @@ var playerId;
   })
 }
 
-//addPlayer(2, 'Mitch')
- 
+addPlayer(2, 'Mitch')
+console.log(Database.getCurrentGame(2))
 module.exports = Database
