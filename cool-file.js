@@ -80,7 +80,6 @@ var totalHandSize;
   }else{
    totalHandSize = numberOfPlayers*4 
   }
-    console.log("Cards Dealt =", totalHandSize)
   
   for(var i= 0; i < array.length; i++){
  //doesn't start counting down until the cards are dealt   
@@ -100,9 +99,7 @@ var totalHandSize;
   };
   
    do{ 
-     console.log('Creating Deck...')
      gameDeck = shuffleDeck(newDeck());
-     console.log('Deck is winnable:', checkIfWinIsPossible(gameDeck))
    } while(!checkIfWinIsPossible(gameDeck))
    
    

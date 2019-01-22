@@ -61,7 +61,7 @@ var objectnew = cardStringToObject(newstring);
 
 const Database ={};
 
-  //   db.run('CREATE TABLE Players(id INTEGER PRIMARY KEY, gameId TEXT, name TEXT, '+createCardString(5)+')');
+  //db.run('CREATE TABLE Players(id INTEGER PRIMARY KEY, gameId TEXT, name TEXT, '+createCardString(5)+')');
  
 
 /*
@@ -78,7 +78,7 @@ db.serialize(() => {
       throw error;
     }
   })
-     db.run('CREATE TABLE HanabiGames (id INTEGER PRIMARY KEY, numberOfPlayers INTEGER NOT NULL, dateCreated DATE, score INTEGER)');
+     db.run('CREATE TABLE HanabiGames (id INTEGER PRIMARY KEY, numberOfPlayers INTEGER NOT NULL, dateCreated DATE, score INTEGER, hintsLeft INTEGER, livesLeft INTEGER)');
  db.each('SELECT * from HanabiGames', function(err, row) {
     console.log("Hanabi Table")  
     if ( row ) {
@@ -415,6 +415,8 @@ return new Promise ((resolve, reject) => {
     });
   });
 }
+Database.getPlayedCards = (gameId) => {}
+Database.getDiscardedCards = (gameId) => {}
 
 
 async function getCurrentGame(gameId){
@@ -422,13 +424,15 @@ async function getCurrentGame(gameId){
   players: []
   }
   gameObject = await Database.getGameObject(gameId)
-  gameObject.players = await Database.getPlayers(gameId);
   gameObject.playingDeck = await Database.getPlayingDeck(gameId);
+  
+  gameObject.players = await Database.getPlayers(gameId);
+  
   console.log("=====CurrentGame======")
   console.log("Game:", JSON.stringify(gameObject))
 }
   
 
-getCurrentGame(87) 
+// getCurrentGame() 
  
 module.exports = Database
