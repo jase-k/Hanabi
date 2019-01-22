@@ -79,6 +79,7 @@ db.serialize(() => {
     }
   })
      db.run('CREATE TABLE HanabiGames (id INTEGER PRIMARY KEY, numberOfPlayers INTEGER NOT NULL, dateCreated DATE, score INTEGER, hintsLeft INTEGER, livesLeft INTEGER)');
+ 
  db.each('SELECT * from HanabiGames', function(err, row) {
     console.log("Hanabi Table")  
     if ( row ) {
@@ -177,7 +178,7 @@ var i;
 function InsertHanabiRow(object) {
 return new Promise((resolve, reject) => {
   object.tableIds = {}
-    db.run('INSERT INTO HanabiGames(numberOfPlayers, dateCreated) VALUES('+object.numberOfPlayers+',"'+object.dateCreated+'")',
+    db.run('INSERT INTO HanabiGames(numberOfPlayers, dateCreated, hintsLeft, livesLeft) VALUES('+object.numberOfPlayers+',"'+object.dateCreated+'",'+ object.hintsLeft+','+object.livesLeft+')',
          {}, 
   function(err){
     if(err){ console.log(err)
@@ -239,13 +240,10 @@ return new Promise((resolve, reject) => {
   var i = 1
   var number = object.players[i].hand.length
   console.log('Number of Cards in Each Hand', number)
-    console.log('first i:', i)
   db.run('INSERT INTO Players (gameId,'+createCardString(number)+') VALUES('+object.tableIds.gameId+','+convertCardArray(object.players[i-1].hand)+') ', {}, 
              function(err){
                 if(err){throw err}
     object.tableIds.playersId.push(this.lastID)
-    console.log('I =', i)
-    console.log('Players Length', object.players.length)
     
     if(i == object.players.length){
       resolve(object)
@@ -255,8 +253,6 @@ db.run('INSERT INTO Players (gameId,'+createCardString(number)+') VALUES('+objec
              function(err){
                 if(err){throw err}
     object.tableIds.playersId.push(this.lastID)
-    console.log('I =', i)
-    console.log('Players Length', object.players.length)
     
     if(i == object.players.length){
       resolve(object)
@@ -265,8 +261,6 @@ db.run('INSERT INTO Players (gameId,'+createCardString(number)+') VALUES('+objec
              function(err){
                 if(err){throw err}
     object.tableIds.playersId.push(this.lastID)
-    console.log('I =', i)
-    console.log('Players Length', object.players.length)
     
     if(i == object.players.length){
       resolve(object)
@@ -275,8 +269,6 @@ db.run('INSERT INTO Players (gameId,'+createCardString(number)+') VALUES('+objec
              function(err){
                 if(err){throw err}
     object.tableIds.playersId.push(this.lastID)
-    console.log('I =', i)
-    console.log('Players Length', object.players.length)
     
     if(i == object.players.length){
       resolve(object)
@@ -285,8 +277,6 @@ db.run('INSERT INTO Players (gameId,'+createCardString(number)+') VALUES('+objec
              function(err){
                 if(err){throw err}
     object.tableIds.playersId.push(this.lastID)
-    console.log('I =', i)
-    console.log('Players Length', object.players.length)
       resolve(object)
 });
     }
@@ -296,7 +286,6 @@ db.run('INSERT INTO Players (gameId,'+createCardString(number)+') VALUES('+objec
     }
 });
     }
-            //console.log("Players id:", currentGame.PlayersId);  
   });
      
     
@@ -409,7 +398,9 @@ return new Promise ((resolve, reject) => {
     object = {
     id: gameId,
     score: row.score,
-    dateCreated: row.dateCreated
+    dateCreated: row.dateCreated,
+    hintsLeft: row.hintsLeft,
+    livesLeft: row.livesLeft
     }
     resolve(object)
     });
@@ -433,6 +424,6 @@ async function getCurrentGame(gameId){
 }
   
 
-// getCurrentGame() 
+//getCurrentGame(1) 
  
 module.exports = Database

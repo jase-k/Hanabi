@@ -56,6 +56,8 @@ app.get('/newgame/:numberOfPlayers', function(request, response) {
 newGame.numberOfPlayers = numberOfPlayers;
 newGame.dateCreated = new Date();
 newGame.score = null;
+newGame.hintsLeft = 9;
+newGame.livesLeft = 3;
 newGame.originalDeck = newDeck.slice();
 
 //deals Hand and Returns the rest of the Deck array and Player Hands
