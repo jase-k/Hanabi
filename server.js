@@ -113,8 +113,13 @@ app.get('/game/:gameid/:name', function(request, response){
 app.get('/game/:gameid/:name/playcard', function(request, response){
 
 });
+var name = 'Joe'
+var cardIndex = 2
   Database.getCurrentGame(3).then(function(results){
-   results.players 
+   var playerIndex = results.players.findIndex(i => i.name === name);
+   console.log("Player Index", playerIndex)
+    console.log("Played Cards", results.playedCards)
+   console.log(results.players[playerIndex].hand[cardIndex])
   })
 
 
