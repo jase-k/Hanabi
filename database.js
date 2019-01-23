@@ -239,7 +239,7 @@ return new Promise((resolve, reject) => {
   object.tableIds.playersId = []
   var i = 1
   var number = object.players[i].hand.length
-  db.run('INSERT INTO Players (gameId, name , '+createCardString(number)+') VALUES('+object.tableIds.gameId+',"'+object.players[0].name+'",'+convertCardArray(object.players[i-1].hand)+') ', {}, 
+  db.run('INSERT INTO Players (gameId, name, active,  '+createCardString(number)+') VALUES('+object.tableIds.gameId+',"'+object.players[0].name+'", 1 ,'+convertCardArray(object.players[i-1].hand)+') ', {}, 
              function(err){
                 if(err){throw err}
     object.tableIds.playersId.push(this.lastID)
@@ -475,5 +475,22 @@ if(row.name !== name){
 }
 
 
+
+
+//=========================================
+// Play a Card
+//========================================
+//name is the player Playing the Card, cardNumber is the Number (1-5)
+function playCard(gameId, name, cardNumber){
+  db.get('SELECT * FROM Players WHERE gameId = $id AND name = $name', {id: gameId, $name:name}, function(err, row){
+  if(err){ console.log("Error at playCard()", err)}
+    console.log(row)
+  })
+}
+playCard(2, 'Jase', 0)
+
+
+
 //Database.getCurrentGame(1).then(data => console.log(data))
 module.exports = Database
+
