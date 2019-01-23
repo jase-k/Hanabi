@@ -125,7 +125,7 @@ var gameId = request.params.gameid
 //==== Replace the First Card undefined Card in the Played Cards Array========//  
   var playerIndex = results.players.findIndex(i => i.name === name);
     console.log("player index", playerIndex)
-   if(playerIndex == -1){
+  if(playerIndex == -1){
     response.send("Couldn't Find Player!")
     return; 
    }
@@ -152,8 +152,11 @@ var gameId = request.params.gameid
 //==== Replace the First Card undefined Card in the Played Cards Array========//  
   var playerIndex = results.players.findIndex(i => i.name === name);
   var discardedCardIndex = results.discardedCards.indexOf(undefined)
+  if(playerIndex == -1){
+    response.send("Couldn't Find Player!")
+    return; 
+   }
    results.discardedCards.splice(discardedCardIndex, 1, results.players[playerIndex].hand[cardIndex])
- 
 //==== Replace the Hand Card with the Next Card from the Deck ===//
   var nextCard = results.playingDeck.shift()
   results.players[playerIndex].hand.splice(cardIndex, 1, nextCard)    
@@ -165,6 +168,8 @@ var gameId = request.params.gameid
  
 app.get('/game/:gameid/:name/givehint', function(request, response){
 var name = request.params.name
+console.log(name)
+
 var hint = request.query.hint
 var player = request.query.player //The Player Receiving the Hint! 
 var gameId = request.params.gameid
@@ -181,8 +186,14 @@ console.log('hintType', hintType)
 //=== Getting Data from the DataBase==//
  Database.getCurrentGame(gameId).then(function(results){
     console.log(JSON.stringify(results))
-   var playerIndex = results.players.findIndex(i => i.name === player);
-   console.log(player,'s index:',playerIndex)
+   
+  var nameIndex = results.players.findIndex(i => i.name === name)
+    if(nameIndex == -1){ response.send("Couldn't Find You!");  return; } // Returns if name isn't found
+    if(!results.players[nameIndex].active){ response.send("Sorry, it's not your Turn!"); return;} //Returns if name isn't active
+   
+  var playerIndex = results.players.findIndex(i => i.name === player);
+    if(playerIndex == -1){    response.send("Couldn't Find Player!");  return; } // Returns if player isn't found
+   
    var hand = results.players[playerIndex].hand
    console.log('hand', hand)
  for(var i =0; i < hand.length; i++){
