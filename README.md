@@ -65,7 +65,7 @@ and provide the `live` experience.
 
 ## Play Card
 
-Call `/game/:gameid/playcard?name=TEXT&card=INTEGER`
+Call `/game/:gameid/:name/playcard?cardIndex=INTEGER`
 
 This will add the played card to the `playedCards` Array in the database and replace the card with the first card from the `playingDeck` Array. 
 If the card does NOT play it will reduce the `livesLeft` by one.
@@ -74,16 +74,16 @@ It will then set `active` to `false` and make the next player's `active` `true`.
 
 ## Discard Card
 
-Call `/game/:gameid/discard?name=TEXT&card=INTEGER`
+Call `/game/:gameid/:name/discard?cardIndex=INTEGER`
 
 This will add the discarded card to the `discardedCards` array in the database, and replace the card with the first card from the `playingDeck` Array.
 It will then set `active` to `false` and make the next player's `active` `true`. 
 
 ## Hint:
 
-Call `/game/:gameid/hint/:name?name=TEXT&hint=TEXT`
+Call `/game/:gameid/:name/givehint?name=TEXT&hint=TEXT`
 
-Hint Text has to be one of the following: `['color', 'not color', 'number', 'not number']`
+Hint Text has to be one of the following: `['orange', 'blue', 'black', 'white', 'red', 1, 2, 3, 4, 5]`
 
 **request.params.name = The person Receiving the hint**
 

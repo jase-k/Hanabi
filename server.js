@@ -77,7 +77,7 @@ Database.createRows(newGame).then(results => response.json(results))
 });
 
 
-app.get('/joingame/:gameid', function(request, response){
+itapp.get('/joingame/:gameid', function(request, response){
   var name = request.query.name
   var gameId = request.params.gameid
   Database.addPlayer(gameId, name) 
