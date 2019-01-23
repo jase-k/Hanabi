@@ -483,7 +483,11 @@ Database.updateGame = (object) =>{
 
 }
 
-function updatePlayingDeck(deck) {
+function updatePlayingDeck(deck, id){
+  var sql = `UPDATE PlayingDeck
+            SET
+            WHERE gameId = ${id}`
+  db.run(sql)
 }
 
 //=========================================
