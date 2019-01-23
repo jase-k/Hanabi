@@ -131,6 +131,29 @@ var gameId = request.params.gameid
   })
 });
 
+app.get('/game/:gameid/:name/discardcard', function(request, response){
+var name = request.params.name
+var cardIndex = request.query.cardIndex
+var gameId = request.params.gameid
+
+  Database.getCurrentGame(gameId).then(function(results){
+    console.log(JSON.stringify(results))
+    
+//==== Replace the First Card undefined Card in the Played Cards Array========//  
+  var playerIndex = results.players.findIndex(i => i.name === name);
+  var discardedCardIndex = results.discardedCards.indexOf(undefined)
+   results.discardedCards.splice(discardedCardIndex, 1, results.players[playerIndex].hand[cardIndex])
+ 
+//==== Replace the Hand Card with the Next Card from the Deck ===//
+  var nextCard = results.playingDeck.shift()
+  results.players[playerIndex].hand.splice(cardIndex, 1, nextCard)    
+  console.log("new Results:", JSON.stringify(results))
+  Database.updateGame(results)
+  response.send(results)
+  })
+});
+
+app.get('/game/:gameid/:name/givehint', u
 
 
 // listen for requests :)
