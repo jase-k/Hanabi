@@ -153,7 +153,23 @@ var gameId = request.params.gameid
   })
 });
 
-app.get('/game/:gameid/:name/givehint', u
+app.get('/game/:gameid/:name/givehint', function(request, response){
+var name = request.params.name
+var hint = request.query.hint
+var player = request.query.player //The Player Receiving the Hint! 
+var gameId = request.params.gameid
+ Database.getCurrentGame(gameId).then(function(results){
+    console.log(JSON.stringify(results))
+   var playerIndex = results.players.findIndex(i => i.name === player);
+   var hand = results.players[playerIndex]
+   
+   results.players[playerIndex].hand.hints.push(hint)
+   results.hintsLeft -= 1;  
+  Database.updateGame(results)
+response.send(results)
+ 
+ });
+});
 
 
 // listen for requests :)
