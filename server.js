@@ -111,25 +111,26 @@ app.get('/game/:gameid/:name', function(request, response){
 });
 
 app.get('/game/:gameid/:name/playcard', function(request, response){
-
-});
-var name = 'Joe'
-var cardIndex = 2
-  Database.getCurrentGame(3).then(function(results){
-    console.log(results)
+var name = request.params.name
+var cardIndex = request.query.cardIndex
+var gameId = request.params.gameid
+  Database.getCurrentGame(gameId).then(function(results){
+    console.log(JSON.stringify(results))
+    
 //==== Replace the First Card undefined Card in the Played Cards Array========//  
   var playerIndex = results.players.findIndex(i => i.name === name);
   var playedCardIndex = results.playedCards.indexOf(undefined)
    results.playedCards.splice(playedCardIndex, 1, results.players[playerIndex].hand[cardIndex])
-   console.log("Player Index", playerIndex)
-   console.log("playedCardIndex", playedCardIndex)
-   console.log("Played Cards", results.playedCards)
+ 
 //==== Replace the Hand Card with the Next Card from the Deck ===//
   var nextCard = results.playingDeck.shift()
-   console.log("nextCard from the Deck:", nextCard)
-    
-    console.log("new Results:", results
+  results.players[playerIndex].hand.splice(cardIndex, 1, nextCard)    
+  console.log("new Results:", JSON.stringify(results))
+  Database.updateGame(results)
+  response.send(results)
   })
+});
+
 
 
 // listen for requests :)
