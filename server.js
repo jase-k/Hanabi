@@ -169,24 +169,33 @@ var hintType;
 var hintValue; // Is the hint 'not'?
   if(hint.includes('Not')){hintValue = false}
   else{hintValue = true}
+console.log('hintType', hintType) 
+console.log('hintValue', hintValue)
   
 //=== Getting Data from the DataBase==//
  Database.getCurrentGame(gameId).then(function(results){
     console.log(JSON.stringify(results))
    var playerIndex = results.players.findIndex(i => i.name === player);
-   var hand = results.players[playerIndex]
+   console.log(player,'s index:',playerIndex)
+   var hand = results.players[playerIndex].hand
+   console.log('hand', hand)
  for(var i =0; i < hand.length; i++){
      var card = hand[i]
      console.log("card:", card)
-  if(card){ //
+  if(card){ //makes sure the card is not null
    if(hintValue){
-      if(card.hintType == hint){ results.players[playerIndex].hand[i].hints.push(hint) }
-  }else{ if(!hint.includes(card.hintType)){results.players[playerIndex].hand[i].hints.push(hint) }}
+        console.log("Hint Doesn't Include 'not'")
+        
+      if(card.hintType == hint){ 
+        results.players[playerIndex].hand[i].hints.push(hint) } //if the hint matches the card value push the hint
+  }else{ 
+    console.log('Hint Value Includes "not"')
+    if(!hint.includes(card.hintType)){results.players[playerIndex].hand[i].hints.push(hint) }}
      }
+ 
  }
-   results.players[playerIndex].hand.hints.push(hint)
    results.hintsLeft -= 1;  
-  Database.updateGame(results)
+Database.updateGame(results)
 response.send(results)
  
  });
