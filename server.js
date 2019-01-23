@@ -112,6 +112,9 @@ app.get('/game/:gameid/:name', function(request, response){
   
 });
 
+
+//== Playing Choices ==//
+
 app.get('/game/:gameid/:name/playcard', function(request, response){
 var name = request.params.name
 var cardIndex = request.query.cardIndex
@@ -121,6 +124,11 @@ var gameId = request.params.gameid
     
 //==== Replace the First Card undefined Card in the Played Cards Array========//  
   var playerIndex = results.players.findIndex(i => i.name === name);
+    console.log("player index", playerIndex)
+   if(playerIndex == -1){
+    response.send("Couldn't Find Player!")
+    return; 
+   }
   var playedCardIndex = results.playedCards.indexOf(undefined)
    results.playedCards.splice(playedCardIndex, 1, results.players[playerIndex].hand[cardIndex])
  
