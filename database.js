@@ -165,15 +165,7 @@ db.serialize(() => {
 //============================
 // Creating New Game (6 tables)
 //============================
-// Object Keys: 
-/* numberOfPlayers
-   originalDeck
-   playingDeck
-   players{
-     name
-      hand: []
-      }
-    */
+
 var i;
 function InsertHanabiRow(object) {
 return new Promise((resolve, reject) => {
@@ -484,12 +476,21 @@ Database.updateGame = (object) =>{
 }
 
 function updatePlayingDeck(deck, id){
+  var setString; 
+for(var i = 0; i < deck.playingDeck.length; i++){
+  console.log(i)
+  
+}
+  
+  
   var sql = `UPDATE PlayingDeck
             SET
             WHERE gameId = ${id}`
-  db.run(sql)
-}
-
+ // db.run(sql)
+  console.log(sql)
+  }
+var object = {"numberOfPlayers":"5","dateCreated":"2019-01-23T14:05:55.013Z","score":null,"hintsLeft":9,"livesLeft":3,"originalDeck":[{"color":"orange","number":2,"hints":[],"cardsLeftToPlay":3},{"color":"orange","number":4,"hints":[],"cardsLeftToPlay":1},{"color":"black","number":1,"hints":[],"cardsLeftToPlay":4},{"color":"black","number":4,"hints":[],"cardsLeftToPlay":1},{"color":"black","number":5,"hints":[],"cardsLeftToPlay":0},{"color":"red","number":4,"hints":[],"cardsLeftToPlay":1},{"color":"white","number":1,"hints":[],"cardsLeftToPlay":4},{"color":"red","number":3,"hints":[],"cardsLeftToPlay":2},{"color":"red","number":1,"hints":[],"cardsLeftToPlay":4},{"color":"white","number":1,"hints":[]},{"color":"orange","number":2,"hints":[]},{"color":"orange","number":3,"hints":[],"cardsLeftToPlay":2},{"color":"black","number":3,"hints":[],"cardsLeftToPlay":2},{"color":"black","number":2,"hints":[],"cardsLeftToPlay":3},{"color":"black","number":1,"hints":[]},{"color":"blue","number":5,"hints":[],"cardsLeftToPlay":0},{"color":"red","number":2,"hints":[],"cardsLeftToPlay":3},{"color":"blue","number":1,"hints":[],"cardsLeftToPlay":4},{"color":"red","number":2,"hints":[]},{"color":"white","number":4,"hints":[],"cardsLeftToPlay":1},{"color":"red","number":3,"hints":[]},{"color":"black","number":3,"hints":[]},{"color":"red","number":5,"hints":[],"cardsLeftToPlay":0},{"color":"white","number":4,"hints":[]},{"color":"orange","number":4,"hints":[]},{"color":"blue","number":3,"hints":[],"cardsLeftToPlay":2},{"color":"white","number":5,"hints":[],"cardsLeftToPlay":0},{"color":"white","number":3,"hints":[],"cardsLeftToPlay":2},{"color":"white","number":1,"hints":[]},{"color":"blue","number":4,"hints":[],"cardsLeftToPlay":1},{"color":"white","number":2,"hints":[],"cardsLeftToPlay":3},{"color":"red","number":4,"hints":[]},{"color":"orange","number":1,"hints":[],"cardsLeftToPlay":4},{"color":"blue","number":2,"hints":[],"cardsLeftToPlay":3},{"color":"blue","number":4,"hints":[]},{"color":"black","number":2,"hints":[]},{"color":"white","number":3,"hints":[]},{"color":"orange","number":5,"hints":[],"cardsLeftToPlay":0},{"color":"red","number":1,"hints":[]},{"color":"red","number":1,"hints":[]},{"color":"black","number":1,"hints":[]},{"color":"orange","number":3,"hints":[]},{"color":"orange","number":1,"hints":[]},{"color":"blue","number":2,"hints":[]},{"color":"white","number":2,"hints":[]},{"color":"blue","number":3,"hints":[]},{"color":"blue","number":1,"hints":[]},{"color":"blue","number":1,"hints":[]},{"color":"orange","number":1,"hints":[]},{"color":"black","number":4,"hints":[]}],"playingDeck":[{"color":"red","number":3,"hints":[]},{"color":"black","number":3,"hints":[]},{"color":"red","number":5,"hints":[],"cardsLeftToPlay":0},{"color":"white","number":4,"hints":[]},{"color":"orange","number":4,"hints":[]},{"color":"blue","number":3,"hints":[],"cardsLeftToPlay":2},{"color":"white","number":5,"hints":[],"cardsLeftToPlay":0},{"color":"white","number":3,"hints":[],"cardsLeftToPlay":2},{"color":"white","number":1,"hints":[]},{"color":"blue","number":4,"hints":[],"cardsLeftToPlay":1},{"color":"white","number":2,"hints":[],"cardsLeftToPlay":3},{"color":"red","number":4,"hints":[]},{"color":"orange","number":1,"hints":[],"cardsLeftToPlay":4},{"color":"blue","number":2,"hints":[],"cardsLeftToPlay":3},{"color":"blue","number":4,"hints":[]},{"color":"black","number":2,"hints":[]},{"color":"white","number":3,"hints":[]},{"color":"orange","number":5,"hints":[],"cardsLeftToPlay":0},{"color":"red","number":1,"hints":[]},{"color":"red","number":1,"hints":[]},{"color":"black","number":1,"hints":[]},{"color":"orange","number":3,"hints":[]},{"color":"orange","number":1,"hints":[]},{"color":"blue","number":2,"hints":[]},{"color":"white","number":2,"hints":[]},{"color":"blue","number":3,"hints":[]},{"color":"blue","number":1,"hints":[]},{"color":"blue","number":1,"hints":[]},{"color":"orange","number":1,"hints":[]},{"color":"black","number":4,"hints":[]}],"discardedCards":[],"playedCards":[],"players":[{"name":"Jase","hand":[{"color":"orange","number":2,"hints":[],"cardsLeftToPlay":3},{"color":"red","number":4,"hints":[],"cardsLeftToPlay":1},{"color":"orange","number":2,"hints":[]},{"color":"blue","number":5,"hints":[],"cardsLeftToPlay":0}]},{"name":null,"hand":[{"color":"orange","number":4,"hints":[],"cardsLeftToPlay":1},{"color":"white","number":1,"hints":[],"cardsLeftToPlay":4},{"color":"orange","number":3,"hints":[],"cardsLeftToPlay":2},{"color":"red","number":2,"hints":[],"cardsLeftToPlay":3}]},{"name":null,"hand":[{"color":"black","number":1,"hints":[],"cardsLeftToPlay":4},{"color":"red","number":3,"hints":[],"cardsLeftToPlay":2},{"color":"black","number":3,"hints":[],"cardsLeftToPlay":2},{"color":"blue","number":1,"hints":[],"cardsLeftToPlay":4}]},{"name":null,"hand":[{"color":"black","number":4,"hints":[],"cardsLeftToPlay":1},{"color":"red","number":1,"hints":[],"cardsLeftToPlay":4},{"color":"black","number":2,"hints":[],"cardsLeftToPlay":3},{"color":"red","number":2,"hints":[]}]},{"name":null,"hand":[{"color":"black","number":5,"hints":[],"cardsLeftToPlay":0},{"color":"white","number":1,"hints":[]},{"color":"black","number":1,"hints":[]},{"color":"white","number":4,"hints":[],"cardsLeftToPlay":1}]}],"tableIds":{"gameId":3,"originalDeckId":3,"playingDeckId":4,"DiscardedCardsId":3,"PlayedCardsId":3,"playersId":[8,9,10,11,12]}}
+updatePlayingDeck(object, 3) 
 //=========================================
 // Play a Card
 //========================================
