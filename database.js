@@ -475,19 +475,33 @@ if(row.name !== name){
 }
 
 
+//========================================
+//  Update Game
+//=======================================
 
+Database.updateGame = (object) =>{
+
+}
+
+function updatePlayingDeck(deck) {
+}
 
 //=========================================
 // Play a Card
 //========================================
 //name is the player Playing the Card, cardNumber is the Number (1-5)
-function playCard(gameId, name, cardNumber){
-  db.get('SELECT * FROM Players WHERE gameId = $id AND name = $name', {id: gameId, $name:name}, function(err, row){
+function playCard(gameId, name, cardIndex){
+var object = {};
+    object.cardIndex = cardIndex;
+  db.get('SELECT * FROM Players WHERE gameId = $id AND name = $name', {$id: gameId, $name:name}, function(err, row){
   if(err){ console.log("Error at playCard()", err)}
-    console.log(row)
+    object.playerRowId = row.id
+  db.get('SELECT * FROM PlayingDeck WHERE gameId = $id',{$id: gameId}, function(err, row){
+    console.log(row, object)
+    })
   })
 }
-playCard(2, 'Jase', 0)
+//playCard(2, 'Kiana', 0) 
 
 
 
