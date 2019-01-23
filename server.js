@@ -129,6 +129,7 @@ var gameId = request.params.gameid
     response.send("Couldn't Find Player!")
     return; 
    }
+         if(!results.players[playerIndex].active){ response.send("Sorry, it's not your Turn!"); return;} //Returns if name isn't active
   var playedCardIndex = results.playedCards.indexOf(undefined)
    results.playedCards.splice(playedCardIndex, 1, results.players[playerIndex].hand[cardIndex])
  
@@ -152,15 +153,21 @@ var gameId = request.params.gameid
 //==== Replace the First Card undefined Card in the Played Cards Array========//  
   var playerIndex = results.players.findIndex(i => i.name === name);
   var discardedCardIndex = results.discardedCards.indexOf(undefined)
-  if(playerIndex == -1){
-    response.send("Couldn't Find Player!")
-    return; 
-   }
-   results.discardedCards.splice(discardedCardIndex, 1, results.players[playerIndex].hand[cardIndex])
+     if(playerIndex == -1){ response.send("Couldn't Find Player!"); return; } // Returns if name isn't Found
+     if(!results.players[playerIndex].active){ response.send("Sorry, it's not your Turn!"); return;} //Returns if name isn't active
+    
+ results.discardedCards.splice(discardedCardIndex, 1, results.players[playerIndex].hand[cardIndex])
+
 //==== Replace the Hand Card with the Next Card from the Deck ===//
   var nextCard = results.playingDeck.shift()
   results.players[playerIndex].hand.splice(cardIndex, 1, nextCard)    
   console.log("new Results:", JSON.stringify(results))
+
+//===== Switch the Active Player ====//
+    results.players[playerIndex].active = 0
+var newIndex = (playerIndex+1) % results.players.length
+    results.players[newIndex].active = 1
+    
   Database.updateGame(results)
   response.send(results)
   })
