@@ -110,6 +110,12 @@ app.get('/game/:gameid/:name', function(request, response){
   
 });
 
+app.get('/game/:gameid/:name/playcard', function(request, response){
+
+});
+  Database.getCurrentGame(3).then(function(results){
+   results.players 
+  })
 
 
 // listen for requests :)

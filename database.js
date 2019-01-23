@@ -514,14 +514,13 @@ function updateDeck(array, id, tableName){
 
 //This function takes an individual playerObject as an argument and updates the row. 
 function updatePlayers(playerObject){
-  console.log(playerObject)
   var setString = convertCardArrayForUpdate(playerObject.hand, 5)
   var sql = `UPDATE Players
             SET ${setString}
             WHERE id = ${playerObject.id}`
-  console.log(sql)
+  db.run(sql)
 }
-
+//This function updates score, livesLeft, hintsLeft
 function updateHanabiGame(gameObject){
   
   var sql = `UPDATE HanabiGames
@@ -534,23 +533,19 @@ var object = {"id":3,"score":23,
               "dateCreated":"Wed Jan 23 2019 14:05:55 GMT+0000 (UTC)",
               "hintsLeft":8,
               "livesLeft":3,
-              "playingDeck":[{"color":"green","number":"5","hints":[]},{"color":"white","number":"4","hints":[]},{"color":"orange","number":"4","hints":[]},{"color":"blue","number":"3","hints":[]},{"color":"white","number":"5","hints":[]},{"color":"white","number":"3","hints":[]},{"color":"white","number":"1","hints":[]},{"color":"blue","number":"4","hints":[]},{"color":"white","number":"2","hints":[]},{"color":"red","number":"4","hints":[]},{"color":"orange","number":"1","hints":[]},{"color":"blue","number":"2","hints":[]},{"color":"blue","number":"4","hints":[]},{"color":"black","number":"2","hints":[]},{"color":"white","number":"3","hints":[]},{"color":"orange","number":"5","hints":[]},{"color":"red","number":"1","hints":[]},{"color":"red","number":"1","hints":[]},{"color":"black","number":"1","hints":[]},{"color":"orange","number":"3","hints":[]},{"color":"orange","number":"1","hints":[]},{"color":"blue","number":"2","hints":[]},{"color":"white","number":"2","hints":[]},{"color":"blue","number":"3","hints":[]},{"color":"blue","number":"1","hints":[]},{"color":"blue","number":"1","hints":[]},{"color":"orange","number":"1","hints":[]},{"color":"black","number":"4","hints":[]},null,null,null,null,null,null,null,null,null,null,null,null,null,null,{color: "blue", number: 4, hints: ["not black", "4", "red"]},null,null,null,null,null,null,null],"playedCards":[null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null],"discardedCards":[{"color":"orange","number":"2","hints":[]},null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null],"players":[{"id":8,"name":"Jase","active":1,"hand":[{"color":"orange","number":"2","hints":[]},{"color":"red","number":"4","hints":[]},{"color":"orange","number":"2","hints":[]},{"color":"blue","number":"5","hints":[]},null]},{"id":9,"name":"Joe","active":null,"hand":[{"color":"orange","number":"4","hints":[]},{"color":"white","number":"1","hints":[]},{"color":"orange","number":"3","hints":[]},{"color":"red","number":"2","hints":[]},null]},{"id":10,"name":null,"active":null,"hand":[{"color":"black","number":"1","hints":[]},{"color":"red","number":"3","hints":[]},{"color":"black","number":"3","hints":[]},{"color":"blue","number":"1","hints":[]},null]},{"id":11,"name":null,"active":null,"hand":[{"color":"black","number":"4","hints":[]},{"color":"red","number":"1","hints":[]},{"color":"black","number":"2","hints":[]},{"color":"red","number":"2","hints":[]},null]},{"id":12,"name":null,"active":null,"hand":[{"color":"black","number":"5","hints":[]},{"color":"white","number":"1","hints":[]},{"color":"black","number":"1","hints":[]},{"color":"white","number":"4","hints":["black"]},null]}],"message":"Success!"}
+              "playingDeck":[{"color":"green","number":"5","hints":[]},{"color":"white","number":"4","hints":[]},{"color":"orange","number":"4","hints":[]},{"color":"blue","number":"3","hints":[]},{"color":"white","number":"5","hints":[]},{"color":"white","number":"3","hints":[]},{"color":"white","number":"1","hints":[]},{"color":"blue","number":"4","hints":[]},{"color":"white","number":"2","hints":[]},{"color":"red","number":"4","hints":[]},{"color":"orange","number":"1","hints":[]},{"color":"blue","number":"2","hints":[]},{"color":"blue","number":"4","hints":[]},{"color":"black","number":"2","hints":[]},{"color":"white","number":"3","hints":[]},{"color":"orange","number":"5","hints":[]},{"color":"red","number":"1","hints":[]},{"color":"red","number":"1","hints":[]},{"color":"black","number":"1","hints":[]},{"color":"orange","number":"3","hints":[]},{"color":"orange","number":"1","hints":[]},{"color":"blue","number":"2","hints":[]},{"color":"white","number":"2","hints":[]},{"color":"blue","number":"3","hints":[]},{"color":"blue","number":"1","hints":[]},{"color":"blue","number":"1","hints":[]},{"color":"orange","number":"1","hints":[]},{"color":"black","number":"4","hints":[]},null,null,null,null,null,null,null,null,null,null,null,null,null,null,{color: "blue", number: 4, hints: ["not black", "4", "red"]},null,null,null,null,null,null,null],
+              "playedCards":[null,null,{"color":"black", "number":"3", "hints": ["black","not2"]},null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null],
+              "discardedCards":[{"color":"orange","number":"2","hints":[]},null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null],
+              "players":[{"id":8,"name":"Jase","active":1,"hand":[{"color":"puke","number":"2","hints":["black"]},{"color":"red","number":"4","hints":[]},{"color":"orange","number":"2","hints":[]},{"color":"blue","number":"5","hints":[]},null]},{"id":9,"name":"Joe","active":null,"hand":[{"color":"orange","number":"4","hints":[]},{"color":"white","number":"1","hints":[]},{"color":"orange","number":"3","hints":[]},{"color":"red","number":"2","hints":[]},null]},{"id":10,"name":null,"active":null,"hand":[{"color":"black","number":"1","hints":[]},{"color":"red","number":"3","hints":[]},{"color":"black","number":"3","hints":[]},{"color":"blue","number":"1","hints":[]},null]},{"id":11,"name":null,"active":null,"hand":[{"color":"black","number":"4","hints":[]},{"color":"red","number":"1","hints":[]},{"color":"black","number":"2","hints":[]},{"color":"red","number":"2","hints":[]},null]},{"id":12,"name":null,"active":null,"hand":[{"color":"black","number":"5","hints":[]},{"color":"white","number":"1","hints":[]},{"color":"black","number":"1","hints":[]},{"color":"white","number":"4","hints":["black"]},null]}],"message":"Success!"}
  
 //Database.updateGame(object)
 //=========================================
 // Play a Card
 //========================================
 //name is the player Playing the Card, cardNumber is the Number (1-5)
-function playCard(gameId, name, cardIndex){
-var object = {};
-    object.cardIndex = cardIndex;
-  db.get('SELECT * FROM Players WHERE gameId = $id AND name = $name', {$id: gameId, $name:name}, function(err, row){
-  if(err){ console.log("Error at playCard()", err)}
-    object.playerRowId = row.id
-  db.get('SELECT * FROM PlayingDeck WHERE gameId = $id',{$id: gameId}, function(err, row){
-    console.log(row, object)
-    })
-  })
+
+function playCard(gameId, name, cardIndex){  
+  
 }
 //playCard(2, 'Kiana', 0) 
 
