@@ -447,7 +447,7 @@ return new Promise((resolve, reject) => {
 // Join a Game 
 //===========================================
 function addPlayer(gameId, name){
-
+  var playerId;
   db.each('SELECT * FROM Players WHERE gameId = $id', 
           {$id: gameId}, 
           function(err,row){
@@ -459,19 +459,18 @@ function addPlayer(gameId, name){
    if(row.name){  
      if(row.name !== name){
         console.log("Player Row:", row)
-       var  playerId = row.id
+      //var  playerId = row.id
         console.log("Player Id", playerId)
          }
       }
     }
   },
       function(err, Allrows){
-    if(playerId){
+    
     db.run('UPDATE Players Set name = $name WHERE id = $id', {$name: name, $id: playerId})    
-  }
   })
 }
  
-addPlayer(11, 'Drew')  
-//Database.getCurrentGame(11).then(data => console.log(data))
+ addPlayer(12, 'Drew')  
+//Database.getCurrentGame(12).then(data => console.log(data))
 module.exports = Database
