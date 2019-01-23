@@ -116,10 +116,19 @@ app.get('/game/:gameid/:name/playcard', function(request, response){
 var name = 'Joe'
 var cardIndex = 2
   Database.getCurrentGame(3).then(function(results){
-   var playerIndex = results.players.findIndex(i => i.name === name);
+    console.log(results)
+//==== Replace the First Card undefined Card in the Played Cards Array========//  
+  var playerIndex = results.players.findIndex(i => i.name === name);
+  var playedCardIndex = results.playedCards.indexOf(undefined)
+   results.playedCards.splice(playedCardIndex, 1, results.players[playerIndex].hand[cardIndex])
    console.log("Player Index", playerIndex)
-    console.log("Played Cards", results.playedCards)
-   console.log(results.players[playerIndex].hand[cardIndex])
+   console.log("playedCardIndex", playedCardIndex)
+   console.log("Played Cards", results.playedCards)
+//==== Replace the Hand Card with the Next Card from the Deck ===//
+  var nextCard = results.playingDeck.shift()
+   console.log("nextCard from the Deck:", nextCard)
+    
+    console.log("new Results:", results
   })
 
 
