@@ -152,17 +152,33 @@ var gameId = request.params.gameid
   response.send(results)
   })
 });
-
+ const colors = ['white', 'red', 'black', 'orange', 'blue']
 app.get('/game/:gameid/:name/givehint', function(request, response){
 var name = request.params.name
 var hint = request.query.hint
 var player = request.query.player //The Player Receiving the Hint! 
 var gameId = request.params.gameid
+//==== Parsing the hint ====//
+var hintType;
+  for(var i = 0; i < colors.length; i++){
+     if(hint.includes(colors[i])){
+      hintType = 'color'
+     break;
+      }else{hintType = 'number'}
+   }
+var hintValue; // Is the hint 'not'?
+  if(hint.includes('Not'))
+//=== Getting Data from the DataBase==//
  Database.getCurrentGame(gameId).then(function(results){
     console.log(JSON.stringify(results))
    var playerIndex = results.players.findIndex(i => i.name === player);
    var hand = results.players[playerIndex]
-   
+ for(var i =0; i < hand.length; i++){
+     var card = hand[i].color+' '+hand[i].number
+     console.log("card:", card)
+  
+     
+     }
    results.players[playerIndex].hand.hints.push(hint)
    results.hintsLeft -= 1;  
   Database.updateGame(results)
