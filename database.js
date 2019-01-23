@@ -475,38 +475,43 @@ Database.updateGame = (object) =>{
 
 }
 
-function convertCardArrayForUpdate(array){
+function convertCardArrayForUpdate(array, length){
   var string = ''
-  for(var i = 0; i < 50; i++){  
+  for(var i = 0; i < length; i++){  
     if(array[i]){
       string += 'card'+(i+1)+'="'+array[i].color+'|'+array[i].number
       for(var j = 0; j < array[i].hints.length; j++){
         string += '|'+array[i].hints[j]
-        }
-    if(i !== array.length-1){
-           string += '",'
-        }
-    }else if{
-      if(i !== array.length-1){
-           string += '",'
-    string += 'card'+(i+1)+'=""'
-        }
+      }   
+       string += '",'
+        
+    }else if(i < length-1){
+    string += 'card'+(i+1)+'=null,'
+        }else{ string += 'card'+(i+1)+'=null'}
+
     }
-    
-  }
   return string
 } 
 
-function updatePlayingDeck(deck, id){
-  var setString =  convertCardArrayForUpdate(deck.playingDeck)  
-  var sql = `UPDATE PlayingDeck
+function updateDeck(array, id, tableName){
+  var length = 50
+  if(tableName !== 'PlayingDeck'){length = 25}
+  var setString =  convertCardArrayForUpdate(array, length)  
+  var sql = `UPDATE ${tableName}
             SET ${setString}
             WHERE gameId = ${id}`
   db.run(sql)
   console.log(sql)
   }
-var object = {"numberOfPlayers":"5","dateCreated":"2019-01-23T14:05:55.013Z","score":null,"hintsLeft":9,"livesLeft":3,"playingDeck":[{"color":"black","number":3,"hints":[]},{"color":"red","number":5,"hints":[],"cardsLeftToPlay":0},{"color":"white","number":4,"hints":[]},{"color":"orange","number":4,"hints":[]},{"color":"blue","number":3,"hints":[],"cardsLeftToPlay":2},{"color":"white","number":5,"hints":[],"cardsLeftToPlay":0},{"color":"white","number":3,"hints":[],"cardsLeftToPlay":2},{"color":"white","number":1,"hints":[]},{"color":"blue","number":4,"hints":[],"cardsLeftToPlay":1},{"color":"white","number":2,"hints":[],"cardsLeftToPlay":3},{"color":"red","number":4,"hints":[]},{"color":"orange","number":1,"hints":[],"cardsLeftToPlay":4},{"color":"blue","number":2,"hints":[],"cardsLeftToPlay":3},{"color":"blue","number":4,"hints":[]},{"color":"black","number":2,"hints":[]},{"color":"white","number":3,"hints":[]},{"color":"orange","number":5,"hints":[],"cardsLeftToPlay":0},{"color":"red","number":1,"hints":[]},{"color":"red","number":1,"hints":[]},{"color":"black","number":1,"hints":[]},{"color":"orange","number":3,"hints":[]},{"color":"orange","number":1,"hints":[]},{"color":"blue","number":2,"hints":[]},{"color":"white","number":2,"hints":[]},{"color":"blue","number":3,"hints":[]},{"color":"blue","number":1,"hints":[]},{"color":"blue","number":1,"hints":[]},{"color":"orange","number":1,"hints":[]},{"color":"black","number":4,"hints":[]}],"discardedCards":[],"playedCards":[],"players":[{"name":"Jase","hand":[{"color":"orange","number":2,"hints":[],"cardsLeftToPlay":3},{"color":"red","number":4,"hints":[],"cardsLeftToPlay":1},{"color":"orange","number":2,"hints":[]},{"color":"blue","number":5,"hints":[],"cardsLeftToPlay":0}]},{"name":null,"hand":[{"color":"orange","number":4,"hints":[],"cardsLeftToPlay":1},{"color":"white","number":1,"hints":[],"cardsLeftToPlay":4},{"color":"orange","number":3,"hints":[],"cardsLeftToPlay":2},{"color":"red","number":2,"hints":[],"cardsLeftToPlay":3}]},{"name":null,"hand":[{"color":"black","number":1,"hints":[],"cardsLeftToPlay":4},{"color":"red","number":3,"hints":[],"cardsLeftToPlay":2},{"color":"black","number":3,"hints":[],"cardsLeftToPlay":2},{"color":"blue","number":1,"hints":[],"cardsLeftToPlay":4}]},{"name":null,"hand":[{"color":"black","number":4,"hints":[],"cardsLeftToPlay":1},{"color":"red","number":1,"hints":[],"cardsLeftToPlay":4},{"color":"black","number":2,"hints":[],"cardsLeftToPlay":3},{"color":"red","number":2,"hints":[]}]},{"name":null,"hand":[{"color":"black","number":5,"hints":[],"cardsLeftToPlay":0},{"color":"white","number":1,"hints":[]},{"color":"black","number":1,"hints":[]},{"color":"white","number":4,"hints":[],"cardsLeftToPlay":1}]}],"tableIds":{"gameId":3,"originalDeckId":3,"playingDeckId":4,"DiscardedCardsId":3,"PlayedCardsId":3,"playersId":[8,9,10,11,12]}}
-updatePlayingDeck(object, 3) 
+
+function updatePlayers(deck, id){
+
+}
+var object = {"numberOfPlayers":"5","dateCreated":"2019-01-23T14:05:55.013Z","score":null,"hintsLeft":9,"livesLeft":3,"playingDeck":[{"color":"red","number":5,"hints":[],"cardsLeftToPlay":0},{"color":"white","number":4,"hints":[]},{"color":"orange","number":4,"hints":[]},{"color":"blue","number":3,"hints":[],"cardsLeftToPlay":2},{"color":"white","number":5,"hints":[],"cardsLeftToPlay":0},{"color":"white","number":3,"hints":[],"cardsLeftToPlay":2},{"color":"white","number":1,"hints":[]},{"color":"blue","number":4,"hints":[],"cardsLeftToPlay":1},{"color":"white","number":2,"hints":[],"cardsLeftToPlay":3},{"color":"red","number":4,"hints":[]},{"color":"orange","number":1,"hints":[],"cardsLeftToPlay":4},{"color":"blue","number":2,"hints":[],"cardsLeftToPlay":3},{"color":"blue","number":4,"hints":[]},{"color":"black","number":2,"hints":[]},{"color":"white","number":3,"hints":[]},{"color":"orange","number":5,"hints":[],"cardsLeftToPlay":0},{"color":"red","number":1,"hints":[]},{"color":"red","number":1,"hints":[]},{"color":"black","number":1,"hints":[]},{"color":"orange","number":3,"hints":[]},{"color":"orange","number":1,"hints":[]},{"color":"blue","number":2,"hints":[]},{"color":"white","number":2,"hints":[]},{"color":"blue","number":3,"hints":[]},{"color":"blue","number":1,"hints":[]},{"color":"blue","number":1,"hints":[]},{"color":"orange","number":1,"hints":[]},{"color":"black","number":4,"hints":[]}],"discardedCards":[],"playedCards":[],"players":[{"name":"Jase","hand":[{"color":"orange","number":2,"hints":[],"cardsLeftToPlay":3},{"color":"red","number":4,"hints":[],"cardsLeftToPlay":1},{"color":"orange","number":2,"hints":[]},{"color":"blue","number":5,"hints":[],"cardsLeftToPlay":0}]},{"name":null,"hand":[{"color":"orange","number":4,"hints":[],"cardsLeftToPlay":1},{"color":"white","number":1,"hints":[],"cardsLeftToPlay":4},{"color":"orange","number":3,"hints":[],"cardsLeftToPlay":2},{"color":"red","number":2,"hints":[],"cardsLeftToPlay":3}]},{"name":null,"hand":[{"color":"black","number":1,"hints":[],"cardsLeftToPlay":4},{"color":"red","number":3,"hints":[],"cardsLeftToPlay":2},{"color":"black","number":3,"hints":[],"cardsLeftToPlay":2},{"color":"blue","number":1,"hints":[],"cardsLeftToPlay":4}]},{"name":null,"hand":[{"color":"black","number":4,"hints":[],"cardsLeftToPlay":1},{"color":"red","number":1,"hints":[],"cardsLeftToPlay":4},{"color":"black","number":2,"hints":[],"cardsLeftToPlay":3},{"color":"red","number":2,"hints":[]}]},{"name":null,"hand":[{"color":"black","number":5,"hints":[],"cardsLeftToPlay":0},{"color":"white","number":1,"hints":[]},{"color":"black","number":1,"hints":[]},{"color":"white","number":4,"hints":[],"cardsLeftToPlay":1}]}],"tableIds":{"gameId":3,"originalDeckId":3,"playingDeckId":4,"DiscardedCardsId":3,"PlayedCardsId":3,"playersId":[8,9,10,11,12]}}
+updateDeck(object.playingDeck, 3, 'PlayingDeck') 
+updateDeck(object.playedCards, 3, 'PlayedCards')
+updateDeck(object.discardedCards, 3, 'DiscardedCards')
+
 //=========================================
 // Play a Card
 //========================================
