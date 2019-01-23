@@ -61,7 +61,7 @@ var objectnew = cardStringToObject(newstring);
 
 const Database ={};
 
-  //db.run('CREATE TABLE Players(id INTEGER PRIMARY KEY, gameId TEXT, name TEXT, '+createCardString(5)+')');
+  //db.run('CREATE TABLE Players(id INTEGER PRIMARY KEY, gameId TEXT, name TEXT, active INTEGER, '+createCardString(5)+')');
  
 
 /*
@@ -376,7 +376,8 @@ return new Promise ((resolve, reject) => {
       rows.forEach(function(row){
         playerObject = {
           id: row.id, 
-          name: row.name
+          name: row.name,
+          active: row.active
         }
        playerObject.hand = [cardStringToObject(row.card1), cardStringToObject(row.card2), cardStringToObject(row.card3), cardStringToObject(row.card4), cardStringToObject(row.card5)]
        object.players.push(playerObject)                 
@@ -474,5 +475,5 @@ if(row.name !== name){
 }
 
 
-Database.getCurrentGame(12).then(data => console.log(data))
+//Database.getCurrentGame(1).then(data => console.log(data))
 module.exports = Database

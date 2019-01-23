@@ -75,7 +75,6 @@ Database.createRows(newGame).then(results => response.json(results))
 });
 
 
-
 app.get('/joingame/:gameid', function(request, response){
   var name = request.query.name
   var gameId = request.params.gameid
@@ -110,6 +109,7 @@ app.get('/game/:gameid/:name', function(request, response){
   })
   
 });
+
 
 
 // listen for requests :)
