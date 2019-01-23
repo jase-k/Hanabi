@@ -78,7 +78,18 @@ Database.createRows(newGame).then(results => response.json(results))
 
 app.get('/joingame/:gameid', function(request, response){
   var name = request.query.name
-
+  var gameId = request.params.gameid
+  Database.addPlayer(gameId, name) 
+  Database.getCurrentGame(gameId).then(function(results){
+     results.message = 'Success!'
+  var failedName = true
+    for(var i = 0; i< results.players.length; i++){
+   if(results.players[i].name == name){ failedName = false}
+  }  
+   if(failedName){
+     results.message = 'Name Not Found in the Game!'
+     response.json(results)} else {response.json(results)}
+  })
   });
 
 
