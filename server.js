@@ -167,18 +167,23 @@ var hintType;
       }else{hintType = 'number'}
    }
 var hintValue; // Is the hint 'not'?
-  if(hint.includes('Not'))
+  if(hint.includes('Not')){hintValue = false}
+  else{hintValue = true}
+  
 //=== Getting Data from the DataBase==//
  Database.getCurrentGame(gameId).then(function(results){
     console.log(JSON.stringify(results))
    var playerIndex = results.players.findIndex(i => i.name === player);
    var hand = results.players[playerIndex]
  for(var i =0; i < hand.length; i++){
-     var card = hand[i].color+' '+hand[i].number
+     var card = hand[i]
      console.log("card:", card)
-  
-     
+  if(card){ //
+   if(hintValue){
+      if(card.hintType == hint){ results.players[playerIndex].hand[i].hints.push(hint) }
+  }else{ if(!hint.includes(card.hintType)){results.players[playerIndex].hand[i].hints.push(hint) }}
      }
+ }
    results.players[playerIndex].hand.hints.push(hint)
    results.hintsLeft -= 1;  
   Database.updateGame(results)
