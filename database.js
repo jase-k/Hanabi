@@ -500,6 +500,7 @@ function convertCardArrayForUpdate(array, length){
     }
   return string
 } 
+
 //This function updates Tables: PlayingDeck, DiscardedCards, & PlayedCards
 function updateDeck(array, id, tableName){
   var length = 50
@@ -516,10 +517,11 @@ function updateDeck(array, id, tableName){
 function updatePlayers(playerObject){
   var setString = convertCardArrayForUpdate(playerObject.hand, 5)
   var sql = `UPDATE Players
-            SET ${setString}
+            SET active = ${playerObject.active}, ${setString}
             WHERE id = ${playerObject.id}`
   db.run(sql)
 }
+
 //This function updates score, livesLeft, hintsLeft
 function updateHanabiGame(gameObject){
   

@@ -137,10 +137,20 @@ var gameId = request.params.gameid
   var nextCard = results.playingDeck.shift()
   results.players[playerIndex].hand.splice(cardIndex, 1, nextCard)    
   console.log("new Results:", JSON.stringify(results))
+    
+//===== Switch the Active Player ====//
+    results.players[playerIndex].active = 0
+var newIndex = (playerIndex+1) % results.players.length
+    results.players[newIndex].active = 1
+    
+    
   Database.updateGame(results)
   response.send(results)
   })
 });
+
+
+//=============================================
 
 app.get('/game/:gameid/:name/discardcard', function(request, response){
 var name = request.params.name
@@ -215,6 +225,11 @@ console.log('hintType', hintType)
         }
     }
  }
+   
+//===== Switch the Active Player ====//
+    results.players[playerIndex].active = 0
+var newIndex = (playerIndex+1) % results.players.length
+    results.players[newIndex].active = 1
 
 results.hintsLeft -= 1;  
 Database.updateGame(results)
