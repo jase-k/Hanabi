@@ -12,7 +12,9 @@ const ReactDOM = require('react-dom')
 const React = require('react')
 const colors = ['white', 'red', 'black', 'orange', 'blue']
 
-const cors =require('c
+const cors =require('cors')
+
+app.use(cors());
 
 // http://expressjs.com/en/starter/static-files.html
 app.use(express.static('public'));
