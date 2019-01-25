@@ -230,8 +230,8 @@ console.log('hintType', hintType)
  }
    
 //===== Switch the Active Player ====//
-    results.players[playerIndex].active = 0
-var newIndex = (playerIndex+1) % results.players.length
+    results.players[nameIndex].active = 0
+var newIndex = (nameIndex+1) % results.players.length
     results.players[newIndex].active = 1
 
 results.hintsLeft -= 1;  
