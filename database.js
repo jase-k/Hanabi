@@ -519,7 +519,13 @@ function updatePlayers(playerObject){
   var sql = `UPDATE Players
             SET active = ${playerObject.active}, ${setString}
             WHERE id = ${playerObject.id}`
-  db.run(sql)
+  console.log(sql)
+  db.run(sql, function(err){
+    if(err){
+      console.log("Error at Player "+PlayerObject.id+" Updating Table")
+    }
+  }
+    )
 }
 
 //This function updates score, livesLeft, hintsLeft
@@ -531,19 +537,5 @@ function updateHanabiGame(gameObject){
   db.run(sql)
 }
 
-
-//=========================================
-// Play a Card
-//========================================
-//name is the player Playing the Card, cardNumber is the Number (1-5)
-
-function playCard(gameId, name, cardIndex){  
-  
-}
-//playCard(2, 'Kiana', 0) 
-
-
-
-//Database.getCurrentGame(1).then(data => console.log(data))
 module.exports = Database
 
