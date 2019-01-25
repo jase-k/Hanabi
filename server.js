@@ -152,7 +152,7 @@ var newIndex = (playerIndex+1) % results.players.length
 
 //=============================================
 
-app.get('/game/:gameid/:name/discardcard', function(request, response){
+app.get('/game/:gameid/:name/discard', function(request, response){
 var name = request.params.name
 var cardIndex = request.query.cardIndex
 var gameId = request.params.gameid
@@ -177,6 +177,9 @@ var gameId = request.params.gameid
     results.players[playerIndex].active = 0
 var newIndex = (playerIndex+1) % results.players.length
     results.players[newIndex].active = 1
+  
+//=== Add a Hint After Discarding ==//
+    results.hintsLeft++
     
   Database.updateGame(results)
   response.send(results)
