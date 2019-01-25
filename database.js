@@ -492,9 +492,8 @@ function convertCardArrayForUpdate(array, length){
       string += 'card'+(i+1)+'="'+array[i].color+'|'+array[i].number
       for(var j = 0; j < array[i].hints.length; j++){
         string += '|'+array[i].hints[j]
-       if(i == length-1){ string += '"'
-                                   }else{string += '",'}
       }   
+string += '",'
         
     }else if(i < length-1){
     string += 'card'+(i+1)+'=null,'
@@ -520,7 +519,7 @@ function updateDeck(array, id, tableName){
 function updatePlayers(playerObject){
   var setString = convertCardArrayForUpdate(playerObject.hand, playerObject.hand.length)
   var sql = `UPDATE Players
-            SET active = ${playerObject.active}, ${setString}
+            SET  ${setString} active = ${playerObject.active}
             WHERE id = ${playerObject.id}`
   console.log(sql)
   db.run(sql, function(err){
