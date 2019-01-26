@@ -11,6 +11,7 @@ const Database = require('./database.js')
 const ReactDOM = require('react-dom')
 const React = require('react')
 const colors = ['white', 'red', 'black', 'orange', 'blue']
+const numbers = [1,2,3,4,5]
 
 const cors = require('cors')
 
@@ -245,18 +246,26 @@ for(var i =0; i < hand.length; i++){
   if(card){ //makes sure the card is not null
         console.log("Hint Doesn't Include 'not'")
         console.log(`Does ${hint} match with ${card[hintType]}`)
-     if(card[hintType] == hint){ 
+   if(card[hintType] == hint){ 
         results.players[playerIndex].hand[i].hints.push(hint) }else{ //if the hint matches the card value push the hint
           hand[i].hints.push('not '+hint)
         }
-  for(var i =0; i< card.hints.length; i++){
-   if card.hint[i]
     
+  removeHints(card.hints, hintType, hint);
     
-    }
   }
 }
-   
+
+function removeHints(array, hintType, hint){
+  for(var i =0; i< array.length; i++){
+     for(var i = 0; i < colors.length; i++){
+       if(array[i].includes(colors[i])){
+           array.splice(i, 1)
+
+        }
+      }
+    }
+   }
    
 //===== Switch the Active Player ====//
     results.players[nameIndex].active = 0
