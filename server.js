@@ -238,18 +238,25 @@ console.log('hintType', hintType)
    
    var hand = results.players[playerIndex].hand
    console.log('hand', hand)
- for(var i =0; i < hand.length; i++){
+ 
+for(var i =0; i < hand.length; i++){
      var card = hand[i]
      console.log("card:", card)
   if(card){ //makes sure the card is not null
         console.log("Hint Doesn't Include 'not'")
         console.log(`Does ${hint} match with ${card[hintType]}`)
-      if(card[hintType] == hint){ 
+     if(card[hintType] == hint){ 
         results.players[playerIndex].hand[i].hints.push(hint) }else{ //if the hint matches the card value push the hint
           hand[i].hints.push('not '+hint)
         }
+  for(var i =0; i< card.hints.length; i++){
+   if card.hint[i]
+    
+    
     }
- }
+  }
+}
+   
    
 //===== Switch the Active Player ====//
     results.players[nameIndex].active = 0
