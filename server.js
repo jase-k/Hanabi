@@ -135,8 +135,12 @@ var gameId = request.params.gameid
   var card = results.players[playerIndex].hand[cardIndex]
 
   //Filters out the color of the played Cards
-  var colorArray = results.playedCards.filter(playedcard => playedcard.color == card.color)
-colorArray.apply.Math
+  console.log("Played Card Arrays:", results.playedCards)
+  var colorArray = results.playedCards.filter(playedcard => playedcard)
+  console.log("colorArray", colorArray)
+  var max =  Math.max.apply(null, colorArray.map(element => element.number))
+    
+  console.log("Max:", max)
   
   var playedCardIndex = results.playedCards.indexOf(undefined)
    results.playedCards.splice(playedCardIndex, 1, card)
