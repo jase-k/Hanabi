@@ -129,9 +129,17 @@ var gameId = request.params.gameid
     response.send("Couldn't Find Player!")
     return; 
    }
-         if(!results.players[playerIndex].active){ response.send("Sorry, it's not your Turn!"); return;} //Returns if name isn't active
+    if(!results.players[playerIndex].active){ response.send("Sorry, it's not your Turn!"); return;} //Returns if name isn't active
+    
+// ==== Checks to see if the Card Plays ===== //
+  var card = results.players[playerIndex].hand[cardIndex]
+
+  //Filters out the color of the played Cards
+  var colorArray = results.playedCards.filter(playedcard => playedcard.color == card.color)
+colorArray.apply.Math
+  
   var playedCardIndex = results.playedCards.indexOf(undefined)
-   results.playedCards.splice(playedCardIndex, 1, results.players[playerIndex].hand[cardIndex])
+   results.playedCards.splice(playedCardIndex, 1, card)
  
 //==== Replace the Hand Card with the Next Card from the Deck ===//
   var nextCard = results.playingDeck.shift()
@@ -160,7 +168,7 @@ var gameId = request.params.gameid
   Database.getCurrentGame(gameId).then(function(results){
     console.log(JSON.stringify(results))
     
-//==== Replace the First Card undefined Card in the Played Cards Array========//  
+//==== Replace the First Card undefined Card in the Discarded Cards Array========//  
   var playerIndex = results.players.findIndex(i => i.name === name);
   var discardedCardIndex = results.discardedCards.indexOf(undefined)
      if(playerIndex == -1){ response.send("Couldn't Find Player!"); return; } // Returns if name isn't Found
