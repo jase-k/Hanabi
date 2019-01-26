@@ -147,6 +147,7 @@ var gameId = request.params.gameid
   var playedCardIndex = results.playedCards.indexOf(undefined)
    results.playedCards.splice(playedCardIndex, 1, card)
    results.message = "Success! Good Job"
+   if(card.number == 5){results.hintsLeft++}
  }else{
     var discardedCardIndex = results.discardedCards.indexOf(undefined)
  results.discardedCards.splice(discardedCardIndex, 1, results.players[playerIndex].hand[cardIndex])
