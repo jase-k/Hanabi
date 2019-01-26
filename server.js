@@ -143,13 +143,15 @@ var gameId = request.params.gameid
   console.log("Max:", max)
   if(max == -Infinity){ max = 0 }
     
- if(max == card.number+1){ 
+ if(max+1 == card.number){ 
   var playedCardIndex = results.playedCards.indexOf(undefined)
    results.playedCards.splice(playedCardIndex, 1, card)
    results.message = "Success! Good Job"
  }else{
-     results.players[playerIndex].hand.splice(cardIndex, 1, nextCard)    
-      results.message = "Sorry, card didn't Play"
+    var discardedCardIndex = results.discardedCards.indexOf(undefined)
+ results.discardedCards.splice(discardedCardIndex, 1, results.players[playerIndex].hand[cardIndex])
+   results.livesLeft--   
+   results.message = "Sorry, card didn't Play"
  }
 //==== Replace the Hand Card with the Next Card from the Deck ===//
   var nextCard = results.playingDeck.shift()
@@ -180,10 +182,10 @@ var gameId = request.params.gameid
     
 //==== Replace the First Card undefined Card in the Discarded Cards Array========//  
   var playerIndex = results.players.findIndex(i => i.name === name);
-  var discardedCardIndex = results.discardedCards.indexOf(undefined)
      if(playerIndex == -1){ response.send("Couldn't Find Player!"); return; } // Returns if name isn't Found
      if(!results.players[playerIndex].active){ response.send("Sorry, it's not your Turn!"); return;} //Returns if name isn't active
     
+  var discardedCardIndex = results.discardedCards.indexOf(undefined)
  results.discardedCards.splice(discardedCardIndex, 1, results.players[playerIndex].hand[cardIndex])
 
 //==== Replace the Hand Card with the Next Card from the Deck ===//
