@@ -135,16 +135,22 @@ var gameId = request.params.gameid
   var card = results.players[playerIndex].hand[cardIndex]
 
   //Filters out the color of the played Cards
-  console.log("Played Card Arrays:", results.playedCards)
-  var colorArray = results.playedCards.filter(playedcard => playedcard)
+  console.log("Color of Card", card.color)
+  var colorArray = results.playedCards.filter(playedcard => playedcard).filter(playedcard => playedcard.color === card.color)
   console.log("colorArray", colorArray)
   var max =  Math.max.apply(null, colorArray.map(element => element.number))
     
   console.log("Max:", max)
-  
+  if(max == -Infinity){ max = 0 }
+    
+ if(max == card.number+1){ 
   var playedCardIndex = results.playedCards.indexOf(undefined)
    results.playedCards.splice(playedCardIndex, 1, card)
- 
+   results.message = "Success! Good Job"
+ }else{
+     results.players[playerIndex].hand.splice(cardIndex, 1, nextCard)    
+      results.message = "Sorry, card didn't Play"
+ }
 //==== Replace the Hand Card with the Next Card from the Deck ===//
   var nextCard = results.playingDeck.shift()
   results.players[playerIndex].hand.splice(cardIndex, 1, nextCard)    
@@ -155,7 +161,7 @@ var gameId = request.params.gameid
 var newIndex = (playerIndex+1) % results.players.length
     results.players[newIndex].active = 1
     
-    
+
   Database.updateGame(results)
   response.send(results)
   })
