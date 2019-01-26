@@ -15,7 +15,6 @@ const colors = ['white', 'red', 'black', 'orange', 'blue']
 const cors = require('cors')
 
 app.use(cors());
-  window.Header().Set("Access-Control-Allow-Origin", "*")
 
 // http://expressjs.com/en/starter/static-files.html
 app.use(express.static('public'));
