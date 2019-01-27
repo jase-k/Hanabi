@@ -258,19 +258,21 @@ function appendHints(hintType, card){
   if(card){ //makes sure the card is not null
 
     if(card[hintType] == hint){ //The Card.color or card.number is a match with the hint 
+       
+      card.hints.forEach(function(hint, index){ This i
         
-       for(var i = 0; i < card.hints.length; i++){ //This loop will get rid of all the hints that pertained to this positive hintType
-          console.log("hint number", i)
-           for(var j = 0; j < hintOptions[hintType].length; j++){
-              if(card.hints[i].includes(hintOptions[hintType][j])){ //Does this hint include the newhint Type?
-                  card.hints.splice(i, 1)
-                  console.log(card.hints)
-                i--
+        console.log("hint number", index)
+          console.log(hint)
+        
+        for(var j = 0; j < hintOptions[hintType].length; j++){
+              if(hint.includes(hintOptions[hintType][j])){ //Does this hint include the newhint Type?
+                  card.hints.splice(index, 1)
               }
           }
-          
-       }
-        card.hints.push(hint) //After all the hints with the same type are removed the new hint is added. 
+    });
+      
+      card.hints.push(hint) //After all the hints with the same type are removed the new hint is added. 
+      
       
       }else{ //if the hint matches the card value push the hint
          // hand[i].hints.push('not '+hint)
