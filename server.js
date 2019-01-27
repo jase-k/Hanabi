@@ -12,7 +12,9 @@ const ReactDOM = require('react-dom')
 const React = require('react')
 const colors = ['white', 'red', 'black', 'orange', 'blue']
 const numbers = [1,2,3,4,5]
-
+const hintOptions = {}
+hintOptions.colors = colors
+hintOptions.number = numbers
 const cors = require('cors')
 
 app.use(cors());
@@ -244,41 +246,33 @@ console.log('hintType', hintType)
  
 for(var i =0; i < hand.length; i++){
      var card = hand[i]
+  append
      }
        
-      console.log("Does this return the number or color array?", [hintType])
-   
+  
 function appendHints(hintType, card){  
      console.log("card:", card)
+      console.log("hint:", hint)
     if(card){ //makes sure the card is not null
 
     if(card[hintType] == hint){ //The Card.color or card.number is a match with the hint 
-        card.hints.push(hint) 
+        
+       for(var i = 0; i < card.hints.length;){ //This loop will get rid of all the hints that pertained to this positive hintType
+           for(var j = 0; j < hintOptions[hintType].length; j++){
+              if(card.hints[i].includes(hintType)){ //Does this hint include the newhint?
+                  card.hints.splice(i, 1)
+              }
+          }
+          i++
+       }
+        card.hints.push(hint) //After all the hints with the same type are removed the new hint is added. 
+      
       }else{ //if the hint matches the card value push the hint
           hand[i].hints.push('not '+hint)
         }
-function appendHints(array, hintType){
-  console.log("Array =", array)
-array.forEach(function(card, index){
-console.log(`${card} is being checked`)
-   if(hintType == 'color'){
-     for(var j = 0; j < colors.length; j++){
-       if(card.includes(colors[j])){
-           array.splice(index, 1)
-          }
-        }
-      }else{
-  for(var j = 0; j < numbers.length; j++){
-       if(array[i].includes(numbers[j])){
-           array.splice(index, 1)
-          }
-        }
-      }
-    })
-}
-    
     
   }
+  console.log("new card:", card)
 }
 
   
