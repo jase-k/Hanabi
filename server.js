@@ -264,7 +264,7 @@ function appendHints(hintType, card){
 
     if(card[hintType] == hint){ //The Card.color or card.number is a match with the hint 
        
-    for(var index = 0; index < card.hints.length;){  //Removes all Other Hints of the 
+    for(var index = 0; index < card.hints.length;){  //Removes all Other Hints of the hintType before adding the new hint
         for(var j = 0; j < hintOptions[hintType].length; j++){
             console.log('index', index)
               if(card.hints[index].includes(hintOptions[hintType][j])){ //Does this hint include the newhint Type?
