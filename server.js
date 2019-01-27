@@ -253,16 +253,18 @@ for(var i =0; i < hand.length; i++){
 function appendHints(hintType, card){  
      console.log("card:", card)
       console.log("hint:", hint)
-      console.log("hintOptions:", hintOptions)
-    if(card){ //makes sure the card is not null
+      console.log(hintOptions[hintType])
+
+  if(card){ //makes sure the card is not null
 
     if(card[hintType] == hint){ //The Card.color or card.number is a match with the hint 
         
        for(var i = 0; i < card.hints.length; i++){ //This loop will get rid of all the hints that pertained to this positive hintType
+          console.log("hint number", i)
            for(var j = 0; j < hintOptions[hintType].length; j++){
-             
               if(card.hints[i].includes(hintOptions[hintType][j])){ //Does this hint include the newhint Type?
                   card.hints.splice(i, 1)
+                  console.log(card.hints)
                 i--
               }
           }
