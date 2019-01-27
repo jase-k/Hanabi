@@ -235,16 +235,17 @@ var gameId = request.params.gameid
    console.log('hand', hand)
  
 //==== Parsing the hint ====//
-var hintType;
+var hintType = determineHintType(hint)
  
-function determineHintType(){
+function determineHintType(string){
   for(var i = 0; i < colors.length; i++){
-     if(hint.includes(colors[i])){
-      hintType = 'color'
+     if(string.includes(colors[i]) || string === ){
+      return 'color'
      break;
-      }else{hintType = 'number'}
+      }else{ return 'number'}
    }
 }
+   
 console.log('hintType', hintType) 
  
 for(var i =0; i < hand.length; i++){
@@ -281,16 +282,18 @@ function appendHints(hintType, card){
        var addHint = true;  
         
         card.hints.forEach(function(cardhint){
+           var type = determineHintType(cardhint)
           if(cardhint === 'not '+hint){ addHint = false}
           
-          if(cardhint.includes('not')){
-           
+          if(!cardhint.includes('not') && type === hintType){ //if the hint doesn't contain not and the 
             addHint = false
           }
-        })
+        }) //Sets addHint to false if any of the old hints meet the criteria
         
+        if(addHint){
         card.hints.push('not '+hint)
         }
+      }
     
   }
   console.log("new card:", card)
