@@ -258,22 +258,24 @@ for(var i =0; i < hand.length; i++){
 
 function removeHints(array, hintType){
   console.log("Array =", array)
-  for(var i =0; i< array.length; i++){
+array.forEach(function(card, index){
+
    if(hintType == 'color'){
      for(var j = 0; j < colors.length; j++){
-       if(array[i].includes(colors[j])){
-           array.splice(i, 1)
+       if(card.includes(colors[j])){
+           array.splice(index, 1)
           }
         }
       }else{
   for(var j = 0; j < numbers.length; j++){
        if(array[i].includes(numbers[j])){
-           array.splice(i, 1)
+           array.splice(index, 1)
           }
         }
       }
-    }
-  }
+    })
+}
+  
    
 //===== Switch the Active Player ====//
     results.players[nameIndex].active = 0
