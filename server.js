@@ -238,12 +238,14 @@ var gameId = request.params.gameid
 var hintType = determineHintType(hint)
  
 function determineHintType(string){
+  var type = ''
   for(var i = 0; i < colors.length; i++){
-     if(string.includes(colors[i]) || string === ){
-      return 'color'
+     if(string.includes(colors[i]) || string === colors[i]){
+      type = 'color'
      break;
-      }else{ return 'number'}
+      }else{ type = 'number'}
    }
+  return type
 }
    
 console.log('hintType', hintType) 
@@ -264,9 +266,6 @@ function appendHints(hintType, card){
     if(card[hintType] == hint){ //The Card.color or card.number is a match with the hint 
        
       card.hints.forEach(function(hint, index){ //Should Remove all unneccessary hints
-        
-        console.log("hint number", index)
-          console.log(hint)
         
         for(var j = 0; j < hintOptions[hintType].length; j++){
               if(hint.includes(hintOptions[hintType][j])){ //Does this hint include the newhint Type?
