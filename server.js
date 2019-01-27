@@ -265,14 +265,14 @@ function appendHints(hintType, card){
 
     if(card[hintType] == hint){ //The Card.color or card.number is a match with the hint 
        
-      card.hints.forEach(function(hint, index){ //Should Remove all unneccessary hints
-        
+    for(var index = 0; index < card.hints.length; index++){  
         for(var j = 0; j < hintOptions[hintType].length; j++){
               if(hint.includes(hintOptions[hintType][j])){ //Does this hint include the newhint Type?
                   card.hints.splice(index, 1)
+                  index -= 1
               }
           }
-    });
+    }
       
       card.hints.push(hint) //After all the hints with the same type are removed the new hint is added. 
       
