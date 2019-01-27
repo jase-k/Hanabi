@@ -13,7 +13,7 @@ const React = require('react')
 const colors = ['white', 'red', 'black', 'orange', 'blue']
 const numbers = [1,2,3,4,5]
 const hintOptions = {}
-hintOptions.colors = colors
+hintOptions.color = colors
 hintOptions.number = numbers
 const cors = require('cors')
 
@@ -246,29 +246,32 @@ console.log('hintType', hintType)
  
 for(var i =0; i < hand.length; i++){
      var card = hand[i]
-  append
+  appendHints(hintType, card)
      }
        
   
 function appendHints(hintType, card){  
      console.log("card:", card)
       console.log("hint:", hint)
+      console.log("hintOptions:", hintOptions)
     if(card){ //makes sure the card is not null
 
     if(card[hintType] == hint){ //The Card.color or card.number is a match with the hint 
         
-       for(var i = 0; i < card.hints.length;){ //This loop will get rid of all the hints that pertained to this positive hintType
+       for(var i = 0; i < card.hints.length; i++){ //This loop will get rid of all the hints that pertained to this positive hintType
            for(var j = 0; j < hintOptions[hintType].length; j++){
-              if(card.hints[i].includes(hintType)){ //Does this hint include the newhint?
+             
+              if(card.hints[i].includes(hintOptions[hintType][j])){ //Does this hint include the newhint Type?
                   card.hints.splice(i, 1)
+                i--
               }
           }
-          i++
+          
        }
         card.hints.push(hint) //After all the hints with the same type are removed the new hint is added. 
       
       }else{ //if the hint matches the card value push the hint
-          hand[i].hints.push('not '+hint)
+         // hand[i].hints.push('not '+hint)
         }
     
   }
