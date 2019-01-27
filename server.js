@@ -236,12 +236,15 @@ var gameId = request.params.gameid
  
 //==== Parsing the hint ====//
 var hintType;
+ 
+function determineHintType(){
   for(var i = 0; i < colors.length; i++){
      if(hint.includes(colors[i])){
       hintType = 'color'
      break;
       }else{hintType = 'number'}
-   }  
+   }
+}
 console.log('hintType', hintType) 
  
 for(var i =0; i < hand.length; i++){
@@ -259,7 +262,7 @@ function appendHints(hintType, card){
 
     if(card[hintType] == hint){ //The Card.color or card.number is a match with the hint 
        
-      card.hints.forEach(function(hint, index){ This i
+      card.hints.forEach(function(hint, index){ //Should Remove all unneccessary hints
         
         console.log("hint number", index)
           console.log(hint)
@@ -275,7 +278,18 @@ function appendHints(hintType, card){
       
       
       }else{ //if the hint matches the card value push the hint
-         // hand[i].hints.push('not '+hint)
+       var addHint = true;  
+        
+        card.hints.forEach(function(cardhint){
+          if(cardhint === 'not '+hint){ addHint = false}
+          
+          if(cardhint.includes('not')){
+           
+            addHint = false
+          }
+        })
+        
+        card.hints.push('not '+hint)
         }
     
   }
