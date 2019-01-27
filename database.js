@@ -485,8 +485,6 @@ Database.updateGame = (object) =>{
 
 function convertCardArrayForUpdate(array, length){
   var string = ''
-  console.log(array)
-  console.log(length)
   for(var i = 0; i < length; i++){  
     if(array[i]){
       string += 'card'+(i+1)+'="'+array[i].color+'|'+array[i].number
@@ -512,7 +510,6 @@ function updateDeck(array, id, tableName){
             SET ${setString}
             WHERE gameId = ${id}`
   db.run(sql)
-  console.log(sql)
   }
 
 //This function takes an individual playerObject as an argument and updates the row. 
@@ -521,7 +518,7 @@ function updatePlayers(playerObject){
   var sql = `UPDATE Players
             SET  ${setString} active = ${playerObject.active}
             WHERE id = ${playerObject.id}`
-  console.log(sql)
+  
   db.run(sql, function(err){
     if(err){
       console.log("Error at Player "+playerObject.id+" Updating Table")

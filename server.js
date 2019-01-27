@@ -244,13 +244,17 @@ console.log('hintType', hintType)
  
 for(var i =0; i < hand.length; i++){
      var card = hand[i]
-|
+     }
+       
+      console.log("Does this return the number or color array?", [hintType])
+   
 function appendHints(hintType, card){  
      console.log("card:", card)
     if(card){ //makes sure the card is not null
-    
-      if(card[hintType] == hint){ 
-        results.players[playerIndex].hand[i].hints.push(hint) }else{ //if the hint matches the card value push the hint
+
+    if(card[hintType] == hint){ //The Card.color or card.number is a match with the hint 
+        card.hints.push(hint) 
+      }else{ //if the hint matches the card value push the hint
           hand[i].hints.push('not '+hint)
         }
 function appendHints(array, hintType){
@@ -273,7 +277,7 @@ console.log(`${card} is being checked`)
     })
 }
     
-    }
+    
   }
 }
 
