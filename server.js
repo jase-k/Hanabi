@@ -216,15 +216,7 @@ console.log(name)
 var hint = request.query.hint
 var player = request.query.player //The Player Receiving the Hint! 
 var gameId = request.params.gameid
-//==== Parsing the hint ====//
-var hintType;
-  for(var i = 0; i < colors.length; i++){
-     if(hint.includes(colors[i])){
-      hintType = 'color'
-     break;
-      }else{hintType = 'number'}
-   }  
-console.log('hintType', hintType) 
+
   
 //=== Getting Data from the DataBase==//
  Database.getCurrentGame(gameId).then(function(results){
@@ -240,26 +232,31 @@ console.log('hintType', hintType)
    var hand = results.players[playerIndex].hand
    console.log('hand', hand)
  
+//==== Parsing the hint ====//
+var hintType;
+  for(var i = 0; i < colors.length; i++){
+     if(hint.includes(colors[i])){
+      hintType = 'color'
+     break;
+      }else{hintType = 'number'}
+   }  
+console.log('hintType', hintType) 
+ 
 for(var i =0; i < hand.length; i++){
      var card = hand[i]
+|
+function appendHints(hintType, card){  
      console.log("card:", card)
-  if(card){ //makes sure the card is not null
+    if(card){ //makes sure the card is not null
     
-    removeHints(card.hints, hintType);
- 
-    if(card[hintType] == hint){ 
+      if(card[hintType] == hint){ 
         results.players[playerIndex].hand[i].hints.push(hint) }else{ //if the hint matches the card value push the hint
           hand[i].hints.push('not '+hint)
         }
-    
-    
-  }
-}
-
-function removeHints(array, hintType){
+function appendHints(array, hintType){
   console.log("Array =", array)
 array.forEach(function(card, index){
-
+console.log(`${card} is being checked`)
    if(hintType == 'color'){
      for(var j = 0; j < colors.length; j++){
        if(card.includes(colors[j])){
@@ -275,6 +272,11 @@ array.forEach(function(card, index){
       }
     })
 }
+    
+    }
+  }
+}
+
   
    
 //===== Switch the Active Player ====//
