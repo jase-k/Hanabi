@@ -244,28 +244,36 @@ for(var i =0; i < hand.length; i++){
      var card = hand[i]
      console.log("card:", card)
   if(card){ //makes sure the card is not null
-        console.log("Hint Doesn't Include 'not'")
-        console.log(`Does ${hint} match with ${card[hintType]}`)
-   if(card[hintType] == hint){ 
+    
+    removeHints(card.hints, hintType);
+ 
+    if(card[hintType] == hint){ 
         results.players[playerIndex].hand[i].hints.push(hint) }else{ //if the hint matches the card value push the hint
           hand[i].hints.push('not '+hint)
         }
     
-  removeHints(card.hints, hintType, hint);
     
   }
 }
 
-function removeHints(array, hintType, hint){
+function removeHints(array, hintType){
+  console.log("Array =", array)
   for(var i =0; i< array.length; i++){
-     for(var i = 0; i < colors.length; i++){
-       if(array[i].includes(colors[i])){
+   if(hintType == 'color'){
+     for(var j = 0; j < colors.length; j++){
+       if(array[i].includes(colors[j])){
            array.splice(i, 1)
-
+          }
+        }
+      }else{
+  for(var j = 0; j < numbers.length; j++){
+       if(array[i].includes(numbers[j])){
+           array.splice(i, 1)
+          }
         }
       }
     }
-   }
+  }
    
 //===== Switch the Active Player ====//
     results.players[nameIndex].active = 0
