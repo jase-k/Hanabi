@@ -404,7 +404,6 @@ return new Promise ((resolve, reject) => {
     });//ENDS db All
   })    
 }
-
 function getPlayedCards(object){
 return new Promise ((resolve, reject) => {
   object.playedCards = []
@@ -433,7 +432,22 @@ return new Promise ((resolve, reject) => {
     });//ENDS db All
   })
 }
-
+function getMessages(object){
+  return new Promise((resolve, reject) => {
+  object.messages = [];
+  db.get('SELECT * FROM Messages WHERE gameId = '+object.id,
+         function(err, row){
+        if(err){
+          console.log("Error at Get Messages", err)
+          throw err
+        }
+      if(row){
+         object.messages = row.Messages.split(",")  
+      } 
+        resolve(object)
+    });
+  });
+}
 
 Database.getCurrentGame = (gameId) => {
 return new Promise((resolve, reject) => { 
@@ -444,6 +458,7 @@ return new Promise((resolve, reject) => {
   .then(object => getPlayedCards(object))
   .then(object => getDiscardedCards(object))
   .then(object => getPlayers(object))
+  .then(object => getMessages(object))
   .then(object => resolve(object))
   });
 };
