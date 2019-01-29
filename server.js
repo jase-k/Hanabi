@@ -85,13 +85,13 @@ app.get('/joingame/:gameid', function(request, response){
   var gameId = request.params.gameid
   Database.addPlayer(gameId, name) 
   Database.getCurrentGame(gameId).then(function(results){
-     results.message = 'Success!'
+     results.messages = 'Success!'
   var failedName = true
     for(var i = 0; i< results.players.length; i++){
    if(results.players[i].name == name){ failedName = false}
   }  
    if(failedName){
-     results.message = 'Name Not Found in the Game!'
+     results.messages = 'Name Not Found in the Game!'
      response.json(results)} else {response.json(results)}
   })
   });
@@ -103,13 +103,13 @@ app.get('/game/:gameid/:name', function(request, response){
   
   //Returning the Game Object and Adding a Failure Message for Debugging 
   Database.getCurrentGame(gameId).then(function(results){
-     results.message = 'Success!'
+     results.messages = 'Success!'
     var failedName = true
     for(var i = 0; i< results.players.length; i++){
    if(results.players[i].name == name){ failedName = false}
   }  
    if(failedName){
-     results.message = 'Name Not Found in the Game!'
+     results.messages = 'Name Not Found in the Game!'
      response.json(results)} else {response.json(results)}
   })
   
@@ -149,14 +149,14 @@ var gameId = request.params.gameid
  if(max+1 == card.number){ 
   var playedCardIndex = results.playedCards.indexOf(undefined)
    results.playedCards.splice(playedCardIndex, 1, card)
-   results.message = "Success! "+name+" played  a "+card.color+" "+card.number+"!"
+   results.messages = "Success! "+name+" played  a "+card.color+" "+card.number+"!"
    results.score++
    if(card.number == 5){results.hintsLeft++}
  }else{
     var discardedCardIndex = results.discardedCards.indexOf(undefined)
  results.discardedCards.splice(discardedCardIndex, 1, results.players[playerIndex].hand[cardIndex])
    results.livesLeft--   
-   results.message = "Sorry, "+name+" tried playing a "+card.color+" "+card.number+" and it didn't play"
+   results.messages = "Sorry, "+name+" tried playing a "+card.color+" "+card.number+" and it didn't play"
  }
 //==== Replace the Hand Card with the Next Card from the Deck ===//
   var nextCard = results.playingDeck.shift()
@@ -211,7 +211,7 @@ var newIndex = (playerIndex+1) % results.players.length
     results.hintsLeft++
    
 // === Sends Message to What Card was Discarded ===//
-   results.message = name+" discarded a "+card.color+" "+card.number 
+   results.messages = name+" discarded a "+card.color+" "+card.number 
     
   Database.updateGame(results)
   response.send(results)

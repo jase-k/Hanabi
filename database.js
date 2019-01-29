@@ -570,5 +570,10 @@ function updateHanabiGame(gameObject){
   db.run(sql)
 }
 
+//This function updates the messages Table
+function updateMessages(object){
+  
+}
+
 module.exports = Database
 
