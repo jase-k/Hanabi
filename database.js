@@ -61,12 +61,13 @@ var objectnew = cardStringToObject(newstring);
 
 const Database ={};
 
-  //db.run('CREATE TABLE Players(id INTEGER PRIMARY KEY, gameId TEXT, name TEXT, active INTEGER, '+createCardString(5)+')');
- 
+ // b.run('CREATE TABLE Messages(id INTEGER PRIMARY KEY, gameId INTEGER, Messages TEXT) 
 
 /*
 db.serialize(() => { 
 
+ db.run('CREATE TABLE Players(id INTEGER PRIMARY KEY, gameId TEXT, name TEXT, active INTEGER, '+createCardString(5)+')');
+  
  db.run('DROP TABLE IF EXISTS Players', error => {
     if (error) {
       throw error;
