@@ -518,7 +518,7 @@ function updatePlayers(playerObject){
   var sql = `UPDATE Players
             SET  ${setString} active = ${playerObject.active}
             WHERE id = ${playerObject.id}`
-  
+  console.log(sql)
   db.run(sql, function(err){
     if(err){
       console.log("Error at Player "+playerObject.id+" Updating Table")
