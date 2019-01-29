@@ -509,14 +509,19 @@ function updateDeck(array, id, tableName){
   var sql = `UPDATE ${tableName}
             SET ${setString}
             WHERE gameId = ${id}`
-  db.run(sql)
+  db.run(sql, function (err){
+    if(err){
+    console.log("Error at updateDeck "+tableName, sql)
+      throw err
+      }
+    })
   }
 
 //This function takes an individual playerObject as an argument and updates the row. 
 function updatePlayers(playerObject){
   var setString = convertCardArrayForUpdate(playerObject.hand, playerObject.hand.length)
   var sql = `UPDATE Players
-            SET  ${setString} active = ${playerObject.active}
+            SET  ${setString}, active = ${playerObject.active}
             WHERE id = ${playerObject.id}`
   console.log(sql)
   db.run(sql, function(err){
