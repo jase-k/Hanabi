@@ -190,11 +190,12 @@ var gameId = request.params.gameid
   var playerIndex = results.players.findIndex(i => i.name === name);
      if(playerIndex == -1){ response.send("Couldn't Find Player!"); return; } // Returns if name isn't Found
      if(!results.players[playerIndex].active){ response.send("Sorry, it's not your Turn!"); return;} //Returns if name isn't active
-    
+
+    var card = results.players[playerIndex].hand[cardIndex]
+    console.log('=====Discarded Card===========', card) 
   var discardedCardIndex = results.discardedCards.indexOf(undefined)
  results.discardedCards.splice(discardedCardIndex, 1, card)
 
-var card = results.players[playerIndex].hand[cardIndex]
 
 //==== Replace the Hand Card with the Next Card from the Deck ===//
   var nextCard = results.playingDeck.shift()
