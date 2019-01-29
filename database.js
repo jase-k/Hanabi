@@ -490,8 +490,10 @@ function convertCardArrayForUpdate(array, length){
       string += 'card'+(i+1)+'="'+array[i].color+'|'+array[i].number
       for(var j = 0; j < array[i].hints.length; j++){
         string += '|'+array[i].hints[j]
-      }   
-string += '",'
+      } 
+      if(i === length-1){
+        string += '"'
+      }else{ string +='",'}
         
     }else if(i < length-1){
     string += 'card'+(i+1)+'=null,'
