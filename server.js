@@ -185,7 +185,6 @@ var gameId = request.params.gameid
   Database.getCurrentGame(gameId).then(function(results){
     console.log(JSON.stringify(results))
     
-var card = results.players[playerIndex].hand[cardIndex]
 
 //==== Replace the First Card undefined Card in the Discarded Cards Array========//  
   var playerIndex = results.players.findIndex(i => i.name === name);
@@ -194,6 +193,8 @@ var card = results.players[playerIndex].hand[cardIndex]
     
   var discardedCardIndex = results.discardedCards.indexOf(undefined)
  results.discardedCards.splice(discardedCardIndex, 1, card)
+
+var card = results.players[playerIndex].hand[cardIndex]
 
 //==== Replace the Hand Card with the Next Card from the Deck ===//
   var nextCard = results.playingDeck.shift()
