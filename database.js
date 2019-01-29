@@ -61,7 +61,7 @@ var objectnew = cardStringToObject(newstring);
 
 const Database ={};
 
- // b.run('CREATE TABLE Messages(id INTEGER PRIMARY KEY, gameId INTEGER, Messages TEXT) 
+ //db.run('CREATE TABLE Messages(id INTEGER PRIMARY KEY, gameId INTEGER, Messages TEXT)') 
 
 /*
 db.serialize(() => { 
@@ -283,7 +283,17 @@ db.run('INSERT INTO Players (gameId,'+createCardString(number)+') VALUES('+objec
     
   });
 }
-
+function InsertMessagesRow(object){
+return new Promise((resolve, reject) =>{
+  db.run('INSERT INTO Messages (gameId) VALUES('+object.tableIds.gameId+') ', {}, 
+             function(err){
+                if(err){throw err}
+              object.tableIds.messageId = this.lastID
+            console.log("Messages Table id:", object.tableIds.playingDeckId);
+    resolve(object)
+    });
+  })
+}
 Database.createRows = function(object){
   return new Promise((resolve, reject) =>{
   InsertHanabiRow(object)
@@ -292,6 +302,7 @@ Database.createRows = function(object){
   .then(object => InsertDiscardedCardsRow(object))
   .then(object => InsertPlayedCardsRow(object))
   .then(object => InsertPlayersRows(object))
+  .then(object => InsertMessagesRow(object))
   .then(object => resolve(object))
   })
 }
