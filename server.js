@@ -149,14 +149,14 @@ var gameId = request.params.gameid
  if(max+1 == card.number){ 
   var playedCardIndex = results.playedCards.indexOf(undefined)
    results.playedCards.splice(playedCardIndex, 1, card)
-   results.message = "Success! Good Job"
+   results.message = "Success! "+name+" played  a "+card.color+" "+card.number+"!"
    results.score++
    if(card.number == 5){results.hintsLeft++}
  }else{
     var discardedCardIndex = results.discardedCards.indexOf(undefined)
  results.discardedCards.splice(discardedCardIndex, 1, results.players[playerIndex].hand[cardIndex])
    results.livesLeft--   
-   results.message = "Sorry, card didn't Play"
+   results.message = "Sorry, "+name+" tried playing a "+card.color+" "+card.number+" and it didn't play"
  }
 //==== Replace the Hand Card with the Next Card from the Deck ===//
   var nextCard = results.playingDeck.shift()
@@ -185,13 +185,15 @@ var gameId = request.params.gameid
   Database.getCurrentGame(gameId).then(function(results){
     console.log(JSON.stringify(results))
     
+var card = results.players[playerIndex].hand[cardIndex]
+
 //==== Replace the First Card undefined Card in the Discarded Cards Array========//  
   var playerIndex = results.players.findIndex(i => i.name === name);
      if(playerIndex == -1){ response.send("Couldn't Find Player!"); return; } // Returns if name isn't Found
      if(!results.players[playerIndex].active){ response.send("Sorry, it's not your Turn!"); return;} //Returns if name isn't active
     
   var discardedCardIndex = results.discardedCards.indexOf(undefined)
- results.discardedCards.splice(discardedCardIndex, 1, results.players[playerIndex].hand[cardIndex])
+ results.discardedCards.splice(discardedCardIndex, 1, card)
 
 //==== Replace the Hand Card with the Next Card from the Deck ===//
   var nextCard = results.playingDeck.shift()
@@ -205,6 +207,9 @@ var newIndex = (playerIndex+1) % results.players.length
   
 //=== Add a Hint After Discarding ==//
     results.hintsLeft++
+   
+// === Sends Message to What Card was Discarded ===//
+   results.message = name+" discarded a "+card.color+" "+card.number 
     
   Database.updateGame(results)
   response.send(results)
