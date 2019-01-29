@@ -503,6 +503,7 @@ Database.updateGame = (object) =>{
  updateDeck(object.playedCards, object.id, 'PlayedCards')
  updateDeck(object.discardedCards, object.id, 'DiscardedCards')
  updateHanabiGame(object)
+ updateMessages(object)
  updatePlayers(object.players[0])
  updatePlayers(object.players[1])
   if(object.players.length > 2){ updatePlayers(object.players[2])}
@@ -572,7 +573,15 @@ function updateHanabiGame(gameObject){
 
 //This function updates the messages Table
 function updateMessages(object){
-  
+  var sql = `UPDATE Messages
+             SET score = ${object.messages.join()}
+             WHERE id = ${object.id}`
+  db.run(sql, function(err){
+    if(err){
+      console.log("Error at Updating Messages")
+      throw err
+    }
+  })
 }
 
 module.exports = Database
