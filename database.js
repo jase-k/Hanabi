@@ -441,7 +441,7 @@ function getMessages(object){
           console.log("Error at Get Messages", err)
           throw err
         }
-      if(row.messages){
+      if(row.Messages){
          object.messages = row.Messages.split(",")
         console.log("++++Messages++++", row.Messages.split(","))
       } 
@@ -576,7 +576,9 @@ function updateHanabiGame(gameObject){
 function updateMessages(object){
   var sql = `UPDATE Messages
              SET Messages = "${object.messages.join()}"
-             WHERE id = ${object.id}`
+             WHERE gameId = ${object.id}`
+  
+  console.log(sql)
   
   db.run(sql, function(err){
     if(err){

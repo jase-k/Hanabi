@@ -101,6 +101,7 @@ app.get('/joingame/:gameid', function(request, response){
 app.get('/game/:gameid/:name', function(request, response){
   var gameId = request.params.gameid
   var name = request.params.name
+  console.log('Returning Game')
   
   //Returning the Game Object and Adding a Failure Message for Debugging 
   Database.getCurrentGame(gameId).then(function(results){
