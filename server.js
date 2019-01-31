@@ -164,6 +164,7 @@ var gameId = request.params.gameid
 //==== Replace the Hand Card with the Next Card from the Deck ===//
   var nextCard = results.playingDeck.shift()
   if(nextCard){
+    console.log("Next Card:", nextCard)
     results.players[playerIndex].hand.splice(cardIndex, 1, nextCard)    
   }
     
@@ -208,9 +209,9 @@ var gameId = request.params.gameid
 //==== Replace the Hand Card with the Next Card from the Deck ===//
   var nextCard = results.playingDeck.shift()
   
-  if(nextCard){
+  
     results.players[playerIndex].hand.splice(cardIndex, 1, nextCard)    
-  }
+  
   
 
 //===== Switch the Active Player ====//
