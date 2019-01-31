@@ -318,8 +318,8 @@ var newIndex = (nameIndex+1) % results.players.length
     results.players[newIndex].active = 1
    
 //==== Adds to Messages ====//
-   results.messages.push(name+' gave '+player+' a hint about their '+hint+'"s') 
-
+   results.messages.push(`${name} gave ${player} a hint about their ${hint}'s`) 
+    console.log("Messages", results.messages)
 results.hintsLeft -= 1;  
 Database.updateGame(results)
 response.send(results)
