@@ -158,7 +158,7 @@ var gameId = request.params.gameid
     var discardedCardIndex = results.discardedCards.indexOf(undefined)
    results.discardedCards.splice(discardedCardIndex, 1, results.players[playerIndex].hand[cardIndex])
    results.livesLeft--   
-   results.messages.push("Sorry, "+name+" tried playing a "+card.color+" "+card.number+" and it didn't play")
+   results.messages.push("Whoop! "+name+" tried playing a "+card.color+" "+card.number+" and it didn't play")
  }
     
 //==== Replace the Hand Card with the Next Card from the Deck ===//
