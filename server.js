@@ -316,6 +316,9 @@ function appendHints(hintType, card){
     results.players[nameIndex].active = 0
 var newIndex = (nameIndex+1) % results.players.length
     results.players[newIndex].active = 1
+   
+//==== Adds to Messages ====//
+   results.messages.push(name+' gave '+player+' a hint about their '+hint+'"s') 
 
 results.hintsLeft -= 1;  
 Database.updateGame(results)
