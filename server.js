@@ -156,14 +156,17 @@ var gameId = request.params.gameid
    if(card.number == 5){results.hintsLeft++}
  }else{
     var discardedCardIndex = results.discardedCards.indexOf(undefined)
- results.discardedCards.splice(discardedCardIndex, 1, results.players[playerIndex].hand[cardIndex])
+   results.discardedCards.splice(discardedCardIndex, 1, results.players[playerIndex].hand[cardIndex])
    results.livesLeft--   
    results.messages.push("Sorry, "+name+" tried playing a "+card.color+" "+card.number+" and it didn't play")
  }
+    
 //==== Replace the Hand Card with the Next Card from the Deck ===//
   var nextCard = results.playingDeck.shift()
-  results.players[playerIndex].hand.splice(cardIndex, 1, nextCard)    
-  console.log("new Results:", JSON.stringify(results))
+  if(nextCard){
+    results.players[playerIndex].hand.splice(cardIndex, 1, nextCard)    
+  }
+    
     
 //===== Switch the Active Player ====//
     results.players[playerIndex].active = 0
@@ -178,6 +181,8 @@ var newIndex = (playerIndex+1) % results.players.length
 
 
 //=============================================
+// Discard Card
+//============================================
 
 app.get('/game/:gameid/:name/discard', function(request, response){
 var name = request.params.name
@@ -195,19 +200,25 @@ var gameId = request.params.gameid
 
     var card = results.players[playerIndex].hand[cardIndex]
     console.log('=====Discarded Card===========', card) 
+    
   var discardedCardIndex = results.discardedCards.indexOf(undefined)
- results.discardedCards.splice(discardedCardIndex, 1, card)
+  results.discardedCards.splice(discardedCardIndex, 1, card)
 
 
 //==== Replace the Hand Card with the Next Card from the Deck ===//
   var nextCard = results.playingDeck.shift()
-  results.players[playerIndex].hand.splice(cardIndex, 1, nextCard)    
-  console.log("new Results:", JSON.stringify(results))
+  
+  if(nextCard){
+    results.players[playerIndex].hand.splice(cardIndex, 1, nextCard)    
+  }
+  
 
 //===== Switch the Active Player ====//
     results.players[playerIndex].active = 0
-var newIndex = (playerIndex+1) % results.players.length
-    results.players[newIndex].active = 1
+    
+var nextPlayersIndex = (playerIndex+1) % results.players.length
+    
+    results.players[nextPlayersIndex].active = 1
   
 //=== Add a Hint After Discarding ==//
     results.hintsLeft++
