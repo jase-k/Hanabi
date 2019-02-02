@@ -61,7 +61,7 @@ app.get('/newgame/:numberOfPlayers', function(request, response) {
 newGame.numberOfPlayers = numberOfPlayers;
 newGame.dateCreated = new Date();
 newGame.score = null;
-newGame.hintsLeft = 9;
+newGame.hintsLeft = 8;
 newGame.livesLeft = 3;
 newGame.originalDeck = newDeck.slice();
 
