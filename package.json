@@ -7,7 +7,8 @@
   "description": "A simple Node app with SQLite as a database management system, instantly up and running.",
   "main": "server.js",
   "scripts": {
-    "start": "node server.js"
+    "start": "node server.js",
+    "test": "mocha"
   },
   "dependencies": {
     "cors": "^2.8.5",
@@ -27,5 +28,9 @@
     "node",
     "glitch",
     "express"
-  ]
+  ],
+  "devDependencies": {
+    "chai": "^4.2.0",
+    "mocha": "^5.2.0"
+  }
 }
