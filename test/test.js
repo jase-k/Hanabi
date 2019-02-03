@@ -3,7 +3,7 @@ const assert = require('chai').assert
 
 // Import Modules
 
-import GamePlay from '../game-play.js'
+const GamePlay = require('../game-play.js');
 
 
 
