@@ -1,5 +1,5 @@
 class GamePlay {
-  
+  newGame:
 }
 
 
