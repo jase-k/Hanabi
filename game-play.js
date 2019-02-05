@@ -10,7 +10,7 @@ var GamePlay = {
       hintsLeft: 8, //Game Always Starts with 8 Hints 
       livesLeft: 3, //Game Always Begins with 3 lives
       messages: [],
-      numberOfPlayers: 0, 
+      numberOfPlayers: numberOfPlayers, 
       // Creates and Shuffles Original Deck
       originalDeck: ModifyDeck.shufflesDeck(ModifyDeck.createDeck()),
       playedCards: [],

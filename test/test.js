@@ -14,7 +14,7 @@ const defaultGameSettings = {
                 messages: [],
                 numberOfPlayers: 3,
                 originalDeck: [/*Length of 50 Card Objects*/],
-                playedCards: [],
+                playedCards: [/* Length of 50- Dealt Cards */],
                 players: [],
                 playingDeck: [],
                 score: 0,
@@ -79,19 +79,19 @@ describe("GamePlay", function(){
       
       const gameObject = GamePlay.newGame(numberOfPlayers)
       
-      assert.equal(expectedArrayLengths.originalDeck, gameObject.originalDeck.length, "Original Deck should have 50 Cards")
-      assert.equal(expectedArrayLengths.playingDeck, gameObject.playingDeck.length, "Playing Deck should have 35 Cards (because of 3 players with 5 cards)")
-      assert.equal(expectedArrayLengths.players, gameObject.players.length, "Player Length should be 3")
-      assert.equal(expectedArrayLengths.hand, gameObject.players[0].hand.length, "Players' hand length should be 5")
-      assert.equal(expectedArrayLengths.hints, gameObject.players[0].hand[0].hints.length, "Card Hints should start empty")
-      assert.equal(expectedArrayLengths.playedCards, gameObject.playedCards.length, "playededCards  should start empty")
-      assert.equal(expectedArrayLengths.messages, gameObject.messages.length, "Messages should start empty")
-      assert.equal(expectedArrayLengths.discardedCards, gameObject.discardedCards.length, "Discarded Cards should start Empty")
-      assert.deepEqual(expectedSettings.dateCreated, gameObject.dateCreated, "Date Created should be the same as the test Date")
-      assert.equal(expectedSettings.hintsLeft, gameObject.hintsLeft, "Hints Left always starts at 8")
-      assert.equal(expectedSettings.livesLeft, gameObject.livesLeft, "Lives Left always starts at 3")
-      assert.equal(expectedSettings.numberOfPlayers, gameObject.numberOfPlayers, "Number of Players should equal 3")
-      assert.equal(expectedSettings.score, gameObject.score, "Score should start out at 0")
+      assert.equal(gameObject.originalDeck.length, expectedArrayLengths.originalDeck, "Original Deck should have 50 Cards")
+      assert.equal(gameObject.playingDeck.length, expectedArrayLengths.playingDeck, "Playing Deck should have 35 Cards (because of 3 players with 5 cards)")
+      assert.equal(gameObject.players.length, expectedArrayLengths.players, "Player Length should be 3")
+      assert.equal(gameObject.players[0].hand.length, expectedArrayLengths.hand, "Players' hand length should be 5")
+      assert.equal(gameObject.players[0].hand[0].hints.length, expectedArrayLengths.hints, "Card Hints should start empty")
+      assert.equal(gameObject.playedCards.length, expectedArrayLengths.playedCards, "playededCards  should start empty")
+      assert.equal(gameObject.messages.length, expectedArrayLengths.messages, "Messages should start empty")
+      assert.equal(gameObject.discardedCards.length, expectedArrayLengths.discardedCards, "Discarded Cards should start Empty")
+      assert.deepEqual(gameObject.dateCreated, expectedSettings.dateCreated, "Date Created should be the same as the test Date")
+      assert.equal(gameObject.hintsLeft, expectedSettings.hintsLeft, "Hints Left always starts at 8")
+      assert.equal(gameObject.livesLeft, expectedSettings.livesLeft, "Lives Left always starts at 3")
+      assert.equal(gameObject.numberOfPlayers, expectedSettings.numberOfPlayers, "Number of Players should equal 3")
+      assert.equal(gameObject.score, expectedSettings.score, "Score should start out at 0")
     });
   
   });
@@ -213,5 +213,8 @@ describe("Modify Game", function(){
       assert.equal(object.playingDeck.length, expectedDeckSize) 
     
     });
+  });
+  describe(".checkWinnability", function(){
+  
   });
 });
