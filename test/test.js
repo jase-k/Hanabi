@@ -5,6 +5,7 @@ const assert = require('chai').assert
 
 const {GamePlay, ModifyDeck} = require('../game-play.js');
 const deckOfCards = require('./defaults.js')
+
 const defaultGameSettings = {
                 dateCreated: new Date(), 
                 discardedCards: [],
@@ -127,7 +128,12 @@ describe("Modify Game", function(){
       
     });
     it("Returns a shuffled Deck", function(){
-    
+      const expectedDeck = deckOfCards;
+      
+      var deck = ModifyDeck.shufflesDeck(deckOfCards);
+
+      assert.notDeepEqual(deck, expectedDeck) //, "Does Not Equal Unshuffled Deck");
+      assert.sameDeepMembers(deck, expectedDeck, "Has the Same Cards as the Original Deck");
     });
   });
 });

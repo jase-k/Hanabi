@@ -44,7 +44,17 @@ const ModifyDeck = {
     return array
   },
   shufflesDeck(deck){
-    return deck
+    
+    var shuffledArray = [];
+    var index;  
+      for(var i=0; i < deck.length;){
+      index = Math.floor(Math.random()*deck.length)
+        shuffledArray.push(deck[index])
+        deck.splice(index, 1)
+      }    
+      
+    return shuffledArray
+      
   }
 }
 
