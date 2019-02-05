@@ -50,10 +50,11 @@ const ModifyDeck = {
       index = Math.floor(Math.random()*deck.length)
         shuffledArray.push(deck[index])
         deck.splice(index, 1)
-      }    
-       
+      }        
     return shuffledArray
-      
+  },
+  dealsHands(numberOfPlayers, deck){
+  
   }
 }
 

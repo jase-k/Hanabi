@@ -110,7 +110,7 @@ describe("Modify Game", function(){
       assert.deepEqual(expectedCardKeys, Object.keys(originalDeck[0]))
     });
     it("Creates 3 (number 1 cards of every color) 2 (number 2-4 cards of every color) and 1 (number 5 of every color)", function(){
-      const expectedDeck = deckOfCards
+      const expectedDeck = deckOfCards()
       
       const originalDeck = ModifyDeck.createDeck()
       
@@ -120,7 +120,7 @@ describe("Modify Game", function(){
   describe(".shufflesDeck", function(){
     it("Returns an Array of 50 Card Objects", function(){
       const expectedDeckLength = 50;
-      var   deck = deckOfCards;
+      var   deck = deckOfCards();
       
       const shuffledDeck = ModifyDeck.shufflesDeck(deck);
       
@@ -128,13 +128,15 @@ describe("Modify Game", function(){
       
     });
     it("Returns a shuffled Deck", function(){
-      const expectDeck = deckOfCards;
-      console.log("Expected Deck:", expectDeck);
+      const expectDeck = deckOfCards();
       
-      var deck = ModifyDeck.shufflesDeck(deckOfCards);
-        console.log("Deck:", deck);
-      assert.notDeepEqual(deck, expectDeck) //, "Does Not Equal Unshuffled Deck");
+      var deck = ModifyDeck.shufflesDeck(deckOfCards());
+      
+      assert.notDeepEqual(deck, expectDeck, "Does Not Equal Unshuffled Deck");
       assert.sameDeepMembers(deck, expectDeck, "Has the Same Cards as the Original Deck");
     });
+  });
+  describe(".dealsHands", function(){
+    const expectedHands
   });
 });

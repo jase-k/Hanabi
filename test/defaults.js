@@ -1,4 +1,5 @@
-const deckOfCards = [
+function deckOfCards(){
+ return( [
   {
     color: 'black', 
     hints: [],
@@ -249,6 +250,8 @@ const deckOfCards = [
     hints: [],
     number: 5
   }
-]
+   ]
+  )
+}
 
 module.exports = deckOfCards
