@@ -225,10 +225,10 @@ describe("Modify Deck", function(){
       assert.equal(torf, expectedResult)
     });
     it("should return true for shuffled Deck", function(){
-    var deck = Defaults.shuffledDeckOfCards;
+    var deck = Defaults.shuffledDeckOfCards();
       var numberOfPlayers = 2; 
       var expectedResult = true;
-      
+      console.log(deck)
       var torf = ModifyDeck.checkWinnability(deck, numberOfPlayers);
       
       console.log("Returned", torf)
