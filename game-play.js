@@ -1,6 +1,6 @@
 var GamePlay = {
-  newGame(){
-  return {
+  newGame(numberOfPlayers){
+  var gameObject = {
       dateCreated: "",
       discardedCards: [],
       hintsLeft: 0, 
@@ -14,6 +14,9 @@ var GamePlay = {
       score: 0,
       tableIds: [],
     }
+  for(var i
+    
+    return 
   }
 }
 

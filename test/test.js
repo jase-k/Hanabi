@@ -9,32 +9,12 @@ const defaultGameSettings = {
                 dateCreated: new Date(), 
                 discardedCards: [],
                 hintsLeft: 8, 
-                id: 0, 
                 livesLeft: 3, 
                 messages: [],
                 numberOfPlayers: 3,
                 originalDeck: [/*Length of 50 Card Objects*/],
                 playedCards: [],
-                players: [
-                  {
-                    id: 0,
-                    name: "John",
-                    active: 0, 
-                    hand: [],
-                  },
-                  {
-                    id: 0,
-                    name: null,
-                    active: 0, 
-                    hand: [],
-                  },
-                  {
-                    id: 0,
-                    name: null,
-                    active: 0, 
-                    hand: [],
-                  }
-                ],
+                players: [],
                 playingDeck: [],
                 score: 0,
                 tableIds: []
@@ -44,8 +24,8 @@ describe("GamePlay", function(){
   
   describe(".newGame", function(){
     
-    it("Should returns a complete game Object for 2 people", function(){
-      const numberOfPlayers = 2; 
+    it("Should create a game Object for 3 people with correct Keys", function(){
+      const numberOfPlayers = 3; 
       const expectedObjectKeys = Object.keys(defaultGameSettings)
       
       const newGameObject = GamePlay.newGame(numberOfPlayers)
@@ -58,12 +38,14 @@ describe("GamePlay", function(){
       
     });
   
-    it("s Player's Array's Length should be the same as number of Players", function(){
-        const numberOfPlayers = 4;
+    it("its Player's Array's Length should be the same as number of Players", function(){
+      const numberOfPlayers = 3;
+      const expectedResult = 3; 
       
         const newGameObject = GamePlay.newGame(numberOfPlayers)
       
-      
+      assert.equal(expectedResult, newGameObject.length)
+                   
     });
     
     it("Should set Game to Default Settings", function(){
