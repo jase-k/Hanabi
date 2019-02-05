@@ -98,7 +98,7 @@ describe("GamePlay", function(){
   
 });
 
-describe("Modify Game", function(){
+describe("Modify Deck", function(){
   describe(".createDeck", function(){
     it("Creates and Returns an Array of 50 Card Objects for the OriginalDeck", function(){
       const expectedResult = 50 
@@ -215,6 +215,15 @@ describe("Modify Game", function(){
     });
   });
   describe(".checkWinnability", function(){
-  
+    it("should return false if Loss Condition: First Card Instance too Late is true", function(){
+      var deck = Defaults.lossExample1;
+      var numberOfPlayers = 2; 
+      var expectedResult = false;
+      
+      var torf = ModifyDeck.checkWinnability(deck, number);
+      
+      assert.equal(torf, expectedResult)
+      
+    }) 
   });
 });
