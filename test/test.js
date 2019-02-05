@@ -147,24 +147,22 @@ describe("Modify Game", function(){
       assert.containsAllKeys(object, expectedKeys)
       
     });
-    it("should deals 5 cards for 3 players", function(){
+    it("should deal 5 cards for 3 players", function(){
       var deck = Defaults.shuffledDeckOfCards()
       var numberOfPlayers = 3; 
       
-      const expectedPlayerLength = 3;
+      const expectedPlayrLength = 3;
       
       var object = ModifyDeck.dealsHands(numberOfPlayers, deck)
       
       assert.equal(object.players.length, expectedPlayerLength) 
       
     });
-    it("should deals 5 cards for 5 players", function(){
+    it("should deal 4 cards for 4-5 players", function(){
       var deck = Defaults.shuffledDeckOfCards()
       var numberOfPlayers = 5; 
       
-      const expectedHandLength = 5
-      const expectedCardKeys = ["number", "color", "hints"]
-      const expectedPlayerLength = 5;
+      const expectedHandLength = 5;
       
       var object = ModifyDeck.dealsHands(numberOfPlayers, deck)
       
@@ -182,7 +180,7 @@ describe("Modify Game", function(){
       
       assert.containsAllKeys(object.players[0], expectedPlayerKeys);
     });
-    it("should return array object.players.hand that contains Card Objects with the keys: 'number', 'color', 'hints'", function(){
+    it("should return Array: 'object.players.hand' that contains CardObjects with the keys: 'number', 'color', 'hints'", function(){
       var deck = Defaults.shuffledDeckOfCards()
       var numberOfPlayers = 5; 
       
@@ -192,7 +190,17 @@ describe("Modify Game", function(){
       
       var object = ModifyDeck.dealsHands(numberOfPlayers, deck)
       
-      assert.equal(object.players.hand[0], expectedCardKeys) 
+      assert.containsAllKeys(object.players[0].hand[0], expectedCardKeys) 
+    });
+    it("should deal 4 cards for 4-5 players", function(){
+      var deck = Defaults.shuffledDeckOfCards();
+      var numberOfPlayers = 5
+    
+    });
+    it("Dealt Cards should match the first X number of Cards in the Original Shuffled deck", function(){
+      var deck = Defaults.shuffledDeckOfCards();
+      var numberOfPlayers
+    
     });
   });
 });

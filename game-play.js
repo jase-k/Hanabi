@@ -54,17 +54,26 @@ const ModifyDeck = {
     return shuffledArray
   },
   dealsHands(numberOfPlayers, deck){
+    var handSize = 5;
     var object = {
       players: [],
       playingDeck: {}
-    }
+    };
+    
   for(i = 0; i < numberOfPlayers; i++){
     object.players.push({
       name: "", 
       hand: [],
       active: 0,
     });
-  }
+    for(var j = 0; j < handSize; j++){
+      object.players[i].hand.push({
+        color: "",
+        hints: [],
+        number: 0
+      });
+    };
+  };
       
     return object
   }

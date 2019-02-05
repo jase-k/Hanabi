@@ -1,5 +1,14 @@
-const Defaults = {
- deckOfCards(){
+/*
+Defaults.js
+
+Defaults contains methods that return specific parts
+of the game object for testing purposes. 
+
+This Document is only used for testing Purposes in *test.js
+*/
+
+const Defaults = {  
+deckOfCards(){
  return( [
   {
     color: 'black', 
