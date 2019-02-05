@@ -264,7 +264,8 @@ const Defaults = {
 },
   shuffledDeckOfCards(){ // This Deck is Winnable for All Players
 return ( 
-  [ { color: 'white', hints: [], number: 3 },
+  [ 
+  { color: 'white', hints: [], number: 3 },
   { color: 'white', hints: [], number: 4 },
   { color: 'orange', hints: [], number: 3 },
   { color: 'blue', hints: [], number: 1 },

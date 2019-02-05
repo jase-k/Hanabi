@@ -216,7 +216,7 @@ describe("Modify Deck", function(){
   });
   describe(".checkWinnability", function(){
     it("should return false if Loss Condition: First Card Instance too Late is true", function(){
-      var deck = Defaults.lossExample1;
+      var deck = Defaults.lossExample1();
       var numberOfPlayers = 2; 
       var expectedResult = false;
       
@@ -228,10 +228,9 @@ describe("Modify Deck", function(){
     var deck = Defaults.shuffledDeckOfCards();
       var numberOfPlayers = 2; 
       var expectedResult = true;
-
+      
       var torf = ModifyDeck.checkWinnability(deck, numberOfPlayers);
       
-      console.log("Returned", torf)
       assert.equal(torf, expectedResult)
     });
   });
