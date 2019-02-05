@@ -43,7 +43,8 @@ const ModifyDeck = {
     }
     return array
   },
-  shufflesDeck(){
+  shufflesDeck(deck){
+    return deck
   }
 }
 

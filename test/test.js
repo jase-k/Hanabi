@@ -29,11 +29,9 @@ describe("GamePlay", function(){
       const expectedObjectKeys = Object.keys(defaultGameSettings)
       
       const newGameObject = GamePlay.newGame(numberOfPlayers)
-      const newGameKeys = Object.keys(newGameObject)
-      newGameKeys.sort();
-      expectedObjectKeys.sort();
 
-      assert.deepEqual(expectedObjectKeys, newGameKeys)
+
+      assert.containsAllKeys(newGameObject, expectedObjectKeys)
       
       
     });
@@ -127,6 +125,9 @@ describe("Modify Game", function(){
       
       assert.equal(expectedDeckLength, shuffledDeck.length)
       
+    });
+    it("Returns a shuffled Deck", function(){
+    
     });
   });
 });
