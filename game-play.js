@@ -1,4 +1,7 @@
 var i;
+const colors = ["black", "blue", "orange", "red", "white"]
+const numbers = [1,1,1,2,2,3,3,4,4,5]
+
 var GamePlay = {
   newGame(numberOfPlayers){
   var gameObject = {
@@ -29,15 +32,18 @@ const ModifyDeck = {
   createDeck(){
     var array = [];
     
-    for(i = 0; i < 50; i++){
-     array.push({
-       color: null, 
-       hints: [],
-       number: null
-     }) 
+    for(i = 0; i < colors.length; i++){
+      for(var j = 0; j < numbers.length; j++){
+       array.push({
+         color: colors[i], 
+         hints: [],
+         number: numbers[j]
+       }) 
+      }
     }
-   
     return array
+  },
+  shufflesDeck(){
   }
 }
 

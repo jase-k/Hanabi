@@ -4,7 +4,7 @@ const assert = require('chai').assert
 // Import Modules
 
 const {GamePlay, ModifyDeck} = require('../game-play.js');
-const deckOfCards = require('.
+const deckOfCards = require('./defaults.js')
 const defaultGameSettings = {
                 dateCreated: new Date(), 
                 discardedCards: [],
@@ -100,8 +100,8 @@ describe("GamePlay", function(){
 });
 
 describe("Modify Game", function(){
-  describe("Create New Deck", function(){
-    it("Creates 50 Card Objects for the OriginalDeck", function(){
+  describe(".createDeck", function(){
+    it("Creates and Returns an Array of 50 Card Objects for the OriginalDeck", function(){
       const expectedResult = 50 
       const expectedCardKeys = ["color", "hints", "number"]
       
@@ -111,8 +111,22 @@ describe("Modify Game", function(){
       assert.deepEqual(expectedCardKeys, Object.keys(originalDeck[0]))
     });
     it("Creates 3 (number 1 cards of every color) 2 (number 2-4 cards of every color) and 1 (number 5 of every color)", function(){
-    
+      const expectedDeck = deckOfCards
+      
+      const originalDeck = ModifyDeck.createDeck()
+      
+      assert.deepEqual(expectedDeck, originalDeck)
     }); 
-  
+  });
+  describe(".shufflesDeck", function(){
+    it("Returns an Array of 50 Card Objects", function(){
+      const expectedDeckLength = 50;
+      var   deck = deckOfCards;
+      
+      const shuffledDeck = ModifyDeck.shufflesDeck(deck);
+      
+      assert.equal(expectedDeckLength, shuffledDeck.length)
+      
+    });
   });
 });
