@@ -1,3 +1,4 @@
+var i;
 var GamePlay = {
   newGame(numberOfPlayers){
   var gameObject = {
@@ -9,14 +10,24 @@ var GamePlay = {
       numberOfPlayers: 0, 
       originalDeck: [],
       playedCards: [],
-      players: 0, 
+      players: [], 
       playingDeck: [],
       score: 0,
       tableIds: [],
     }
-  for(var i
+for(i = 0; i < numberOfPlayers; i++){
+  gameObject.players.push({
+    name: null
+    })
+  }
     
-    return 
+    return gameObject
+  }
+}
+
+const ModifyDeck = {
+  createDeck(){
+  
   }
 }
 

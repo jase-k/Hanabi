@@ -38,18 +38,42 @@ describe("GamePlay", function(){
       
     });
   
-    it("its Player's Array's Length should be the same as number of Players", function(){
+    it("its Player's Array's Length should be the same as number of Players (3)", function(){
       const numberOfPlayers = 3;
       const expectedResult = 3; 
       
         const newGameObject = GamePlay.newGame(numberOfPlayers)
       
-      assert.equal(expectedResult, newGameObject.length)
+      assert.equal(expectedResult, newGameObject.players.length)
+                   
+    });
+    
+    it("its Player's Array's Length should be the same as number of Players (5)", function(){
+      const numberOfPlayers = 5;
+      const expectedResult = 5; 
+      
+        const newGameObject = GamePlay.newGame(numberOfPlayers)
+      
+      assert.equal(expectedResult, newGameObject.players.length)
                    
     });
     
     it("Should set Game to Default Settings", function(){
+      var expectedSettings = {
+                dateCreated: new Date(), 
+                discardedCards: [],
+                hintsLeft: 8, 
+                livesLeft: 3, 
+                messages: [],
+                numberOfPlayers: 3,
+                playedCards: [],
+                score: 0,
+              }
+      var expectedArrayLengths = {
+        o
+      }
       
+      assert.equal(
       
     });
   
