@@ -93,5 +93,14 @@ const ModifyDeck = {
   },
 }
 
+function doesCardPlay(cardToCheck, playedCards){
+  var playedCardColorPile = playedCards.filter(card => card.color === cardToCheck.color)
+  var highestCardInPile = Math.max(playedCardColorPile.map(card => card.number)) 
+
+  console.log(highestCardInPile)
+  if(highestCardInPile){}
+  }
+
+doesCardPlay({color: "blue", number: 3}, [])
 
 module.exports = {GamePlay, ModifyDeck}

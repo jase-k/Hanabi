@@ -262,8 +262,8 @@ const Defaults = {
   }
    ] )
 },
-  shuffledDeckOfCards(){
-return (
+  shuffledDeckOfCards(){ // This Deck is Winnable for All Players
+return ( 
   [ { color: 'white', hints: [], number: 3 },
   { color: 'white', hints: [], number: 4 },
   { color: 'orange', hints: [], number: 3 },
@@ -831,29 +831,3 @@ return( [
 }
 
 module.exports = Defaults
-
-
-  { color: 'orange', hints: [], number: 3 },
-  { color: 'red', hints: [], number: 4 },
-  { color: 'black', hints: [], number: 3 },
-  { color: 'black', hints: [], number: 4 },
-  { color: 'black', hints: [], number: 5 },
-  { color: 'orange', hints: [], number: 1 },
-  { color: 'blue', hints: [], number: 1 },
-  { color: 'red', hints: [], number: 2 },
-  { color: 'orange', hints: [], number: 4 },
-  { color: 'black', hints: [], number: 1 },
-    
-    
-  { color: 'orange', hints: [], number: 2 },
-  { color: 'red', hints: [], number: 1 },
-  { color: 'black', hints: [], number: 3 },
-  { color: 'black', hints: [], number: 4 },
-  { color: 'blue', hints: [], number: 2 },
-  { color: 'orange', hints: [], number: 1 },
-  { color: 'orange', hints: [], number: 5 },
-  { color: 'black', hints: [], number: 2 },
-  { color: 'white', hints: [], number: 1 },
-  { color: 'black', hints: [], number: 1 },
-  { color: 'blue', hints: [], number: 3 },
-  { color: 'blue', hints: [], number: 4 }
