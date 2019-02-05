@@ -54,7 +54,15 @@ const ModifyDeck = {
     return shuffledArray
   },
   dealsHands(numberOfPlayers, deck){
-  
+    var object = {
+      players: [
+      null, 
+      null, 
+      null
+      ],
+      playingDeck: {}
+    }
+    return object
   }
 }
 

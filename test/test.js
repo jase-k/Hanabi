@@ -107,7 +107,7 @@ describe("Modify Game", function(){
       const originalDeck = ModifyDeck.createDeck()
       
       assert.equal(expectedResult, originalDeck.length)
-      assert.deepEqual(expectedCardKeys, Object.keys(originalDeck[0]))
+      assert.containsAllKeys(originalDeck[0], expectedCardKeys)
     });
     it("Creates 3 (number 1 cards of every color) 2 (number 2-4 cards of every color) and 1 (number 5 of every color)", function(){
       const expectedDeck = Defaults.deckOfCards()
@@ -137,16 +137,17 @@ describe("Modify Game", function(){
     });
   });
   describe(".dealsHands", function(){
-    it("should return an object containing a deck and players", function(){
+    it("should return an object containing keys:  'playinDeck' and 'players'", function(){
       var deck = Defaults.shuffledDeckOfCards()
       var numberOfPlayers = 3; 
+      var expectedKeys = ["players", "playingDeck"];
           
       var object = ModifyDeck.dealsHands(numberOfPlayers, deck)
       
-      assert.
+      assert.containsAllKeys(object, expectedKeys)
       
     })
-    it("deals 5 cards for 3 players", function(){
+    it("should deals 5 cards for 3 players", function(){
       var deck = Defaults.shuffledDeckOfCards()
       var numberOfPlayers = 3; 
       
@@ -154,9 +155,9 @@ describe("Modify Game", function(){
       const expectedCardKeys = ["number", "color", "hints"]
       const expectedPlayerLength = 3;
       
-      var players = ModifyDeck.dealsHands(numberOfPlayers, deck)
+      var object = ModifyDeck.dealsHands(numberOfPlayers, deck)
       
-      
+      assert.equal(object.players.length, expectedPlayerLength) 
       
       
     });
