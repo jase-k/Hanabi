@@ -5,20 +5,27 @@ const numbers = [1,1,1,2,2,3,3,4,4,5]
 var GamePlay = {
   newGame(numberOfPlayers){
   var gameObject = {
-      dateCreated: "",
-      discardedCards: [],
-      hintsLeft: 0, 
-      livesLeft: 0,
+      dateCreated: new Date(),
+      discardedCards: [], 
+      hintsLeft: 8, //Game Always Starts with 8 Hints 
+      livesLeft: 3, //Game Always Begins with 3 lives
       messages: [],
       numberOfPlayers: 0, 
-      originalDeck: ModifyDeck.createDeck(),
+      // Creates and Shuffles Original Deck
+      originalDeck: ModifyDeck.shufflesDeck(ModifyDeck.createDeck()),
       playedCards: [],
       players: [], 
       playingDeck: [],
       score: 0,
       tableIds: [],
     }
-  gameObject.playingDeck = ModifyDeck.
+  
+  //dealtGame holds the PlayingDeck and Players Array
+  //After the Original deck was shuffled
+ var dealtGame= ModifyDeck.dealsHands(numberOfPlayers, gameObject.originalDeck)
+
+     gameObject.playingDeck = dealtGame.playingDeck
+     gameObject.players = dealtGame.players
     
     return gameObject
   }
