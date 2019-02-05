@@ -228,9 +228,11 @@ describe("Modify Deck", function(){
     var deck = Defaults.shuffledDeckOfCards();
       var numberOfPlayers = 2; 
       var expectedResult = true;
+      var gameObject = ModifyDeck.dealsHands(numberOfPlayers, deck);
       
-      var torf = ModifyDeck.checkWinnability(deck, numberOfPlayers);
+      var torf = ModifyDeck.checkWinnability(gameObject.players, gameObject.playingDeck)
       
+      console.log("Result:", torf)
       assert.equal(torf, expectedResult)
     });
   });

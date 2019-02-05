@@ -88,22 +88,27 @@ const ModifyDeck = {
       
     return object
   },
-  checkWinnability(deck, numberOfPlayers){
-    var returned = doesCardPlay(deck[0], [{color: "white", number: 2}], "white")
+  checkWinnability(players, playingDeck){
+    for(
+    doesCardPlay(deck[0], [])
   
-    return returned
+    return true
   },
 }
 
-function doesCardPlay(cardToCheck, playedCards, color){
+function doesCardPlay(cardToCheck, playedCards){
   var playedCardColorPile = playedCards.filter(function(card){
-    return card.color == color
+    return card.color == cardToCheck.color
   })
   
   var highestCardInPile = Math.max(playedCardColorPile.map(card => card.number)) 
-
   
-  return cardToCheck.color
+  if(cardToCheck.number == highestCardInPile+1){ 
+    return true
+  }else{
+    return false
+  }
+  
 }
 
 module.exports = {GamePlay, ModifyDeck}
