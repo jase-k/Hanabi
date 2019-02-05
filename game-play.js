@@ -58,6 +58,8 @@ const ModifyDeck = {
   },
   dealsHands(numberOfPlayers, deck){
     var handSize;
+    var cloneDeck = deck.slice() // Creates a clone of the deck so we don't affect Original Deck
+    
     if(numberOfPlayers < 4){
       handSize = 5;
     }else{
@@ -77,12 +79,12 @@ const ModifyDeck = {
     });
     for(var j = 0; j < handSize; j++){
       object.players[i].hand.push(
-        deck.shift()
+        cloneDeck.shift()
       );
     };
   };
     
-    object.playingDeck = deck //Sets the Playing Deck to the remaining cards
+    object.playingDeck = cloneDeck //Sets the Playing Deck to the remaining cards
       
     return object
   }

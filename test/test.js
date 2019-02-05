@@ -82,16 +82,16 @@ describe("GamePlay", function(){
       assert.equal(expectedArrayLengths.originalDeck, gameObject.originalDeck.length, "Original Deck should have 50 Cards")
       assert.equal(expectedArrayLengths.playingDeck, gameObject.playingDeck.length, "Playing Deck should have 35 Cards (because of 3 players with 5 cards)")
       assert.equal(expectedArrayLengths.players, gameObject.players.length, "Player Length should be 3")
-      assert.equal(expectedArrayLengths.hand, gameObject.players.hand.length, "Players' hand length should be 5")
-      assert.equal(expectedArrayLengths.hints, gameObject.players.hand.hints.length, "Card Hints should start empty")
+      assert.equal(expectedArrayLengths.hand, gameObject.players[0].hand.length, "Players' hand length should be 5")
+      assert.equal(expectedArrayLengths.hints, gameObject.players[0].hand[0].hints.length, "Card Hints should start empty")
       assert.equal(expectedArrayLengths.playedCards, gameObject.playedCards.length, "playededCards  should start empty")
       assert.equal(expectedArrayLengths.messages, gameObject.messages.length, "Messages should start empty")
       assert.equal(expectedArrayLengths.discardedCards, gameObject.discardedCards.length, "Discarded Cards should start Empty")
-      assert.equal(expectedSettings.dateCreated, gameObject.dateCreated, "Date Created should be the same as the test Date")
+      assert.deepEqual(expectedSettings.dateCreated, gameObject.dateCreated, "Date Created should be the same as the test Date")
       assert.equal(expectedSettings.hintsLeft, gameObject.hintsLeft, "Hints Left always starts at 8")
-      assert.equal(expectedSettings.liveLeft, gameObject.livesLeft, "Lives Left always starts at 3")
-      assert.equal(expectedSettings.numberOfPlayers, gameObject.numberOfPlayers)
-      assert.equal(expectedSettings.score, gameObject.score)
+      assert.equal(expectedSettings.livesLeft, gameObject.livesLeft, "Lives Left always starts at 3")
+      assert.equal(expectedSettings.numberOfPlayers, gameObject.numberOfPlayers, "Number of Players should equal 3")
+      assert.equal(expectedSettings.score, gameObject.score, "Score should start out at 0")
     });
   
   });
