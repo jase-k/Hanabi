@@ -220,10 +220,18 @@ describe("Modify Deck", function(){
       var numberOfPlayers = 2; 
       var expectedResult = false;
       
-      var torf = ModifyDeck.checkWinnability(deck, number);
+      var torf = ModifyDeck.checkWinnability(deck, numberOfPlayers);
       
       assert.equal(torf, expectedResult)
+    });
+    it("should return true for shuffled Deck", function(){
+    var deck = Defaults.shuffledDeckOfCards;
+      var numberOfPlayers = 2; 
+      var expectedResult = true;
       
-    }) 
+      var torf = ModifyDeck.checkWinnability(deck, numberOfPlayers);
+      
+      assert.equal(torf, expectedResult)
+    });
   });
 });
