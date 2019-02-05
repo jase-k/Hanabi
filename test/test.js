@@ -57,7 +57,7 @@ describe("GamePlay", function(){
                    
     });
     
-    it.skip("Should set Game to Default Settings (3 players)", function(){
+    it("Should set Game to Default Settings (3 players)", function(){
       var numberOfPlayers = 3
       var expectedSettings = {
                 dateCreated: new Date(), 
@@ -195,14 +195,23 @@ describe("Modify Game", function(){
     it("Dealt Cards should match the first X number of Cards in the Original Shuffled deck", function(){
       var deck = Defaults.shuffledDeckOfCards();
       var numberOfPlayers = 3
-      var expectedHands = deck.splice(
+      var expectedHands = deck.slice(0,15)
       
       var object = ModifyDeck.dealsHands(numberOfPlayers, deck)
+      //Joins the Players Hands into One Array
       var cardsInPlayersHand = object.players[0].hand.concat(object.players[1].hand, object.players[2].hand)
-      console.log("mapped hands", cardsInPlayersHand)
       
-      assert.sameDeepMembers()  
+      assert.sameDeepMembers(cardsInPlayersHand, expectedHands)  
+    });
+    it("should remove dealt cards from returned object.playingDeck", function(){
+      var deck = Defaults.shuffledDeckOfCards();
+      var numberOfPlayers = 3
+      var expectedDeckSize = 35
       
+      var object = ModifyDeck.dealsHands(numberOfPlayers, deck)
+      
+      assert.equal(object.playingDeck.length, expectedDeckSize) 
+    
     });
   });
 });

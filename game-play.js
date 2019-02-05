@@ -11,18 +11,14 @@ var GamePlay = {
       livesLeft: 0,
       messages: [],
       numberOfPlayers: 0, 
-      originalDeck: [],
+      originalDeck: ModifyDeck.createDeck(),
       playedCards: [],
       players: [], 
       playingDeck: [],
       score: 0,
       tableIds: [],
     }
-for(i = 0; i < numberOfPlayers; i++){
-  gameObject.players.push({
-    name: null
-    })
-  }
+  gameObject.playingDeck = ModifyDeck.
     
     return gameObject
   }
@@ -63,7 +59,7 @@ const ModifyDeck = {
     
     var object = {
       players: [],
-      playingDeck: {}
+      playingDeck: [],
     };
     
   for(i = 0; i < numberOfPlayers; i++){
@@ -73,13 +69,13 @@ const ModifyDeck = {
       active: 0,
     });
     for(var j = 0; j < handSize; j++){
-      object.players[i].hand.push({
-        color: "",
-        hints: [],
-        number: 0
-      });
+      object.players[i].hand.push(
+        deck.shift()
+      );
     };
   };
+    
+    object.playingDeck = deck //Sets the Playing Deck to the remaining cards
       
     return object
   }
