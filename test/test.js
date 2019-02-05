@@ -4,7 +4,7 @@ const assert = require('chai').assert
 // Import Modules
 
 const {GamePlay, ModifyDeck} = require('../game-play.js');
-const deckOfCards = require('./defaults.js')
+const Defaults = require('./defaults.js')
 
 const defaultGameSettings = {
                 dateCreated: new Date(), 
@@ -110,7 +110,7 @@ describe("Modify Game", function(){
       assert.deepEqual(expectedCardKeys, Object.keys(originalDeck[0]))
     });
     it("Creates 3 (number 1 cards of every color) 2 (number 2-4 cards of every color) and 1 (number 5 of every color)", function(){
-      const expectedDeck = deckOfCards()
+      const expectedDeck = Defaults.deckOfCards()
       
       const originalDeck = ModifyDeck.createDeck()
       
@@ -120,7 +120,7 @@ describe("Modify Game", function(){
   describe(".shufflesDeck", function(){
     it("Returns an Array of 50 Card Objects", function(){
       const expectedDeckLength = 50;
-      var   deck = deckOfCards();
+      var   deck = Defaults.deckOfCards();
       
       const shuffledDeck = ModifyDeck.shufflesDeck(deck);
       
@@ -128,15 +128,37 @@ describe("Modify Game", function(){
       
     });
     it("Returns a shuffled Deck", function(){
-      const expectDeck = deckOfCards();
+      const expectDeck = Defaults.deckOfCards();
       
-      var deck = ModifyDeck.shufflesDeck(deckOfCards());
+      var deck = ModifyDeck.shufflesDeck(Defaults.deckOfCards());
       
       assert.notDeepEqual(deck, expectDeck, "Does Not Equal Unshuffled Deck");
       assert.sameDeepMembers(deck, expectDeck, "Has the Same Cards as the Original Deck");
     });
   });
   describe(".dealsHands", function(){
-    const expectedHands
+    it("should return an object containing a deck and players", function(){
+      var deck = Defaults.shuffledDeckOfCards()
+      var numberOfPlayers = 3; 
+          
+      var object = ModifyDeck.dealsHands(numberOfPlayers, deck)
+      
+      assert.
+      
+    })
+    it("deals 5 cards for 3 players", function(){
+      var deck = Defaults.shuffledDeckOfCards()
+      var numberOfPlayers = 3; 
+      
+      const expectedHandLength = 5
+      const expectedCardKeys = ["number", "color", "hints"]
+      const expectedPlayerLength = 3;
+      
+      var players = ModifyDeck.dealsHands(numberOfPlayers, deck)
+      
+      
+      
+      
+    });
   });
 });
