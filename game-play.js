@@ -59,7 +59,11 @@ const ModifyDeck = {
       playingDeck: {}
     }
   for(i = 0; i < numberOfPlayers; i++){
-    object.players.push(null);
+    object.players.push({
+      name: "", 
+      hand: [],
+      active: 0,
+    });
   }
       
     return object

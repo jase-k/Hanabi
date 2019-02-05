@@ -146,13 +146,11 @@ describe("Modify Game", function(){
       
       assert.containsAllKeys(object, expectedKeys)
       
-    })
+    });
     it("should deals 5 cards for 3 players", function(){
       var deck = Defaults.shuffledDeckOfCards()
       var numberOfPlayers = 3; 
       
-      const expectedHandLength = 5
-      const expectedCardKeys = ["number", "color", "hints"]
       const expectedPlayerLength = 3;
       
       var object = ModifyDeck.dealsHands(numberOfPlayers, deck)
@@ -173,8 +171,28 @@ describe("Modify Game", function(){
       assert.equal(object.players.length, expectedPlayerLength) 
       
     });
-    it("should retun player objects that contain the keys: 'hand', 'name', 'active'", function(){
-      const 
+    it("should return array object.players that contains Player Objects with the keys: 'hand', 'name', 'active'", function(){
+      var deck = Defaults.shuffledDeckOfCards()
+      var numberOfPlayers = 5; 
+      
+      const expectedPlayerKeys = ["hand", "name", "active"]
+      const expectedPlayerLength = 5;
+      
+      var object = ModifyDeck.dealsHands(numberOfPlayers, deck)
+      
+      assert.containsAllKeys(object.players[0], expectedPlayerKeys);
+    });
+    it("should return array object.players.hand that contains Card Objects with the keys: 'number', 'color', 'hints'", function(){
+      var deck = Defaults.shuffledDeckOfCards()
+      var numberOfPlayers = 5; 
+      
+      const expectedHandLength = 5
+      const expectedCardKeys = ["number", "color", "hints"]
+      const expectedPlayerLength = 5;
+      
+      var object = ModifyDeck.dealsHands(numberOfPlayers, deck)
+      
+      assert.equal(object.players.hand[0], expectedCardKeys) 
     });
   });
 });
