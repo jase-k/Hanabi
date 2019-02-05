@@ -38,7 +38,7 @@ describe("GamePlay", function(){
       
     });
   
-    it("its Player's Array's Length should be the same as number of Players (3)", function(){
+    it("its Player's Array's Length should be the same as number of Players (3 players)", function(){
       const numberOfPlayers = 3;
       const expectedResult = 3; 
       
@@ -48,7 +48,7 @@ describe("GamePlay", function(){
                    
     });
     
-    it("its Player's Array's Length should be the same as number of Players (5)", function(){
+    it("its Player's Array's Length should be the same as number of Players (5 players)", function(){
       const numberOfPlayers = 5;
       const expectedResult = 5; 
       
@@ -58,25 +58,55 @@ describe("GamePlay", function(){
                    
     });
     
-    it("Should set Game to Default Settings", function(){
+    it("Should set Game to Default Settings (3 players)", function(){
+      var numberOfPlayers = 3
       var expectedSettings = {
                 dateCreated: new Date(), 
-                discardedCards: [],
                 hintsLeft: 8, 
                 livesLeft: 3, 
-                messages: [],
                 numberOfPlayers: 3,
-                playedCards: [],
                 score: 0,
               }
       var expectedArrayLengths = {
-        o
+        originalDeck: 50, 
+        playingDeck: 35,
+        players: 3, 
+        hand: 5, 
+        hints: 0,
+        playedCards: 0,
+        messages: 0,
+        discardedCards: 0               
       }
       
-      assert.equal(
+      const gameObject = GamePlay.newGame(numberOfPlayers)
       
+      assert.equal(expectedArrayLengths.originalDeck, gameObject.originalDeck.length)
+      assert.equal(expectedArrayLengths.playingDeck, gameObject.playingDeck.length)
+      assert.equal(expectedArrayLengths.players, gameObject.players.length)
+      assert.equal(expectedArrayLengths.hand, gameObject.players.hand.length)
+      assert.equal(expectedArrayLengths.hints, gameObject.players.hand.hints.length)
+      assert.equal(expectedArrayLengths.playedCards, gameObject.playedCards.length)
+      assert.equal(expectedArrayLengths.messages, gameObject.messages.length)
+      assert.equal(expectedArrayLengths.discardedCards, gameObject.discardedCards.length)
+      assert.equal(expectedSettings.dateCreated, gameObject.dateCreated)
+      assert.equal(expectedSettings.hintsLeft, gameObject.hintsLeft)
+      assert.equal(expectedSettings.liveLeft, gameObject.livesLeft)
+      assert.equal(expectedSettings.numberOfPlayers, gameObject.numberOfPlayers)
+      assert.equal(expectedSettings.score, gameObject.score)
     });
   
   });
   
+});
+
+describe("Modify Game", function(){
+  describe("Create New Deck", function(){
+    it("Creates 50 Card Objects for the OriginalDeck", function(){
+      const expectedResult = 50 
+      
+      ModifyGame.createDeck
+    
+    });
+    
+  });
 });
