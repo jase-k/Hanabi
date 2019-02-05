@@ -44,7 +44,6 @@ const ModifyDeck = {
     return array
   },
   shufflesDeck(deck){
-    
     var shuffledArray = [];
     var index;  
       for(var i=0; i < deck.length;){
@@ -52,7 +51,7 @@ const ModifyDeck = {
         shuffledArray.push(deck[index])
         deck.splice(index, 1)
       }    
-      
+       
     return shuffledArray
       
   }

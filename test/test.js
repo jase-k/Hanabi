@@ -128,12 +128,13 @@ describe("Modify Game", function(){
       
     });
     it("Returns a shuffled Deck", function(){
-      const expectedDeck = deckOfCards;
+      const expectDeck = deckOfCards;
+      console.log("Expected Deck:", expectDeck);
       
       var deck = ModifyDeck.shufflesDeck(deckOfCards);
-
-      assert.notDeepEqual(deck, expectedDeck) //, "Does Not Equal Unshuffled Deck");
-      assert.sameDeepMembers(deck, expectedDeck, "Has the Same Cards as the Original Deck");
+        console.log("Deck:", deck);
+      assert.notDeepEqual(deck, expectDeck) //, "Does Not Equal Unshuffled Deck");
+      assert.sameDeepMembers(deck, expectDeck, "Has the Same Cards as the Original Deck");
     });
   });
 });
