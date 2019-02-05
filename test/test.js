@@ -7,7 +7,7 @@ const GamePlay = require('../game-play.js');
 
 const defaultGameSettings = {
                 dateCreated: new Date(), 
-                discardedCard: [],
+                discardedCards: [],
                 hintsLeft: 8, 
                 id: 0, 
                 livesLeft: 3, 
@@ -21,9 +21,23 @@ const defaultGameSettings = {
                     name: "John",
                     active: 0, 
                     hand: [],
+                  },
+                  {
+                    id: 0,
+                    name: null,
+                    active: 0, 
+                    hand: [],
+                  },
+                  {
+                    id: 0,
+                    name: null,
+                    active: 0, 
+                    hand: [],
                   }
                 ],
-                
+                playingDeck: [],
+                score: 0,
+                tableIds: []
               }
 
 describe("GamePlay", function(){
