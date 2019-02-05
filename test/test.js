@@ -228,7 +228,7 @@ describe("Modify Deck", function(){
     var deck = Defaults.shuffledDeckOfCards();
       var numberOfPlayers = 2; 
       var expectedResult = true;
-      console.log(deck)
+
       var torf = ModifyDeck.checkWinnability(deck, numberOfPlayers);
       
       console.log("Returned", torf)
