@@ -3,7 +3,7 @@ const assert = require('chai').assert
 
 // Import Modules
 
-const GamePlay = require('../game-play.js');
+const {GamePlay, ModifyDeck} = require('../game-play.js');
 
 const defaultGameSettings = {
                 dateCreated: new Date(), 
@@ -58,7 +58,7 @@ describe("GamePlay", function(){
                    
     });
     
-    it("Should set Game to Default Settings (3 players)", function(){
+    it.skip("Should set Game to Default Settings (3 players)", function(){
       var numberOfPlayers = 3
       var expectedSettings = {
                 dateCreated: new Date(), 
@@ -103,10 +103,14 @@ describe("Modify Game", function(){
   describe("Create New Deck", function(){
     it("Creates 50 Card Objects for the OriginalDeck", function(){
       const expectedResult = 50 
+      const expectedCardKeys = ["color", "hints", "number"]
       
-      ModifyGame.createDeck
-    
+      const originalDeck = ModifyDeck.createDeck()
+      
+      assert.equal(expectedResult, originalDeck.length)
+      assert.deepEqual(expectedCardKeys, Object.keys(originalDeck[0]))
     });
-    
+    it("Creates a Card
+  
   });
 });

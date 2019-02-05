@@ -27,9 +27,19 @@ for(i = 0; i < numberOfPlayers; i++){
 
 const ModifyDeck = {
   createDeck(){
-  
+    var array = [];
+    
+    for(i = 0; i < 50; i++){
+     array.push({
+       color: null, 
+       hints: [],
+       number: null
+     }) 
+    }
+   
+    return array
   }
 }
 
 
-module.exports = GamePlay
+module.exports = {GamePlay, ModifyDeck}
