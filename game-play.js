@@ -54,7 +54,13 @@ const ModifyDeck = {
     return shuffledArray
   },
   dealsHands(numberOfPlayers, deck){
-    var handSize = 5;
+    var handSize;
+    if(numberOfPlayers < 4){
+      handSize = 5;
+    }else{
+      handSize = 4;
+    };
+    
     var object = {
       players: [],
       playingDeck: {}

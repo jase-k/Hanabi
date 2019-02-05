@@ -151,22 +151,22 @@ describe("Modify Game", function(){
       var deck = Defaults.shuffledDeckOfCards()
       var numberOfPlayers = 3; 
       
-      const expectedPlayrLength = 3;
+      const expectedHandLength = 5;
       
       var object = ModifyDeck.dealsHands(numberOfPlayers, deck)
       
-      assert.equal(object.players.length, expectedPlayerLength) 
+      assert.equal(object.players[0].hand.length, expectedHandLength) 
       
     });
     it("should deal 4 cards for 4-5 players", function(){
       var deck = Defaults.shuffledDeckOfCards()
       var numberOfPlayers = 5; 
       
-      const expectedHandLength = 5;
+      const expectedHandLength = 4;
       
       var object = ModifyDeck.dealsHands(numberOfPlayers, deck)
       
-      assert.equal(object.players.length, expectedPlayerLength) 
+      assert.equal(object.players[0].hand.length, expectedHandLength) 
       
     });
     it("should return array object.players that contains Player Objects with the keys: 'hand', 'name', 'active'", function(){
@@ -192,15 +192,15 @@ describe("Modify Game", function(){
       
       assert.containsAllKeys(object.players[0].hand[0], expectedCardKeys) 
     });
-    it("should deal 4 cards for 4-5 players", function(){
-      var deck = Defaults.shuffledDeckOfCards();
-      var numberOfPlayers = 5
-    
-    });
     it("Dealt Cards should match the first X number of Cards in the Original Shuffled deck", function(){
       var deck = Defaults.shuffledDeckOfCards();
-      var numberOfPlayers
-    
+      var numberOfPlayers = 5
+      
+      var object = ModifyDeck.dealsHands(numberOfPlayers, deck)
+      var cardsInPlayersHand = object.players.map(player => player.hand)
+      console.log("mapped hands", card
+      assert.sameDeepMembers()  
+      
     });
   });
 });
