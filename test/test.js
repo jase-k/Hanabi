@@ -159,7 +159,22 @@ describe("Modify Game", function(){
       
       assert.equal(object.players.length, expectedPlayerLength) 
       
+    });
+    it("should deals 5 cards for 5 players", function(){
+      var deck = Defaults.shuffledDeckOfCards()
+      var numberOfPlayers = 5; 
       
+      const expectedHandLength = 5
+      const expectedCardKeys = ["number", "color", "hints"]
+      const expectedPlayerLength = 5;
+      
+      var object = ModifyDeck.dealsHands(numberOfPlayers, deck)
+      
+      assert.equal(object.players.length, expectedPlayerLength) 
+      
+    });
+    it("should retun player objects that contain the keys: 'hand', 'name', 'active'", function(){
+      const 
     });
   });
 });

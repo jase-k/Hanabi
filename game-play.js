@@ -55,13 +55,13 @@ const ModifyDeck = {
   },
   dealsHands(numberOfPlayers, deck){
     var object = {
-      players: [
-      null, 
-      null, 
-      null
-      ],
+      players: [],
       playingDeck: {}
     }
+  for(i = 0; i < numberOfPlayers; i++){
+    object.players.push(null);
+  }
+      
     return object
   }
 }
