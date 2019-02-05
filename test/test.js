@@ -32,6 +32,17 @@ describe("GamePlay", function(){
       
       
     });
+    
+    it("Should set Game to Default Settings", function(){
+      const defaultSettings = {
+                dateCreated: new Date(), 
+                discardedCard: [],
+                hintsLeft: 8, 
+                livesLeft: 3, 
+                
+              }
+      
+    });
   
   });
   
