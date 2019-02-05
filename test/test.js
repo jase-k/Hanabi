@@ -4,7 +4,7 @@ const assert = require('chai').assert
 // Import Modules
 
 const {GamePlay, ModifyDeck} = require('../game-play.js');
-
+const deckOfCards = require('.
 const defaultGameSettings = {
                 dateCreated: new Date(), 
                 discardedCards: [],
@@ -110,7 +110,9 @@ describe("Modify Game", function(){
       assert.equal(expectedResult, originalDeck.length)
       assert.deepEqual(expectedCardKeys, Object.keys(originalDeck[0]))
     });
-    it("Creates a Card
+    it("Creates 3 (number 1 cards of every color) 2 (number 2-4 cards of every color) and 1 (number 5 of every color)", function(){
+    
+    }); 
   
   });
 });
