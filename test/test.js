@@ -194,11 +194,13 @@ describe("Modify Game", function(){
     });
     it("Dealt Cards should match the first X number of Cards in the Original Shuffled deck", function(){
       var deck = Defaults.shuffledDeckOfCards();
-      var numberOfPlayers = 5
+      var numberOfPlayers = 3
+      var expectedHands = deck.splice(
       
       var object = ModifyDeck.dealsHands(numberOfPlayers, deck)
-      var cardsInPlayersHand = object.players.map(player => player.hand)
-      console.log("mapped hands", card
+      var cardsInPlayersHand = object.players[0].hand.concat(object.players[1].hand, object.players[2].hand)
+      console.log("mapped hands", cardsInPlayersHand)
+      
       assert.sameDeepMembers()  
       
     });
