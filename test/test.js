@@ -231,6 +231,7 @@ describe("Modify Deck", function(){
       
       var torf = ModifyDeck.checkWinnability(deck, numberOfPlayers);
       
+      console.log("Returned", torf)
       assert.equal(torf, expectedResult)
     });
   });

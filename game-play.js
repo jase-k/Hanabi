@@ -89,7 +89,8 @@ const ModifyDeck = {
     return object
   },
   checkWinnability(deck, numberOfPlayers){
-  return false
+    var returned = doesCardPlay(deck[0], [])
+  return returned
   },
 }
 
@@ -97,10 +98,8 @@ function doesCardPlay(cardToCheck, playedCards){
   var playedCardColorPile = playedCards.filter(card => card.color === cardToCheck.color)
   var highestCardInPile = Math.max(playedCardColorPile.map(card => card.number)) 
 
-  console.log(highestCardInPile)
-  if(highestCardInPile){}
-  }
-
-doesCardPlay({color: "blue", number: 3}, [])
+  
+  return highestCardInPile
+}
 
 module.exports = {GamePlay, ModifyDeck}
