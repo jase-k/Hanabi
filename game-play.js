@@ -89,7 +89,7 @@ const ModifyDeck = {
     return object
   },
   checkWinnability(players, playingDeck){
-    for(
+    for(i
     doesCardPlay(deck[0], [])
   
     return true
