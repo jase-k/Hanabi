@@ -162,4 +162,4 @@ function doesAnyCardPlay(player, playedCards, playingDeck){
   return false
 }
 
-module.exports = {GamePlay, ModifyDeck, doesCardPlay}
+module.exports = {GamePlay, ModifyDeck, doesCardPlay, doesAnyCardPlay}
