@@ -94,12 +94,16 @@ const ModifyDeck = {
     var p = 0 //p represents the PlayerIndex
     var c = 0 //c represents the cardIndex in the Players Hand
     while(playedCards.length < 25 && playingDeck.length > 0){
-      for(c = 0; c < players[p].hand.length; c++){
+      for(c = 0; c < players[p].hand.length; c++){ //For Loop Goes through Cards and Tries to Play a card
         var card = players[p].hand[c]
-        if(doesCardPlay(card, playedCards)){
+        
+        if(doesCardPlay(card, playedCards)){ //Plays Card and Replaces card if Possible
            playedCards.push(card)
-           }
+           players[p].hand.splice(c, 1, playingDeck.shift())
+            break;   
+        }   
       }
+        p++
       
     }
     return true
