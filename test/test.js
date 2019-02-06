@@ -229,11 +229,14 @@ describe("Modify Deck", function(){
       var numberOfPlayers = 2; 
       var expectedResult = true;
       var gameObject = ModifyDeck.dealsHands(numberOfPlayers, deck);
-      console.log("Players", gameObject.players[0].hand)
+      console.log("Players", JSON.stringify(gameObject))
       
       var torf = ModifyDeck.checkWinnability(gameObject.players, gameObject.playingDeck)
       console.log("Result:", torf)
       assert.equal(torf, expectedResult)
+    });
+    describe("doesCardPlay", function(){
+      it("returns true if card can play")
     });
   });
 });
