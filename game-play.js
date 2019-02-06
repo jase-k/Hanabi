@@ -22,7 +22,7 @@ var GamePlay = {
   
   //dealtGame holds the PlayingDeck and Players Array
   //After the Original deck was shuffled
- var dealtGame= ModifyDeck.dealsHands(numberOfPlayers, gameObject.originalDeck)
+ var dealtGame = ModifyDeck.dealsHands(numberOfPlayers, gameObject.originalDeck)
 
      gameObject.playingDeck = dealtGame.playingDeck
      gameObject.players = dealtGame.players
