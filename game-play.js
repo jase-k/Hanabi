@@ -89,9 +89,19 @@ const ModifyDeck = {
     return object
   },
   checkWinnability(players, playingDeck){
-    for(i
-    doesCardPlay(deck[0], [])
-  
+    var playedCards = [];
+    var discardedCards = [];
+    var p = 0 //p represents the PlayerIndex
+    var c = 0 //c represents the cardIndex in the Players Hand
+    while(playedCards.length < 25 && playingDeck.length > 0){
+      for(c = 0; c < players[p].hand.length; c++){
+        var card = players[p].hand[c]
+        if(doesCardPlay(card, playedCards)){
+           playedCards.push(card)
+           }
+      }
+      
+    }
     return true
   },
 }
