@@ -119,10 +119,10 @@ const ModifyDeck = {
         if(filteredPlayedCardArray !== []){ //
            discardedCards.push(card)
            players[p % numberOfPlayers].hand.splice(c, 1, playingDeck.shift())
-
-           } 
-       
-    }
+           break;
+        }; 
+      
+    };
       p++
       return true
     }
