@@ -116,17 +116,19 @@ PlayersTurn:
         if(filteredPlayedCardArray !== []){ //if Card is in the Playing Deck Discard First
            discardedCards.push(card)
            players[p % numberOfPlayers].hand.splice(c, 1, playingDeck.shift())
-           break PlayersTurn;
+          hintsLeft++ 
+          continue PlayersTurn;
         };
         if(filterdDiscardedCardArray !== [] && card.number !== 5){ //if Card is not a 5 and notin the discardedCards Discard First
            discardedCards.push(card)
            players[p % numberOfPlayers].hand.splice(c, 1, playingDeck.shift())
-           continue PlayersTurn;
+          hintsLeft++ 
+          continue PlayersTurn;
         };
     };
       p++
     }
-      return "Hello There"
+      return hintsLeft
   },
 }
 
