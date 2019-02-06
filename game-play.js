@@ -137,13 +137,12 @@ function doesCardPlay(cardToCheck, playedCards){
     return card.color == cardToCheck.color
   })
   
-  var highestCardInPile = Math.max([1,2])
-    //playedCardColorPile.map(card => card.number)) 
+  var highestCardInPile = Math.max(...playedCardColorPile.map(card => card.number)) 
   
   if(cardToCheck.number == highestCardInPile+1){ 
     return true
   }else{
-    return highestCardInPile
+    return false
   }
   
 }

@@ -224,7 +224,7 @@ describe("Modify Deck", function(){
       
       assert.equal(torf, expectedResult)
     });
-    it.skip("should return true for shuffled Deck", function(){
+    it("should return true for shuffled Deck", function(){
     var deck = Defaults.shuffledDeckOfCards();
       var numberOfPlayers = 2; 
       var expectedResult = true;
@@ -241,7 +241,6 @@ describe("Modify Deck", function(){
         var playedCards = [{color: "blue", hints:[], number: 1}, {color: "blue", hints:[], number: 2}]
      
         var torf = doesCardPlay(card, playedCards)
-        console.log(torf)
         assert.isOk(torf)
         })
     });
