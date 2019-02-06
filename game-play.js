@@ -128,7 +128,7 @@ PlayersTurn:
     };
       p++
     }
-      return discardedCards
+      return playedCards
   },
 }
 
