@@ -98,19 +98,14 @@ const ModifyDeck = {
 
 PlayersTurn:     
     while(playedCards.length < 25 && playingDeck.length > 0){// Simulates A Players Turn
-      for(c = 0; c < players[p % numberOfPlayers].hand.length; c++){ //For Loop looks for a potential Card to Play 
-        var card = players[p % numberOfPlayers].hand[c]
         
-        if(doesCardPlay(card, playedCards)){ //Plays Card and Replaces card if Possible
-           playedCards.push(card)
-           players[p % numberOfPlayers].hand.splice(c, 1, playingDeck.shift())
-            break PlayersTurn;   
+        if(doesAnyCardPlay(players[p % numberOfPlayers], playedCards, playingDeck)){
+          continue PlayersTurn
         }
-      }
       
         if(hintsLeft){ //Gives Hints if hints are left 
            hintsLeft--
-            break PlayersTurn;
+          continue PlayersTurn;
         }
       
       for(c = 0; c < players[p % numberOfPlayers].hand.length; c++){ //For Loop looks for a potential Discard
@@ -126,12 +121,12 @@ PlayersTurn:
         if(filterdDiscardedCardArray !== [] && card.number !== 5){ //if Card is not a 5 and notin the discardedCards Discard First
            discardedCards.push(card)
            players[p % numberOfPlayers].hand.splice(c, 1, playingDeck.shift())
-           break PlayersTurn;
+           continue PlayersTurn;
         };
     };
       p++
-      return "Hello There"
     }
+      return "Hello There"
   },
 }
 
@@ -148,6 +143,19 @@ function doesCardPlay(cardToCheck, playedCards){
     return false
   }
   
+}
+
+function doesAnyCardPlay(player, playedCards, playingDeck){
+  for(i = 0; i < player.hand.length; i++){ //For Loop looks for a potential Card to Play 
+        var card = player.hand[i]
+        
+     if(doesCardPlay(card, playedCards)){ //Plays Card and Replaces card if Possible
+           playedCards.push(card)
+           player.hand.splice(i, 1, playingDeck.shift())
+            return true;   
+      }
+  }
+  return false
 }
 
 module.exports = {GamePlay, ModifyDeck}
