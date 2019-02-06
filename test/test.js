@@ -229,9 +229,9 @@ describe("Modify Deck", function(){
       var numberOfPlayers = 2; 
       var expectedResult = true;
       var gameObject = ModifyDeck.dealsHands(numberOfPlayers, deck);
-      console.log("Players", JSON.stringify(gameObject))
       
       var torf = ModifyDeck.checkWinnability(gameObject.players, gameObject.playingDeck)
+
       console.log("Result:", torf)
       assert.equal(torf, expectedResult)
     });
@@ -243,6 +243,22 @@ describe("Modify Deck", function(){
         var torf = doesCardPlay(card, playedCards)
         assert.isOk(torf)
         })
+      it("returns false if card cannot play blue 3", function(){
+        var card = {color: "blue", hints:[], number: 3}
+        var playedCards = [{color: "red", hints:[], number: 1}, {color: "red", hints:[], number: 2}]
+     
+        var torf = doesCardPlay(card, playedCards)
+        assert.isNotOk(torf)
+        });
+      it("returns true if card can play red 1", function(){
+        var card = {color: "red", hints:[], number: 1}
+        var playedCards = [{color: "blue", hints:[], number: 1}, {color: "blue", hints:[], number: 2}]
+     
+        var torf = doesCardPlay(card, playedCards)
+        console.log(torf)
+        assert.isOk(torf)
+        
+      });
     });
   });
 });
