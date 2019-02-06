@@ -91,20 +91,29 @@ const ModifyDeck = {
   checkWinnability(players, playingDeck){
     var playedCards = [];
     var discardedCards = [];
+    var hintsLeft = 8;
     var p = 0 //p represents the PlayerIndex
     var c = 0 //c represents the cardIndex in the Players Hand
+    var numberOfPlayers = players.length
+    
     while(playedCards.length < 25 && playingDeck.length > 0){
-      for(c = 0; c < players[p].hand.length; c++){ //For Loop Goes through Cards and Tries to Play a card
-        var card = players[p].hand[c]
+      for(c = 0; c < players[p % numberOfPlayers].hand.length; c++){ //For Loop simulates a Players Turn
+        var card = players[p % numberOfPlayers].hand[c]
         
         if(doesCardPlay(card, playedCards)){ //Plays Card and Replaces card if Possible
            playedCards.push(card)
-           players[p].hand.splice(c, 1, playingDeck.shift())
+           players[p % numberOfPlayers].hand.splice(c, 1, playingDeck.shift())
             break;   
-        }   
+        }
+        
+        if(hintsLeft){ //Gives Hints if hints are left 
+           hintsLeft--
+            break;
+        }
+        
       }
-        p++
-      
+       
+      p++
     }
     return true
   },
