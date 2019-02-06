@@ -229,9 +229,9 @@ describe("Modify Deck", function(){
       var numberOfPlayers = 2; 
       var expectedResult = true;
       var gameObject = ModifyDeck.dealsHands(numberOfPlayers, deck);
+      console.log("Players", gameObject.players[0].hand)
       
       var torf = ModifyDeck.checkWinnability(gameObject.players, gameObject.playingDeck)
-      console.log(PgameObject.players)
       console.log("Result:", torf)
       assert.equal(torf, expectedResult)
     });
