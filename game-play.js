@@ -113,8 +113,13 @@ const ModifyDeck = {
         }
       
       for(c = 0; c < players[p % numberOfPlayers].hand.length; c++){ //For Loop looks for a potential Discard
-        if(){
-           
+          var card = players[p % numberOfPlayers].hand[c]
+          var filteredPlayedCardArray = playedCards.filter(cards => cards.color+""+cards.number == card.color+""+card.number)
+       
+        if(filteredPlayedCardArray !== []){ //
+           discardedCards.push(card)
+           players[p % numberOfPlayers].hand.splice(c, 1, playingDeck.shift())
+
            } 
        
     }
