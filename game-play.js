@@ -96,8 +96,8 @@ const ModifyDeck = {
     var c = 0 //c represents the cardIndex in the Players Hand
     var numberOfPlayers = players.length
     
-    while(playedCards.length < 25 && playingDeck.length > 0){
-      for(c = 0; c < players[p % numberOfPlayers].hand.length; c++){ //For Loop simulates a Players Turn
+    while(playedCards.length < 25 && playingDeck.length > 0){// Simulates A Players Turn
+      for(c = 0; c < players[p % numberOfPlayers].hand.length; c++){ //For Loop looks for a potential Card to Play 
         var card = players[p % numberOfPlayers].hand[c]
         
         if(doesCardPlay(card, playedCards)){ //Plays Card and Replaces card if Possible
@@ -105,17 +105,22 @@ const ModifyDeck = {
            players[p % numberOfPlayers].hand.splice(c, 1, playingDeck.shift())
             break;   
         }
-        
+      }
+      
         if(hintsLeft){ //Gives Hints if hints are left 
            hintsLeft--
             break;
         }
-        
-      }
+      
+      for(c = 0; c < players[p % numberOfPlayers].hand.length; c++){ //For Loop looks for a potential Discard
+        if(){
+           
+           } 
        
-      p++
     }
-    return true
+      p++
+      return true
+    }
   },
 }
 
