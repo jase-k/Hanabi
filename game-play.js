@@ -95,7 +95,8 @@ const ModifyDeck = {
     var p = 0 //p represents the PlayerIndex
     var c = 0 //c represents the cardIndex in the Players Hand
     var numberOfPlayers = players.length
-    
+
+PlayersTurn:     
     while(playedCards.length < 25 && playingDeck.length > 0){// Simulates A Players Turn
       for(c = 0; c < players[p % numberOfPlayers].hand.length; c++){ //For Loop looks for a potential Card to Play 
         var card = players[p % numberOfPlayers].hand[c]
@@ -103,28 +104,33 @@ const ModifyDeck = {
         if(doesCardPlay(card, playedCards)){ //Plays Card and Replaces card if Possible
            playedCards.push(card)
            players[p % numberOfPlayers].hand.splice(c, 1, playingDeck.shift())
-            break;   
+            break PlayersTurn;   
         }
       }
       
         if(hintsLeft){ //Gives Hints if hints are left 
            hintsLeft--
-            break;
+            break PlayersTurn;
         }
       
       for(c = 0; c < players[p % numberOfPlayers].hand.length; c++){ //For Loop looks for a potential Discard
           var card = players[p % numberOfPlayers].hand[c]
           var filteredPlayedCardArray = playedCards.filter(cards => cards.color+""+cards.number == card.color+""+card.number)
-       
-        if(filteredPlayedCardArray !== []){ //
+          var filterdDiscardedCardArray = discardedCards.filter(cards => cards.color+""+cards.number == card.color+""+card.number)
+          
+        if(filteredPlayedCardArray !== []){ //if Card is in the Playing Deck Discard First
            discardedCards.push(card)
            players[p % numberOfPlayers].hand.splice(c, 1, playingDeck.shift())
-           break;
-        }; 
-      
+           break PlayersTurn;
+        };
+        if(filterdDiscardedCardArray !== [] && card.number !== 5){ //if Card is not a 5 and notin the discardedCards Discard First
+           discardedCards.push(card)
+           players[p % numberOfPlayers].hand.splice(c, 1, playingDeck.shift())
+           break PlayersTurn;
+        };
     };
       p++
-      return true
+      return "Hello There"
     }
   },
 }
