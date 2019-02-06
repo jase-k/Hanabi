@@ -3,7 +3,7 @@ const assert = require('chai').assert
 
 // Import Modules
 
-const {GamePlay, ModifyDeck} = require('../game-play.js');
+const {GamePlay, ModifyDeck, doesCardPlay} = require('../game-play.js');
 const Defaults = require('./defaults.js')
 
 const defaultGameSettings = {
@@ -215,7 +215,7 @@ describe("Modify Deck", function(){
     });
   });
   describe(".checkWinnability", function(){
-    it("should return false if Loss Condition: First Card Instance too Late is true", function(){
+    it.skip("should return false if Loss Condition: First Card Instance too Late is true", function(){
       var deck = Defaults.lossExample1();
       var numberOfPlayers = 2; 
       var expectedResult = false;
@@ -224,7 +224,7 @@ describe("Modify Deck", function(){
       
       assert.equal(torf, expectedResult)
     });
-    it("should return true for shuffled Deck", function(){
+    it.skip("should return true for shuffled Deck", function(){
     var deck = Defaults.shuffledDeckOfCards();
       var numberOfPlayers = 2; 
       var expectedResult = true;
@@ -236,7 +236,14 @@ describe("Modify Deck", function(){
       assert.equal(torf, expectedResult)
     });
     describe("doesCardPlay", function(){
-      it("returns true if card can play")
+      it("returns true if card can play blue 3", function(){
+        var card = {color: "blue", hints:[], number: 3}
+        var playedCards = [{color: "blue", hints:[], number: 1}, {color: "blue", hints:[], number: 2}]
+     
+        var torf = doesCardPlay(card, playedCards)
+        console.log(torf)
+        assert.isOk(torf)
+        })
     });
   });
 });

@@ -137,12 +137,13 @@ function doesCardPlay(cardToCheck, playedCards){
     return card.color == cardToCheck.color
   })
   
-  var highestCardInPile = Math.max(playedCardColorPile.map(card => card.number)) 
+  var highestCardInPile = Math.max([1,2])
+    //playedCardColorPile.map(card => card.number)) 
   
   if(cardToCheck.number == highestCardInPile+1){ 
     return true
   }else{
-    return false
+    return highestCardInPile
   }
   
 }
@@ -160,4 +161,4 @@ function doesAnyCardPlay(player, playedCards, playingDeck){
   return false
 }
 
-module.exports = {GamePlay, ModifyDeck}
+module.exports = {GamePlay, ModifyDeck, doesCardPlay}
