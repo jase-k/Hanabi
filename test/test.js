@@ -22,7 +22,12 @@ const defaultGameSettings = {
               }
 
 describe("GamePlay", function(){
-  
+  describe(".playCard", function(){});
+  describe(".discard", function(){});
+  describe(".giveHint", function(){});
+});
+
+describe("Database", function(){
   describe(".newGame", function(){
     
     it("Should create a game Object for 3 people with correct Keys", function(){
@@ -95,7 +100,8 @@ describe("GamePlay", function(){
     });
   
   });
-  
+  describe(".updateGame", function(){});
+  describe(".getGame", function(){});
 });
 
 describe("Modify Deck", function(){
