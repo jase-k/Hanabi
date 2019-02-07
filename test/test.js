@@ -3,7 +3,7 @@ const assert = require('chai').assert
 
 // Import Modules
 
-const {GamePlay, ModifyDeck, doesCardPlay, doesAnyCardPlay} = require('../game-play.js');
+const {GamePlay, ModifyDeck, Utils} = require('../game-play.js');
 const Defaults = require('./defaults.js')
 
 const defaultGameSettings = {
@@ -224,7 +224,7 @@ describe("Modify Deck", function(){
       
       assert.equal(torf, expectedResult)
     });
-    it("should return true for shuffled Deck", function(){
+    it.skip("should return true for shuffled Deck", function(){
     var deck = Defaults.shuffledDeckOfCards();
       var numberOfPlayers = 2; 
       var expectedResult = true;
@@ -235,32 +235,37 @@ describe("Modify Deck", function(){
       console.log("Result:", torf)
       assert.equal(torf, expectedResult)
     });
-    describe("doesCardPlay", function(){
+    
+  });
+});
+
+describe("Utils", function(){
+  describe("doesCardPlay", function(){
       it("returns true if card can play blue 3", function(){
         var card = {color: "blue", hints:[], number: 3}
         var playedCards = [{color: "blue", hints:[], number: 1}, {color: "blue", hints:[], number: 2}]
      
-        var torf = doesCardPlay(card, playedCards)
+        var torf = Utils.doesCardPlay(card, playedCards)
         assert.isOk(torf)
         })
       it("returns false if card cannot play blue 3", function(){
         var card = {color: "blue", hints:[], number: 3}
         var playedCards = [{color: "red", hints:[], number: 1}, {color: "red", hints:[], number: 2}]
      
-        var torf = doesCardPlay(card, playedCards)
+        var torf = Utils.doesCardPlay(card, playedCards)
         assert.isNotOk(torf)
         });
       it("returns true if card can play red 1", function(){
         var card = {color: "red", hints:[], number: 1}
         var playedCards = [{color: "blue", hints:[], number: 1}, {color: "blue", hints:[], number: 2}]
      
-        var torf = doesCardPlay(card, playedCards)
+        var torf = Utils.doesCardPlay(card, playedCards)
         console.log(torf)
         assert.isOk(torf)
         
       });
     });
-    describe("doesAnyCardPlay", function(){
+  describe("doesAnyCardPlay", function(){
       it("should return true if one card can play:", function(){
         var player ={ 
           name: "John",
@@ -272,14 +277,15 @@ describe("Modify Deck", function(){
             {color: "red", hints:[], number: 5} 
                       ]
         }
-        var playedCards = [{color: "blue", hints:[], number: 1},
+        var playedCards = [
+                           {color: "blue", hints:[], number: 1},
                            {color: "blue", hints:[], number: 2}
                           ]
         var playingDeck = [
                            {color: "black", hints:[], number: 5},
                            {color: "orange", hints:[], number: 4}
                             ]
-        var torf = doesAnyCardPlay(player, playedCards, playingDeck)
+        var torf = Utils.doesAnyCardPlay(player, playedCards, playingDeck)
           
         assert.isOk(torf)
          });
@@ -301,7 +307,7 @@ describe("Modify Deck", function(){
                            {color: "black", hints:[], number: 5},
                            {color: "orange", hints:[], number: 4}
                             ]
-        var torf = doesAnyCardPlay(player, playedCards, playingDeck)
+        var torf = Utils.doesAnyCardPlay(player, playedCards, playingDeck)
           
         assert.isNotOk(torf)
          });
@@ -325,7 +331,7 @@ describe("Modify Deck", function(){
                             ]
         var expectedReplacement = playingDeck.slice(0,1)        
         
-        var torf = doesAnyCardPlay(player, playedCards, playingDeck)
+        var torf = Utils.doesAnyCardPlay(player, playedCards, playingDeck)
           
         assert.deepEqual(player.hand[1], expectedReplacement[0])
          });
@@ -349,11 +355,12 @@ describe("Modify Deck", function(){
                             ]
         var expectedFirstCard = playingDeck.slice(1,2)        
         
-        var torf = doesAnyCardPlay(player, playedCards, playingDeck)
+        var torf = Utils.doesAnyCardPlay(player, playedCards, playingDeck)
           
         assert.deepEqual(playingDeck[0], expectedFirstCard[0])
          });
     });
-    describe("shouldItBeDiscarded", function(){});
+  describe("shouldItBeDiscarded", function(){
+    
   });
 });

@@ -99,7 +99,7 @@ const ModifyDeck = {
 PlayersTurn:     
     while(playedCards.length < 25 && playingDeck.length > 0){// Simulates A Players Turn
         
-        if(doesAnyCardPlay(players[p % numberOfPlayers], playedCards, playingDeck)){
+        if(Utils.doesAnyCardPlay(players[p % numberOfPlayers], playedCards, playingDeck)){
           continue PlayersTurn
         }
       
@@ -132,34 +132,35 @@ PlayersTurn:
   },
 }
 
-function doesCardPlay(cardToCheck, playedCards){
-  var playedCardColorPile = playedCards.filter(function(card){
-    return card.color == cardToCheck.color
-  })
-  // (...) is needed below for Math.max to recognize the array as numbers instead of an object
-  var highestCardInPile = Math.max(...playedCardColorPile.map(card => card.number)) 
-  
-  if(cardToCheck.number == highestCardInPile+1){ 
-    return true
-  }else if(highestCardInPile == -Infinity && cardToCheck.number == 1){
-   return true 
-  }else{
+const Utils = {
+  doesCardPlay(cardToCheck, playedCards){
+    var playedCardColorPile = playedCards.filter(function(card){
+      return card.color == cardToCheck.color
+    })
+    // (...) is needed below for Math.max to recognize the array as numbers instead of an object
+    var highestCardInPile = Math.max(...playedCardColorPile.map(card => card.number)) 
+    
+    if(cardToCheck.number == highestCardInPile+1){ 
+      return true
+      }else if(highestCardInPile == -Infinity && cardToCheck.number == 1){
+       return true 
+      }else{
+      return false
+    }
+  },
+  doesAnyCardPlay(player, playedCards, playingDeck){
+    for(i = 0; i < player.hand.length; i++){ //For Loop looks for a potential Card to Play 
+       var card = player.hand[i]
+          
+       if(this.doesCardPlay(card, playedCards)){ //Plays Card and Replaces card if Possible
+             playedCards.push(card)
+             player.hand.splice(i, 1, playingDeck.shift())
+              return true;   
+        }
+    }
     return false
-  }
-  
+  },
 }
 
-function doesAnyCardPlay(player, playedCards, playingDeck){
-  for(i = 0; i < player.hand.length; i++){ //For Loop looks for a potential Card to Play 
-        var card = player.hand[i]
-        
-     if(doesCardPlay(card, playedCards)){ //Plays Card and Replaces card if Possible
-           playedCards.push(card)
-           player.hand.splice(i, 1, playingDeck.shift())
-            return true;   
-      }
-  }
-  return false
-}
 
-module.exports = {GamePlay, ModifyDeck, doesCardPlay, doesAnyCardPlay}
+module.exports = {GamePlay, ModifyDeck, Utils}
