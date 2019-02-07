@@ -363,4 +363,21 @@ describe("Utils", function(){
   describe("shouldItBeDiscarded", function(){
     
   });
+  describe("shouldAnyBeDiscarded", function(){
+    var hand =  [
+        {color: "red", hints:[], number: 5}, 
+        {color: "blue", hints:[], number: 2}, 
+        {color: "red", hints:[], number: 3},
+        {color: "red", hints:[], number: 2} 
+                ]
+    var discardedPile = []
+    var playedCards = [
+        {color: "blue", hints:[], number: 1},
+        {color: "blue", hints:[], number: 2}
+                       ]
+    //Returns an Index of True; returns undefined if False
+    var torf = Utils.shouldAnyBeDiscarded(hand, discardedPile, playedCards)
+  
+    assert.
+  });
 });
