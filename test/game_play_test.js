@@ -138,8 +138,8 @@ describe("GamePlay", function(){
   describe(".newGame", function(){
     it("Should create a game Object for 3 people with correct Keys", function(){
       const numberOfPlayers = 3; 
-      const expectedObjectKeys = Object.keys(Defaults.gameSettings)
-      console.log(expectedObjectKeys)
+      const expectedObjectKeys = Object.keys(Defaults.gameSettings())
+
       const newGameObject = GamePlay.newGame(numberOfPlayers)
 
 
