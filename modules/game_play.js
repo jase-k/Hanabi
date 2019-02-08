@@ -71,7 +71,7 @@ var GamePlay = {
       messages: [],
       numberOfPlayers: numberOfPlayers, 
       // Creates and Shuffles Original Deck
-      originalDeck: ModifyDeck.shufflesDeck(ModifyDeck.createDeck()),
+      originalDeck: this.shufflesDeck(this.createDeck()),
       playedCards: [],
       players: [], 
       playingDeck: [],
@@ -81,7 +81,7 @@ var GamePlay = {
   
   //dealtGame holds the PlayingDeck and Players Array
   //After the Original deck was shuffled
- var dealtGame = ModifyDeck.dealsHands(numberOfPlayers, gameObject.originalDeck)
+ var dealtGame = this.dealsHands(numberOfPlayers, gameObject.originalDeck)
 
      gameObject.playingDeck = dealtGame.playingDeck
      gameObject.players = dealtGame.players
