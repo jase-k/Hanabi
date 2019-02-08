@@ -136,9 +136,9 @@ describe("GamePlay", function(){
     });
   });
   describe(".newGame", function(){
-    it("Should create a game Object for 3 people with correct Keys", function(){
-      const numberOfPlayers = 3; 
-      const expectedObjectKeys = Object.keys(Defaults.gameSettings())
+    it("Should create a game Object with correct Keys", function(){
+      const numberOfPlayers = 2; 
+      const expectedObjectKeys = Object.keys(Defaults.gameSettings2Player())
 
       const newGameObject = GamePlay.newGame(numberOfPlayers)
 

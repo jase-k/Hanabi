@@ -8,7 +8,7 @@ This Document is only used for testing Purposes in *test.js
 */
 
 const Defaults = {  
-  gameSettings(){
+  gameSettings2Player(){ //Boiler Template for a New Game After Hand Dealt (2-players)
      return {
                 dateCreated: new Date(), 
                 discardedCards: [],
@@ -19,16 +19,58 @@ const Defaults = {
                 originalDeck: this.shuffledDeckOfCards(),
                 playedCards: [],
                 players: [{
-  active: BOOLEAN,
-  name: STRING, 
-  hand: [ARRAY *Length === 4 || 5* of CARD OBJECTS]
-},{
-  active: BOOLEAN,
-  name: STRING, 
-  hand: [ARRAY *Length === 4 || 5* of CARD OBJECTS]
-}
+                    active: 1,
+                    name: "John Doe", 
+                    hand: [{
+                        color: "blue", 
+                        hints: [],
+                        number: 1
+                      },{
+                        color: "black", 
+                        hints: [],
+                        number: 2
+                      },{
+                        color: "white", 
+                        hints: [],
+                        number: 3
+                      },{
+                        color: "orange", 
+                        hints: [],
+                        number: 4
+                      },{
+                        color: "red", 
+                        hints: [],
+                        number: 5
+                      },
+                          ]
+                  },{
+                    active: 0,
+                    name: "Jane Doe", 
+                    hand: [{
+                        color: "blue", 
+                        hints: [],
+                        number: 1
+                      },{
+                        color: "black", 
+                        hints: [],
+                        number: 2
+                      },{
+                        color: "white", 
+                        hints: [],
+                        number: 3
+                      },{
+                        color: "orange", 
+                        hints: [],
+                        number: 4
+                      },{
+                        color: "red", 
+                        hints: [],
+                        number: 5
+                      },
+                          ]
+                  }
                          ],
-                playingDeck: [],
+                playingDeck: this.shuffledDeckOfCards().slice(0,30),
                 score: 0,
                 tableIds: []
               }
