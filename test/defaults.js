@@ -16,9 +16,18 @@ const Defaults = {
                 livesLeft: 3, 
                 messages: [],
                 numberOfPlayers: 3,
-                originalDeck: [/Length of 50 Card Objects/],
-                playedCards: [/ Length of 50- Dealt Cards /],
-                players: [],
+                originalDeck: this.shuffledDeckOfCards(),
+                playedCards: [],
+                players: [{
+  active: BOOLEAN,
+  name: STRING, 
+  hand: [ARRAY *Length === 4 || 5* of CARD OBJECTS]
+},{
+  active: BOOLEAN,
+  name: STRING, 
+  hand: [ARRAY *Length === 4 || 5* of CARD OBJECTS]
+}
+                         ],
                 playingDeck: [],
                 score: 0,
                 tableIds: []
