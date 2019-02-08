@@ -9,20 +9,28 @@ the sqlite Database
 
 const assert = require('chai').assert
 
+//Import Database
+var fs = require('fs');
+var dbFile = './.data/sqlite.db';
+var exists = fs.existsSync(dbFile);
+var sqlite3 = require('sqlite3').verbose();
+var db = new sqlite3.Database(dbFile);
+
+
 //Import Module:
 const Database = require('../modules/database.js')
 const Defaults = require('./defaults.js')
 
 describe("Database", function(){
   describe(".insert", function(){
-    it("Should insert a new row in Hanabi_Games", function(){   
+    it("Should insert a new row in Hanabi_Games", async function(){   
       const gameObject = Defaults.gameSettings2Player 
       
-      Database.insert(gameObject)
-      .then(function(results){
-        assert.ok(results.id) //results id is the row ID of the new Table
-        assert.equal(results.hintsLeft, gameObject.hintsLeft)
-      });
+      var results = await Database.insert(gameObject)
+      
+      db.get("SELECT
+      assert.ok(results.id)
+      assert.equal(results.hintsLeft, gameObject.hintsLeft)
       
     });  
   });

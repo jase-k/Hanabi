@@ -49,6 +49,7 @@ const Utils = {
 
 const Database = {
   insert(object){
+    object.id = 1 
     return new Promise((resolve, reject) => {
       resolve(object)
     });
