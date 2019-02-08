@@ -8,21 +8,31 @@ After the initiation, the game object will alway be retrieved by
 
 Database.getGame(GAMEID)
 
-Sample Object: {
-   dateCreated: new Date(), 
-   discardedCards: [],
-   hintsLeft: 8, 
-   livesLeft: 3, 
+Sample GameObject: {
+   dateCreated: STRING *new Date()*,  
+   discardedCards: [/ARRAY *Max Length: 25* of CARD OBJECTS/],
+   hintsLeft: INTEGER *Default Start: 8*, 
+   livesLeft: INTEGER *Default Start: 3*, 
    messages: [ARRAY OF STRINGS], 
    numberOfPlayers: INTEGER (2-5),
    originalDeck: [/ARRAY *Max Length of 50* CARD OBJECTS/],
    playedCards: [/ARRAY *Max Length: 25* of CARD OBJECTS/],
-   players: [],
+   players: [/ARRAY *1 < Length < 6* of PLAYER OBJECTS/],
    playingDeck: [/ARRAY *Length of (50 - (players[*].hand + playedCards + discardedCards))* of CARD OBJECTS/],
-   score: IN,
-   tableIds: []
+   score: INTEGER *Length of playedCards Array*,
+   tableIds: [INTEGERS *Primary Keys of All Database Tables for the Game*]
+};
+Sample CardObject:{
+  color: STRING, 
+  hints: [ARRAY of STRINGS],
+  number: INTEGER
+};
 
-}
+Sample PlayerObject: {
+  active: BOOLEAN,
+  name: STRING, 
+  hand: [ARRAY *Length === 4 || 5* of CARD OBJECTS]
+};
 */
 
 var i;
