@@ -23,20 +23,19 @@ const Defaults = require('./defaults.js')
 
 describe("Database", function(){
   describe(".insert", function(){
-    it("Should insert a new row in Hanabi_Games", async function(done){   
+    it("Should insert a new row in Hanabi_Games", function(done){   
       const gameObject = Defaults.gameSettings2Player 
       
-      var results = await Database.insert(gameObject)
-      
-      done();
-      db.get("SELECT * Hanabi_Games WHERE id = $id", {$id:results.id}, function(err){
-        if(err){
-          console.log(err)
-        }
-          assert.notOk(err)
-          assert.ok(results.id)
-      });
-      
+       Database.insert(gameObject)
+        .then(function(results){
+          db.get("SELECT * Hanabi_Games WHERE id = $id", {$id:results.id}, function(err, row){
+                                    if(err){
+                                      console.log(err)
+                                    }
+                                      assert.notOk(err)
+                                      done();
+                                  })  
+                   });
     });  
   });
   describe(".updateGame", function(){});
