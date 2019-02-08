@@ -28,14 +28,34 @@ var db = new sqlite3.Database(dbFile);
 //Declare variables
 var i;
 
-const Utils = {};
-
-const Database = {
-  insert(){
-  
+const Utils = {
+  insertHanabiRow(object) { //Insert Row and Return Object with Game ID
+    return new Promise((resolve, reject) => {
+      object.tableIds = {}
+      db.run('INSERT INTO HanabiGames(numberOfPlayers, dateCreated, hintsLeft, livesLeft) VALUES('+object.numberOfPlayers+',"'+object.dateCreated+'",'+ object.hintsLeft+','+object.livesLeft+')',
+           {}, 
+          function(err){
+            if(err){ console.log(err)
+             reject(console.log('Operation was Rejected at Hanabi Table'))
+             };
+          object.tableIds.gameId= this.lastID
+          console.log("current game id", object.tableIds.gameId);
+        
+          resolve(object)
+        })
+    });
   }
 };
 
+const Database = {
+  insert(object){
+    return new Promise((resolve, reject) => {
+      resolve(object)
+    });
+  }
+};
+
+module.exports = Database
 
 function createCardString(number){
  var string = '' 

@@ -70,6 +70,149 @@ const Defaults = {
                           ]
                   }
                          ],
+                playingDeck: this.shuffledDeckOfCards().slice(0,40),
+                score: 0,
+                tableIds: []
+              }
+   },
+  gameSettings5Player(){ //Boiler Template for a New Game After Hand Dealt (5-players)
+     return {
+                dateCreated: new Date(), 
+                discardedCards: [],
+                hintsLeft: 8, 
+                livesLeft: 3, 
+                messages: [],
+                numberOfPlayers: 3,
+                originalDeck: this.shuffledDeckOfCards(),
+                playedCards: [],
+                players: [
+                  {
+                    active: 1,
+                    name: "John Doe", 
+                    hand: [{
+                        color: "blue", 
+                        hints: [],
+                        number: 1
+                      },{
+                        color: "black", 
+                        hints: [],
+                        number: 2
+                      },{
+                        color: "white", 
+                        hints: [],
+                        number: 3
+                      },{
+                        color: "orange", 
+                        hints: [],
+                        number: 4
+                      },{
+                        color: "red", 
+                        hints: [],
+                        number: 5
+                      },
+                          ]
+                  },{
+                    active: 0,
+                    name: "Jane Doe", 
+                    hand: [{
+                        color: "blue", 
+                        hints: [],
+                        number: 1
+                      },{
+                        color: "black", 
+                        hints: [],
+                        number: 2
+                      },{
+                        color: "white", 
+                        hints: [],
+                        number: 3
+                      },{
+                        color: "orange", 
+                        hints: [],
+                        number: 4
+                      },{
+                        color: "red", 
+                        hints: [],
+                        number: 5
+                      },
+                          ]
+                  },{
+                    active: 0,
+                    name: "Marlin Doe", 
+                    hand: [{
+                        color: "blue", 
+                        hints: [],
+                        number: 1
+                      },{
+                        color: "black", 
+                        hints: [],
+                        number: 2
+                      },{
+                        color: "white", 
+                        hints: [],
+                        number: 3
+                      },{
+                        color: "orange", 
+                        hints: [],
+                        number: 4
+                      },{
+                        color: "red", 
+                        hints: [],
+                        number: 5
+                      },
+                          ]
+                  },{
+                    active: 0,
+                    name: "Howard Duck", 
+                    hand: [{
+                        color: "blue", 
+                        hints: [],
+                        number: 1
+                      },{
+                        color: "black", 
+                        hints: [],
+                        number: 2
+                      },{
+                        color: "white", 
+                        hints: [],
+                        number: 3
+                      },{
+                        color: "orange", 
+                        hints: [],
+                        number: 4
+                      },{
+                        color: "red", 
+                        hints: [],
+                        number: 5
+                      },
+                          ]
+                  },{
+                    active: 0,
+                    name: "Buck Doe", 
+                    hand: [{
+                        color: "blue", 
+                        hints: [],
+                        number: 1
+                      },{
+                        color: "black", 
+                        hints: [],
+                        number: 2
+                      },{
+                        color: "white", 
+                        hints: [],
+                        number: 3
+                      },{
+                        color: "orange", 
+                        hints: [],
+                        number: 4
+                      },{
+                        color: "red", 
+                        hints: [],
+                        number: 5
+                      },
+                          ]
+                  }
+                         ],
                 playingDeck: this.shuffledDeckOfCards().slice(0,30),
                 score: 0,
                 tableIds: []
