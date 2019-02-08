@@ -1,3 +1,15 @@
+/* 
+/test/game_play_test.js
+
+Tests the Functionality of the Gameplay Module
+
+This modules Creates a New Game,and handles Playing Options:
+-.playcard
+-.discard
+-.givehint
+
+*/
+
 const assert = require('chai').assert
 
 
@@ -22,6 +34,122 @@ const defaultGameSettings = {
               }
 
 describe("GamePlay", function(){
+  
+  describe(".createDeck", function(){
+    it("Creates and Returns an Array of 50 Card Objects for the OriginalDeck", function(){
+      const expectedResult = 50 
+      const expectedCardKeys = ["color", "hints", "number"]
+      
+      const originalDeck = GamePlay.createDeck()
+      
+      assert.equal(expectedResult, originalDeck.length)
+      assert.containsAllKeys(originalDeck[0], expectedCardKeys)
+    });
+    it("Creates 3 (number 1 cards of every color) 2 (number 2-4 cards of every color) and 1 (number 5 of every color)", function(){
+      const expectedDeck = Defaults.deckOfCards()
+      
+      const originalDeck = GamePlay.createDeck()
+      
+      assert.deepEqual(expectedDeck, originalDeck)
+    }); 
+  });
+  describe(".shufflesDeck", function(){
+    it("Returns an Array of 50 Card Objects", function(){
+      const expectedDeckLength = 50;
+      var   deck = Defaults.deckOfCards();
+      
+      const shuffledDeck = GamePlay.shufflesDeck(deck);
+      
+      assert.equal(expectedDeckLength, shuffledDeck.length)
+      
+    });
+    it("Returns a shuffled Deck", function(){
+      const expectDeck = Defaults.deckOfCards();
+      
+      var deck = GamePlay.shufflesDeck(Defaults.deckOfCards());
+      
+      assert.notDeepEqual(deck, expectDeck, "Does Not Equal Unshuffled Deck");
+      assert.sameDeepMembers(deck, expectDeck, "Has the Same Cards as the Original Deck");
+    });
+  });
+  describe(".dealsHands", function(){
+    it("should return an object containing keys:  'playinDeck' and 'players'", function(){
+      var deck = Defaults.shuffledDeckOfCards()
+      var numberOfPlayers = 3; 
+      var expectedKeys = ["players", "playingDeck"];
+          
+      var object = GamePlay.dealsHands(numberOfPlayers, deck)
+      
+      assert.containsAllKeys(object, expectedKeys)
+      
+    });
+    it("should deal 5 cards for 3 players", function(){
+      var deck = Defaults.shuffledDeckOfCards()
+      var numberOfPlayers = 3; 
+      
+      const expectedHandLength = 5;
+      
+      var object = GamePlay.dealsHands(numberOfPlayers, deck)
+      
+      assert.equal(object.players[0].hand.length, expectedHandLength) 
+      
+    });
+    it("should deal 4 cards for 4-5 players", function(){
+      var deck = Defaults.shuffledDeckOfCards()
+      var numberOfPlayers = 5; 
+      
+      const expectedHandLength = 4;
+      
+      var object = GamePlay.dealsHands(numberOfPlayers, deck)
+      
+      assert.equal(object.players[0].hand.length, expectedHandLength) 
+      
+    });
+    it("should return array object.players that contains Player Objects with the keys: 'hand', 'name', 'active'", function(){
+      var deck = Defaults.shuffledDeckOfCards()
+      var numberOfPlayers = 5; 
+      
+      const expectedPlayerKeys = ["hand", "name", "active"]
+      const expectedPlayerLength = 5;
+      
+      var object = GamePlay.dealsHands(numberOfPlayers, deck)
+      
+      assert.containsAllKeys(object.players[0], expectedPlayerKeys);
+    });
+    it("should return Array: 'object.players.hand' that contains CardObjects with the keys: 'number', 'color', 'hints'", function(){
+      var deck = Defaults.shuffledDeckOfCards()
+      var numberOfPlayers = 5; 
+      
+      const expectedHandLength = 5
+      const expectedCardKeys = ["number", "color", "hints"]
+      const expectedPlayerLength = 5;
+      
+      var object = GamePlay.dealsHands(numberOfPlayers, deck)
+      
+      assert.containsAllKeys(object.players[0].hand[0], expectedCardKeys) 
+    });
+    it("Dealt Cards should match the first X number of Cards in the Original Shuffled deck", function(){
+      var deck = Defaults.shuffledDeckOfCards();
+      var numberOfPlayers = 3
+      var expectedHands = deck.slice(0,15)
+      
+      var object = GamePlay.dealsHands(numberOfPlayers, deck)
+      //Joins the Players Hands into One Array
+      var cardsInPlayersHand = object.players[0].hand.concat(object.players[1].hand, object.players[2].hand)
+      
+      assert.sameDeepMembers(cardsInPlayersHand, expectedHands)  
+    });
+    it("should remove dealt cards from returned object.playingDeck", function(){
+      var deck = Defaults.shuffledDeckOfCards();
+      var numberOfPlayers = 3
+      var expectedDeckSize = 35
+      
+      var object = GamePlay.dealsHands(numberOfPlayers, deck)
+      
+      assert.equal(object.playingDeck.length, expectedDeckSize) 
+    
+    });
+  });
   describe(".newGame", function(){
     it("Should create a game Object for 3 people with correct Keys", function(){
       const numberOfPlayers = 3; 
@@ -95,143 +223,5 @@ describe("GamePlay", function(){
 });
 
 describe.skip("Modify Deck", function(){
-  describe(".createDeck", function(){
-    it("Creates and Returns an Array of 50 Card Objects for the OriginalDeck", function(){
-      const expectedResult = 50 
-      const expectedCardKeys = ["color", "hints", "number"]
-      
-      const originalDeck = ModifyDeck.createDeck()
-      
-      assert.equal(expectedResult, originalDeck.length)
-      assert.containsAllKeys(originalDeck[0], expectedCardKeys)
-    });
-    it("Creates 3 (number 1 cards of every color) 2 (number 2-4 cards of every color) and 1 (number 5 of every color)", function(){
-      const expectedDeck = Defaults.deckOfCards()
-      
-      const originalDeck = ModifyDeck.createDeck()
-      
-      assert.deepEqual(expectedDeck, originalDeck)
-    }); 
-  });
-  describe(".shufflesDeck", function(){
-    it("Returns an Array of 50 Card Objects", function(){
-      const expectedDeckLength = 50;
-      var   deck = Defaults.deckOfCards();
-      
-      const shuffledDeck = ModifyDeck.shufflesDeck(deck);
-      
-      assert.equal(expectedDeckLength, shuffledDeck.length)
-      
-    });
-    it("Returns a shuffled Deck", function(){
-      const expectDeck = Defaults.deckOfCards();
-      
-      var deck = ModifyDeck.shufflesDeck(Defaults.deckOfCards());
-      
-      assert.notDeepEqual(deck, expectDeck, "Does Not Equal Unshuffled Deck");
-      assert.sameDeepMembers(deck, expectDeck, "Has the Same Cards as the Original Deck");
-    });
-  });
-  describe(".dealsHands", function(){
-    it("should return an object containing keys:  'playinDeck' and 'players'", function(){
-      var deck = Defaults.shuffledDeckOfCards()
-      var numberOfPlayers = 3; 
-      var expectedKeys = ["players", "playingDeck"];
-          
-      var object = ModifyDeck.dealsHands(numberOfPlayers, deck)
-      
-      assert.containsAllKeys(object, expectedKeys)
-      
-    });
-    it("should deal 5 cards for 3 players", function(){
-      var deck = Defaults.shuffledDeckOfCards()
-      var numberOfPlayers = 3; 
-      
-      const expectedHandLength = 5;
-      
-      var object = ModifyDeck.dealsHands(numberOfPlayers, deck)
-      
-      assert.equal(object.players[0].hand.length, expectedHandLength) 
-      
-    });
-    it("should deal 4 cards for 4-5 players", function(){
-      var deck = Defaults.shuffledDeckOfCards()
-      var numberOfPlayers = 5; 
-      
-      const expectedHandLength = 4;
-      
-      var object = ModifyDeck.dealsHands(numberOfPlayers, deck)
-      
-      assert.equal(object.players[0].hand.length, expectedHandLength) 
-      
-    });
-    it("should return array object.players that contains Player Objects with the keys: 'hand', 'name', 'active'", function(){
-      var deck = Defaults.shuffledDeckOfCards()
-      var numberOfPlayers = 5; 
-      
-      const expectedPlayerKeys = ["hand", "name", "active"]
-      const expectedPlayerLength = 5;
-      
-      var object = ModifyDeck.dealsHands(numberOfPlayers, deck)
-      
-      assert.containsAllKeys(object.players[0], expectedPlayerKeys);
-    });
-    it("should return Array: 'object.players.hand' that contains CardObjects with the keys: 'number', 'color', 'hints'", function(){
-      var deck = Defaults.shuffledDeckOfCards()
-      var numberOfPlayers = 5; 
-      
-      const expectedHandLength = 5
-      const expectedCardKeys = ["number", "color", "hints"]
-      const expectedPlayerLength = 5;
-      
-      var object = ModifyDeck.dealsHands(numberOfPlayers, deck)
-      
-      assert.containsAllKeys(object.players[0].hand[0], expectedCardKeys) 
-    });
-    it("Dealt Cards should match the first X number of Cards in the Original Shuffled deck", function(){
-      var deck = Defaults.shuffledDeckOfCards();
-      var numberOfPlayers = 3
-      var expectedHands = deck.slice(0,15)
-      
-      var object = ModifyDeck.dealsHands(numberOfPlayers, deck)
-      //Joins the Players Hands into One Array
-      var cardsInPlayersHand = object.players[0].hand.concat(object.players[1].hand, object.players[2].hand)
-      
-      assert.sameDeepMembers(cardsInPlayersHand, expectedHands)  
-    });
-    it("should remove dealt cards from returned object.playingDeck", function(){
-      var deck = Defaults.shuffledDeckOfCards();
-      var numberOfPlayers = 3
-      var expectedDeckSize = 35
-      
-      var object = ModifyDeck.dealsHands(numberOfPlayers, deck)
-      
-      assert.equal(object.playingDeck.length, expectedDeckSize) 
-    
-    });
-  });
-  describe(".checkWinnability", function(){
-    it.skip("should return false if Loss Condition: First Card Instance too Late is true", function(){
-      var deck = Defaults.lossExample1();
-      var numberOfPlayers = 2; 
-      var expectedResult = false;
-      
-      var torf = ModifyDeck.checkWinnability(deck, numberOfPlayers);
-      
-      assert.equal(torf, expectedResult)
-    });
-    it.skip("should return true for shuffled Deck", function(){
-    var deck = Defaults.shuffledDeckOfCards();
-      var numberOfPlayers = 2; 
-      var expectedResult = true;
-      var gameObject = ModifyDeck.dealsHands(numberOfPlayers, deck);
-      
-      var torf = ModifyDeck.checkWinnability(gameObject.players, gameObject.playingDeck)
-
-      console.log("Result:", torf)
-      assert.equal(torf, expectedResult)
-    });
-    
-  });
-});
+ });
 

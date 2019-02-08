@@ -1,3 +1,30 @@
+/*
+/test/modules/game_play.js
+
+This Module is base around a Game Object
+
+This game object is created in the .newGame() Function
+After the initiation, the game object will alway be retrieved by
+
+Database.getGame(GAMEID)
+
+Sample Object: {
+   dateCreated: new Date(), 
+   discardedCards: [],
+   hintsLeft: 8, 
+   livesLeft: 3, 
+   messages: [ARRAY OF STRINGS], 
+   numberOfPlayers: INTEGER (2-5),
+   originalDeck: [/ARRAY *Max Length of 50* CARD OBJECTS/],
+   playedCards: [/ARRAY *Max Length: 25* of CARD OBJECTS/],
+   players: [],
+   playingDeck: [/ARRAY *Length of (50 - (players[*].hand + playedCards + discardedCards))* of CARD OBJECTS/],
+   score: IN,
+   tableIds: []
+
+}
+*/
+
 var i;
 const colors = ["black", "blue", "orange", "red", "white"]
 const numbers = [1,1,1,2,2,3,3,4,4,5]
