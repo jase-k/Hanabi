@@ -3,7 +3,7 @@ const assert = require('chai').assert
 
 // Import Modules
 
-const {GamePlay, ModifyDeck, Utils} = require('../game-play.js');
+const {GamePlay, ModifyDeck, Utils} = require('../modules/game_play.js');
 const Defaults = require('./defaults.js')
 
 const defaultGameSettings = {
@@ -380,6 +380,5 @@ describe("Utils", function(){
     //Returns an Index of True; returns undefined if False
     var torf = Utils.shouldAnyBeDiscarded(hand, discardedPile, playedCards)
   
-    assert.
   });
 });

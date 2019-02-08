@@ -317,7 +317,7 @@ return (
   { color: 'blue', hints: [], number: 4 } ]
        )
 },
-  lossExample1(){ //First instance of a Card is too far into the deck
+  lossDeck1(){ //First instance of a Card is too far into the deck
 return( [
   {
     color: 'black', 
@@ -572,7 +572,7 @@ return( [
    ])
   },
   //Too Many Cards needed to be held in hand before being able to be played
-  lossExample2(){ 
+  lossDeck2(){ 
   return( [
   {
     color: 'white', 
