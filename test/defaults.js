@@ -8,7 +8,7 @@ This Document is only used for testing Purposes in *test.js
 */
 
 const Defaults = {  
-   gameSettings(){
+  gameSettings(){
      return {
                 dateCreated: new Date(), 
                 discardedCards: [],
@@ -333,6 +333,7 @@ return (
   { color: 'blue', hints: [], number: 4 } ]
        )
 },
+  //First Instance of White 2's came too late
   lossDeck1(){ //First instance of a Card is too far into the deck
 return( [
   {
