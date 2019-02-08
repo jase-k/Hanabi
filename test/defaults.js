@@ -8,6 +8,22 @@ This Document is only used for testing Purposes in *test.js
 */
 
 const Defaults = {  
+   gameSettings(){
+     return {
+                dateCreated: new Date(), 
+                discardedCards: [],
+                hintsLeft: 8, 
+                livesLeft: 3, 
+                messages: [],
+                numberOfPlayers: 3,
+                originalDeck: [/Length of 50 Card Objects/],
+                playedCards: [/ Length of 50- Dealt Cards /],
+                players: [],
+                playingDeck: [],
+                score: 0,
+                tableIds: []
+              }
+   },
   deckOfCards(){
  return( [
   {

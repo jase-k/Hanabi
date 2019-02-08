@@ -18,21 +18,6 @@ const assert = require('chai').assert
 const {GamePlay} = require('../modules/game_play.js');
 const Defaults = require('./defaults.js')
 
-const defaultGameSettings = {
-                dateCreated: new Date(), 
-                discardedCards: [],
-                hintsLeft: 8, 
-                livesLeft: 3, 
-                messages: [],
-                numberOfPlayers: 3,
-                originalDeck: [/*Length of 50 Card Objects*/],
-                playedCards: [/* Length of 50- Dealt Cards */],
-                players: [],
-                playingDeck: [],
-                score: 0,
-                tableIds: []
-              }
-
 describe("GamePlay", function(){
   
   describe(".createDeck", function(){
@@ -153,8 +138,8 @@ describe("GamePlay", function(){
   describe(".newGame", function(){
     it("Should create a game Object for 3 people with correct Keys", function(){
       const numberOfPlayers = 3; 
-      const expectedObjectKeys = Object.keys(defaultGameSettings)
-      
+      const expectedObjectKeys = Object.keys(Defaults.gameSettings)
+      console.log(expectedObjectKeys)
       const newGameObject = GamePlay.newGame(numberOfPlayers)
 
 
