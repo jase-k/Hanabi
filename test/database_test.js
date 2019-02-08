@@ -13,8 +13,9 @@ const assert = require('chai').assert
 const {Database} = require('../modules/database.js')
 
 describe("Database", function(){
-  describe(".newGame", function(){
+  describe(".insert", function(){
     it("Should insert a new row in Hanabi_Games", function(){   
+      
     });  
   });
   describe(".updateGame", function(){});

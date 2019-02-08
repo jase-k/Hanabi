@@ -1,14 +1,84 @@
+/*
+/modules/database.js
 
+This Module is in Take the GameObject modified by game_play.js
+and inserts it into the sqlite Database. 
+
+It has three public functions: 
+.insert(GAME OBJECT)
+.get(GAMEID
+.update(GAME Object)
+
+The Object Utils contains Private Helper Functions for 
+{Database}.
+
+*/
+
+//Establishes a Database
 var fs = require('fs');
 var dbFile = './.data/sqlite.db';
 var exists = fs.existsSync(dbFile);
 var sqlite3 = require('sqlite3').verbose();
 var db = new sqlite3.Database(dbFile);
+
+//Import Modules
 const gameCreation = require('./cool-file.js')
 var sampleDeck = gameCreation.createDeck(5)
 
-
+//Declare variables
 var i;
+
+const Utils = {};
+
+const Database = {
+  insert(){
+  
+  }
+};
+
+
+function createCardString(number){
+ var string = '' 
+  for(var i = 1; i <= number; i++){
+    if(i !== number){ 
+    string += 'card'+i+','
+      }else{string += 'card'+i}
+    }
+  return string
+}
+
+function convertCardArray(array){
+  var string = ''
+  for(var i = 0; i < array.length; i++){  
+    if(array[i]){
+      string += '"'+array[i].color+'|'+array[i].number
+      for(var j = 0; j < array[i].hints.length; j++){
+        string += '|'+array[i].hints[j]
+        }
+    if(i !== array.length-1){
+           string += '",'
+        }else{string += '"'}
+    }
+  }
+  return string
+}
+
+function cardStringToObject(string){
+var object;
+  if(string){
+var array = string.split("|")
+object = {
+    color: array[0],
+    number: array[1],
+    hints: []    
+  }
+for(var i = 2; i <array.length; i++){
+    object.hints.push(array[i])
+    }  
+  }
+  return object
+}
+
 function InsertHanabiRow(object) {
 return new Promise((resolve, reject) => {
   object.tableIds = {}
