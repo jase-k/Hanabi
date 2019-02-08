@@ -21,9 +21,7 @@ var exists = fs.existsSync(dbFile);
 var sqlite3 = require('sqlite3').verbose();
 var db = new sqlite3.Database(dbFile);
 
-//Import Modules
-//const gameCreation = require('./cool-file.js')
-//var sampleDeck = gameCreation.createDeck(5)
+
 
 //Declare variables
 var i;
@@ -49,9 +47,9 @@ const Utils = {
 
 const Database = {
   insert(object){
-    object.id = 1 
     return new Promise((resolve, reject) => {
-      resolve(object)
+      Utils.insertHanabiRow(object)
+      .then(object => resolve(object))
     });
   }
 };
