@@ -28,9 +28,10 @@ describe("Database", function(){
       
        Database.insert(gameObject)
         .then(function(results){
-          db.get("SELECT * Hanabi_Games WHERE id = $id", {$id:results.id}, function(err, row){
+          db.get("SELECT * HanabiGames WHERE id = $id", {$id:results.id}, function(err, row){
                                     if(err){
                                       console.log(err)
+                                      done();
                                     }
                                       assert.notOk(err)
                                       done();

@@ -22,7 +22,6 @@ var sqlite3 = require('sqlite3').verbose();
 var db = new sqlite3.Database(dbFile);
 
 
-
 //Declare variables
 var i;
 
@@ -105,6 +104,7 @@ return new Promise((resolve, reject) => {
          {}, 
   function(err){
     if(err){ console.log(err)
+            throw err
            reject(console.log('Operation was Rejected at Hanabi Table'))
            };
       object.tableIds.gameId= this.lastID

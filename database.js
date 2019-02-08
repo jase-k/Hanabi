@@ -5,6 +5,9 @@ var sqlite3 = require('sqlite3').verbose();
 var db = new sqlite3.Database(dbFile);
 const gameCreation = require('./cool-file.js')
 var sampleDeck = gameCreation.createDeck(5)
+
+
+
 //Create a string of mulitple cards
 function createCardString(number){
  var string = '' 
@@ -79,7 +82,7 @@ db.serialize(() => {
       throw error;
     }
   })
-     db.run('CREATE TABLE HanabiGames (id INTEGER PRIMARY KEY, numberOfPlayers INTEGER NOT NULL, dateCreated DATE, score INTEGER, hintsLeft INTEGER, livesLeft INTEGER)');
+ db.run('CREATE TABLE HanabiGames (id INTEGER PRIMARY KEY, numberOfPlayers INTEGER NOT NULL, dateCreated DATE, score INTEGER, hintsLeft INTEGER, livesLeft INTEGER)');
  
  db.each('SELECT * from HanabiGames', function(err, row) {
     console.log("Hanabi Table")  
