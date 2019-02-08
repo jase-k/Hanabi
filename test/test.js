@@ -29,7 +29,7 @@ describe("GamePlay", function(){
 
 describe("Database", function(){
   describe(".newGame", function(){
-    
+    it("Should insert a new row in Hanabi_Games", function(){});
     it("Should create a game Object for 3 people with correct Keys", function(){
       const numberOfPlayers = 3; 
       const expectedObjectKeys = Object.keys(defaultGameSettings)
@@ -40,8 +40,7 @@ describe("Database", function(){
       assert.containsAllKeys(newGameObject, expectedObjectKeys)
       
       
-    });
-  
+    });  
     it("its Player's Array's Length should be the same as number of Players (3 players)", function(){
       const numberOfPlayers = 3;
       const expectedResult = 3; 
@@ -50,8 +49,7 @@ describe("Database", function(){
       
       assert.equal(expectedResult, newGameObject.players.length)
                    
-    });
-    
+    }); 
     it("its Player's Array's Length should be the same as number of Players (5 players)", function(){
       const numberOfPlayers = 5;
       const expectedResult = 5; 
@@ -61,7 +59,6 @@ describe("Database", function(){
       assert.equal(expectedResult, newGameObject.players.length)
                    
     });
-    
     it("Should set Game to Default Settings (3 players)", function(){
       var numberOfPlayers = 3
       var expectedSettings = {
@@ -98,7 +95,6 @@ describe("Database", function(){
       assert.equal(gameObject.numberOfPlayers, expectedSettings.numberOfPlayers, "Number of Players should equal 3")
       assert.equal(gameObject.score, expectedSettings.score, "Score should start out at 0")
     });
-  
   });
   describe(".updateGame", function(){});
   describe(".getGame", function(){});
