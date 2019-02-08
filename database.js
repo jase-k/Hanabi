@@ -3,6 +3,8 @@ var dbFile = './.data/sqlite.db';
 var exists = fs.existsSync(dbFile);
 var sqlite3 = require('sqlite3').verbose();
 var db = new sqlite3.Database(dbFile);
+
+
 const gameCreation = require('./cool-file.js')
 var sampleDeck = gameCreation.createDeck(5)
 
