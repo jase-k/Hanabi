@@ -79,24 +79,17 @@ describe("Utils", function(){
     });
   });
   describe("insertOriginalDeckRow", function(){
-    before(function(done){
-        var gameObject = Defaults.gameSettings2Player()
-        
-       // Adds Row to OriginalDeck Table Row Id saved to: results.tableIds.originalDeckId 
-        Utils.insertHanabiGameRow(gameObject)
-       .then(game => Utils.insertOriginalDeckRow(game))
-       .then(object => this.tests.push = object)
-         done()
-    console.log("this value", this)
-    });
-    after(function(done){
-       db.run("DELETE FROM OriginalDeck WHERE id = "+this.test.results.tableIds.originalDeckId)
-    });
     it("Should insert gameObject.OriginalDeck Deck Row into OriginalDeck Table",function(done){
        var gameObject = Defaults.gameSettings2Player()
-      console.log("Results", this.Suite.title)
-          db.get("SELECT * FROM OriginalDeck WHERE id = $id",  
-                 {$id: this.test.results.tableIds.originalDeckId},
+       
+        // Adds Row to OriginalDeck Table Row Id saved to: results.tableIds.originalDeckId 
+        // HanabiGame Row is Created as well to retrieve a GameId to Insert into the Original Deck Id
+        Utils.insertHanabiGameRow(gameObject)
+       .then(game => Utils.insertOriginalDeckRow(game))
+       .then(function(results){
+      
+        db.get("SELECT * FROM OriginalDeck WHERE id = $id",  
+                 {$id: results.tableIds.originalDeckId},
                  function(err, row){
                   if(err){
                    console.log(err)
@@ -108,9 +101,11 @@ describe("Utils", function(){
                   assert.ok(row)
                   done();
                  
-            //Deletes the Added Row
-            db.run("DELETE FROM OriginalDeck WHERE id = "+this.test.results.tableIds.originalDeckId)
-                });          
+            //Deletes the Added Rows
+            db.run("DELETE FROM HanabiGames WHERE id = "+results.tableIds.gameId)
+            db.run("DELETE FROM OriginalDeck WHERE id = "+results.tableIds.originalDeckId)
+                }); 
+            });
          });
     });
   
