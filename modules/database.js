@@ -26,7 +26,7 @@ var db = new sqlite3.Database(dbFile);
 var i;
 
 const Utils = {
-  insertHanabiRow(object) { //Insert Row and Return Object with Game ID
+  insertHanabiGameRow(object) { //Insert Row and Return Object with Game ID
     return new Promise((resolve, reject) => {
       object.tableIds = {}
       db.run('INSERT INTO HanabiGames(numberOfPlayers, dateCreated, hintsLeft, livesLeft) VALUES('+object.numberOfPlayers+',"'+object.dateCreated+'",'+ object.hintsLeft+','+object.livesLeft+')',
@@ -40,14 +40,27 @@ const Utils = {
           resolve(object)
         })
     });
-  }
+  },
+  insertOriginalDeckRow(object){
+ return new Promise((resolve, reject) =>{
+  db.run('INSERT INTO OriginalDeck (gameId,'+createCardString(50)+') VALUES('+object.tableIds.gameId+','+convertCardArray(object.originalDeck)+') ', {}, 
+             function(err){
+                if(err){throw err}
+              object.tableIds.originalDeckId = this.lastID
+            console.log("originalDeck id:", object.tableIds.originalDeckId);
+      resolve(object)
+    })
+  });
+}
 };
 
 const Database = {
   insert(object){
     return new Promise((resolve, reject) => {
-      Utils.insertHanabiRow(object)
+      Utils.insertHanabiGameRow(object)
+      .then(object => Utils.insertOriginalDeckRow(object))
       .then(object => resolve(object))
+      
     });
   }
 };
