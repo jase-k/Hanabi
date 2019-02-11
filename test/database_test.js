@@ -79,24 +79,24 @@ describe("Utils", function(){
     });
   });
   describe("insertOriginalDeckRow", function(){
-     var results = {}
     before(function(done){
         var gameObject = Defaults.gameSettings2Player()
         
        // Adds Row to OriginalDeck Table Row Id saved to: results.tableIds.originalDeckId 
         Utils.insertHanabiGameRow(gameObject)
        .then(game => Utils.insertOriginalDeckRow(game))
-       .then(object => results = object)
+       .then(object => this.tests.push = object)
          done()
+    console.log("this value", this)
     });
     after(function(done){
-       db.run("DELETE FROM OriginalDeck WHERE id = "+results.tableIds.originalDeckId)
+       db.run("DELETE FROM OriginalDeck WHERE id = "+this.test.results.tableIds.originalDeckId)
     });
     it("Should insert gameObject.OriginalDeck Deck Row into OriginalDeck Table",function(done){
        var gameObject = Defaults.gameSettings2Player()
-      console.log("Results", results)
+      console.log("Results", this.Suite.title)
           db.get("SELECT * FROM OriginalDeck WHERE id = $id",  
-                 {$id: results.tableIds.originalDeckId},
+                 {$id: this.test.results.tableIds.originalDeckId},
                  function(err, row){
                   if(err){
                    console.log(err)
@@ -109,7 +109,7 @@ describe("Utils", function(){
                   done();
                  
             //Deletes the Added Row
-            db.run("DELETE FROM OriginalDeck WHERE id = "+results.tableIds.originalDeckId)
+            db.run("DELETE FROM OriginalDeck WHERE id = "+this.test.results.tableIds.originalDeckId)
                 });          
          });
     });
