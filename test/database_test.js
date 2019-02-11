@@ -29,17 +29,19 @@ describe("Database", function(){
        Database.insert(gameObject)
         .then(function(results){
          console.log("results:", results)
-          db.get("SELECT * HanabiGames WHERE id = $id", 
+          db.get("SELECT * FROM HanabiGames WHERE id = $id", 
                  {$id:results.tableIds.gameId},
                  function(err, row){
                   if(err){
                    console.log(err)
+                   console.log("message", err.message)
                      done();
                    }
                   console.log("row:", row)
                   assert.notOk(err)
                   done();
-                });  
+            db.run("DELETE FROM HanabiGames WHERE id = "+)
+                });          
          });
     });  
   });
