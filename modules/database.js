@@ -62,7 +62,19 @@ const Utils = {
     resolve(object)
     });
   })
-}};
+},
+  insertDiscardedCardsRow(object){
+    return new Promise ((resolve, reject) =>{
+      db.run('INSERT INTO DiscardedCards (gameId) VALUES('+object.tableIds.gameId+') ', {}, 
+             function(err){
+                if(err){throw err}
+              object.tableIds.discardedCardsId = this.lastID
+            console.log("DiscardedCards id:", object.tableIds.discardedCardsId);
+      resolve(object)
+      });
+    });
+  }
+};
 
 const Database = {
   insert(object){
@@ -119,17 +131,6 @@ for(var i = 2; i <array.length; i++){
   return object
 }
  
-function InsertDiscardedCardsRow(object){
-return new Promise ((resolve, reject) =>{
-  db.run('INSERT INTO DiscardedCards (gameId) VALUES('+object.tableIds.gameId+') ', {}, 
-             function(err){
-                if(err){throw err}
-              object.tableIds.DiscardedCardsId = this.lastID
-            console.log("DiscardedCards id:", object.tableIds.DiscardedCardsId);
-    resolve(object)
-    });
-  });
-}
 function InsertPlayedCardsRow(object){
 return new Promise((resolve, reject) => {
   db.run('INSERT INTO PlayedCards (gameId) VALUES('+object.tableIds.gameId+') ', {}, 

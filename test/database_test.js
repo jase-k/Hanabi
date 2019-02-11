@@ -112,7 +112,7 @@ describe("Utils", function(){
         // Adds Row to PlayingDeck Table Row Id saved to: results.tableIds.playingDeckId 
         // HanabiGame Row is Created as well to retrieve a GameId to Insert into the Playing Deck gameId
         Utils.insertHanabiGameRow(gameObject)
-       .then(game => Utils.insertOriginalDeckRow(game))
+       .then(game => Utils.insertPlayingDeckRow(game))
        .then(function(results){
       
         db.get("SELECT * FROM PlayingDeck WHERE id = $id",  
@@ -125,13 +125,44 @@ describe("Utils", function(){
                    }
                   assert.notOk(err)
                   assert.ok(row)
+                  assert.equal(row.id, results.tableIds.playingDeckId)
                   done();
                  
             //Deletes the Added Rows
             db.run("DELETE FROM HanabiGames WHERE id = "+results.tableIds.gameId)
             db.run("DELETE FROM OriginalDeck WHERE id = "+results.tableIds.playingDeckId)
                 }); 
-            });
+        });
+    });
+  });
+  describe(".insertDiscardedCardsRow", function(){
+    it("should insert a new row in DescardedCards Table", function(done){
+      var gameObject = Defaults.gameSettings2Player()
+       
+        // Adds Row to DiscardedCards Table Row Id saved to: results.tableIds.discardedCardsId 
+        // HanabiGame Row is Created as well to retrieve a GameId to Insert into the  DiscardedCards gameId
+        Utils.insertHanabiGameRow(gameObject)
+       .then(game => Utils.insertDiscardedCardsRow(game))
+       .then(function(results){
+      
+        db.get("SELECT * FROM DiscardedCards WHERE id = $id",  
+                 {$id: results.tableIds.discardedCardsId},
+                 function(err, row){
+                  if(err){
+                   console.log(err)
+                   console.log("message", err.message)
+                     done();
+                   }
+                  assert.notOk(err)
+                  assert.ok(row)
+                  assert.equal(row.id, results.tableIds.discardedCardsId)
+                  done();
+                 
+            //Deletes the Added Rows
+            db.run("DELETE FROM HanabiGames WHERE id = "+results.tableIds.gameId)
+            db.run("DELETE FROM DiscardedCards WHERE id = "+results.tableIds.discardedCardsId)
+                }); 
+        });
     });
   });
 });
