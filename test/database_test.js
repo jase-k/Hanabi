@@ -79,6 +79,12 @@ describe("Utils", function(){
     });
   });
   describe("insertOriginalDeckRow", function(){
+    before(function(done){
+        var gameObject = Defaults.gameSettings2Player()
+        
+        Utils.insertOriginalDeckRow(gameObject)
+        .then(results => var results = results)
+           })
     it("Should insert gameObject.OriginalDeck Deck Row into OriginalDeck Table",function(done){
        var gameObject = Defaults.gameSettings2Player()
       
