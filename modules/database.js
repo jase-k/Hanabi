@@ -209,7 +209,7 @@ for(var i = 2; i <array.length; i++){
 }
  
 
-
+/*
 Database.createRows = function(object){
   return new Promise((resolve, reject) =>{
   InsertHanabiRow(object)
@@ -222,3 +222,4 @@ Database.createRows = function(object){
   .then(object => resolve(object))
   })
 }
+*/

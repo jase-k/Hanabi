@@ -225,47 +225,17 @@ describe("Utils", function(){
         });
     });
   });
-  describe(".insertMessagesRow", function(){
-    it("should insert a new row in Messages Table", function(done){
-        var gameObject = Defaults.gameSettings2Player()
-       
-        // Adds Row to Messages Table Row Id saved to: results.tableIds.messageId 
-        // HanabiGame Row is Created as well to retrieve a GameId to Insert into the Messages gameId
-        Utils.insertHanabiGameRow(gameObject)
-       .then(game => Utils.insertMessagesRow(game))
-       .then(function(results){
-      
-        db.get("SELECT * FROM Messages WHERE id = $id",  
-                 {$id: results.tableIds.messagesId},
-                 function(err, row){
-                  if(err){
-                   console.log(err)
-                   console.log("message", err.message)
-                     done();
-                   }
-                  assert.notOk(err)
-                  assert.ok(row)
-                  assert.equal(row.id, results.tableIds.messagesId)
-                  done();      
-                });
-          
-          //Deletes All Rows From Test
-         db.run("DELETE FROM HanabiGames WHERE id = "+results.tableIds.gameId)
-         db.run("DELETE FROM Messages WHERE id = "+results.tableIds.messagesId)
-        });
-    });
-  });
   describe(".insertPlayerRows", function(){
     it("should insert a new rows in Players Table (2-players)", function(done){
         var gameObject = Defaults.gameSettings2Player()
        
-        // Adds Row to Messages Table Row Id saved to: results.tableIds.messageId 
-        // HanabiGame Row is Created as well to retrieve a GameId to Insert into the Messages gameId
+        // Adds Rows to Players Table Row Id saved to: results.tableIds.playerId[i] 
+        // HanabiGame Row is Created as well to retrieve a GameId to Insert into the Players gameId
         Utils.insertHanabiGameRow(gameObject)
-       .then(game => Utils.insertMessagesRow(game))
+       .then(game => Utils.insertPlayersRows(game))
        .then(function(results){
       
-        db.each("SELECT * FROM Players WHERE gameId = $id",  
+        db.get("SELECT * FROM Players WHERE gameId = $id",  
                  {$id: results.tableIds.playersId[0]},
                  function(err, row){
                   if(err){
@@ -275,13 +245,27 @@ describe("Utils", function(){
                    }
                   assert.notOk(err)
                   assert.ok(row)
-                  assert.equal(row.id, results.tableIds.messagesId)
+                  assert.equal(row.id, results.tableIds.playersId[0])
+                  done();      
+                });
+        db.get("SELECT * FROM Players WHERE gameId = $id",  
+                 {$id: results.tableIds.playersId[1]},
+                 function(err, row){
+                  if(err){
+                   console.log(err)
+                   console.log("message", err.message)
+                     done();
+                   }
+                  assert.notOk(err)
+                  assert.ok(row)
+                  assert.equal(row.id, results.tableIds.playersId[1])
                   done();      
                 });
           
           //Deletes All Rows From Test
          db.run("DELETE FROM HanabiGames WHERE id = "+results.tableIds.gameId)
-         db.run("DELETE FROM Messages WHERE id = "+results.tableIds.messagesId)
+         db.run("DELETE FROM Messages WHERE id = "+results.tableIds.playersId[0])
+         db.run("DELETE FROM Messages WHERE id = "+results.tableIds.playersId[1])
         });
     });
   });
