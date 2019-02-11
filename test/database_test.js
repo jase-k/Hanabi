@@ -25,7 +25,7 @@ describe("Database", function(){
   describe(".insert", function(){
     it("Should insert a new row in Hanabi_Games", function(done){   
       const gameObject = Defaults.gameSettings2Player 
-      
+      gameObject.dateCreated = "January 9th, 2019"
        Database.insert(gameObject)
         .then(function(results){
           db.get("SELECT * HanabiGames WHERE id = $id", {$id:results.id}, function(err, row){
