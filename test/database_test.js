@@ -79,19 +79,21 @@ describe("Utils", function(){
     });
   });
   describe("insertOriginalDeckRow", function(){
-    before(function(done){
+    before( async function(done){
         var gameObject = Defaults.gameSettings2Player()
         
-        Utils.insertOriginalDeckRow(gameObject)
-        .then(results => var results = results)
-           })
+       // Adds Row to OriginalDeck Table Row Id saved to: results.tableIds.originalDeckId 
+       const results = await Utils.insertOriginalDeckRow(gameObject)
+             
+    });
+    after(function(done){
+       db.run("DELETE FROM OriginalDeck WHERE id = "+results.tableIds.originalDeckId)
+    });
     it("Should insert gameObject.OriginalDeck Deck Row into OriginalDeck Table",function(done){
        var gameObject = Defaults.gameSettings2Player()
       
-       Utils.insertOriginalDeckRow(gameObject) // Adds Row to OriginalDeck Table Row Id saved to: results.tableIds.originalDeckId
-        .then(function(results){
           db.get("SELECT * FROM OriginalDeck WHERE id = $id",  
-                 {$id:results.tableIds.originalDeckId},
+                 {$id: results.tableIds.originalDeckId},
                  function(err, row){
                   if(err){
                    console.log(err)
@@ -108,5 +110,5 @@ describe("Utils", function(){
                 });          
          });
     });
-  });
+  
 });
