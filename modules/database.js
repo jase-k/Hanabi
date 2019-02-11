@@ -38,7 +38,6 @@ const Utils = {
              };
           object.tableIds.gameId= this.lastID
           console.log("current game id", object.tableIds.gameId);
-        
           resolve(object)
         })
     });

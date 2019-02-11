@@ -29,15 +29,18 @@ describe("Database", function(){
        Database.insert(gameObject)
         .then(function(results){
          console.log("results:", results)
-          db.get("SELECT * HanabiGames WHERE id = $id", {"$id" :results.tableIds.gameId}, function(err, row){
-                                    if(err){
-                                      console.log(err)
-                                      done();
-                                    }
-                                      assert.notOk(err)
-                                      done();
-                                  });  
-                   });
+          db.get("SELECT * HanabiGames WHERE id = $id", 
+                 {$id:results.tableIds.gameId},
+                 function(err, row){
+                  if(err){
+                   console.log(err)
+                     done();
+                   }
+                  console.log("row:", row)
+                  assert.notOk(err)
+                  done();
+                });  
+         });
     });  
   });
   describe(".updateGame", function(){});
