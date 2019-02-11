@@ -197,25 +197,16 @@ describe("Utils", function(){
   });
   describe(".insertMessagesRow", function(){
     it("should insert a new row in Messages Table", function(done){
-      var results; 
-      
-      after(function(){
-         //Deletes the Added Rows
-         db.run("DELETE FROM HanabiGames WHERE id = "+results.tableIds.gameId)
-         db.run("DELETE FROM Messages WHERE id = "+results.tableIds.messageId)
-           
-      });
-      
-      var gameObject = Defaults.gameSettings2Player()
+        var gameObject = Defaults.gameSettings2Player()
        
         // Adds Row to Messages Table Row Id saved to: results.tableIds.messageId 
         // HanabiGame Row is Created as well to retrieve a GameId to Insert into the Messages gameId
         Utils.insertHanabiGameRow(gameObject)
-       .then(game => Utils.insertPlayedCardsRow(game))
+       .then(game => Utils.insertMessagesRow(game))
        .then(function(results){
       
         db.get("SELECT * FROM Messages WHERE id = $id",  
-                 {$id: results.tableIds.messageId},
+                 {$id: results.tableIds.messagesId},
                  function(err, row){
                   if(err){
                    console.log(err)
@@ -224,9 +215,43 @@ describe("Utils", function(){
                    }
                   assert.notOk(err)
                   assert.ok(row)
-                  assert.equal(row.id, results.tableIds.messageId)
+                  assert.equal(row.id, results.tableIds.messagesId)
                   done();      
-                }); 
+                });
+          
+          //Deletes All Rows From Test
+         db.run("DELETE FROM HanabiGames WHERE id = "+results.tableIds.gameId)
+         db.run("DELETE FROM Messages WHERE id = "+results.tableIds.messagesId)
+        });
+    });
+  });
+  describe(".insertMessagesRow", function(){
+    it("should insert a new row in Messages Table", function(done){
+        var gameObject = Defaults.gameSettings2Player()
+       
+        // Adds Row to Messages Table Row Id saved to: results.tableIds.messageId 
+        // HanabiGame Row is Created as well to retrieve a GameId to Insert into the Messages gameId
+        Utils.insertHanabiGameRow(gameObject)
+       .then(game => Utils.insertMessagesRow(game))
+       .then(function(results){
+      
+        db.get("SELECT * FROM Messages WHERE id = $id",  
+                 {$id: results.tableIds.messagesId},
+                 function(err, row){
+                  if(err){
+                   console.log(err)
+                   console.log("message", err.message)
+                     done();
+                   }
+                  assert.notOk(err)
+                  assert.ok(row)
+                  assert.equal(row.id, results.tableIds.messagesId)
+                  done();      
+                });
+          
+          //Deletes All Rows From Test
+         db.run("DELETE FROM HanabiGames WHERE id = "+results.tableIds.gameId)
+         db.run("DELETE FROM Messages WHERE id = "+results.tableIds.messagesId)
         });
     });
   });

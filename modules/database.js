@@ -90,12 +90,68 @@ const Utils = {
     db.run('INSERT INTO Messages (gameId) VALUES('+object.tableIds.gameId+') ', {}, 
              function(err){
                 if(err){throw err}
-              object.tableIds.messageId = this.lastID
-            console.log("Messages Table id:", object.tableIds.messageId);
+              object.tableIds.messagesId = this.lastID
+            console.log("Messages Table id:", object.tableIds.messagesId);
       resolve(object)
       });
     })
-  }
+  },
+  insertPlayersRows(object){
+    return new Promise((resolve, reject) => {
+      object.tableIds.playersId = []
+      var i = 1
+      var number = object.players[i].hand.length
+    db.run('INSERT INTO Players (gameId, name, active,  '+createCardString(number)+') VALUES('+object.tableIds.gameId+',"'+object.players[0].name+'", 1 ,'+convertCardArray(object.players[i-1].hand)+') ', {}, 
+             function(err){
+                if(err){throw err}
+      object.tableIds.playersId.push(this.lastID)
+    
+      if(i == object.players.length){
+        resolve(object)
+      }else{ i++
+          
+    db.run('INSERT INTO Players (gameId,'+createCardString(number)+') VALUES('+object.tableIds.gameId+','+convertCardArray(object.players[i-1].hand)+') ', {}, 
+      function(err){
+        if(err){throw err}
+        object.tableIds.playersId.push(this.lastID)
+    
+        if(i == object.players.length){
+          resolve(object)
+          }else{ i++
+            db.run('INSERT INTO Players (gameId,'+createCardString(number)+') VALUES('+object.tableIds.gameId+','+convertCardArray(object.players[i-1].hand)+') ', {}, 
+               function(err){
+                if(err){throw err}
+                object.tableIds.playersId.push(this.lastID)
+        
+                if(i == object.players.length){
+                resolve(object)
+                }else{ i++
+                  db.run('INSERT INTO Players (gameId,'+createCardString(number)+') VALUES('+object.tableIds.gameId+','+convertCardArray(object.players[i-1].hand)+') ', {}, 
+                   function(err){
+                    if(err){throw err}
+                    object.tableIds.playersId.push(this.lastID)
+        
+                    if(i == object.players.length){
+                    resolve(object)
+                    }else{i++
+    db.run('INSERT INTO Players (gameId,'+createCardString(number)+') VALUES('+object.tableIds.gameId+','+convertCardArray(object.players[i-1].hand)+') ', {}, 
+               function(err){
+                  if(err){throw err}
+          object.tableIds.playersId.push(this.lastID)
+          resolve(object)
+          });
+        }
+});
+    }
+});
+    }
+});
+    }
+  });
+     
+    
+  });
+}
 
 };
 
@@ -154,62 +210,7 @@ for(var i = 2; i <array.length; i++){
   return object
 }
  
-function InsertPlayersRows(object){
-return new Promise((resolve, reject) => {
-  object.tableIds.playersId = []
-  var i = 1
-  var number = object.players[i].hand.length
-  db.run('INSERT INTO Players (gameId, name, active,  '+createCardString(number)+') VALUES('+object.tableIds.gameId+',"'+object.players[0].name+'", 1 ,'+convertCardArray(object.players[i-1].hand)+') ', {}, 
-             function(err){
-                if(err){throw err}
-    object.tableIds.playersId.push(this.lastID)
-    
-    if(i == object.players.length){
-      resolve(object)
-    }else{ i++
-          
-db.run('INSERT INTO Players (gameId,'+createCardString(number)+') VALUES('+object.tableIds.gameId+','+convertCardArray(object.players[i-1].hand)+') ', {}, 
-             function(err){
-                if(err){throw err}
-    object.tableIds.playersId.push(this.lastID)
-    
-    if(i == object.players.length){
-      resolve(object)
-    }else{ i++
-db.run('INSERT INTO Players (gameId,'+createCardString(number)+') VALUES('+object.tableIds.gameId+','+convertCardArray(object.players[i-1].hand)+') ', {}, 
-             function(err){
-                if(err){throw err}
-    object.tableIds.playersId.push(this.lastID)
-    
-    if(i == object.players.length){
-      resolve(object)
-    }else{ i++
-db.run('INSERT INTO Players (gameId,'+createCardString(number)+') VALUES('+object.tableIds.gameId+','+convertCardArray(object.players[i-1].hand)+') ', {}, 
-             function(err){
-                if(err){throw err}
-    object.tableIds.playersId.push(this.lastID)
-    
-    if(i == object.players.length){
-      resolve(object)
-    }else{i++
-db.run('INSERT INTO Players (gameId,'+createCardString(number)+') VALUES('+object.tableIds.gameId+','+convertCardArray(object.players[i-1].hand)+') ', {}, 
-             function(err){
-                if(err){throw err}
-    object.tableIds.playersId.push(this.lastID)
-      resolve(object)
-});
-    }
-});
-    }
-});
-    }
-});
-    }
-  });
-     
-    
-  });
-}
+
 
 Database.createRows = function(object){
   return new Promise((resolve, reject) =>{
