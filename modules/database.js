@@ -117,7 +117,7 @@ const Utils = {
     
         if(i == object.players.length){
           resolve(object)
-          }else{ i++
+          }else{  i++
             db.run('INSERT INTO Players (gameId,'+createCardString(number)+') VALUES('+object.tableIds.gameId+','+convertCardArray(object.players[i-1].hand)+') ', {}, 
                function(err){
                 if(err){throw err}
@@ -125,7 +125,7 @@ const Utils = {
         
                 if(i == object.players.length){
                 resolve(object)
-                }else{ i++
+                }else{  i++
                   db.run('INSERT INTO Players (gameId,'+createCardString(number)+') VALUES('+object.tableIds.gameId+','+convertCardArray(object.players[i-1].hand)+') ', {}, 
                    function(err){
                     if(err){throw err}
@@ -133,25 +133,23 @@ const Utils = {
         
                     if(i == object.players.length){
                     resolve(object)
-                    }else{i++
-    db.run('INSERT INTO Players (gameId,'+createCardString(number)+') VALUES('+object.tableIds.gameId+','+convertCardArray(object.players[i-1].hand)+') ', {}, 
-               function(err){
-                  if(err){throw err}
-          object.tableIds.playersId.push(this.lastID)
-          resolve(object)
-          });
-        }
-});
-    }
-});
-    }
-});
-    }
+                    }else{  i++
+                      db.run('INSERT INTO Players (gameId,'+createCardString(number)+') VALUES('+object.tableIds.gameId+','+convertCardArray(object.players[i-1].hand)+') ', {}, 
+                       function(err){
+                        if(err){throw err};
+                        object.tableIds.playersId.push(this.lastID)
+                        resolve(object)
+                      });
+                    };
+                  });
+                 }
+              });
+           }
+        });
+      }
+    });   
   });
-     
-    
-  });
-}
+},
 
 };
 

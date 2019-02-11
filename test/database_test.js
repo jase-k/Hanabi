@@ -255,4 +255,34 @@ describe("Utils", function(){
         });
     });
   });
+  describe(".insertPlayerRows", function(){
+    it("should insert a new rows in Players Table (2-players)", function(done){
+        var gameObject = Defaults.gameSettings2Player()
+       
+        // Adds Row to Messages Table Row Id saved to: results.tableIds.messageId 
+        // HanabiGame Row is Created as well to retrieve a GameId to Insert into the Messages gameId
+        Utils.insertHanabiGameRow(gameObject)
+       .then(game => Utils.insertMessagesRow(game))
+       .then(function(results){
+      
+        db.each("SELECT * FROM Players WHERE gameId = $id",  
+                 {$id: results.tableIds.playersId[0]},
+                 function(err, row){
+                  if(err){
+                   console.log(err)
+                   console.log("message", err.message)
+                     done();
+                   }
+                  assert.notOk(err)
+                  assert.ok(row)
+                  assert.equal(row.id, results.tableIds.messagesId)
+                  done();      
+                });
+          
+          //Deletes All Rows From Test
+         db.run("DELETE FROM HanabiGames WHERE id = "+results.tableIds.gameId)
+         db.run("DELETE FROM Messages WHERE id = "+results.tableIds.messagesId)
+        });
+    });
+  });
 });
