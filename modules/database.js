@@ -51,8 +51,18 @@ const Utils = {
       resolve(object)
     })
   });
-}
-};
+},
+  insertPlayingDeckRow(object){
+  return new Promise((resolve, reject) =>{
+    db.run('INSERT INTO PlayingDeck (gameId,'+createCardString(object.playingDeck.length)+') VALUES('+object.tableIds.gameId+','+convertCardArray(object.playingDeck)+') ', {}, 
+             function(err){
+                if(err){throw err}
+              object.tableIds.playingDeckId = this.lastID
+            console.log("playingDeck id:", object.tableIds.playingDeckId);
+    resolve(object)
+    });
+  })
+}};
 
 const Database = {
   insert(object){
@@ -108,45 +118,7 @@ for(var i = 2; i <array.length; i++){
   }
   return object
 }
-
-function InsertHanabiRow(object) {
-return new Promise((resolve, reject) => {
-  object.tableIds = {}
-    db.run('INSERT INTO HanabiGames(numberOfPlayers, dateCreated, hintsLeft, livesLeft) VALUES('+object.numberOfPlayers+',"'+object.dateCreated+'",'+ object.hintsLeft+','+object.livesLeft+')',
-         {}, 
-  function(err){
-    if(err){ console.log(err)
-            throw err
-           reject(console.log('Operation was Rejected at Hanabi Table'))
-           };
-      object.tableIds.gameId= this.lastID
-    console.log("current game id", object.tableIds.gameId);
-      resolve(object)
-    })
-  });
-}
-function InsertOriginalDeckRow(object){
- return new Promise((resolve, reject) =>{
-  db.run('INSERT INTO OriginalDeck (gameId,'+createCardString(50)+') VALUES('+object.tableIds.gameId+','+convertCardArray(object.originalDeck)+') ', {}, 
-             function(err){
-                if(err){throw err}
-              object.tableIds.originalDeckId = this.lastID
-            console.log("originalDeck id:", object.tableIds.originalDeckId);
-      resolve(object)
-    })
-  });
-}
-function InsertPlayingDeckRow(object){
-return new Promise((resolve, reject) =>{
-  db.run('INSERT INTO PlayingDeck (gameId,'+createCardString(object.playingDeck.length)+') VALUES('+object.tableIds.gameId+','+convertCardArray(object.playingDeck)+') ', {}, 
-             function(err){
-                if(err){throw err}
-              object.tableIds.playingDeckId = this.lastID
-            console.log("playingDeck id:", object.tableIds.playingDeckId);
-    resolve(object)
-    });
-  })
-}
+ 
 function InsertDiscardedCardsRow(object){
 return new Promise ((resolve, reject) =>{
   db.run('INSERT INTO DiscardedCards (gameId) VALUES('+object.tableIds.gameId+') ', {}, 

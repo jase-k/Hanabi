@@ -35,7 +35,6 @@ describe("Utils", function(){
   describe("insertHanabiGameRow", function(){
    it("Should insert a new row in HanabiGames Table", function(done){   
       var gameObject = Defaults.gameSettings2Player()
-      console.log("Utils:", Utils);
        Utils.insertHanabiGameRow(gameObject) // Adds Row to HanabiGame Table
         .then(function(results){
           db.get("SELECT * FROM HanabiGames WHERE id = $id", 
@@ -46,7 +45,6 @@ describe("Utils", function(){
                    console.log("message", err.message)
                      done();
                    }
-                  console.log("row:", row)
                   assert.notOk(err)
                   done();
                  
@@ -96,7 +94,6 @@ describe("Utils", function(){
                    console.log("message", err.message)
                      done();
                    }
-                  console.log("row:", row)
                   assert.notOk(err)
                   assert.ok(row)
                   done();
@@ -108,5 +105,33 @@ describe("Utils", function(){
             });
          });
     });
-  
+  describe(".insertPlayingDeckRow", function(){
+    it("Should insert gameObject.PlayingDeck into PlayingDeck Table", function(done){
+       var gameObject = Defaults.gameSettings2Player()
+       
+        // Adds Row to PlayingDeck Table Row Id saved to: results.tableIds.playingDeckId 
+        // HanabiGame Row is Created as well to retrieve a GameId to Insert into the Playing Deck gameId
+        Utils.insertHanabiGameRow(gameObject)
+       .then(game => Utils.insertOriginalDeckRow(game))
+       .then(function(results){
+      
+        db.get("SELECT * FROM PlayingDeck WHERE id = $id",  
+                 {$id: results.tableIds.playingDeckId},
+                 function(err, row){
+                  if(err){
+                   console.log(err)
+                   console.log("message", err.message)
+                     done();
+                   }
+                  assert.notOk(err)
+                  assert.ok(row)
+                  done();
+                 
+            //Deletes the Added Rows
+            db.run("DELETE FROM HanabiGames WHERE id = "+results.tableIds.gameId)
+            db.run("DELETE FROM OriginalDeck WHERE id = "+results.tableIds.playingDeckId)
+                }); 
+            });
+    });
+  });
 });
