@@ -24,7 +24,38 @@ const Defaults = require('./defaults.js')
 
 describe("Database", function(){
   describe(".insert", function(){
-  
+    it("should insert new rows in All Tables: 5 players", function(done){
+       var gameObject = Defaults.gameSettings5Player()
+        
+       Database.insert(gameObject)
+      .then(function(results){
+         db.get("SELECT * FROM HanabiGames WHERE id = $id", 
+                 {$id:results.tableIds.gameId},
+                 function(err, row){
+                  if(err){
+                   console.log(err)
+                   console.log("message", err.message)
+                     done();
+                   }
+                  assert.notOk(err)
+         });
+         db.get("SELECT * FROM OriginalDeck WHERE gameId = $id",  
+                 {$id: results.tableIds.gameId},
+                 function(err, row){
+                  if(err){
+                   console.log(err)
+                   console.log("message", err.message)
+                     done();
+                   }
+                  assert.notOk(err)
+                  assert.ok(row)
+               }); 
+         
+            db.run("DELETE FROM HanabiGames WHERE id = "+results.tableIds.gameId)
+            db.run("DELETE FROM OriginalDeck WHERE id = "+results.tableIds.originalDeckId)
+       });
+      
+    });
   });
   describe(".updateGame", function(){});
   describe(".getGame", function(){});
@@ -235,7 +266,7 @@ describe("Utils", function(){
        .then(game => Utils.insertPlayersRows(game))
        .then(function(results){
       
-        db.get("SELECT * FROM Players WHERE gameId = $id",  
+        db.get("SELECT * FROM Players WHERE id = $id",  
                  {$id: results.tableIds.playersId[0]},
                  function(err, row){
                   if(err){
@@ -246,9 +277,9 @@ describe("Utils", function(){
                   assert.notOk(err)
                   assert.ok(row)
                   assert.equal(row.id, results.tableIds.playersId[0])
-                  done();      
+                  ;      
                 });
-        db.get("SELECT * FROM Players WHERE gameId = $id",  
+        db.get("SELECT * FROM Players WHERE id = $id",  
                  {$id: results.tableIds.playersId[1]},
                  function(err, row){
                   if(err){
