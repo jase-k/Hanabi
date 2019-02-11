@@ -150,7 +150,6 @@ const Utils = {
     });   
   });
 },
-
 };
 
 const Database = {
@@ -158,8 +157,12 @@ const Database = {
     return new Promise((resolve, reject) => {
       Utils.insertHanabiGameRow(object)
       .then(object => Utils.insertOriginalDeckRow(object))
+      .then(object => Utils.insertPlayingDeckRow(object))
+      .then(object => Utils.insertDiscardedCardsRow(object))
+      .then(object => Utils.insertPlayedCardsRow(object))
+      .then(object => Utils.insertMessagesRow(object))
+      .then(object => Utils.insertPlayersRows(object))
       .then(object => resolve(object))
-      
     });
   }
 };

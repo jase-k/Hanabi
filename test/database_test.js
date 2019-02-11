@@ -35,7 +35,6 @@ describe("Database", function(){
                   if(err){
                    console.log(err)
                    console.log("message", err.message)
-                     done();
                    }
                   assert.notOk(err)
          });
@@ -45,14 +44,87 @@ describe("Database", function(){
                   if(err){
                    console.log(err)
                    console.log("message", err.message)
-                     done();
                    }
                   assert.notOk(err)
                   assert.ok(row)
-               }); 
+               });
+         db.get("SELECT * FROM PlayingDeck WHERE gameId = $id",  
+                 {$id: results.tableIds.gameId},
+                 function(err, row){
+                  if(err){
+                   console.log(err)
+                   console.log("message", err.message)
+                   }
+                  assert.notOk(err)
+                  assert.ok(row)
+                  assert.equal(row.id, results.tableIds.playingDeckId)                 
+                }); 
+         db.get("SELECT * FROM DiscardedCards WHERE gameId = $id",  
+                 {$id: results.tableIds.gameId},
+                 function(err, row){
+                  if(err){
+                   console.log(err)
+                   console.log("message", err.message)
+                   }
+           
+                  assert.notOk(err)
+                  assert.ok(row)
+                  assert.equal(row.id, results.tableIds.discardedCardsId)
+                });
+         db.get("SELECT * FROM PlayedCards WHERE gameId = $id",  
+                 {$id: results.tableIds.gameId},
+                 function(err, row){
+                  if(err){
+                   console.log(err)
+                   console.log("message", err.message)
+                   }
+                  assert.notOk(err)
+                  assert.ok(row)
+                  assert.equal(row.id, results.tableIds.playedCardsId)
+                });
+         db.get("SELECT * FROM Messages WHERE gameId = $id",  
+                 {$id: results.tableIds.gameId},
+                 function(err, row){
+                  if(err){
+                   console.log(err)
+                   console.log("message", err.message)
+                   }
+                  assert.notOk(err)
+                  assert.ok(row)
+                  assert.equal(row.id, results.tableIds.messagesId)
+                });
+        db.get("SELECT * FROM Players WHERE id = $id",  
+                 {$id: results.tableIds.playersId[0]},
+                 function(err, row){
+                  if(err){
+                   console.log(err)
+                   console.log("message", err.message)
+                   }
+                  assert.notOk(err)
+                  assert.ok(row)
+                  assert.equal(row.id, results.tableIds.playersId[0])
+                  ;      
+                });
+        db.get("SELECT * FROM Players WHERE id = $id",  
+                 {$id: results.tableIds.playersId[1]},
+                 function(err, row){
+                  if(err){
+                   console.log(err)
+                   console.log("message", err.message)
+                   }
+                  assert.notOk(err)
+                  assert.ok(row)
+                  assert.equal(row.id, results.tableIds.playersId[1])
+                });      
          
             db.run("DELETE FROM HanabiGames WHERE id = "+results.tableIds.gameId)
             db.run("DELETE FROM OriginalDeck WHERE id = "+results.tableIds.originalDeckId)
+            db.run("DELETE FROM OriginalDeck WHERE id = "+results.tableIds.playingDeckId)
+            db.run("DELETE FROM DiscardedCards WHERE id = "+results.tableIds.discardedCardsId)
+            db.run("DELETE FROM PlayedCards WHERE id = "+results.tableIds.playedCardsId)
+            db.run("DELETE FROM Messages WHERE id = "+results.tableIds.messagesId)
+            db.run("DELETE FROM Players WHERE id = "+results.tableIds.playersId[0])
+            db.run("DELETE FROM Players WHERE id = "+results.tableIds.playersId[1])
        });
       
     });
@@ -295,8 +367,8 @@ describe("Utils", function(){
           
           //Deletes All Rows From Test
          db.run("DELETE FROM HanabiGames WHERE id = "+results.tableIds.gameId)
-         db.run("DELETE FROM Messages WHERE id = "+results.tableIds.playersId[0])
-         db.run("DELETE FROM Messages WHERE id = "+results.tableIds.playersId[1])
+         db.run("DELETE FROM Players WHERE id = "+results.tableIds.playersId[0])
+         db.run("DELETE FROM Players WHERE id = "+results.tableIds.playersId[1])
         });
     });
   });
