@@ -23,12 +23,11 @@ const Defaults = require('./defaults.js')
 
 describe("Database", function(){
   describe(".insert", function(){
-    it("Should insert a new row in Hanabi_Games", function(done){   
+    it("Should insert a new row in HanabiGames", function(done){   
       var gameObject = Defaults.gameSettings2Player()
       
-       Database.insert(gameObject)
+       Database.insert(gameObject) // Adds Row to Main Game
         .then(function(results){
-         console.log("results:", results)
           db.get("SELECT * FROM HanabiGames WHERE id = $id", 
                  {$id:results.tableIds.gameId},
                  function(err, row){
@@ -40,10 +39,56 @@ describe("Database", function(){
                   console.log("row:", row)
                   assert.notOk(err)
                   done();
-            db.run("DELETE FROM HanabiGames WHERE id = "+)
+                 
+            //Deletes the Added Row
+            db.run("DELETE FROM HanabiGames WHERE id = "+results.tableIds.gameId)
                 });          
          });
-    });  
+    }); 
+    it("Should insert Default Settings in HanabiGames", function(done){
+       var gameObject = Defaults.gameSettings2Player()
+      
+       Database.insert(gameObject) // Adds Row to Main Game
+        .then(function(results){
+          db.get("SELECT * FROM HanabiGames WHERE id = $id", 
+                 {$id:results.tableIds.gameId},
+                 function(err, row){
+                  if(err){
+                   console.log(err)
+                   console.log("message", err.message)
+                     done();
+                   }
+                  assert.equal(row.hintsLeft, gameObject.hintsLeft, "Expected hintsLeft to Equal")
+                  assert.equal(row.livesLeft, gameObject.livesLeft, "Expected livesLeft to Equal")
+                  done();
+                 
+            //Deletes the Added Row
+            db.run("DELETE FROM HanabiGames WHERE id = "+results.tableIds.gameId)
+                });          
+         });
+    });
+    it("Should insert gameObject.OriginalDeck Deck Row into OriginalDeck",function(done){
+       var gameObject = Defaults.gameSettings2Player()
+      
+       Database.insert(gameObject) // Adds Row to Main Game
+        .then(function(results){
+          db.get("SELECT * FROM OriginalDeck WHERE id = $id", 
+                 {$id:results.tableIds.gameId},
+                 function(err, row){
+                  if(err){
+                   console.log(err)
+                   console.log("message", err.message)
+                     done();
+                   }
+                  console.log("row:", row)
+                  assert.notOk(err)
+                  done();
+                 
+            //Deletes the Added Row
+            db.run("DELETE FROM OriginalDeck WHERE id = "+results.tableIds.gameId)
+                });          
+         });
+    });
   });
   describe(".updateGame", function(){});
   describe(".getGame", function(){});
