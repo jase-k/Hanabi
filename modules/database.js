@@ -65,7 +65,7 @@ const Database = {
   }
 };
 
-module.exports = Database
+module.exports = {Database, Utils}
 
 function createCardString(number){
  var string = '' 

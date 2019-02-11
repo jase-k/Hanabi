@@ -18,9 +18,8 @@ var db = new sqlite3.Database(dbFile);
 
 
 //Import Module:
-const Database = require('../modules/database.js')
+const {Database, Utils} = require('../modules/database.js')
 const Defaults = require('./defaults.js')
-const Utils = require('../modules/database.js')
 
 
 describe("Database", function(){
@@ -36,8 +35,8 @@ describe("Utils", function(){
   describe("insertHanabiGameRow", function(){
    it("Should insert a new row in HanabiGames Table", function(done){   
       var gameObject = Defaults.gameSettings2Player()
-      
-       Utils.insertHanabiGameRow(gameObject) // Adds Row to Main Game
+      console.log("Utils:", Utils);
+       Utils.insertHanabiGameRow(gameObject) // Adds Row to HanabiGame Table
         .then(function(results){
           db.get("SELECT * FROM HanabiGames WHERE id = $id", 
                  {$id:results.tableIds.gameId},
@@ -59,7 +58,7 @@ describe("Utils", function(){
    it("Should insert Default Settings in HanabiGames", function(done){
        var gameObject = Defaults.gameSettings2Player()
       
-       Utils.insertHanabiGameRow(gameObject) // Adds Row to Main Game
+       Utils.insertHanabiGameRow(gameObject) // Adds Row to HanabiGame Table
         .then(function(results){
           db.get("SELECT * FROM HanabiGames WHERE id = $id", 
                  {$id:results.tableIds.gameId},
@@ -80,6 +79,28 @@ describe("Utils", function(){
     });
   });
   describe("insertOriginalDeckRow", function(){
-    
+    it("Should insert gameObject.OriginalDeck Deck Row into OriginalDeck Table",function(done){
+       var gameObject = Defaults.gameSettings2Player()
+      
+       Utils.insertOriginalDeckRow(gameObject) // Adds Row to OriginalDeck Table Row Id saved to: results.tableIds.originalDeckId
+        .then(function(results){
+          db.get("SELECT * FROM OriginalDeck WHERE id = $id",  
+                 {$id:results.tableIds.originalDeckId},
+                 function(err, row){
+                  if(err){
+                   console.log(err)
+                   console.log("message", err.message)
+                     done();
+                   }
+                  console.log("row:", row)
+                  assert.notOk(err)
+                  assert.ok(row)
+                  done();
+                 
+            //Deletes the Added Row
+            db.run("DELETE FROM OriginalDeck WHERE id = "+results.tableIds.originalDeckId)
+                });          
+         });
+    });
   });
 });
