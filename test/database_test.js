@@ -135,7 +135,7 @@ describe("Database", function(){
 
 
 describe("Utils", function(){
-  describe("insertHanabiGameRow", function(){
+  describe.skip(".insertHanabiGameRow", function(){
    it("Should insert a new row in HanabiGames Table", function(done){   
       var gameObject = Defaults.gameSettings2Player()
        Utils.insertHanabiGameRow(gameObject) // Adds Row to HanabiGame Table
@@ -179,7 +179,7 @@ describe("Utils", function(){
          });
     });
   });
-  describe("insertOriginalDeckRow", function(){
+  describe.skip(".insertOriginalDeckRow", function(){
     it("Should insert gameObject.OriginalDeck Deck Row into OriginalDeck Table",function(done){
        var gameObject = Defaults.gameSettings2Player()
        
@@ -208,7 +208,7 @@ describe("Utils", function(){
             });
          });
     });
-  describe(".insertPlayingDeckRow", function(){
+  describe.skip(".insertPlayingDeckRow", function(){
     it("Should insert gameObject.PlayingDeck into PlayingDeck Table", function(done){
        var gameObject = Defaults.gameSettings2Player()
        var expectedFirstCard = "red|3"
@@ -241,7 +241,7 @@ describe("Utils", function(){
         });
     });
   });
-  describe(".insertDiscardedCardsRow", function(){
+  describe.skip(".insertDiscardedCardsRow", function(){
     it("should insert a new row in DescardedCards Table", function(done){
       var gameObject = Defaults.gameSettings2Player()
        
@@ -271,7 +271,7 @@ describe("Utils", function(){
         });
     });
   });
-  describe(".insertPlayedCardsRow", function(){
+  describe.skip(".insertPlayedCardsRow", function(){
     it("should insert a new row in PlayedCards Table", function(done){
       var gameObject = Defaults.gameSettings2Player()
        
@@ -301,7 +301,7 @@ describe("Utils", function(){
         });
     });
   });
-  describe(".insertMessagesRow", function(){
+  describe.skip(".insertMessagesRow", function(){
     it("should insert a new row in Messages Table", function(done){
         var gameObject = Defaults.gameSettings2Player()
        
@@ -332,7 +332,7 @@ describe("Utils", function(){
         });
     });
   });
-  describe(".insertPlayerRows", function(){
+  describe.skip(".insertPlayerRows", function(){
     it("should insert a new rows in Players Table (2-players)", function(done){
         var gameObject = Defaults.gameSettings2Player()
         var expectedPlayer1Card2 = "orange|3";
@@ -380,4 +380,34 @@ describe("Utils", function(){
         });
     });
   });
+  describe.skip(".updateHanabiGameRow", function(){
+    it("Updates hints and lives in Hanabi Game Row", function(done){
+       var gameObject = Defaults.gameSettings2Player()
+       var expectedHintsLeft = 4 
+       var expectedLivesLeft = 1
+       
+       Utils.insertHanabiGameRow(gameObject) // Adds Row to HanabiGame Table
+       .then(function(results){
+           results.hintsLeft = 4
+           results.livesLeft = 1
+         Utils.updateHanabitGameRow(results) // Updates Table with New Hints and Lives
+         .then(function(object){
+             db.get("SELECT * FROM HanabiGames WHERE id = $id",  // Retrieves Row
+                    {$id: object.tableIds.gameId},
+                    function(err, row){
+                assert.notOK(err)
+                assert.ok(row)
+                assert.equal(row.hintsLeft, expectedHintsLeft) 
+                assert.equal(row.livesLeft, expectedLivesLeft)
+               
+               db.run("DELETE FROM HanabiGames WHERE id ="+object.tableIds.gameId);
+               done()
+              });
+                    
+           });
+       });
+      
+    });
+  });
+  
 });
