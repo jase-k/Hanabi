@@ -332,7 +332,7 @@ describe("Utils", function(){
         });
     });
   });
-  describe.skip(".insertPlayerRows", function(){
+  describe(".insertPlayerRows", function(){
     it("should insert a new rows in Players Table (2-players)", function(done){
         var gameObject = Defaults.gameSettings2Player()
         var expectedPlayer1Card2 = "orange|3";
@@ -438,8 +438,11 @@ describe("Utils", function(){
                 assert.ok(row, "The Table Row was undefined!")
                 assert.equal(row.card1, expectedCard1, "Card 1 is incorrect!") 
                 assert.equal(row.card39, expectedCard39, "card 39 is incorrect!")
-              });
-           done()
+               });
+
+         db.run("DELETE FROM HanabiGames WHERE id = "+results.tableIds.gameId)
+         db.run("DELETE FROM PlayingDeck WHERE gameId ="+results.tableIds.gameId);
+         done()
        });
     });
     it("Updates PlayedCards in the PlayedCards Table Row", function(done){

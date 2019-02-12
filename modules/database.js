@@ -105,6 +105,7 @@ const Utils = {
              function(err){
                 if(err){throw err}
       object.tableIds.playersId.push(this.lastID)
+      object.players[i-1].id = this.lastID
       console.log("Players Table id:", this.lastID);
 
       if(i == object.players.length){
@@ -115,6 +116,7 @@ const Utils = {
       function(err){
         if(err){throw err}
         object.tableIds.playersId.push(this.lastID)
+        object.players[i-1].id = this.lastID
         console.log("Players Table id:", this.lastID);
 
         if(i == object.players.length){
@@ -124,6 +126,7 @@ const Utils = {
                function(err){
                 if(err){throw err}
                 object.tableIds.playersId.push(this.lastID)
+                object.players[i-1].id = this.lastID
                 console.log("Players Table id:", this.lastID);
 
                 if(i == object.players.length){
@@ -133,6 +136,7 @@ const Utils = {
                    function(err){
                     if(err){throw err}
                     object.tableIds.playersId.push(this.lastID)
+                     object.players[i-1].id = this.lastID
                     console.log("Players Table id:", this.lastID);
 
                     if(i == object.players.length){
@@ -142,6 +146,7 @@ const Utils = {
                        function(err){
                         if(err){throw err};
                         object.tableIds.playersId.push(this.lastID)
+                         object.players[i-1].id = this.lastID
                         console.log("Players Table id:", this.lastID);
 
                         resolve(object)
