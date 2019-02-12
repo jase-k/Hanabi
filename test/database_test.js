@@ -57,7 +57,7 @@ describe("Database", function(){
                    }
                   assert.notOk(err)
                   assert.ok(row)
-                 // assert.equal(row.id, results.tableIds.playingDeckId)                 
+                  assert.equal(row.id, results.tableIds.playingDeckId)                 
                 }); 
          db.get("SELECT * FROM DiscardedCards WHERE gameId = $id",  
                  {$id: results.tableIds.gameId},
@@ -235,7 +235,7 @@ describe("Utils", function(){
                   assert.equal(row.card40, expectedLastCard) //If both these matches, it is likely the deck is in the right order.
                   //Deletes the Added Rows
                   db.run("DELETE FROM HanabiGames WHERE id = "+results.tableIds.gameId)
-                  db.run("DELETE FROM OriginalDeck WHERE gameId = "+results.tableIds.gameId)
+                  db.run("DELETE FROM PlayingDeck WHERE gameId = "+results.tableIds.gameId)
                   done();
                 }); 
         });

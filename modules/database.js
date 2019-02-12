@@ -218,17 +218,97 @@ for(var i = 2; i <array.length; i++){
 }
  
 
-/*
-Database.createRows = function(object){
-  return new Promise((resolve, reject) =>{
-  InsertHanabiRow(object)
-  .then(object => InsertOriginalDeckRow(object))
-  .then(object => InsertPlayingDeckRow(object))
-  .then(object => InsertDiscardedCardsRow(object))
-  .then(object => InsertPlayedCardsRow(object))
-  .then(object => InsertPlayersRows(object))
-  .then(object => InsertMessagesRow(object))
-  .then(object => resolve(object))
+//+++++++++++++++++++++++++++++
+// Game Update
+//+++++++++++++++++++++++++++++
+
+Database.updateGame = (object) =>{
+ updateDeck(object.playingDeck, object.id, 'PlayingDeck') 
+ updateDeck(object.playedCards, object.id, 'PlayedCards')
+ updateDeck(object.discardedCards, object.id, 'DiscardedCards')
+ updateHanabiGame(object)
+ updateMessages(object)
+ updatePlayers(object.players[0])
+ updatePlayers(object.players[1])
+  if(object.players.length > 2){ updatePlayers(object.players[2])}
+  if(object.players.length > 3){ updatePlayers(object.players[3])}
+  if(object.players.length > 4){ updatePlayers(object.players[4])}
+}
+
+function convertCardArrayForUpdate(array, length){
+  var string = ''
+  for(var i = 0; i < length; i++){  
+    if(array[i]){
+      string += 'card'+(i+1)+'="'+array[i].color+'|'+array[i].number
+        for(var j = 0; j < array[i].hints.length; j++){
+          string += '|'+array[i].hints[j]
+            } 
+        if(i === length-1){
+        string += '"'
+          }else{ string +='",'}
+        
+    }else if(i < length-1){
+        string += 'card'+(i+1)+'=null,'
+    
+    }else{ 
+      string += 'card'+(i+1)+'=null'
+    };
+ };
+  return string
+}; 
+
+//This function updates Tables: PlayingDeck, DiscardedCards, & PlayedCards
+function updateDeck(array, id, tableName){
+  var length = 50
+  if(tableName !== 'PlayingDeck'){length = 25}
+  var setString =  convertCardArrayForUpdate(array, length)  
+  var sql = `UPDATE ${tableName}
+            SET ${setString}
+            WHERE gameId = ${id}`
+  db.run(sql, function (err){
+    if(err){
+    console.log("Error at updateDeck "+tableName, sql)
+      throw err
+      }
+    })
+  }
+
+//This function takes an individual playerObject as an argument and updates the row. 
+function updatePlayers(playerObject){
+  var setString = convertCardArrayForUpdate(playerObject.hand, playerObject.hand.length)
+  var sql = `UPDATE Players
+            SET  ${setString}, active = ${playerObject.active}
+            WHERE id = ${playerObject.id}`
+  console.log(sql)
+  db.run(sql, function(err){
+    if(err){
+      console.log("Error at Player "+playerObject.id+" Updating Table")
+    }
+  }
+    )
+}
+
+//This function updates score, livesLeft, hintsLeft
+function updateHanabiGame(gameObject){
+  
+  var sql = `UPDATE HanabiGames
+            SET score = ${gameObject.score}, hintsLeft = ${gameObject.hintsLeft}, livesLeft = ${gameObject.livesLeft}
+            WHERE id = ${gameObject.id}`
+  db.run(sql)
+}
+
+//This function updates the messages Table
+function updateMessages(object){
+  var sql = `UPDATE Messages
+             SET Messages = "${object.messages.join()}"
+             WHERE gameId = ${object.id}`
+  
+  console.log(sql)
+  
+  db.run(sql, function(err){
+    if(err){
+      console.log("Error at Updating Messages")
+      throw err
+    }
   })
 }
-*/

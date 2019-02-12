@@ -169,7 +169,7 @@ db.serialize(() => {
 
 
 //============================
-// Creating New Game (6 tables)
+// Creating New Game (7 tables)
 //============================
 
 var i;
