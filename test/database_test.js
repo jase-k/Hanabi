@@ -23,7 +23,7 @@ const Defaults = require('./defaults.js')
 
 
 describe("Database", function(){
-  describe(".insert", function(){
+  describe.skip(".insert", function(){
     it("should insert new rows in All Tables: 5 players", function(done){
        var gameObject = Defaults.gameSettings5Player()
         
@@ -502,7 +502,7 @@ describe("Utils", function(){
        });
     })
   });
-  describe(".updateMessages", function(){
+  describe.skip(".updateMessages", function(){
     it("Updates Messages Tables by joining gameObject.messages into a string", function(done){
       var gameObject = Defaults.gameSettings2Player()
        var expectedString = "Steven played a blue 4!,Whoops! Jase played a white 3 and it didn't play." 
@@ -541,7 +541,7 @@ describe("Utils", function(){
        });
     });
   });
-  describe(".updatesPlayerRow", function(){
+  describe.skip(".updatesPlayerRow", function(){
     it("Updates One Player in Players Tables", function(done){
       var gameObject = Defaults.gameSettings2Player()
       var expectedCard1 = "orange|5"
