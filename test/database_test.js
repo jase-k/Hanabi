@@ -380,31 +380,34 @@ describe("Utils", function(){
         });
     });
   });
-  describe.skip(".updateHanabiGameRow", function(){
+  describe(".updateHanabiGameRow", function(){
     it("Updates hints and lives in Hanabi Game Row", function(done){
        var gameObject = Defaults.gameSettings2Player()
        var expectedHintsLeft = 4 
        var expectedLivesLeft = 1
        
-       Utils.insertHanabiGameRow(gameObject) // Adds Row to HanabiGame Table
+       Utils.insertHanabiGameRow(gameObject)// Adds Row to HanabiGame Table
+       .catch(function(e){ console.log(e.message)})
        .then(function(results){
            results.hintsLeft = 4
            results.livesLeft = 1
-         Utils.updateHanabitGameRow(results) // Updates Table with New Hints and Lives
-         .then(function(object){
-             db.get("SELECT * FROM HanabiGames WHERE id = $id",  // Retrieves Row
-                    {$id: object.tableIds.gameId},
+        
+         Utils.updateHanabiGameRow(results) // Updates Table with New Hints and Lives
+         
+         db.get("SELECT * FROM HanabiGames WHERE id = $id",  // Retrieves Row
+                    {$id: results.tableIds.gameId},
                     function(err, row){
                 assert.notOK(err)
                 assert.ok(row)
                 assert.equal(row.hintsLeft, expectedHintsLeft) 
                 assert.equal(row.livesLeft, expectedLivesLeft)
                
-               db.run("DELETE FROM HanabiGames WHERE id ="+object.tableIds.gameId);
-               done()
+               db.run("DELETE FROM HanabiGames WHERE id ="+results.tableIds.gameId);
+             
+           done()
               });
                     
-           });
+          
        });
       
     });

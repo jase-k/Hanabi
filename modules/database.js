@@ -156,6 +156,13 @@ const Utils = {
     });   
   });
 },
+  //This function updates score, livesLeft, hintsLeft
+  updateHanabiGameRow(gameObject){
+    var sql = `UPDATE HanabiGames
+            SET score = ${gameObject.score}, hintsLeft = ${gameObject.hintsLeft}, livesLeft = ${gameObject.livesLeft}
+            WHERE id = ${gameObject.id}`
+    db.run(sql)
+  },
 };
 
 const Database = {
@@ -303,14 +310,7 @@ function updatePlayers(playerObject){
     )
 }
 
-//This function updates score, livesLeft, hintsLeft
-function updateHanabiGame(gameObject){
-  
-  var sql = `UPDATE HanabiGames
-            SET score = ${gameObject.score}, hintsLeft = ${gameObject.hintsLeft}, livesLeft = ${gameObject.livesLeft}
-            WHERE id = ${gameObject.id}`
-  db.run(sql)
-}
+
 
 //This function updates the messages Table
 function updateMessages(object){
