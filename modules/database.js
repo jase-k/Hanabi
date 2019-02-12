@@ -160,7 +160,7 @@ const Utils = {
   updateHanabiGameRow(gameObject){
     var sql = `UPDATE HanabiGames
             SET score = ${gameObject.score}, hintsLeft = ${gameObject.hintsLeft}, livesLeft = ${gameObject.livesLeft}
-            WHERE id = ${gameObject.id}`
+            WHERE id = ${gameObject.tableIds.gameId}`
     db.run(sql)
   },
 };

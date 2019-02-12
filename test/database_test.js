@@ -397,7 +397,7 @@ describe("Utils", function(){
          db.get("SELECT * FROM HanabiGames WHERE id = $id",  // Retrieves Row
                     {$id: results.tableIds.gameId},
                     function(err, row){
-                assert.notOK(err)
+                assert.notOk(err)
                 assert.ok(row)
                 assert.equal(row.hintsLeft, expectedHintsLeft) 
                 assert.equal(row.livesLeft, expectedLivesLeft)
@@ -406,11 +406,35 @@ describe("Utils", function(){
              
            done()
               });
-                    
-          
        });
-      
     });
   });
-  
+  describe(".updatePlayingDeckRow", function(){
+   it("Updates hints and lives in Hanabi Game Row", function(done){
+       var gameObject = Defaults.gameSettings2Player()
+       var expectedCard 1 = 4 
+       var expectedLivesLeft = 1
+       
+       Utils.insertHanabiGameRow(gameObject)// Adds Row to HanabiGame Table
+       .catch(function(e){ console.log(e.message)})
+       .then(function(results){
+           results.playingDeck.shift()
+        
+         Utils.updateHanabiGameRow(results) // Updates Table with New Hints and Lives
+         
+         db.get("SELECT * FROM PlayingDeck WHERE gameId = $id",  // Retrieves Row
+                    {$id: results.tableIds.gameId},
+                    function(err, row){
+                assert.notOk(err)
+                assert.ok(row)
+                assert.equal(row.hintsLeft, expectedHintsLeft) 
+                assert.equal(row.livesLeft, expectedLivesLeft)
+               
+               db.run("DELETE FROM PlayingDeck WHERE id ="+results.tableIds.gameId);
+             
+           done()
+              });
+       });
+    });
+  });  
 });
