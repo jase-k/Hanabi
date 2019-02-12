@@ -24,6 +24,12 @@ var db = new sqlite3.Database(dbFile);
 
 //Declare variables
 var i;
+const Helper = {
+  //table: STRING columns: ARRAY values: ARRAY
+  createInsertSQLString(table, columns, values){ 
+    return 'INSERT INTO HanabiGames(numberOfPlayers, dateCreated, hintsLeft, livesLeft) VALUES('+object.numberOfPlayers+',"'+object.dateCreated+'",'+ values[3].value+','+values[3].value+')'
+  }
+}
 
 const Utils = {
   insertHanabiGameRow(object) { //Insert Row and Return Object with Game ID
@@ -248,7 +254,7 @@ const Database = {
   }
 };
 
-module.exports = {Database, Utils}
+module.exports = {Database, Utils, Helper}
 
 function createCardString(number){
  var string = '' 

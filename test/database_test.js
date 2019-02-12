@@ -18,7 +18,7 @@ var db = new sqlite3.Database(dbFile);
 
 
 //Import Module:
-const {Database, Utils} = require('../modules/database.js')
+const {Database, Utils, Helper} = require('../modules/database.js')
 const Defaults = require('./defaults.js')
 
 
@@ -580,5 +580,23 @@ describe("Utils", function(){
               });
        });
     });
+  });
+});
+
+describe("Helper", function(){
+  describe("createInsertSQLStrings", function(){
+    it("returns a string including the table name", function(){
+      var table = "HanabiGame"
+      var values = [
+        {column: "dateCreated", value: new Date()},
+        {column: "numberOfPlayers", value: new Date()},
+        {column: "livesLeft", value: 3},
+        {column: "hintsLeft", value: 8},
+      ]
+      
+      Helper.createInsertSQLString(table, values);
+      
+      
+    })
   });
 });
