@@ -105,7 +105,8 @@ const Utils = {
              function(err){
                 if(err){throw err}
       object.tableIds.playersId.push(this.lastID)
-    
+      console.log("Players Table id:", this.lastID);
+
       if(i == object.players.length){
         resolve(object)
       }else{ i++
@@ -114,7 +115,8 @@ const Utils = {
       function(err){
         if(err){throw err}
         object.tableIds.playersId.push(this.lastID)
-    
+        console.log("Players Table id:", this.lastID);
+
         if(i == object.players.length){
           resolve(object)
           }else{  i++
@@ -122,7 +124,8 @@ const Utils = {
                function(err){
                 if(err){throw err}
                 object.tableIds.playersId.push(this.lastID)
-        
+                console.log("Players Table id:", this.lastID);
+
                 if(i == object.players.length){
                 resolve(object)
                 }else{  i++
@@ -130,7 +133,8 @@ const Utils = {
                    function(err){
                     if(err){throw err}
                     object.tableIds.playersId.push(this.lastID)
-        
+                    console.log("Players Table id:", this.lastID);
+
                     if(i == object.players.length){
                     resolve(object)
                     }else{  i++
@@ -138,6 +142,8 @@ const Utils = {
                        function(err){
                         if(err){throw err};
                         object.tableIds.playersId.push(this.lastID)
+                        console.log("Players Table id:", this.lastID);
+
                         resolve(object)
                       });
                     };

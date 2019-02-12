@@ -233,7 +233,7 @@ describe("Utils", function(){
                  
             //Deletes the Added Rows
             db.run("DELETE FROM HanabiGames WHERE id = "+results.tableIds.gameId)
-            db.run("DELETE FROM OriginalDeck WHERE id = "+results.tableIds.playingDeckId)
+            db.run("DELETE FROM OriginalDeck WHERE gameId = "+results.tableIds.gameId)
                 }); 
         });
     });
