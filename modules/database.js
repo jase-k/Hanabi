@@ -163,6 +163,26 @@ const Utils = {
             WHERE id = ${gameObject.tableIds.gameId}`
     db.run(sql)
   },
+  //This function updates Tables: PlayingDeck, DiscardedCards, & PlayedCards
+  updateDeck(array, id, tableName){
+    var deckLength = 25 //Max Length of decks
+    if(tableName === 'PlayingDeck'){
+      deckLength = 50
+    }
+    
+    var setString =  convertCardArrayForUpdate(array, deckLength) //Converts Array to a Valid SQL String 
+    
+    var sql = `UPDATE ${tableName}
+               SET ${setString}
+               WHERE gameId = ${id}`
+    
+    db.run(sql, function (err){
+      if(err){
+      console.log("Error at updateDeck "+tableName, sql)
+        throw err
+        }
+      })
+    },
 };
 
 const Database = {
@@ -228,7 +248,7 @@ for(var i = 2; i <array.length; i++){
 //+++++++++++++++++++++++++++++
 // Game Update
 //+++++++++++++++++++++++++++++
-
+/*
 Database.updateGame = (object) =>{
  updateDeck(object.playingDeck, object.id, 'PlayingDeck') 
  updateDeck(object.playedCards, object.id, 'PlayedCards')
@@ -241,7 +261,7 @@ Database.updateGame = (object) =>{
   if(object.players.length > 3){ updatePlayers(object.players[3])}
   if(object.players.length > 4){ updatePlayers(object.players[4])}
 }
-
+*/
 /* 
 convertCardArrayForUpdate() converts a Card Object to a string to be
 placed into the Database. (It also lengthens the string to include null values

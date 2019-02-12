@@ -412,25 +412,29 @@ describe("Utils", function(){
   describe(".updatePlayingDeckRow", function(){
    it("Updates hints and lives in Hanabi Game Row", function(done){
        var gameObject = Defaults.gameSettings2Player()
-       var expectedCard 1 = 4 
-       var expectedLivesLeft = 1
+       var expectedCard1 = "red|1" 
+       var expectedCard39 = "blue|4"
        
        Utils.insertHanabiGameRow(gameObject)// Adds Row to HanabiGame Table
        .catch(function(e){ console.log(e.message)})
+       .then(object => Utils.insertPlayingDeckRow(object))
+       .catch(function(e){ console.log(e.message)})
        .then(function(results){
            results.playingDeck.shift()
-        
-         Utils.updateHanabiGameRow(results) // Updates Table with New Hints and Lives
+            var id = results.tableIds.gameId
+          
+         Utils.updateDeck(results.playingDeck, id, "PlayingDeck") // Updates Table with New Hints and Lives
          
          db.get("SELECT * FROM PlayingDeck WHERE gameId = $id",  // Retrieves Row
                     {$id: results.tableIds.gameId},
                     function(err, row){
                 assert.notOk(err)
                 assert.ok(row)
-                assert.equal(row.hintsLeft, expectedHintsLeft) 
-                assert.equal(row.livesLeft, expectedLivesLeft)
-               
-               db.run("DELETE FROM PlayingDeck WHERE id ="+results.tableIds.gameId);
+                assert.equal(row.card1, expectedCard1) 
+                assert.equal(row.card39, expectedCard39)
+
+           db.run("DELETE FROM HanabiGames WHERE id = "+results.tableIds.gameId)
+           db.run("DELETE FROM PlayingDeck WHERE id ="+results.tableIds.gameId);
              
            done()
               });
