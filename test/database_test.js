@@ -545,15 +545,16 @@ describe("Utils", function(){
        .then(object => Utils.insertPlayersRows(object))
          .catch(function(e){ console.log(e.message)})
        .then(function(results){
-           results.players[0].hand[0].splice(0, 1, {color: "orange", hints: [], number: 5}) //add Switch out Card Object
-           results.players[0].active = 1 
          
         after(function() {
            db.run("DELETE FROM HanabiGames WHERE id = "+results.tableIds.gameId)
            db.run("DELETE FROM Players WHERE gameId ="+results.tableIds.gameId);
                }); 
          
-         Utils.updatePlayerRow(results)// Updates Table with New Message String
+           results.players[0].hand.splice(0, 1, {color: "orange", hints: [], number: 5}) //add Switch out Card Object
+           results.players[0].active = 1 
+         
+         Utils.updatePlayerRow(results.players[0])// Updates Table with New Player Data
          
          db.get("SELECT * FROM Players WHERE id = $id",  // Retrieves Row
                     {$id: results.tableIds.playersId[0]},
@@ -561,7 +562,7 @@ describe("Utils", function(){
                      if(err){ console.log(err)};
                 assert.notOk(err, "There was an Error Getting the Table Row")
                 assert.ok(row, "The Table Row was undefined!")
-                assert.equal(row.Messages, expectedCard1, "card 1 String is incorrect!") 
+                assert.equal(row.card1, expectedCard1, "card 1 String is incorrect!") 
                 assert.equal(row.active, expectedActive, "Player Active is incorrect!")
               });
            done()
