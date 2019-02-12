@@ -161,7 +161,12 @@ const Utils = {
     var sql = `UPDATE HanabiGames
             SET score = ${gameObject.score}, hintsLeft = ${gameObject.hintsLeft}, livesLeft = ${gameObject.livesLeft}
             WHERE id = ${gameObject.tableIds.gameId}`
-    db.run(sql)
+    db.run(sql, function(err){
+     if(err){
+      console.log("Error at updateDeck at Hanabi Game Table", sql)
+        throw err
+        }
+    })
   },
   //This function updates Tables: PlayingDeck, DiscardedCards, & PlayedCards
   updateDeck(array, id, tableName){
