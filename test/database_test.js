@@ -438,8 +438,7 @@ describe("Utils", function(){
                 assert.ok(row, "The Table Row was undefined!")
                 assert.equal(row.card1, expectedCard1, "Card 1 is incorrect!") 
                 assert.equal(row.card39, expectedCard39, "card 39 is incorrect!")
-         db.run("DELETE FROM HanabiGames WHERE id = "+results.tableIds.gameId)
-         db.run("DELETE FROM PlayingDeck WHERE gameId ="+results.tableIds.gameId);
+           db.run("DELETE FROM HanabiGames WHERE id ="+results.tableIds.gameId)
                });
 
          done()
@@ -463,13 +462,13 @@ describe("Utils", function(){
          db.get("SELECT * FROM PlayedCards WHERE gameId = $id",  // Retrieves Row
                     {$id: results.tableIds.gameId},
                     function(err, row){
-                     if(err){ console.log(err)};
+                     if(err){ console.log("Error at Utils.updatesPlayerRow db.get('SELECT...",err)};
                 assert.notOk(err, "There was an Error Getting the Table Row")
                 assert.ok(row, "The Table Row was undefined!")
                 assert.equal(row.card1, expectedCard1, "Card 1 is incorrect!") 
-              });
-            db.run("DELETE FROM HanabiGames WHERE id = "+results.tableIds.gameId);
-            db.run("DELETE FROM PlayedCards WHERE gameId ="+results.tableIds.gameId);
+              db.run("DELETE FROM HanabiGames WHERE id ="+results.tableIds.gameId);
+              db.run("DELETE FROM PlayedCards WHERE gameId ="+results.tableIds.gameId);
+                });
            done()
        });
     });
@@ -495,7 +494,7 @@ describe("Utils", function(){
          db.get("SELECT * FROM DiscardedCards WHERE gameId = $id",  // Retrieves Row
                     {$id: results.tableIds.gameId},
                     function(err, row){
-                     if(err){ console.log(err)};
+                     if(err){ console.log("Error at Utils.updatesDiscardedCardsRow db.get('SELECT...",err)};
                 assert.notOk(err, "There was an Error Getting the Table Row")
                 assert.ok(row, "The Table Row was undefined!")
                 assert.equal(row.card1, expectedCard1, "Card 1 is incorrect!") 
@@ -528,7 +527,7 @@ describe("Utils", function(){
          db.get("SELECT * FROM Messages WHERE gameId = $id",  // Retrieves Row
                     {$id: results.tableIds.gameId},
                     function(err, row){
-                     if(err){ console.log(err)};
+                     if(err){ console.log("Error at Utils.updateMessages db.get('SELECT...",err)};
                 assert.notOk(err, "There was an Error Getting the Table Row")
                 assert.ok(row, "The Table Row was undefined!")
                 assert.equal(row.Messages, expectedString, "Message String is incorrect!") 
@@ -562,7 +561,7 @@ describe("Utils", function(){
          db.get("SELECT * FROM Players WHERE id = $id",  // Retrieves Row
                     {$id: results.tableIds.playersId[0]},
                     function(err, row){
-                     if(err){ console.log(err)};
+                     if(err){ console.log("Error at Utils.updatesPlayerRow db.get('SELECT...",err)};
                 assert.notOk(err, "There was an Error Getting the Table Row")
                 assert.ok(row, "The Table Row was undefined!")
                 assert.equal(row.card1, expectedCard1, "card 1 String is incorrect!") 
