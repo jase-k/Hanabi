@@ -89,7 +89,9 @@ const Utils = {
     return new Promise((resolve, reject) =>{
     db.run('INSERT INTO Messages (gameId) VALUES('+object.tableIds.gameId+') ', {}, 
              function(err){
-                if(err){throw err}
+                if(err){
+                  console.log("Error at insertMessagesRow")
+                  throw err}
               object.tableIds.messagesId = this.lastID
             console.log("Messages Table id:", object.tableIds.messagesId);
       resolve(object)
@@ -103,7 +105,9 @@ const Utils = {
       var number = object.players[i].hand.length
     db.run('INSERT INTO Players (gameId, name, active,  '+createCardString(number)+') VALUES('+object.tableIds.gameId+',"'+object.players[0].name+'", 1 ,'+convertCardArray(object.players[i-1].hand)+') ', {}, 
              function(err){
-                if(err){throw err}
+                if(err){
+                  console.log("Error at insertMessagesRow Player 1")
+                  throw err}
       object.tableIds.playersId.push(this.lastID)
       object.players[i-1].id = this.lastID
       console.log("Players Table id:", this.lastID);
@@ -114,7 +118,9 @@ const Utils = {
           
     db.run('INSERT INTO Players (gameId,'+createCardString(number)+') VALUES('+object.tableIds.gameId+','+convertCardArray(object.players[i-1].hand)+') ', {}, 
       function(err){
-        if(err){throw err}
+        if(err){
+          console.log("Error at insertMessagesRow Player 2")
+          throw err}
         object.tableIds.playersId.push(this.lastID)
         object.players[i-1].id = this.lastID
         console.log("Players Table id:", this.lastID);
@@ -124,7 +130,9 @@ const Utils = {
           }else{  i++
             db.run('INSERT INTO Players (gameId,'+createCardString(number)+') VALUES('+object.tableIds.gameId+','+convertCardArray(object.players[i-1].hand)+') ', {}, 
                function(err){
-                if(err){throw err}
+                if(err){
+                  console.log("Error at insertMessagesRow Player 3")
+                  throw err}
                 object.tableIds.playersId.push(this.lastID)
                 object.players[i-1].id = this.lastID
                 console.log("Players Table id:", this.lastID);
@@ -134,9 +142,12 @@ const Utils = {
                 }else{  i++
                   db.run('INSERT INTO Players (gameId,'+createCardString(number)+') VALUES('+object.tableIds.gameId+','+convertCardArray(object.players[i-1].hand)+') ', {}, 
                    function(err){
-                    if(err){throw err}
+                    if(err){
+                      console.log("Error at insertMessagesRow Player 4")
+                      throw err}
+                    
                     object.tableIds.playersId.push(this.lastID)
-                     object.players[i-1].id = this.lastID
+                    object.players[i-1].id = this.lastID
                     console.log("Players Table id:", this.lastID);
 
                     if(i == object.players.length){
@@ -144,7 +155,9 @@ const Utils = {
                     }else{  i++
                       db.run('INSERT INTO Players (gameId,'+createCardString(number)+') VALUES('+object.tableIds.gameId+','+convertCardArray(object.players[i-1].hand)+') ', {}, 
                        function(err){
-                        if(err){throw err};
+                        if(err){
+                          console.log("Error at insertMessagesRow Player 5")
+                          throw err};
                         object.tableIds.playersId.push(this.lastID)
                          object.players[i-1].id = this.lastID
                         console.log("Players Table id:", this.lastID);
@@ -191,7 +204,7 @@ const Utils = {
       console.log("Error at updateDeck "+tableName, sql)
         throw err
         }
-      })
+      });
     },
   updateMessages(object){
     var sql = `UPDATE Messages
