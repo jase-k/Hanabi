@@ -380,7 +380,7 @@ describe("Utils", function(){
         });
     });
   });
-  describe(".updateHanabiGameRow", function(){
+  describe.skip(".updateHanabiGameRow", function(){
     it("Updates hints and lives in Hanabi Game Row", function(done){
        var gameObject = Defaults.gameSettings2Player()
        var expectedHintsLeft = 4 
@@ -518,18 +518,24 @@ describe("Utils", function(){
            db.run("DELETE FROM HanabiGames WHERE id = "+results.tableIds.gameId)
            db.run("DELETE FROM Messages WHERE gameId ="+results.tableIds.gameId);
                }); 
-         console.log("starting updata")
+         
+         console.log("starting update")
          Utils.updateMessages(results)// Updates Table with New Message String
-         console.log("done with update")
-         db.get("SELECT * FROM Messages WHERE gameId = $id",  // Retrieves Row
-                    {$id: results.tableIds.gameId},
+         console.log("done with update", results.tableIds.gameId)
+        
+         db.get("SELECT * FROM Messages WHERE id = $id",  // Retrieves Row
+                    {$id: results.tableIds.messagesId},
                     function(err, row){
-                     if(err){ console.log("Error at Utils.updateMessages db.get('SELECT...",err)};
+                     if(err){ 
+                       console.log("Error at Utils.updateMessages db.get('SELECT...",err)
+                            };
+               
                 assert.notOk(err, "There was an Error Getting the Table Row")
                 assert.ok(row, "The Table Row was undefined!")
                 assert.equal(row.Messages, expectedString, "Message String is incorrect!") 
-             console.log("Done with sQL")    
-             done()
+             
+               console.log("Done with sQL")    
+               done()
               });
          console.log("Done with Operation")
        });
