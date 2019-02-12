@@ -140,14 +140,14 @@ describe("Utils", function(){
       var gameObject = Defaults.gameSettings2Player()
        Utils.insertHanabiGameRow(gameObject) // Adds Row to HanabiGame Table
         .then(function(results){
+          after(function(){
+             //Deletes the Added Row
+              db.run("DELETE FROM HanabiGames WHERE id = "+results.tableIds.gameId)
+             })
           db.get("SELECT * FROM HanabiGames WHERE id = $id", 
             {$id:results.tableIds.gameId},
             function(err, row){
    
-             afterEach(function(){
-             //Deletes the Added Row
-              db.run("DELETE FROM HanabiGames WHERE id = "+results.tableIds.gameId)
-             })
             
               if(err){
                    console.log(err)
@@ -164,6 +164,10 @@ describe("Utils", function(){
       
        Utils.insertHanabiGameRow(gameObject) // Adds Row to HanabiGame Table
         .then(function(results){
+         after(function(){
+             //Deletes the Added Row
+              db.run("DELETE FROM HanabiGames WHERE id = "+results.tableIds.gameId)
+             })
           db.get("SELECT * FROM HanabiGames WHERE id = $id", 
                  {$id:results.tableIds.gameId},
                  function(err, row){
@@ -176,9 +180,6 @@ describe("Utils", function(){
                   assert.equal(row.hintsLeft, gameObject.hintsLeft, "Expected hintsLeft to Equal")
                   assert.equal(row.livesLeft, gameObject.livesLeft, "Expected livesLeft to Equal")
                   done();
-                 
-            //Deletes the Added Row
-            db.run("DELETE FROM HanabiGames WHERE id = "+results.tableIds.gameId)
                 });          
          });
     });
