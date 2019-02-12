@@ -21,56 +21,26 @@ const Defaults = {
                 players: [{
                     active: 1,
                     name: "John Doe", 
-                    hand: [{
-                        color: "blue", 
-                        hints: [],
-                        number: 1
-                      },{
-                        color: "black", 
-                        hints: [],
-                        number: 2
-                      },{
-                        color: "white", 
-                        hints: [],
-                        number: 3
-                      },{
-                        color: "orange", 
-                        hints: [],
-                        number: 4
-                      },{
-                        color: "red", 
-                        hints: [],
-                        number: 5
-                      },
+                    hand: [
+                        { color: 'white', hints: [], number: 3 },
+                        { color: 'orange', hints: [], number: 3 },
+                        { color: 'red', hints: [], number: 4 },
+                        { color: 'red', hints: [], number: 5 },
+                        { color: 'white', hints: [], number: 1 },
                           ]
                   },{
                     active: 0,
                     name: "Jane Doe", 
-                    hand: [{
-                        color: "blue", 
-                        hints: [],
-                        number: 1
-                      },{
-                        color: "black", 
-                        hints: [],
-                        number: 2
-                      },{
-                        color: "white", 
-                        hints: [],
-                        number: 3
-                      },{
-                        color: "orange", 
-                        hints: [],
-                        number: 4
-                      },{
-                        color: "red", 
-                        hints: [],
-                        number: 5
-                      },
+                    hand: [
+                        { color: 'white', hints: [], number: 4 },
+                        { color: 'blue', hints: [], number: 1 },
+                        { color: 'blue', hints: [], number: 1 },
+                        { color: 'orange', hints: [], number: 3 },
+                        { color: 'orange', hints: [], number: 2 },
                           ]
                   }
                          ],
-                playingDeck: this.shuffledDeckOfCards().slice(0,40),
+                playingDeck: this.shuffledDeckOfCards().slice(10,50),
                 score: 0,
                 tableIds: []
               }
@@ -213,7 +183,7 @@ const Defaults = {
                           ]
                   }
                          ],
-                playingDeck: this.shuffledDeckOfCards().slice(0,30),
+                playingDeck: this.shuffledDeckOfCards().slice(20,50),
                 score: 0,
                 tableIds: []
               }

@@ -211,7 +211,7 @@ describe("Utils", function(){
   describe(".insertPlayingDeckRow", function(){
     it("Should insert gameObject.PlayingDeck into PlayingDeck Table", function(done){
        var gameObject = Defaults.gameSettings2Player()
-       var expectedFirstCard = "white|3"
+       var expectedFirstCard = "red|3"
        var expectedLastCard = "blue|4"
        console.log("first Card", expectedFirstCard)
         // Adds Row to PlayingDeck Table Row Id saved to: results.tableIds.playingDeckId 
@@ -232,7 +232,7 @@ describe("Utils", function(){
                   assert.ok(row) // Game Id Isn't Correct
                   assert.equal(row.id, results.tableIds.playingDeckId, "Row Id doesn't match tableIds" ) //Row Id isn't Correct
                   assert.equal(row.card1, expectedFirstCard) //First Card Matches           
-                  assert.equal(row.card39, expectedLastCard) //If both these matches, it is likely the deck is in the right order.
+                  assert.equal(row.card40, expectedLastCard) //If both these matches, it is likely the deck is in the right order.
                   //Deletes the Added Rows
                   db.run("DELETE FROM HanabiGames WHERE id = "+results.tableIds.gameId)
                   db.run("DELETE FROM OriginalDeck WHERE gameId = "+results.tableIds.gameId)
@@ -322,18 +322,21 @@ describe("Utils", function(){
                   assert.notOk(err)
                   assert.ok(row)
                   assert.equal(row.id, results.tableIds.messagesId)
-                  done();      
+                        
                 });
           
           //Deletes All Rows From Test
          db.run("DELETE FROM HanabiGames WHERE id = "+results.tableIds.gameId)
          db.run("DELETE FROM Messages WHERE id = "+results.tableIds.messagesId)
+         done();
         });
     });
   });
   describe(".insertPlayerRows", function(){
     it("should insert a new rows in Players Table (2-players)", function(done){
         var gameObject = Defaults.gameSettings2Player()
+        var expectedPlayer1Card2 = "orange|3";
+        var expectedPlayer2Card5 = "orange|2";    
        
         // Adds Rows to Players Table Row Id saved to: results.tableIds.playerId[i] 
         // HanabiGame Row is Created as well to retrieve a GameId to Insert into the Players gameId
@@ -352,6 +355,7 @@ describe("Utils", function(){
                   assert.notOk(err)
                   assert.ok(row)
                   assert.equal(row.id, results.tableIds.playersId[0])
+                  assert.equal(row.card2, expectedPlayer1Card2)
                   ;      
                 });
         db.get("SELECT * FROM Players WHERE id = $id",  
@@ -365,13 +369,14 @@ describe("Utils", function(){
                   assert.notOk(err)
                   assert.ok(row)
                   assert.equal(row.id, results.tableIds.playersId[1])
-                  done();      
+                  assert.equal(row.card5, expectedPlayer2Card5)
                 });
           
           //Deletes All Rows From Test
          db.run("DELETE FROM HanabiGames WHERE id = "+results.tableIds.gameId)
          db.run("DELETE FROM Players WHERE id = "+results.tableIds.playersId[0])
          db.run("DELETE FROM Players WHERE id = "+results.tableIds.playersId[1])
+                  done();      
         });
     });
   });
