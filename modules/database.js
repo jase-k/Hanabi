@@ -199,6 +199,19 @@ const Utils = {
         throw err
       }
     });
+  },
+  //This function takes an individual playerObject as an argument and updates the row. 
+  updatePlayerRow(playerObject){
+    var setString = convertCardArrayForUpdate(playerObject.hand, playerObject.hand.length)
+    var sql = `UPDATE Players
+              SET  ${setString}, active = ${playerObject.active}
+              WHERE id = ${playerObject.id}`
+    console.log(sql)
+    db.run(sql, function(err){
+      if(err){
+        console.log("Error at Player "+playerObject.id+" Updating Table")
+      }
+    })
   }
 };
 
@@ -332,19 +345,3 @@ function updatePlayers(playerObject){
 }
 
 
-
-//This function updates the messages Table
-function updateMessages(object){
-  var sql = `UPDATE Messages
-             SET Messages = "${object.messages.join()}"
-             WHERE gameId = ${object.id}`
-  
-  console.log(sql)
-  
-  db.run(sql, function(err){
-    if(err){
-      console.log("Error at Updating Messages")
-      throw err
-    }
-  })
-}
