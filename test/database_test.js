@@ -211,7 +211,9 @@ describe("Utils", function(){
   describe(".insertPlayingDeckRow", function(){
     it("Should insert gameObject.PlayingDeck into PlayingDeck Table", function(done){
        var gameObject = Defaults.gameSettings2Player()
-       
+       var expectedFirstCard = "white|3"
+       var expectedLastCard = "blue|4"
+       console.log("first Card", expectedFirstCard)
         // Adds Row to PlayingDeck Table Row Id saved to: results.tableIds.playingDeckId 
         // HanabiGame Row is Created as well to retrieve a GameId to Insert into the Playing Deck gameId
         Utils.insertHanabiGameRow(gameObject)
@@ -227,13 +229,14 @@ describe("Utils", function(){
                      done();
                    }
                   assert.notOk(err)
-                  assert.ok(row)
-                  assert.equal(row.id, results.tableIds.playingDeckId)
+                  assert.ok(row) // Game Id Isn't Correct
+                  assert.equal(row.id, results.tableIds.playingDeckId, "Row Id doesn't match tableIds" ) //Row Id isn't Correct
+                  assert.equal(row.card1, expectedFirstCard) //First Card Matches           
+                  assert.equal(row.card39, expectedLastCard) //If both these matches, it is likely the deck is in the right order.
+                  //Deletes the Added Rows
+                  db.run("DELETE FROM HanabiGames WHERE id = "+results.tableIds.gameId)
+                  db.run("DELETE FROM OriginalDeck WHERE gameId = "+results.tableIds.gameId)
                   done();
-                 
-            //Deletes the Added Rows
-            db.run("DELETE FROM HanabiGames WHERE id = "+results.tableIds.gameId)
-            db.run("DELETE FROM OriginalDeck WHERE gameId = "+results.tableIds.gameId)
                 }); 
         });
     });
