@@ -424,7 +424,7 @@ describe("Utils", function(){
             var id = results.tableIds.gameId
           
         after(function() {
-           db.run("DELETE FROM HanabiGames WHERE id = "+results.tableIds.gameId)
+            db.run("DELETE FROM HanabiGames WHERE id ="+results.tableIds.gameId);
            db.run("DELETE FROM PlayingDeck WHERE gameId ="+results.tableIds.gameId);
                }); 
          
@@ -438,10 +438,10 @@ describe("Utils", function(){
                 assert.ok(row, "The Table Row was undefined!")
                 assert.equal(row.card1, expectedCard1, "Card 1 is incorrect!") 
                 assert.equal(row.card39, expectedCard39, "card 39 is incorrect!")
-               });
-
          db.run("DELETE FROM HanabiGames WHERE id = "+results.tableIds.gameId)
          db.run("DELETE FROM PlayingDeck WHERE gameId ="+results.tableIds.gameId);
+               });
+
          done()
        });
     });
@@ -456,11 +456,7 @@ describe("Utils", function(){
        .then(function(results){
            results.playedCards.push({color: 'red', hints: [], number: 1}) //add Card Object to Array
             var id = results.tableIds.gameId
-          
-        after(function() {
-           db.run("DELETE FROM HanabiGames WHERE id = "+results.tableIds.gameId)
-           db.run("DELETE FROM PlayedCards WHERE gameId ="+results.tableIds.gameId);
-               }); 
+         
          
          Utils.updateDeck(results.playedCards, id, "PlayedCards") // Updates Table with New Played Cards Array
          
@@ -472,6 +468,8 @@ describe("Utils", function(){
                 assert.ok(row, "The Table Row was undefined!")
                 assert.equal(row.card1, expectedCard1, "Card 1 is incorrect!") 
               });
+            db.run("DELETE FROM HanabiGames WHERE id = "+results.tableIds.gameId);
+            db.run("DELETE FROM PlayedCards WHERE gameId ="+results.tableIds.gameId);
            done()
        });
     });
@@ -502,6 +500,8 @@ describe("Utils", function(){
                 assert.ok(row, "The Table Row was undefined!")
                 assert.equal(row.card1, expectedCard1, "Card 1 is incorrect!") 
               });
+                  db.run("DELETE FROM HanabiGames WHERE id = "+results.tableIds.gameId)
+
            done()
        });
     })
@@ -550,7 +550,7 @@ describe("Utils", function(){
        .then(function(results){
          
         after(function() {
-           db.run("DELETE FROM HanabiGames WHERE id = "+results.tableIds.gameId)
+           db.run("DELETE FROM HanabiGames WHERE id ="+results.tableIds.gameId)
            db.run("DELETE FROM Players WHERE gameId ="+results.tableIds.gameId);
                }); 
          
