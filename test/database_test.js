@@ -57,7 +57,7 @@ describe("Database", function(){
                    }
                   assert.notOk(err)
                   assert.ok(row)
-                  assert.equal(row.id, results.tableIds.playingDeckId)                 
+                 // assert.equal(row.id, results.tableIds.playingDeckId)                 
                 }); 
          db.get("SELECT * FROM DiscardedCards WHERE gameId = $id",  
                  {$id: results.tableIds.gameId},
@@ -118,13 +118,13 @@ describe("Database", function(){
                 });      
          
             db.run("DELETE FROM HanabiGames WHERE id = "+results.tableIds.gameId)
-            db.run("DELETE FROM OriginalDeck WHERE id = "+results.tableIds.originalDeckId)
-            db.run("DELETE FROM OriginalDeck WHERE id = "+results.tableIds.playingDeckId)
-            db.run("DELETE FROM DiscardedCards WHERE id = "+results.tableIds.discardedCardsId)
-            db.run("DELETE FROM PlayedCards WHERE id = "+results.tableIds.playedCardsId)
-            db.run("DELETE FROM Messages WHERE id = "+results.tableIds.messagesId)
-            db.run("DELETE FROM Players WHERE id = "+results.tableIds.playersId[0])
-            db.run("DELETE FROM Players WHERE id = "+results.tableIds.playersId[1])
+            db.run("DELETE FROM OriginalDeck WHERE gameId = "+results.tableIds.gameId)
+            db.run("DELETE FROM PlayingDeck WHERE gameId = "+results.tableIds.gameId)
+            db.run("DELETE FROM DiscardedCards WHERE gameId = "+results.tableIds.gameId)
+            db.run("DELETE FROM PlayedCards WHERE gameId = "+results.tableIds.gameId)
+            db.run("DELETE FROM Messages WHERE gameId = "+results.tableIds.gameId)
+            db.run("DELETE FROM Players WHERE gameId = "+results.tableIds.gameId)
+            done();
        });
       
     });
