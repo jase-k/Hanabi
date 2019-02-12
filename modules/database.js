@@ -235,9 +235,23 @@ Database.updateGame = (object) =>{
   if(object.players.length > 4){ updatePlayers(object.players[4])}
 }
 
+/* 
+convertCardArrayForUpdate() converts a Card Object to a string to be
+placed into the Database. (It also lengthens the string to include null values
+for the places there may have been cards in the database. This assures that the whole row
+will be overwritten)
+
+array = Array to Update
+length = Number of card slots in the Database Row 
+
+Input: Card Object = {color: STRING, hints: ARRAY, number: INTEGER}
+Output: String = "color|number|hint[0] hint[1] hint[2],"
+
+*/
+
 function convertCardArrayForUpdate(array, length){
   var string = ''
-  for(var i = 0; i < length; i++){  
+  for(var i = 0; i < length; i++){  //Converts Each Array Object to String format to be inserted into the Table 
     if(array[i]){
       string += 'card'+(i+1)+'="'+array[i].color+'|'+array[i].number
         for(var j = 0; j < array[i].hints.length; j++){
@@ -247,7 +261,7 @@ function convertCardArrayForUpdate(array, length){
         string += '"'
           }else{ string +='",'}
         
-    }else if(i < length-1){
+    }else if(i < length-1){ //Changes the Last spots to null to clear the table of those cards
         string += 'card'+(i+1)+'=null,'
     
     }else{ 
@@ -256,6 +270,7 @@ function convertCardArrayForUpdate(array, length){
  };
   return string
 }; 
+
 
 //This function updates Tables: PlayingDeck, DiscardedCards, & PlayedCards
 function updateDeck(array, id, tableName){
