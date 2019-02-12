@@ -409,8 +409,8 @@ describe("Utils", function(){
        });
     });
   });
-  describe(".updatePlayingDeckRow", function(){
-   it("Updates PlayingDeck in the PlayingDeck Table Row", function(done){
+  describe(".updateDeck", function(){
+    it("Updates PlayingDeck in the PlayingDeck Table Row", function(done){
        var gameObject = Defaults.gameSettings2Player()
        var expectedCard1 = "red|1" 
        var expectedCard39 = "blue|4"
@@ -428,21 +428,80 @@ describe("Utils", function(){
            db.run("DELETE FROM PlayingDeck WHERE gameId ="+results.tableIds.gameId);
                }); 
          
-         Utils.updateDeck(results.playingDeck, id, "PlayingDeck") // Updates Table with New Hints and Lives
+         Utils.updateDeck(results.playingDeck, id, "PlayingDeck") // Updates Table with New Playing Deck Array
          
          db.get("SELECT * FROM PlayingDeck WHERE gameId = $id",  // Retrieves Row
                     {$id: results.tableIds.gameId},
                     function(err, row){
                      if(err){ console.log(err)};
-                     console.log("Row", row)
                 assert.notOk(err, "There was an Error Getting the Table Row")
                 assert.ok(row, "The Table Row was undefined!")
                 assert.equal(row.card1, expectedCard1, "Card 1 is incorrect!") 
                 assert.equal(row.card39, expectedCard39, "card 39 is incorrect!")
-                
               });
            done()
        });
     });
-  });  
+    it("Updates PlayedCards in the PlayedCards Table Row", function(done){
+       var gameObject = Defaults.gameSettings2Player()
+       var expectedCard1 = "red|1" 
+       
+       Utils.insertHanabiGameRow(gameObject)// Adds Row to HanabiGame Table
+         .catch(function(e){ console.log(e.message)})
+       .then(object => Utils.insertPlayedCardsRow(object))
+         .catch(function(e){ console.log(e.message)})
+       .then(function(results){
+           results.playedCards.push({color: 'red', hints: [], number: 1}) //add Card Object to Array
+            var id = results.tableIds.gameId
+          
+        after(function() {
+           db.run("DELETE FROM HanabiGames WHERE id = "+results.tableIds.gameId)
+           db.run("DELETE FROM PlayedCards WHERE gameId ="+results.tableIds.gameId);
+               }); 
+         
+         Utils.updateDeck(results.playedCards, id, "PlayedCards") // Updates Table with New Played Cards Array
+         
+         db.get("SELECT * FROM PlayedCards WHERE gameId = $id",  // Retrieves Row
+                    {$id: results.tableIds.gameId},
+                    function(err, row){
+                     if(err){ console.log(err)};
+                assert.notOk(err, "There was an Error Getting the Table Row")
+                assert.ok(row, "The Table Row was undefined!")
+                assert.equal(row.card1, expectedCard1, "Card 1 is incorrect!") 
+              });
+           done()
+       });
+    });
+    it("Updates DiscardedCards in the DiscardedCards Table Row", function(done){
+       var gameObject = Defaults.gameSettings2Player()
+       var expectedCard1 = "red|1" 
+       
+       Utils.insertHanabiGameRow(gameObject)// Adds Row to HanabiGame Table
+         .catch(function(e){ console.log(e.message)})
+       .then(object => Utils.insertDiscardedCardsRow(object))
+         .catch(function(e){ console.log(e.message)})
+       .then(function(results){
+           results.discardedCards.push({color: 'red', hints: [], number: 1}) //add Card Object to Array
+            var id = results.tableIds.gameId
+          
+        after(function() {
+           db.run("DELETE FROM HanabiGames WHERE id = "+results.tableIds.gameId)
+           db.run("DELETE FROM DiscardedCards WHERE gameId ="+results.tableIds.gameId);
+               }); 
+         
+         Utils.updateDeck(results.discardedCards, id, "DiscardedCards") // Updates Table with New Played Cards Array
+         
+         db.get("SELECT * FROM DiscardedCards WHERE gameId = $id",  // Retrieves Row
+                    {$id: results.tableIds.gameId},
+                    function(err, row){
+                     if(err){ console.log(err)};
+                assert.notOk(err, "There was an Error Getting the Table Row")
+                assert.ok(row, "The Table Row was undefined!")
+                assert.equal(row.card1, expectedCard1, "Card 1 is incorrect!") 
+              });
+           done()
+       });
+    })
+  });
+  describe(".", function(){});
 });
