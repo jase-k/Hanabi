@@ -541,7 +541,7 @@ describe("Utils", function(){
        });
     });
   });
-  describe.skip(".updatesPlayerRow", function(){
+  describe(".updatesPlayerRow", function(){
     it("Updates One Player in Players Tables", function(done){
       var gameObject = Defaults.gameSettings2Player()
       var expectedCard1 = "orange|5"
