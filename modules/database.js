@@ -26,8 +26,8 @@ var db = new sqlite3.Database(dbFile);
 var i;
 const Helper = {
   //table: STRING columns: ARRAY values: ARRAY
-  createInsertSQLString(table, columns, values){ 
-    return 'INSERT INTO HanabiGames(numberOfPlayers, dateCreated, hintsLeft, livesLeft) VALUES('+object.numberOfPlayers+',"'+object.dateCreated+'",'+ values[3].value+','+values[3].value+')'
+  createInsertSQLString(table, values){ 
+    return 'INSERT INTO HanabiGames('+values[0].column+','+values[1].column+','+values[2].column+','+values[3].column+') VALUES('+values[0].value+',"'+values[1].value+'",'+values[2].value+','+values[3].value+')'
   }
 }
 

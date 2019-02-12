@@ -588,15 +588,17 @@ describe("Helper", function(){
     it("returns a string including the table name", function(){
       var table = "HanabiGame"
       var values = [
+        {column: "numberOfPlayers", value: 3},
         {column: "dateCreated", value: new Date()},
-        {column: "numberOfPlayers", value: new Date()},
         {column: "livesLeft", value: 3},
         {column: "hintsLeft", value: 8},
       ]
+      var expectedResults = 'INSERT INTO HanabiGames(numberOfPlayers,dateCreated,livesLeft,hintsLeft) VALUES(3,"'+new Date()+'",3,8)'
+
       
-      Helper.createInsertSQLString(table, values);
+      var string = Helper.createInsertSQLString(table, values);
       
-      
+      assert.equal(string, expectedResults)
     })
   });
 });
