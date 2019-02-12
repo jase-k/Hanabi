@@ -135,25 +135,28 @@ describe("Database", function(){
 
 
 describe("Utils", function(){
-  describe.skip(".insertHanabiGameRow", function(){
+  describe(".insertHanabiGameRow", function(){
    it("Should insert a new row in HanabiGames Table", function(done){   
       var gameObject = Defaults.gameSettings2Player()
        Utils.insertHanabiGameRow(gameObject) // Adds Row to HanabiGame Table
         .then(function(results){
           db.get("SELECT * FROM HanabiGames WHERE id = $id", 
-                 {$id:results.tableIds.gameId},
-                 function(err, row){
-                  if(err){
+            {$id:results.tableIds.gameId},
+            function(err, row){
+   
+             afterEach(function(){
+             //Deletes the Added Row
+              db.run("DELETE FROM HanabiGames WHERE id = "+results.tableIds.gameId)
+             })
+            
+              if(err){
                    console.log(err)
                    console.log("message", err.message)
                      done();
                    }
-                  assert.notOk(err)
-                  done();
-                 
-            //Deletes the Added Row
-            db.run("DELETE FROM HanabiGames WHERE id = "+results.tableIds.gameId)
-                });          
+              assert.notOk(err)   
+              done();
+                 });          
          });
     }); 
    it("Should insert Default Settings in HanabiGames", function(done){
@@ -164,6 +167,7 @@ describe("Utils", function(){
           db.get("SELECT * FROM HanabiGames WHERE id = $id", 
                  {$id:results.tableIds.gameId},
                  function(err, row){
+          
                   if(err){
                    console.log(err)
                    console.log("message", err.message)
