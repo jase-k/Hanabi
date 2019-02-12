@@ -188,6 +188,18 @@ const Utils = {
         }
       })
     },
+  updateMessages(object){
+    var sql = `UPDATE Messages
+               SET Messages = "${object.messages.join()}"
+               WHERE gameId = ${object.tableIds.gameId}`
+    
+    db.run(sql, function(err){
+      if(err){
+        console.log("Error at Updating Messages")
+        throw err
+      }
+    });
+  }
 };
 
 const Database = {
@@ -303,22 +315,6 @@ function convertCardArrayForUpdate(array, length){
   return string
 }; 
 
-
-//This function updates Tables: PlayingDeck, DiscardedCards, & PlayedCards
-function updateDeck(array, id, tableName){
-  var length = 50
-  if(tableName !== 'PlayingDeck'){length = 25}
-  var setString =  convertCardArrayForUpdate(array, length)  
-  var sql = `UPDATE ${tableName}
-            SET ${setString}
-            WHERE gameId = ${id}`
-  db.run(sql, function (err){
-    if(err){
-    console.log("Error at updateDeck "+tableName, sql)
-      throw err
-      }
-    })
-  }
 
 //This function takes an individual playerObject as an argument and updates the row. 
 function updatePlayers(playerObject){

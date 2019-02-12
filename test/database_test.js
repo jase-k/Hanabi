@@ -503,5 +503,37 @@ describe("Utils", function(){
        });
     })
   });
-  describe(".", function(){});
+  describe(".updateMessages", function(){
+    it("Updates Messages Tables by joining gameObject.messages into a string", function(done){
+      var gameObject = Defaults.gameSettings2Player()
+       var expectedString = "Steven played a blue 4!,Whoops! Jase played a white 3 and it didn't play." 
+       
+       Utils.insertHanabiGameRow(gameObject)// Adds Row to HanabiGame Table
+         .catch(function(e){ console.log(e.message)})
+       .then(object => Utils.insertMessagesRow(object))
+         .catch(function(e){ console.log(e.message)})
+       .then(function(results){
+           results.messages.push(["Steven played a blue 4!", "Whoops! Jase played a white 3 and it didn't play."]) //add Card Object to Array
+            var id = results.tableIds.gameId
+          
+        after(function() {
+           db.run("DELETE FROM HanabiGames WHERE id = "+results.tableIds.gameId)
+           db.run("DELETE FROM Messages WHERE gameId ="+results.tableIds.gameId);
+               }); 
+         
+         Utils.updateMessages(results)// Updates Table with New Message String
+         
+         db.get("SELECT * FROM Messages WHERE gameId = $id",  // Retrieves Row
+                    {$id: results.tableIds.gameId},
+                    function(err, row){
+                     if(err){ console.log(err)};
+                 console.log("row", row)
+                assert.notOk(err, "There was an Error Getting the Table Row")
+                assert.ok(row, "The Table Row was undefined!")
+                assert.equal(row.Messages, expectedString, "Message String is incorrect!") 
+              });
+           done()
+       });
+    });
+  });
 });
