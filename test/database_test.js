@@ -23,12 +23,22 @@ const Defaults = require('./defaults.js')
 
 
 describe("Database", function(){
-  describe.skip(".insert", function(){
+  describe(".insert", function(){
     it("should insert new rows in All Tables: 5 players", function(done){
        var gameObject = Defaults.gameSettings5Player()
         
        Database.insert(gameObject)
       .then(function(results){
+         after(function(){
+            db.run("DELETE FROM HanabiGames WHERE id = "+results.tableIds.gameId)
+            db.run("DELETE FROM OriginalDeck WHERE gameId = "+results.tableIds.gameId)
+            db.run("DELETE FROM PlayingDeck WHERE gameId = "+results.tableIds.gameId)
+            db.run("DELETE FROM DiscardedCards WHERE gameId = "+results.tableIds.gameId)
+            db.run("DELETE FROM PlayedCards WHERE gameId = "+results.tableIds.gameId)
+            db.run("DELETE FROM Messages WHERE gameId = "+results.tableIds.gameId)
+            db.run("DELETE FROM Players WHERE gameId = "+results.tableIds.gameId)
+         });
+         
          db.get("SELECT * FROM HanabiGames WHERE id = $id", 
                  {$id:results.tableIds.gameId},
                  function(err, row){
@@ -116,14 +126,6 @@ describe("Database", function(){
                   assert.ok(row)
                   assert.equal(row.id, results.tableIds.playersId[1])
                 });      
-         
-            db.run("DELETE FROM HanabiGames WHERE id = "+results.tableIds.gameId)
-            db.run("DELETE FROM OriginalDeck WHERE gameId = "+results.tableIds.gameId)
-            db.run("DELETE FROM PlayingDeck WHERE gameId = "+results.tableIds.gameId)
-            db.run("DELETE FROM DiscardedCards WHERE gameId = "+results.tableIds.gameId)
-            db.run("DELETE FROM PlayedCards WHERE gameId = "+results.tableIds.gameId)
-            db.run("DELETE FROM Messages WHERE gameId = "+results.tableIds.gameId)
-            db.run("DELETE FROM Players WHERE gameId = "+results.tableIds.gameId)
             done();
        });
       
@@ -558,7 +560,7 @@ describe("Utils", function(){
     });
   });
   describe(".updatesPlayerRow", function(){
-    it("Updates One Player in Players Tables", function(done){
+    it("Updates One Player in Players Tables (2-player)", function(done){
       var gameObject = Defaults.gameSettings2Player()
       var expectedCard1 = "orange|5"
       var expectedActive = 1;
@@ -581,6 +583,39 @@ describe("Utils", function(){
          
          db.get("SELECT * FROM Players WHERE id = $id",  // Retrieves Row
                     {$id: results.tableIds.playersId[0]},
+                    function(err, row){
+                     if(err){ console.log("Error at Utils.updatesPlayerRow db.get('SELECT...",err)};
+                assert.notOk(err, "There was an Error Getting the Table Row")
+                assert.ok(row, "The Table Row was undefined!")
+                assert.equal(row.card1, expectedCard1, "card 1 String is incorrect!") 
+                assert.equal(row.active, expectedActive, "Player Active is incorrect!")
+                 done()
+              });
+       });
+    });
+    it("Updates One Player in Players Tables (5-player)", function(done){
+      var gameObject = Defaults.gameSettings5Player()
+      var expectedCard1 = "orange|5"
+      var expectedActive = 1;
+       
+       Utils.insertHanabiGameRow(gameObject)// Adds Row to HanabiGame Table
+         .catch(function(e){ console.log(e.message)})
+       .then(object => Utils.insertPlayersRows(object))
+         .catch(function(e){ console.log(e.message)})
+       .then(function(results){
+         
+        after(function() {
+           db.run("DELETE FROM HanabiGames WHERE id ="+results.tableIds.gameId)
+           db.run("DELETE FROM Players WHERE gameId ="+results.tableIds.gameId);
+               }); 
+         
+           results.players[4].hand.splice(0, 1, {color: "orange", hints: [], number: 5}) //add Switch out Card Object
+           results.players[4].active = 1 
+         
+         Utils.updatePlayerRow(results.players[4])// Updates Table with New Player Data
+         
+         db.get("SELECT * FROM Players WHERE id = $id",  // Retrieves Row
+                    {$id: results.tableIds.playersId[4]},
                     function(err, row){
                      if(err){ console.log("Error at Utils.updatesPlayerRow db.get('SELECT...",err)};
                 assert.notOk(err, "There was an Error Getting the Table Row")

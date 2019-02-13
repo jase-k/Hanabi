@@ -67,71 +67,77 @@ const Utils = {
     return new Promise((resolve, reject) => {
       object.tableIds = {}
       db.run('INSERT INTO HanabiGames(numberOfPlayers, dateCreated, hintsLeft, livesLeft) VALUES('+object.numberOfPlayers+',"'+object.dateCreated+'",'+ object.hintsLeft+','+object.livesLeft+')',
-           {}, 
-          function(err){
-            if(err){ console.log(err)
-             reject(console.log('Operation was Rejected at Hanabi Table'))
+         {}, 
+         function(err){
+           if(err){ 
+             reject(console.log('Operation was Rejected at Hanabi Table', err))
              };
-          object.tableIds.gameId= this.lastID
-          console.log("current game id", object.tableIds.gameId);
-          resolve(object)
+        
+           object.tableIds.gameId= this.lastID
+          
+           resolve(object)
         })
     });
   },
   insertOriginalDeckRow(object){
  return new Promise((resolve, reject) =>{
   db.run('INSERT INTO OriginalDeck (gameId,'+Helper.createCardString(50)+') VALUES('+object.tableIds.gameId+','+Helper.convertCardArray(object.originalDeck)+') ', {}, 
-             function(err){
-                if(err){throw err}
-              object.tableIds.originalDeckId = this.lastID
-            console.log("originalDeck id:", object.tableIds.originalDeckId);
-      resolve(object)
+      function(err){
+        if(err){throw err}
+        
+        object.tableIds.originalDeckId = this.lastID
+        
+        resolve(object)
     })
   });
 },
   insertPlayingDeckRow(object){
   return new Promise((resolve, reject) =>{
     db.run('INSERT INTO PlayingDeck (gameId,'+Helper.createCardString(object.playingDeck.length)+') VALUES('+object.tableIds.gameId+','+Helper.convertCardArray(object.playingDeck)+') ', {}, 
-             function(err){
-                if(err){throw err}
-              object.tableIds.playingDeckId = this.lastID
-            console.log("playingDeck id:", object.tableIds.playingDeckId);
-    resolve(object)
+        function(err){
+          if(err){throw err}
+          
+          object.tableIds.playingDeckId = this.lastID
+
+          resolve(object)
     });
   })
 },
   insertDiscardedCardsRow(object){
     return new Promise ((resolve, reject) =>{
       db.run('INSERT INTO DiscardedCards (gameId) VALUES('+object.tableIds.gameId+') ', {}, 
-             function(err){
-                if(err){throw err}
-              object.tableIds.discardedCardsId = this.lastID
-            console.log("DiscardedCards id:", object.tableIds.discardedCardsId);
-      resolve(object)
+         function(err){
+           if(err){throw err}
+           
+           object.tableIds.discardedCardsId = this.lastID
+      
+           resolve(object)
       });
     });
   },
   insertPlayedCardsRow(object){
     return new Promise((resolve, reject) => {
       db.run('INSERT INTO PlayedCards (gameId) VALUES('+object.tableIds.gameId+') ', {}, 
-             function(err){
-                if(err){throw err}
-              object.tableIds.playedCardsId = this.lastID
-            console.log("PlayedCards id:", object.tableIds.playedCardsId); 
-        resolve(object)
+         function(err){
+           if(err){throw err}
+           
+           object.tableIds.playedCardsId = this.lastID
+        
+           resolve(object)
       });  
     });
   },
   insertMessagesRow(object){
     return new Promise((resolve, reject) =>{
     db.run('INSERT INTO Messages (gameId) VALUES('+object.tableIds.gameId+') ', {}, 
-             function(err){
-                if(err){
-                  console.log("Error at insertMessagesRow")
-                  throw err}
-              object.tableIds.messagesId = this.lastID
-            console.log("Messages Table id:", object.tableIds.messagesId);
-      resolve(object)
+       function(err){
+         if(err){
+           console.log("Error at insertMessagesRow")
+           throw err
+         }
+         object.tableIds.messagesId = this.lastID
+         
+         resolve(object)
       });
     })
   },
@@ -141,14 +147,14 @@ const Utils = {
       var i = 1
       var number = object.players[i].hand.length
     db.run('INSERT INTO Players (gameId, name, active,  '+Helper.createCardString(number)+') VALUES('+object.tableIds.gameId+',"'+object.players[0].name+'", 1 ,'+Helper.convertCardArray(object.players[i-1].hand)+') ', {}, 
-             function(err){
-                if(err){
-                  console.log("Error at insertMessagesRow Player 1")
-                  throw err}
-      object.tableIds.playersId.push(this.lastID)
-      object.players[i-1].id = this.lastID
-      console.log("Players Table id:", this.lastID);
-
+        function(err){
+          if(err){
+            console.log("Error at insertMessagesRow Player 1")
+            throw err
+          }
+          object.tableIds.playersId.push(this.lastID)
+          object.players[i-1].id = this.lastID
+         
       if(i == object.players.length){
         resolve(object)
       }else{ i++
