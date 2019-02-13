@@ -670,7 +670,17 @@ describe("Helper", function(){
         db.run("DELETE FROM "+table+" WHERE id = "+id);
         done();
       });
+    });
+  });
+  describe("createSQL", function(){
+    it("returns a valid SQL with correct columns for Insert HanabiGame", function(){
+      var table = "HanabiGame"
+      var expectedColumns = ['numberOfPlayers','hintsLeft']
+      var object = Defaults.gameSettings2Player()
       
+      var string = Helper.createSQL(table, object);
+      
+      assert.include(string, table)
     });
   });
 });

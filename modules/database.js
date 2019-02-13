@@ -25,11 +25,14 @@ var db = new sqlite3.Database(dbFile);
 //Declare variables
 var i;
 const Helper = {
-  //table: STRING columns: ARRAY values: ARRAY
+  //table: STRING values: ARRAY of OBJECTS
   createInsertSQLString(table, values){ 
     var SQL = `INSERT INTO ${table}(${values.map(value => value.column).join()}) VALUES("${values.map(value => value.value).join('","')}")`
     
     return SQL 
+  },
+  //table: STRING object: GAME OBJECT
+  createSQL(table, object){
   }
 }
 
