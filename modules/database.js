@@ -82,7 +82,7 @@ const Utils = {
   insertHanabiGameRow(object) { //Insert Row and Return Object with Game ID
     return new Promise((resolve, reject) => {
       object.tableIds = {}
-      db.run('INSERT INTO HanabiGames(numberOfPlayers, dateCreated, hintsLeft, livesLeft) VALUES('+object.numberOfPlayers+',"'+object.dateCreated+'",'+ object.hintsLeft+','+object.livesLeft+')',
+      db.run('INSERT INTO HanabiGames(numberOfPlayers, dateCreated, hintsLeft, livesLeft, score) VALUES('+object.numberOfPlayers+',"'+object.dateCreated+'",'+ object.hintsLeft+','+object.livesLeft+','+object.score+')',
          {}, 
          function(err){
            if(err){ 
@@ -330,8 +330,22 @@ const Utils = {
           score: row.score
         }
         resolve(object)
+      });
     });
-  });
+  },
+  getPlayingDeck(object){
+    return new Promise ((resolve, reject) => {
+      object.playingDeck = []
+      db.get('SELECT * FROM PlayingDeck WHERE gameId ='+object.id, 
+        function(err, row){
+          if(err){throw err}
+    
+ for(var i = 1; i <= 50; i++){
+     object.playingDeck.push(cardStringToObject(row['card'+i]))
+    }
+        resolve(object)
+    });//ENDS db All
+  })    
 }
 };
 
@@ -397,20 +411,7 @@ return new Promise ((resolve, reject) => {
     });//ENDS db All
   });
 }
-function getPlayingDeck(object){
-return new Promise ((resolve, reject) => {
-  object.playingDeck = []
-  db.get('SELECT * FROM PlayingDeck WHERE gameId ='+object.id, 
-    function(err, row){
-      if(err){throw err}
-    
- for(var i = 1; i <= 50; i++){
-     object.playingDeck.push(cardStringToObject(row['card'+i]))
-    }
-        resolve(object)
-    });//ENDS db All
-  })    
-}
+
 function getPlayedCards(object){
 return new Promise ((resolve, reject) => {
   object.playedCards = []

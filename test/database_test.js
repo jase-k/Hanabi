@@ -772,12 +772,39 @@ describe("Utils", function(){
               assert.equal(results.livesLeft,gameObject.livesLeft)
               assert.equal(results.numberOfPlayers, gameObject.numberOfPlayers)
               assert.equal(results.score, gameObject.score, "Score is Not Equal")
-           if(err){
-             done(err)
-           }   
-          done();
+             
+             done();
+           
             });
          })
+    });
+  });
+  describe(".getPlayingDeck", function(){
+    it("should retrieve the correct Playing Deck Row with 50 values", function(done){
+      var gameObject = Defaults.gameSettings2Player()
+       var expectedCard1 = "red|3|"
+       var expectedCard40 = "blue|4|"
+       var expectedLength = 50
+       
+        // Adds Row to PlayingDeck Table Row Id saved to: results.tableIds.playingDeckId 
+        // HanabiGame Row is Created as well to retrieve a GameId to Insert into the Playing Deck gameId
+        Utils.insertHanabiGameRow(gameObject)
+       .then(game => Utils.insertPlayingDeckRow(game))
+       .then(function(results){
+       
+        after(function(){ //Deletes the Added Rows
+           db.run("DELETE FROM HanabiGames WHERE id = "+results.tableIds.gameId)
+           db.run("DELETE FROM PlayingDeck WHERE gameId = "+results.tableIds.gameId)
+         });
+        
+        Utils.getPlayingDeck(results.tableIds.gameId)
+         .then(function(results){
+            
+            assert.ok(results)
+            done()
+          });
+        
+        });
     });
   });
 });
