@@ -9,7 +9,7 @@ It has three public functions:
 .get(GAMEID
 .update(GAME Object)
 
-The Object Utils contains Private Helper Functions for 
+The Object Utils and Helper contains Private Helper Functions for 
 {Database}.
 
 All Calls to the sqlite.db DATABASE are Promises
@@ -315,7 +315,24 @@ const Utils = {
        resolve(gameObject)
      }) 
    })
-  }
+  },
+  getHanabiGameRow(id){
+    var object = {};
+    return new Promise ((resolve, reject) => {
+      db.get('SELECT * FROM HanabiGames WHERE id = $id', {$id: id}, function (err, row){
+        if(err){console.log("Error @ Database.getGameObject", err)}
+        object = {
+          dateCreated: row.dateCreated,
+          hintsLeft: row.hintsLeft,
+          id: row.id,
+          livesLeft: row.livesLeft,
+          numberOfPlayers: row.numberOfPlayers,
+          score: row.score
+        }
+        resolve(object)
+    });
+  });
+}
 };
 
 const Database = {
@@ -360,53 +377,98 @@ module.exports = {Database, Utils, Helper}
 
  
 
-//+++++++++++++++++++++++++++++
-// Game Update
-//+++++++++++++++++++++++++++++
-/*
-Database.updateGame = (object) =>{
- updateDeck(object.playingDeck, object.id, 'PlayingDeck') 
- updateDeck(object.playedCards, object.id, 'PlayedCards')
- updateDeck(object.discardedCards, object.id, 'DiscardedCards')
- updateHanabiGame(object)
- updateMessages(object)
- updatePlayers(object.players[0])
- updatePlayers(object.players[1])
-  if(object.players.length > 2){ updatePlayers(object.players[2])}
-  if(object.players.length > 3){ updatePlayers(object.players[3])}
-  if(object.players.length > 4){ updatePlayers(object.players[4])}
+function getPlayers(object){
+return new Promise ((resolve, reject) => {
+  object.players = []
+  var playerObject = { }
+  db.all('SELECT * FROM Players WHERE gameId ='+object.id, 
+    function(err, rows){
+      if(err){throw err}
+      rows.forEach(function(row){
+        playerObject = {
+          id: row.id, 
+          name: row.name,
+          active: row.active
+        }
+       playerObject.hand = [cardStringToObject(row.card1), cardStringToObject(row.card2), cardStringToObject(row.card3), cardStringToObject(row.card4), cardStringToObject(row.card5)]
+       object.players.push(playerObject)                 
+      })
+        resolve(object)    
+    });//ENDS db All
+  });
 }
-*/
-/* 
-convertCardArrayForUpdate() converts a Card Object to a string to be
-placed into the Database. (It also lengthens the string to include null values
-for the places there may have been cards in the database. This assures that the whole row
-will be overwritten)
-
-array = Array to Update
-length = Number of card slots in the Database Row 
-
-Input: Card Object = {color: STRING, hints: ARRAY, number: INTEGER}
-Output: String = "color|number|hint[0] hint[1] hint[2],"
-
-*/
-
- 
-
-
-//This function takes an individual playerObject as an argument and updates the row. 
-function updatePlayers(playerObject){
-  var setString = Helper.convertCardArrayForUpdate(playerObject.hand, playerObject.hand.length)
-  var sql = `UPDATE Players
-            SET  ${setString}, active = ${playerObject.active}
-            WHERE id = ${playerObject.id}`
-  console.log(sql)
-  db.run(sql, function(err){
-    if(err){
-      console.log("Error at Player "+playerObject.id+" Updating Table")
+function getPlayingDeck(object){
+return new Promise ((resolve, reject) => {
+  object.playingDeck = []
+  db.get('SELECT * FROM PlayingDeck WHERE gameId ='+object.id, 
+    function(err, row){
+      if(err){throw err}
+    
+ for(var i = 1; i <= 50; i++){
+     object.playingDeck.push(cardStringToObject(row['card'+i]))
     }
-  }
-    )
+        resolve(object)
+    });//ENDS db All
+  })    
 }
+function getPlayedCards(object){
+return new Promise ((resolve, reject) => {
+  object.playedCards = []
+  db.get('SELECT * FROM PlayedCards WHERE gameId ='+object.id, 
+    function(err, row){
+      if(err){throw err}
+    
+ for(var i = 1; i <= 25; i++){
+     object.playedCards.push(cardStringToObject(row['card'+i]))
+    }
+        resolve(object)
+    });//ENDS db All
+  })
+}
+function getDiscardedCards(object){
+return new Promise ((resolve, reject) => {
+  object.discardedCards = [];
+  db.get('SELECT * FROM DiscardedCards WHERE gameId ='+object.id, 
+    function(err, row){
+      if(err){throw err}
+    
+ for(var i = 1; i <= 25; i++){
+     object.discardedCards.push(cardStringToObject(row['card'+i]))
+    }
+        resolve(object)
+    });//ENDS db All
+  })
+}
+function getMessages(object){
+  return new Promise((resolve, reject) => {
+  object.messages = [];
+  db.get('SELECT * FROM Messages WHERE gameId = '+object.id,
+         function(err, row){
+        if(err){
+          console.log("Error at Get Messages", err)
+          throw err
+        }
+      if(row.Messages){
+         object.messages = row.Messages.split(",")
+        console.log("++++Messages++++", row.Messages.split(","))
+      } 
+        resolve(object)
+    });
+  });
+}
+
+Database.getCurrentGame = (gameId) => {
+return new Promise((resolve, reject) => { 
+  var gameObject = {
+    id: gameId
+  }
+  getGameObject(gameObject).then(object => getPlayingDeck(object))
+  .then(object => getPlayedCards(object))
+  .then(object => getDiscardedCards(object))
+  .then(object => getPlayers(object))
+  .then(object => getMessages(object))
+  .then(object => resolve(object))
+  });
+};
 
 

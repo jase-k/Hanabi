@@ -358,7 +358,7 @@ db.each('SELECT * from OriginalDeck', function(err, row) {
 
 
 //============================================
-// Return Game Data from GameId and Name
+// Return Game Data from GameId 
 //============================================
 function getGameObject(object){
 return new Promise ((resolve, reject) => {

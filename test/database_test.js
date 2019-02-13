@@ -755,7 +755,33 @@ describe("Utils", function(){
        });
     });
   });
-  describe(".getHanabiGame", function(){});
+  describe(".getHanabiGame", function(){
+    it("should retrieve row with correct Key: Value Pairs", function(done){
+      var gameObject = Defaults.gameSettings2Player()
+       
+      Utils.insertHanabiGameRow(gameObject) // Adds Row to HanabiGame Table
+        .then(function(results){
+          after(function(){
+             db.run("DELETE FROM HanabiGames WHERE id = "+results.tableIds.gameId) //Deletes the Added Row
+             })
+        Utils.getHanabiGameRow(results.tableIds.gameId)  
+        .then(function(results){
+          db.get("SELECT * FROM HanabiGames WHERE id = $id", 
+            {$id:results.tableIds.gameId},
+            function(err, row){
+   
+            
+              if(err){
+                   console.log(err)
+                   console.log("message", err.message)
+                     done();
+                   }
+              assert.notOk(err)   
+              done();
+                 });          
+         })
+    });
+  });
 });
 
 describe("Helper", function(){
