@@ -348,9 +348,11 @@ const Database = {
          });  
       }); 
   },
-  //Gets Data from All Table and Forms a Valid gameObject (see test/defaults.js - Defaults)
+  //Gets Data from All Table and Returns a Valid gameObject (see test/defaults.js - Defaults)
   get(id){
-  
+    return new Promise((resolve, reject) => {
+     resolve({numberOfPlayer: 5})
+    });
   }
 };
 

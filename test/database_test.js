@@ -131,7 +131,7 @@ describe("Database", function(){
       
     });
   });
-  describe(".updateGame", function(){
+  describe(".update", function(){
     it("Updates All Tables for an Updated Game Object", function(done){
       var gameObject = Defaults.gameSettings5Player()
       var expectedHints = 1
@@ -226,9 +226,10 @@ describe("Database", function(){
       });
     });
   });
-  describe(".getGame", function(){
-    it("Should create a game Object with correct Keys", function(){
-      const expectedObjectKeys = Object.keys(Defaults.gameSettings5Player())
+  describe.skip(".get", function(){
+    it("Should create a game Object with correct Keys", function(done){
+      const expectedObjectKeys = ["numberOfPlayers", "hintsLeft", "livesLeft", "score", "dateCreated", "playingDeck",
+                                  "playedCards", "discardedCards", "players"]
         var gameObject = Defaults.gameSettings5Player();
       
       Database.insert(gameObject)
@@ -242,12 +243,17 @@ describe("Database", function(){
             db.run("DELETE FROM Messages WHERE gameId = "+results.tableIds.gameId)
             db.run("DELETE FROM Players WHERE gameId = "+results.tableIds.gameId)
          });
-       Database.get(results.id)
+      
+        Database.get(results.id)
        .then(function(results){
-         newGame
+         
+         var newGameObject = results
+         
+         assert.containsAllKeys(newGameObject, expectedObjectKeys)
+        
+         done()
        }); 
 
-      assert.containsAllKeys(newGameObject, expectedObjectKeys)
       });
       
     });
@@ -749,6 +755,7 @@ describe("Utils", function(){
        });
     });
   });
+  describe(".getHanabiGame", function(){});
 });
 
 describe("Helper", function(){
