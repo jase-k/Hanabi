@@ -350,7 +350,24 @@ const Utils = {
         resolve(object)
       });
     })    
-  }
+  },
+  getDiscardedCards(object){
+    return new Promise ((resolve, reject) => {
+      var array = []
+      object.discardedCards = [];
+      db.get('SELECT * FROM DiscardedCards WHERE gameId ='+object.id, 
+        function(err, row){
+          if(err){throw err}
+    
+          for(var i = 1; i <= 25; i++){
+           array.push(Helper.cardStringToObject(row['card'+i]))
+          }
+        object.discardedCards = array.filter(card => card)
+        
+        resolve(object)
+    });
+  })
+}
 };
 
 const Database = {
@@ -430,20 +447,7 @@ return new Promise ((resolve, reject) => {
     });//ENDS db All
   })
 }
-function getDiscardedCards(object){
-return new Promise ((resolve, reject) => {
-  object.discardedCards = [];
-  db.get('SELECT * FROM DiscardedCards WHERE gameId ='+object.id, 
-    function(err, row){
-      if(err){throw err}
-    
- for(var i = 1; i <= 25; i++){
-     object.discardedCards.push(cardStringToObject(row['card'+i]))
-    }
-        resolve(object)
-    });//ENDS db All
-  })
-}
+
 function getMessages(object){
   return new Promise((resolve, reject) => {
   object.messages = [];

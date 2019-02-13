@@ -534,8 +534,8 @@ describe("Utils", function(){
            results.livesLeft = 1
         
          Utils.updateHanabiGameRow(results) // Updates Table with New Hints and Lives
-         
-         db.get("SELECT * FROM HanabiGames WHERE id = $id",  // Retrieves Row
+         .then(function(results){
+           db.get("SELECT * FROM HanabiGames WHERE id = $id",  // Retrieves Row
                     {$id: results.tableIds.gameId},
                     function(err, row){
                 assert.notOk(err)
@@ -543,8 +543,8 @@ describe("Utils", function(){
                 assert.equal(row.hintsLeft, expectedHintsLeft) 
                 assert.equal(row.livesLeft, expectedLivesLeft)
                done()
-               
-              });
+           });       
+         });
        });
     });
   });
@@ -843,8 +843,7 @@ describe("Utils", function(){
   describe(".getDiscardedCards", function(){
     it("should retrieve the Correct DiscardedCards Row (check card1)", function(done){
       var gameObject = Defaults.gameSettings2Player()
-          gameObject.discardedCards = ["SampleCard"]
-      var expectedCard1 = "SampleCard"
+      var expectedCard1 = {color: "red", hints: [], number: "5"}
       var expectedLength = 1
       
       
@@ -856,19 +855,25 @@ describe("Utils", function(){
            db.run("DELETE FROM HanabiGames WHERE id = "+results.tableIds.gameId)
            db.run("DELETE FROM DiscardedCards WHERE gameId = "+results.tableIds.gameId)
          });
-        var object = {
-          id: results.tableIds.gameId
-        }
-        Utils.getPlayingDeck(object)
-         .then(function(results){
+        
+        results.discardedCards.push({color: "red", hints: [], number: "5"});
+        
+        Utils.updateDeck(results, "DiscardedCards")
+        .then(function(results){
+          var object = {
+            id: results.tableIds.gameId
+          }
+        
+          Utils.getDiscardedCards(object)
+           .then(function(results){
             
             assert.ok(results)
             assert.deepEqual(results.playingDeck[0], expectedCard1, "Card 1 Failed")
             
             done()
-          })
-        
-        });
+          });
+        }); 
+      });
     })
   });
 });
