@@ -533,7 +533,6 @@ describe("Utils", function(){
            db.run("DELETE FROM PlayingDeck WHERE gameId ="+results.tableIds.gameId);
                }); 
          
-         var id = results.tableIds.gameId 
              results.playingDeck.shift()
          
          Utils.updateDeck(results, "PlayingDeck") // Updates Table with New Playing Deck Array
@@ -656,7 +655,7 @@ describe("Utils", function(){
   describe(".updatesPlayerRow", function(){
     it("Updates One Player in Players Tables (2-player)", function(done){
       var gameObject = Defaults.gameSettings2Player()
-      var expectedCard1 = "orange|5"
+      var expectedCard1 = "orange|5|"
       var expectedActive = 1;
        
        Utils.insertHanabiGameRow(gameObject)// Adds Row to HanabiGame Table
@@ -689,7 +688,7 @@ describe("Utils", function(){
     });
     it("Updates One Player in Players Tables (5-player)", function(done){
       var gameObject = Defaults.gameSettings5Player()
-      var expectedCard1 = "orange|5"
+      var expectedCard1 = "orange|5|"
       var expectedActive = 1;
        
        Utils.insertHanabiGameRow(gameObject)// Adds Row to HanabiGame Table
@@ -740,7 +739,7 @@ describe("Helper", function(){
       assert.equal(result, expectedResult);
     });
   });
-  describe("convertCardArray", function(){
+  describe(".convertCardArray", function(){
     it("returns a String from a CARD OBJECT ARRAY to format: 'card.color|card.number|card.hints' (5cards)", function(){
       var array = [
         {color: "red", hints: ["not white", "3"], number: 3},
@@ -775,7 +774,7 @@ describe("Helper", function(){
       assert.equal(result, expectedResult)
     });
   });
-  describe("cardStringToObject", function(){
+  describe(".cardStringToObject", function(){
     it("returns a cardObjectArray from format: 'card.color|card.number|card.hints' (5cards)", function(){
       var expectedResult =  {
         color: "red", 
@@ -801,5 +800,8 @@ describe("Helper", function(){
       
       assert.deepEqual(result, expectedResult)
     });
+  });
+  describe(".convertCardArrayForUpdate", function(){
+  
   });
 });

@@ -64,30 +64,16 @@ const Helper = {
 //output: 'card1="card.color|card.number|card.hints",card2="card.color|card.number|card.hints", card[length+1...n]=null'    
  convertCardArrayForUpdate(array, length){
     var string = ''
-    var stringArray = array.map((card, index) => 'card'+(index+1)+'="'+card.color+'|'+card.number+'|'+card.hints.join()+'"') 
-    for(var i = array.length; i = length; i++){
-      stringArray.push('card'+i+'="null"')
-    }  
-    console.log("String Array:", stringArray)
-   
-   for(var i = 0; i < length; i++){  //Converts Each Array Object to String format to be inserted into the Table 
-      if(array[i]){
-        string += 'card'+(i+1)+'="'+array[i].color+'|'+array[i].number
-          for(var j = 0; j < array[i].hints.length; j++){
-            string += '|'+array[i].hints[j]
-              } 
-          if(i === length-1){
-          string += '"'
-            }else{ string +='",'}
-          
-      }else if(i < length-1){ //Changes the Last spots to null to clear the table of those cards
-          string += 'card'+(i+1)+'=null,'
     
-      }else{ 
-        string += 'card'+(i+1)+'=null'
-      };
-   };
-    return string
+    var stringArray = array.map((card, index) => 'card'+(index+1)+'="'+card.color+'|'+card.number+'|'+card.hints.join()+'"') 
+    
+    for(var i = array.length; i < length; i++){
+      stringArray.push('card'+(i+1)+'="null"')
+    }  
+    
+   string = stringArray.join() 
+   
+   return string
   }
 }
 
