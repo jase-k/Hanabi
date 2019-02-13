@@ -517,6 +517,7 @@ describe("Utils", function(){
         });
     });
   });
+  
   describe(".updateHanabiGameRow", function(){
     it("Updates hints and lives in Hanabi Game Row", function(done){
        var gameObject = Defaults.gameSettings2Player()
@@ -755,6 +756,7 @@ describe("Utils", function(){
        });
     });
   });
+  
   describe(".getHanabiGame", function(){
     it("should retrieve row with correct Key:Value Pairs", function(done){
       var gameObject = Defaults.gameSettings2Player()
@@ -904,37 +906,43 @@ describe("Utils", function(){
       });
     })
   });
-  describe(".getPlayedCards", function(){
-    it("should retrieve the Correct PlayedCards Row (check card1)", function(done){
+  describe(".getMessages", function(){
+    it("should retrieve the Messages in an Array Format)", function(done){
       var gameObject = Defaults.gameSettings2Player()
-      var expectedCard1 = {color: "red", hints: [], number: "5"}
-      var expectedLength = 1
+      var expectedMessages = ["Success! Billy played a blue 4","Whoops! Jase played a black 5 and it didn't Play!"]
+      var expectedLength = 2
       
       
       Utils.insertHanabiGameRow(gameObject)
-       .then(game => Utils.insertPlayedCardsRow(game))
+       .then(game => Utils.insertMessagesRow(game))
        .then(function(results){
        
         after(function(){ //Deletes the Added Rows
            db.run("DELETE FROM HanabiGames WHERE id = "+results.tableIds.gameId)
-           db.run("DELETE FROM PlayedCards WHERE gameId = "+results.tableIds.gameId)
+           db.run("DELETE FROM Messages WHERE gameId = "+results.tableIds.gameId)
          });
         
-        results.playedCards.push({color: "red", hints: [], number: "5"});
+        results.messages.push(["Success! Billy played a blue 4","Whoops! Jase played a black 5 and it didn't Play!"]);
         
-        Utils.updateDeck(results, "PlayedCards")
+        Utils.updateMessages(results)
         .then(function(results){
-          Utils.getPlayedCards(results)
+          Utils.getMessages(results)
            .then(function(results){
             
             assert.ok(results)
-            assert.deepEqual(results.playedCards[0], expectedCard1, "Card 1 Failed")
+            assert.deepEqual(results.messages, expectedMessages)
             
             done()
           });
         }); 
       });
     })
+  });
+  describe(".getPlayers", function(){
+    it("should return player Objects for All Players", function(){
+      var expectedPlayers = Defaults.gameSettings2Player().players
+      console.log(expectedPlayers)
+    });
   });
 });
 

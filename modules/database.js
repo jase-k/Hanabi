@@ -383,7 +383,23 @@ const Utils = {
         resolve(object)
     });
   })
-}
+},
+  getMessages(object){
+    return new Promise((resolve, reject) => {
+      object.messages = [];
+      db.get('SELECT * FROM Messages WHERE gameId = '+object.id,
+           function(err, row){
+            if(err){
+              console.log("Error at Get Messages", err)
+              throw err
+            }
+        if(row.Messages){
+          object.messages = row.Messages.split(",")
+          } 
+        resolve(object)
+    });
+   });
+  }
 };
 
 const Database = {
@@ -451,23 +467,7 @@ return new Promise ((resolve, reject) => {
 
 
 
-function getMessages(object){
-  return new Promise((resolve, reject) => {
-  object.messages = [];
-  db.get('SELECT * FROM Messages WHERE gameId = '+object.id,
-         function(err, row){
-        if(err){
-          console.log("Error at Get Messages", err)
-          throw err
-        }
-      if(row.Messages){
-         object.messages = row.Messages.split(",")
-        console.log("++++Messages++++", row.Messages.split(","))
-      } 
-        resolve(object)
-    });
-  });
-}
+
 
 Database.getCurrentGame = (gameId) => {
 return new Promise((resolve, reject) => { 
