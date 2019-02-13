@@ -131,7 +131,35 @@ describe("Database", function(){
       
     });
   });
-  describe(".updateGame", function(){});
+  describe(".updateGame", function(){
+    it("Updates All Tables for an Updated Game Object", function(done){
+      var gameObject = Defaults.gameSettings5Player()
+      var expectedHints = 1
+      var expectedDiscard = ""
+      var expectedPlayed = ""
+      var expectedCard1Playing = ""
+      var expectedMessage = "Success! Jase played a blue 4!"
+       Database.insert(gameObject)
+      .then(function(results){
+         after(function(){
+            db.run("DELETE FROM HanabiGames WHERE id = "+results.tableIds.gameId)
+            db.run("DELETE FROM OriginalDeck WHERE gameId = "+results.tableIds.gameId)
+            db.run("DELETE FROM PlayingDeck WHERE gameId = "+results.tableIds.gameId)
+            db.run("DELETE FROM DiscardedCards WHERE gameId = "+results.tableIds.gameId)
+            db.run("DELETE FROM PlayedCards WHERE gameId = "+results.tableIds.gameId)
+            db.run("DELETE FROM Messages WHERE gameId = "+results.tableIds.gameId)
+            db.run("DELETE FROM Players WHERE gameId = "+results.tableIds.gameId)
+         });
+        //Altering Game Object for Update:
+         results.hintsLeft = 1; //changes HanabiGames
+         results.discardedCards.push(results.playingDeck.shift()) //Alters DiscardedCards and PlayingDeck
+         results.playedCards.push({color: "blue", hints: ["not orange"],number: ) //Alters PlayedCards and PlayingDeck
+         results.messages = "Success! Jase played a blue 4!" //Alters Messages
+         results.players[4].active = 1; //changes Players
+         
+         
+    });
+  });
   describe(".getGame", function(){});
 });
 
@@ -220,7 +248,7 @@ describe("Utils", function(){
        var gameObject = Defaults.gameSettings2Player()
        var expectedFirstCard = "red|3|"
        var expectedLastCard = "blue|4|"
-       console.log("first Card", expectedFirstCard)
+       
         // Adds Row to PlayingDeck Table Row Id saved to: results.tableIds.playingDeckId 
         // HanabiGame Row is Created as well to retrieve a GameId to Insert into the Playing Deck gameId
         Utils.insertHanabiGameRow(gameObject)
