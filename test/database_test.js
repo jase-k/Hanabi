@@ -226,7 +226,7 @@ describe("Database", function(){
       });
     });
   });
-  describe.skip(".get", function(){
+  describe(".get", function(){
     it("Should create a game Object with correct Keys", function(done){
       const expectedObjectKeys = ["numberOfPlayers", "hintsLeft", "livesLeft", "score", "dateCreated", "playingDeck",
                                   "playedCards", "discardedCards", "players"]
@@ -250,7 +250,12 @@ describe("Database", function(){
          var newGameObject = results
          
          assert.containsAllKeys(newGameObject, expectedObjectKeys)
-        
+         assert.equal(results.hintsLeft, 8, "Error at HanabiGame")
+         assert.equal(results.players[0].active, 1, "Error at Players")
+         assert.equal(results.playingDeck.length, 30, "Error at PlayingDeck")
+         assert.equal(results.discardedCards.length, 0, "Error at DiscardedCards")
+         assert.equal(results.playedCards.length, 0, "Error at PlayedCards")
+          
          done()
        }); 
 

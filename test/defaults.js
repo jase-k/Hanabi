@@ -22,21 +22,21 @@ const Defaults = {
                     active: 1,
                     name: "John Doe", 
                     hand: [
-                        { color: 'white', hints: [], number: 3 },
-                        { color: 'orange', hints: [], number: 3 },
-                        { color: 'red', hints: [], number: 4 },
-                        { color: 'red', hints: [], number: 5 },
-                        { color: 'white', hints: [], number: 1 },
+                        { color: 'white', hints: [], number: "3" },
+                        { color: 'orange', hints: [], number: "3" },
+                        { color: 'red', hints: [], number: "4" },
+                        { color: 'red', hints: [], number: "5" },
+                        { color: 'white', hints: [], number: "1" },
                           ]
                   },{
                     active: null,
                     name: null, 
                     hand: [
-                        { color: 'white', hints: [], number: 4 },
-                        { color: 'blue', hints: [], number: 1 },
-                        { color: 'blue', hints: [], number: 1 },
-                        { color: 'orange', hints: [], number: 3 },
-                        { color: 'orange', hints: [], number: 2 },
+                        { color: 'white', hints: [], number: "4" },
+                        { color: 'blue', hints: [], number: "1" },
+                        { color: 'blue', hints: [], number: "1" },
+                        { color: 'orange', hints: [], number: "3" },
+                        { color: 'orange', hints: [], number: "2" },
                           ]
                   }
                          ],

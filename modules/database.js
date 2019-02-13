@@ -427,8 +427,6 @@ const Utils = {
     });
   });
 }
-
-
 };
 
 const Database = {
@@ -464,7 +462,13 @@ const Database = {
   //Gets Data from All Table and Returns a Valid gameObject (see test/defaults.js - Defaults)
   get(id){
     return new Promise((resolve, reject) => {
-     resolve({numberOfPlayer: 5})
+      Utils.getHanabiGameRow(id)
+      .then(object => Utils.getPlayingDeck(object))
+      .then(object => Utils.getDiscardedCards(object))
+      .then(object => Utils.getPlayedCards(object))
+      .then(object => Utils.getMessages(object))
+      .then(object => Utils.getPlayers(object))
+      .then(object => resolve(object))
     });
   }
 };
@@ -477,18 +481,5 @@ module.exports = {Database, Utils, Helper}
 
 
 
-Database.getCurrentGame = (gameId) => {
-return new Promise((resolve, reject) => { 
-  var gameObject = {
-    id: gameId
-  }
-  getGameObject(gameObject).then(object => getPlayingDeck(object))
-  .then(object => getPlayedCards(object))
-  .then(object => getDiscardedCards(object))
-  .then(object => getPlayers(object))
-  .then(object => getMessages(object))
-  .then(object => resolve(object))
-  });
-};
 
 
