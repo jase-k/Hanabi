@@ -158,8 +158,8 @@ describe("Database", function(){
          results.messages.push = "Success! Jase played a blue 4!" //Alters Messages
          results.players[4].active = 1; //changes Players
         
-         Database.update(results)
-         
+       Database.update(results)
+       .then(function(results){
          db.get("SELECT * FROM HanabiGames WHERE id = $id", 
                {$id:results.tableIds.gameId},
                function(err, row){
@@ -221,7 +221,8 @@ describe("Database", function(){
                    }
                   assert.equal(row.active, 1)
                 });      
-        done();         
+        done();      
+        }); 
       });
     });
   });

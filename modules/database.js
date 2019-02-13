@@ -218,6 +218,7 @@ const Utils = {
   
   //This function updates score, livesLeft, hintsLeft
   updateHanabiGameRow(gameObject){
+   return new Promise((resolve, reject) => { 
     var sql = `UPDATE HanabiGames
             SET score = ${gameObject.score}, hintsLeft = ${gameObject.hintsLeft}, livesLeft = ${gameObject.livesLeft}
             WHERE id = ${gameObject.tableIds.gameId}`
@@ -226,7 +227,9 @@ const Utils = {
       console.log("Error at updateDeck at Hanabi Game Table", sql)
         throw err
         }
+      resolve(gameObject)
     })
+   });  
   },
   //This function updates Tables: PlayingDeck, DiscardedCards, & PlayedCards
   updateDeck(array, id, tableName){
@@ -243,13 +246,13 @@ const Utils = {
     
     db.run(sql, function (err){
       if(err){
-      console.log("Error at updateDeck "+tableName, sql)
+      console.log("Error at updateDeck "+tableName, sql, err)
         throw err
         }
       });
     },
   updateMessages(object){
-    var sql = `UPDATE Messages
+       var sql = `UPDATE Messages
                SET Messages = "${object.messages.join()}"
                WHERE gameId = ${object.tableIds.gameId}`
     
@@ -290,6 +293,7 @@ const Database = {
   },
   //Updates All Tables with Current Object. Returns the same Object
   update(object){
+    return new Promise((resolve, reject) => { 
      Utils.updateHanabiGameRow(object)
      Utils.updateDeck(object.playingDeck, object.tableIds.gameId, "PlayingDeck")
      Utils.updateDeck(object.discardedCards, object.tableIds.gameId, "DiscardedCards")
@@ -298,6 +302,8 @@ const Database = {
      object.players.forEach(function(player){
        Utils.updatePlayerRow(player)
      });
+     resolve(object) 
+    });  
   },
 };
 
