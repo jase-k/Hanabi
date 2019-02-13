@@ -12,6 +12,7 @@ It has three public functions:
 The Object Utils contains Private Helper Functions for 
 {Database}.
 
+All Calls to the sqlite.db DATABASE are Promises
 */
 
 //Establishes a Database
@@ -230,7 +231,6 @@ const Utils = {
     });   
   });
 },
-  
   //This function updates score, livesLeft, hintsLeft
   updateHanabiGameRow(gameObject){
     console.log("Updating HanabiGame")
@@ -298,7 +298,8 @@ const Utils = {
     });
   },
   //This function takes an individual playerObject as an argument and updates the row. 
-  updatePlayerRow(playerObject, object){
+  //gameObject is included to pass data to the next call in Database.update
+  updatePlayerRow(playerObject, gameObject){
      console.log("updating Players")
     
    return new Promise((resolve, reject) => { 
@@ -311,7 +312,7 @@ const Utils = {
        if(err){
          console.log("Error at Player "+playerObject.id+" Updating Table", err)
        }
-       resolve(object)
+       resolve(gameObject)
      }) 
    })
   }
@@ -347,6 +348,10 @@ const Database = {
          });  
       }); 
   },
+  //Gets Data from All Table and Forms a Valid gameObject (see test/defaults.js - Defaults)
+  get(id){
+  
+  }
 };
 
 module.exports = {Database, Utils, Helper}
