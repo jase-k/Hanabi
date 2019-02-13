@@ -46,8 +46,8 @@ const Helper = {
 
   return string
 },
-//input: "color|number|hints, color|number|hints"
-//output Array of {color: STRING, hints: [STRINGS], number: STRING}
+//input: "color|number|hints"
+//output {color: STRING, hints: [STRINGS], number: STRING}
  cardStringToObject(string){
   var object;
     if(string){
@@ -55,11 +55,8 @@ const Helper = {
       object = {
         color: array[0],
         number: array[1],
-        hints: []    
+        hints: array[2].split(',')    
         }
-      for(var i = 2; i <array.length; i++){
-        object.hints.push(array[i])
-        }  
     }
     return object
   } 

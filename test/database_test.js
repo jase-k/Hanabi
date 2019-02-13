@@ -184,7 +184,7 @@ describe("Utils", function(){
          });
     });
   });
-  describe.skip(".insertOriginalDeckRow", function(){
+  describe(".insertOriginalDeckRow", function(){
     it("Should insert gameObject.OriginalDeck Deck Row into OriginalDeck Table",function(done){
        var gameObject = Defaults.gameSettings2Player()
        
@@ -213,17 +213,21 @@ describe("Utils", function(){
             });
          });
     });
-  describe.skip(".insertPlayingDeckRow", function(){
+  describe(".insertPlayingDeckRow", function(){
     it("Should insert gameObject.PlayingDeck into PlayingDeck Table", function(done){
        var gameObject = Defaults.gameSettings2Player()
-       var expectedFirstCard = "red|3"
-       var expectedLastCard = "blue|4"
+       var expectedFirstCard = "red|3|"
+       var expectedLastCard = "blue|4|"
        console.log("first Card", expectedFirstCard)
         // Adds Row to PlayingDeck Table Row Id saved to: results.tableIds.playingDeckId 
         // HanabiGame Row is Created as well to retrieve a GameId to Insert into the Playing Deck gameId
         Utils.insertHanabiGameRow(gameObject)
        .then(game => Utils.insertPlayingDeckRow(game))
        .then(function(results){
+        after(function(){ //Deletes the Added Rows
+           db.run("DELETE FROM HanabiGames WHERE id = "+results.tableIds.gameId)
+                 db.run("DELETE FROM PlayingDeck WHERE gameId = "+results.tableIds.gameId)
+                 }
       
         db.get("SELECT * FROM PlayingDeck WHERE id = $id",  
                  {$id: results.tableIds.playingDeckId},
@@ -238,10 +242,7 @@ describe("Utils", function(){
                   assert.equal(row.id, results.tableIds.playingDeckId, "Row Id doesn't match tableIds" ) //Row Id isn't Correct
                   assert.equal(row.card1, expectedFirstCard) //First Card Matches           
                   assert.equal(row.card40, expectedLastCard) //If both these matches, it is likely the deck is in the right order.
-                  //Deletes the Added Rows
-                  db.run("DELETE FROM HanabiGames WHERE id = "+results.tableIds.gameId)
-                  db.run("DELETE FROM PlayingDeck WHERE gameId = "+results.tableIds.gameId)
-                  done();
+                   done();
                 }); 
         });
     });
@@ -637,33 +638,25 @@ describe("Helper", function(){
   });
   describe("cardStringToObject", function(){
     it("returns a cardObjectArray from format: 'card.color|card.number|card.hints' (5cards)", function(){
-      var expectedResult = [
-        {color: "red", hints: ["not white", "3"], number: 3},
-        {color: "red", hints: ["not white", "3"], number: 3},
-        {color: "red", hints: ["not white", "not 3"], number: 1},
-        {color: "white", hints: ["white", "not 3"], number: 2},
-        {color: "white", hints: ["white", "not 3"], number: 5},
-      ]
-      var string = '"red|3|not white,3","red|3|not white,3","red|1|not white,not 3","white|2|white,not 3","white|5|white,not 3"'
+      var expectedResult =  {
+        color: "red", 
+        hints: ["not white", "3"], 
+        number: "3"
+        }
+      
+      var string = "red|3|not white,3"
       
       var result = Helper.cardStringToObject(string);
       
       assert.deepEqual(result, expectedResult)
     });
     it("returns a cardObjectArray from format: 'card.color|card.number|card.hints' (10 cards)", function(){
-      var expectedResult = [
-        {color: "red", hints: ["not white", "3"], number: 3},
-        {color: "red", hints: ["not white", "3"], number: 3},
-        {color: "red", hints: ["not white", "not 3"], number: 1},
-        {color: "white", hints: ["white", "not 3"], number: 2},
-        {color: "white", hints: ["white", "not 3"], number: 5},
-        {color: "red", hints: ["not white", "3"], number: 3},
-        {color: "red", hints: ["not white", "3"], number: 3},
-        {color: "red", hints: ["not white", "not 3"], number: 1},
-        {color: "white", hints: ["white", "not 3"], number: 2},
-        {color: "white", hints: ["white", "not 3"], number: 5},
-      ]
-      var string = '"red|3|not white,3","red|3|not white,3","red|1|not white,not 3","white|2|white,not 3","white|5|white,not 3","red|3|not white,3","red|3|not white,3","red|1|not white,not 3","white|2|white,not 3","white|5|white,not 3"'
+      var expectedResult =  {
+        color: "white", 
+        hints: ["white", "not 3"], 
+        number: "5"}
+      
+      var string = "white|5|white,not 3"
       
       var result = Helper.cardStringToObject(string);
       
