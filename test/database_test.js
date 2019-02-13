@@ -135,9 +135,9 @@ describe("Database", function(){
     it("Updates All Tables for an Updated Game Object", function(done){
       var gameObject = Defaults.gameSettings5Player()
       var expectedHints = 1
-      var expectedDiscard = ""
-      var expectedPlayed = ""
-      var expectedCard1Playing = ""
+      var expectedDiscard = "white|3|"
+      var expectedPlayed = "blue|3|not orange"
+      var expectedCard1Playing = "blue|3|"
       var expectedMessage = "Success! Jase played a blue 4!"
        Database.insert(gameObject)
       .then(function(results){
@@ -150,14 +150,82 @@ describe("Database", function(){
             db.run("DELETE FROM Messages WHERE gameId = "+results.tableIds.gameId)
             db.run("DELETE FROM Players WHERE gameId = "+results.tableIds.gameId)
          });
-        //Altering Game Object for Update:
+     
+         //Altering Game Object for Update:
          results.hintsLeft = 1; //changes HanabiGames
          results.discardedCards.push(results.playingDeck.shift()) //Alters DiscardedCards and PlayingDeck
-         results.playedCards.push({color: "blue", hints: ["not orange"],number: ) //Alters PlayedCards and PlayingDeck
+         results.playedCards.push({color: "blue", hints: ["not orange"], number: "3"} ) //Alters PlayedCards  
          results.messages = "Success! Jase played a blue 4!" //Alters Messages
          results.players[4].active = 1; //changes Players
+        
+         Database.update(results)
+         .then(function(results){
+           db.get("SELECT * FROM HanabiGames WHERE id = $id", 
+               {$id:results.tableIds.gameId},
+               function(err, row){
+                  if(err){
+                     console.log(err)
+                     console.log("message", err.message)
+                   };
+                  assert.notOk(err)
+                  assert.equal(row.hintsLeft, expectedHints)
+         });
+         db.get("SELECT * FROM PlayingDeck WHERE gameId = $id",  
+                 {$id: results.tableIds.gameId},
+                 function(err, row){
+                  if(err){
+                   console.log(err)
+                   console.log("message", err.message)
+                   }
+                  assert.notOk(err)
+                  assert.ok(row)
+                  assert.equal(row.card1, expectedCard1Playing)                 
+                }); 
+         db.get("SELECT * FROM DiscardedCards WHERE gameId = $id",  
+                 {$id: results.tableIds.gameId},
+                 function(err, row){
+                  if(err){
+                   console.log(err)
+                   console.log("message", err.message)
+                   }
+           
+                  assert.notOk(err)
+                  assert.equal(row.card1, expectedDiscard)
+                });
+         db.get("SELECT * FROM PlayedCards WHERE gameId = $id",  
+                 {$id: results.tableIds.gameId},
+                 function(err, row){
+                  if(err){
+                   console.log(err)
+                   console.log("message", err.message)
+                   }
+                  assert.notOk(err)
+                  assert.equal(row.card1, expectedPlayed)
+                });
+         db.get("SELECT * FROM Messages WHERE gameId = $id",  
+                 {$id: results.tableIds.gameId},
+                 function(err, row){
+                  if(err){
+                   console.log(err)
+                   console.log("message", err.message)
+                   }
+                  assert.notOk(err)
+                  assert.equal(row.Message, expectedMessage)
+                });
+        db.get("SELECT * FROM Players WHERE id = $id",  
+                 {$id: results.tableIds.playersId[4]},
+                 function(err, row){
+                  if(err){
+                   console.log(err)
+                   console.log("message", err.message)
+                   }
+                  assert.equal(row.active, expectedActive)
+                });      
+        done();
          
+         });
          
+      });
     });
   });
   describe(".getGame", function(){});

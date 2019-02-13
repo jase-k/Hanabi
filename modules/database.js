@@ -74,7 +74,7 @@ const Utils = {
              };
         
            object.tableIds.gameId= this.lastID
-          
+           console.log("HanabiGame ID", this.lastID)
            resolve(object)
         })
     });
