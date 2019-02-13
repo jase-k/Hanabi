@@ -940,8 +940,25 @@ describe("Utils", function(){
   });
   describe(".getPlayers", function(){
     it("should return player Objects for All Players", function(){
-      var expectedPlayers = Defaults.gameSettings2Player().players
+      var gameObject = Defaults.gameSettings2Player()
+      var expectedPlayers = gameObject.players
+      
       console.log(expectedPlayers)
+       
+      Utils.insertHanabiGameRow(gameObject) // Adds Row to HanabiGame Table
+      .then(game => Utils.insertPlayersRows(game))
+      .then(function(results){
+          after(function(){
+             db.run("DELETE FROM HanabiGames WHERE id = "+results.tableIds.gameId) //Deletes the Added Row
+             db.run("DELETE FROM Players WHERE gameId ="+results.tableIds.gameId); //Deletes the Players Row
+             });
+        Utils.getPlayersRows(results)  
+        .then(function(results){
+      
+          assert.deepEqual(results.players, expectedPlayers)
+          done()
+        })
+      }
     });
   });
 });

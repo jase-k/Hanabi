@@ -399,7 +399,35 @@ const Utils = {
         resolve(object)
     });
    });
-  }
+  },
+  getPlayers(object){
+    return new Promise ((resolve, reject) => {
+      object.players = []
+      var playerObject = { }
+      db.all('SELECT * FROM Players WHERE gameId ='+object.id, 
+        function(err, rows){
+          if(err){throw err}
+          
+        rows.forEach(function(row){
+            var array = []
+          
+            playerObject = {
+              id: row.id, 
+              name: row.name,
+              active: row.active
+            }
+            for(var i = 1; i <= 5; i++){
+             array.push(Helper.cardStringToObject(row['card'+i]))
+            }
+            playerObject.hand = array
+            object.players.push(playerObject)                 
+      });
+        resolve(object)    
+    });
+  });
+}
+
+
 };
 
 const Database = {
@@ -443,27 +471,6 @@ const Database = {
 module.exports = {Database, Utils, Helper}
 
  
-
-function getPlayers(object){
-return new Promise ((resolve, reject) => {
-  object.players = []
-  var playerObject = { }
-  db.all('SELECT * FROM Players WHERE gameId ='+object.id, 
-    function(err, rows){
-      if(err){throw err}
-      rows.forEach(function(row){
-        playerObject = {
-          id: row.id, 
-          name: row.name,
-          active: row.active
-        }
-       playerObject.hand = [cardStringToObject(row.card1), cardStringToObject(row.card2), cardStringToObject(row.card3), cardStringToObject(row.card4), cardStringToObject(row.card5)]
-       object.players.push(playerObject)                 
-      })
-        resolve(object)    
-    });//ENDS db All
-  });
-}
 
 
 
