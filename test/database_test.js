@@ -860,15 +860,75 @@ describe("Utils", function(){
         
         Utils.updateDeck(results, "DiscardedCards")
         .then(function(results){
-          var object = {
-            id: results.tableIds.gameId
-          }
-        
-          Utils.getDiscardedCards(object)
+          Utils.getDiscardedCards(results)
            .then(function(results){
             
             assert.ok(results)
-            assert.deepEqual(results.playingDeck[0], expectedCard1, "Card 1 Failed")
+            assert.deepEqual(results.discardedCards[0], expectedCard1, "Card 1 Failed")
+            
+            done()
+          });
+        }); 
+      });
+    })
+  });
+  describe(".getPlayedCards", function(){
+    it("should retrieve the Correct PlayedCards Row (check card1)", function(done){
+      var gameObject = Defaults.gameSettings2Player()
+      var expectedCard1 = {color: "red", hints: [], number: "5"}
+      var expectedLength = 1
+      
+      
+      Utils.insertHanabiGameRow(gameObject)
+       .then(game => Utils.insertPlayedCardsRow(game))
+       .then(function(results){
+       
+        after(function(){ //Deletes the Added Rows
+           db.run("DELETE FROM HanabiGames WHERE id = "+results.tableIds.gameId)
+           db.run("DELETE FROM PlayedCards WHERE gameId = "+results.tableIds.gameId)
+         });
+        
+        results.playedCards.push({color: "red", hints: [], number: "5"});
+        
+        Utils.updateDeck(results, "PlayedCards")
+        .then(function(results){
+          Utils.getPlayedCards(results)
+           .then(function(results){
+            
+            assert.ok(results)
+            assert.deepEqual(results.playedCards[0], expectedCard1, "Card 1 Failed")
+            
+            done()
+          });
+        }); 
+      });
+    })
+  });
+  describe(".getPlayedCards", function(){
+    it("should retrieve the Correct PlayedCards Row (check card1)", function(done){
+      var gameObject = Defaults.gameSettings2Player()
+      var expectedCard1 = {color: "red", hints: [], number: "5"}
+      var expectedLength = 1
+      
+      
+      Utils.insertHanabiGameRow(gameObject)
+       .then(game => Utils.insertPlayedCardsRow(game))
+       .then(function(results){
+       
+        after(function(){ //Deletes the Added Rows
+           db.run("DELETE FROM HanabiGames WHERE id = "+results.tableIds.gameId)
+           db.run("DELETE FROM PlayedCards WHERE gameId = "+results.tableIds.gameId)
+         });
+        
+        results.playedCards.push({color: "red", hints: [], number: "5"});
+        
+        Utils.updateDeck(results, "PlayedCards")
+        .then(function(results){
+          Utils.getPlayedCards(results)
+           .then(function(results){
+            
+            assert.ok(results)
+            assert.deepEqual(results.playedCards[0], expectedCard1, "Card 1 Failed")
             
             done()
           });

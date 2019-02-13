@@ -90,6 +90,7 @@ const Utils = {
              };
         
            object.tableIds.gameId= this.lastID
+           object.id = this.lastID
            console.log("HanabiGame ID", this.lastID)
            resolve(object)
         })
@@ -367,6 +368,21 @@ const Utils = {
         resolve(object)
     });
   })
+},
+  getPlayedCards(object){
+    return new Promise ((resolve, reject) => {
+      object.playedCards = []
+      db.get('SELECT * FROM PlayedCards WHERE gameId ='+object.id, 
+        function(err, row){
+          if(err){throw err}
+    
+         for(var i = 1; i <= 25; i++){
+           object.playedCards.push(Helper.cardStringToObject(row['card'+i]))
+          }
+        
+        resolve(object)
+    });
+  })
 }
 };
 
@@ -433,20 +449,7 @@ return new Promise ((resolve, reject) => {
   });
 }
 
-function getPlayedCards(object){
-return new Promise ((resolve, reject) => {
-  object.playedCards = []
-  db.get('SELECT * FROM PlayedCards WHERE gameId ='+object.id, 
-    function(err, row){
-      if(err){throw err}
-    
- for(var i = 1; i <= 25; i++){
-     object.playedCards.push(cardStringToObject(row['card'+i]))
-    }
-        resolve(object)
-    });//ENDS db All
-  })
-}
+
 
 function getMessages(object){
   return new Promise((resolve, reject) => {
