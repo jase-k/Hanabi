@@ -600,7 +600,19 @@ describe("Helper", function(){
       assert.equal(result, expectedResult);
     });
   });
-  describe("createSQL", function(){
-  
+  describe("convertCardArray", function(){
+    it("returns a cardObjectArray to format: 'card.color|card.number|card.hints'", function(){
+      var array = [
+        {color: "red", hints: ["not white", "3"], number: 3},
+        {color: "red", hints: ["not white", "3"], number: 3},
+        {color: "red", hints: ["not white", "not 3"], number: 1},
+        {color: "white", hints: ["white", "not 3"], number: 2},
+        {color: "white", hints: ["white", "not 3"], number: 5},
+      ]
+      var expectedResult = '"red|3|not white,3","red|3|not white,3","red|1|not white,not 3","white|2|white,not 3","white|5|white,not 3"'
+      
+      var result = Helper.convertCardArray(array)
+      
+    });
   });
 });
