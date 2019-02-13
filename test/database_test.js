@@ -421,7 +421,7 @@ describe("Utils", function(){
        });
     });
   });
-  describe.skip(".updateDeck", function(){
+  describe(".updateDeck", function(){
     it("Updates PlayingDeck in the PlayingDeck Table Row", function(done){
        var gameObject = Defaults.gameSettings2Player()
        var expectedCard1 = "red|1" 
@@ -432,13 +432,13 @@ describe("Utils", function(){
        .then(object => Utils.insertPlayingDeckRow(object))
        .catch(function(e){ console.log(e.message)})
        .then(function(results){
-           results.playingDeck.shift()
-            var id = results.tableIds.gameId
-          
-        after(function() {
+         after(function() {
            db.run("DELETE FROM HanabiGames WHERE id ="+results.tableIds.gameId);
            db.run("DELETE FROM PlayingDeck WHERE gameId ="+results.tableIds.gameId);
                }); 
+         
+         var id = results.tableIds.gameId 
+             results.playingDeck.shift()
          
          Utils.updateDeck(results.playingDeck, id, "PlayingDeck") // Updates Table with New Playing Deck Array
          
@@ -451,7 +451,6 @@ describe("Utils", function(){
                 assert.equal(row.card1, expectedCard1, "Card 1 is incorrect!") 
                 assert.equal(row.card39, expectedCard39, "card 39 is incorrect!")
                 done()
-               db.run("DELETE FROM HanabiGames WHERE id ="+results.tableIds.gameId)
                });
 
        });
@@ -465,20 +464,26 @@ describe("Utils", function(){
        .then(object => Utils.insertPlayedCardsRow(object))
          .catch(function(e){ console.log(e.message)})
        .then(function(results){
-           results.playedCards.push({color: 'red', hints: [], number: 1}) //add Card Object to Array
-            var id = results.tableIds.gameId
+         after(function() {
+           db.run("DELETE FROM HanabiGames WHERE id ="+results.tableIds.gameId);
+           db.run("DELETE FROM PlayedCards WHERE gameId ="+results.tableIds.gameId);
+               }); 
+         
+          var id = results.tableIds.gameId
+              results.playedCards.push({color: 'red', hints: [], number: 1}) //add Card Object to Array
          
          
          Utils.updateDeck(results.playedCards, id, "PlayedCards") // Updates Table with New Played Cards Array
          
          db.get("SELECT * FROM PlayedCards WHERE gameId = $id",  // Retrieves Row
-                    {$id: results.tableIds.gameId},
-                    function(err, row){
-                     if(err){ console.log("Error at Utils.updatesPlayedCards db.get('SELECT...",err)};
+              {$id: results.tableIds.gameId},
+              function(err, row){
+                if(err){ console.log("Error at Utils.updatesPlayedCards db.get('SELECT...",err)};
+                
                 assert.notOk(err, "There was an Error Getting the Table Row")
                 assert.ok(row, "The Table Row was undefined!")
                 assert.equal(row.card1, expectedCard1, "Card 1 is incorrect!") 
-                 done()  
+                done()  
                 });
        });
     });
@@ -491,31 +496,32 @@ describe("Utils", function(){
        .then(object => Utils.insertDiscardedCardsRow(object))
          .catch(function(e){ console.log(e.message)})
        .then(function(results){
-           results.discardedCards.push({color: 'red', hints: [], number: 1}) //add Card Object to Array
-            var id = results.tableIds.gameId
-          
-        after(function() {
+          after(function() {
            db.run("DELETE FROM HanabiGames WHERE id = "+results.tableIds.gameId)
            db.run("DELETE FROM DiscardedCards WHERE gameId ="+results.tableIds.gameId);
                }); 
          
+          var id = results.tableIds.gameId
+              results.discardedCards.push({color: 'red', hints: [], number: 1}) //add Card Object to Array
+          
+         
          Utils.updateDeck(results.discardedCards, id, "DiscardedCards") // Updates Table with New Played Cards Array
          
          db.get("SELECT * FROM DiscardedCards WHERE gameId = $id",  // Retrieves Row
-                    {$id: results.tableIds.gameId},
-                    function(err, row){
-                     if(err){ console.log("Error at Utils.updatesDiscardedCardsRow db.get('SELECT...",err)};
+             {$id: results.tableIds.gameId},
+             function(err, row){
+                if(err){ console.log("Error at Utils.updatesDiscardedCardsRow db.get('SELECT...",err)};
+                
                 assert.notOk(err, "There was an Error Getting the Table Row")
                 assert.ok(row, "The Table Row was undefined!")
                 assert.equal(row.card1, expectedCard1, "Card 1 is incorrect!") 
-                db.run("DELETE FROM HanabiGames WHERE id = "+results.tableIds.gameId)
                 done()
               });
 
        });
     })
   });
-  describe.skip(".updateMessages", function(){
+  describe(".updateMessages", function(){
     it("Updates Messages Tables by joining gameObject.messages into a string", function(done){
       var gameObject = Defaults.gameSettings2Player()
        var expectedString = "Steven played a blue 4!,Whoops! Jase played a white 3 and it didn't play." 
@@ -525,36 +531,33 @@ describe("Utils", function(){
        .then(object => Utils.insertMessagesRow(object))
          .catch(function(e){ console.log(e.message)})
        .then(function(results){
-           results.messages.push(["Steven played a blue 4!", "Whoops! Jase played a white 3 and it didn't play."]) //add Card Object to Array
-          
-        after(function() {
+          after(function() {
            db.run("DELETE FROM HanabiGames WHERE id = "+results.tableIds.gameId)
            db.run("DELETE FROM Messages WHERE gameId ="+results.tableIds.gameId);
                }); 
          
-         console.log("starting update")
-         Utils.updateMessages(results)// Updates Table with New Message String
-         console.log("done with update", results.tableIds.gameId)
+          results.messages.push(["Steven played a blue 4!", "Whoops! Jase played a white 3 and it didn't play."]) //add Card Object to Array
+          
+         
+           Utils.updateMessages(results)// Updates Table with New Message String
         
-         db.get("SELECT * FROM Messages WHERE id = $id",  // Retrieves Row
-                    {$id: results.tableIds.messagesId},
-                    function(err, row){
-                     if(err){ 
-                       console.log("Error at Utils.updateMessages db.get('SELECT...",err)
-                            };
+           db.get("SELECT * FROM Messages WHERE gameId = $id",  // Retrieves Row
+               {$id: results.tableIds.gameId},
+               function(err, row){
+                 if(err){ 
+                   console.log("Error at Utils.updateMessages db.get('SELECT...",err)
+                 };
                
-                assert.notOk(err, "There was an Error Getting the Table Row")
-                assert.ok(row, "The Table Row was undefined!")
-                assert.equal(row.Messages, expectedString, "Message String is incorrect!") 
-             
-               console.log("Done with sQL")    
-               done()
+                 assert.notOk(err, "There was an Error Getting the Table Row")
+                 assert.ok(row, "The Table Row was undefined!")
+                 assert.equal(row.Messages, expectedString, "Message String is incorrect!") 
+                
+                 done()
               });
-         console.log("Done with Operation")
        });
     });
   });
-  describe.skip(".updatesPlayerRow", function(){
+  describe(".updatesPlayerRow", function(){
     it("Updates One Player in Players Tables", function(done){
       var gameObject = Defaults.gameSettings2Player()
       var expectedCard1 = "orange|5"
