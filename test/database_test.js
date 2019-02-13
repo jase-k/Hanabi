@@ -193,6 +193,10 @@ describe("Utils", function(){
         Utils.insertHanabiGameRow(gameObject)
        .then(game => Utils.insertOriginalDeckRow(game))
        .then(function(results){
+         after(function(){   //Deletes the Added Rows
+            db.run("DELETE FROM HanabiGames WHERE id = "+results.tableIds.gameId)
+            db.run("DELETE FROM OriginalDeck WHERE id = "+results.tableIds.originalDeckId)
+         });
       
         db.get("SELECT * FROM OriginalDeck WHERE id = $id",  
                  {$id: results.tableIds.originalDeckId},
@@ -205,11 +209,7 @@ describe("Utils", function(){
                   assert.notOk(err)
                   assert.ok(row)
                   done();
-                 
-            //Deletes the Added Rows
-            db.run("DELETE FROM HanabiGames WHERE id = "+results.tableIds.gameId)
-            db.run("DELETE FROM OriginalDeck WHERE id = "+results.tableIds.originalDeckId)
-                }); 
+              }); 
             });
          });
     });
@@ -224,10 +224,11 @@ describe("Utils", function(){
         Utils.insertHanabiGameRow(gameObject)
        .then(game => Utils.insertPlayingDeckRow(game))
        .then(function(results){
+       
         after(function(){ //Deletes the Added Rows
            db.run("DELETE FROM HanabiGames WHERE id = "+results.tableIds.gameId)
-                 db.run("DELETE FROM PlayingDeck WHERE gameId = "+results.tableIds.gameId)
-                 }
+           db.run("DELETE FROM PlayingDeck WHERE gameId = "+results.tableIds.gameId)
+         });
       
         db.get("SELECT * FROM PlayingDeck WHERE id = $id",  
                  {$id: results.tableIds.playingDeckId},
@@ -247,7 +248,7 @@ describe("Utils", function(){
         });
     });
   });
-  describe.skip(".insertDiscardedCardsRow", function(){
+  describe(".insertDiscardedCardsRow", function(){
     it("should insert a new row in DescardedCards Table", function(done){
       var gameObject = Defaults.gameSettings2Player()
        
@@ -256,6 +257,10 @@ describe("Utils", function(){
         Utils.insertHanabiGameRow(gameObject)
        .then(game => Utils.insertDiscardedCardsRow(game))
        .then(function(results){
+         after(function(){   //Deletes the Added Rows
+            db.run("DELETE FROM HanabiGames WHERE id = "+results.tableIds.gameId)
+            db.run("DELETE FROM DiscardedCards WHERE id = "+results.tableIds.discardedCardsId)
+         });
       
         db.get("SELECT * FROM DiscardedCards WHERE id = $id",  
                  {$id: results.tableIds.discardedCardsId},
@@ -270,14 +275,11 @@ describe("Utils", function(){
                   assert.equal(row.id, results.tableIds.discardedCardsId)
                   done();
                  
-            //Deletes the Added Rows
-            db.run("DELETE FROM HanabiGames WHERE id = "+results.tableIds.gameId)
-            db.run("DELETE FROM DiscardedCards WHERE id = "+results.tableIds.discardedCardsId)
                 }); 
         });
     });
   });
-  describe.skip(".insertPlayedCardsRow", function(){
+  describe(".insertPlayedCardsRow", function(){
     it("should insert a new row in PlayedCards Table", function(done){
       var gameObject = Defaults.gameSettings2Player()
        
@@ -286,6 +288,10 @@ describe("Utils", function(){
         Utils.insertHanabiGameRow(gameObject)
        .then(game => Utils.insertPlayedCardsRow(game))
        .then(function(results){
+         after(function(){   //Deletes the Added Rows
+            db.run("DELETE FROM HanabiGames WHERE id = "+results.tableIds.gameId)
+            db.run("DELETE FROM PlayedCards WHERE id = "+results.tableIds.playedCardsId)
+         })
       
         db.get("SELECT * FROM PlayedCards WHERE id = $id",  
                  {$id: results.tableIds.playedCardsId},
@@ -300,14 +306,11 @@ describe("Utils", function(){
                   assert.equal(row.id, results.tableIds.playedCardsId)
                   done();
                  
-            //Deletes the Added Rows
-            db.run("DELETE FROM HanabiGames WHERE id = "+results.tableIds.gameId)
-            db.run("DELETE FROM PlayedCards WHERE id = "+results.tableIds.playedCardsId)
                 }); 
         });
     });
   });
-  describe.skip(".insertMessagesRow", function(){
+  describe(".insertMessagesRow", function(){
     it("should insert a new row in Messages Table", function(done){
         var gameObject = Defaults.gameSettings2Player()
        
@@ -316,6 +319,10 @@ describe("Utils", function(){
         Utils.insertHanabiGameRow(gameObject)
        .then(game => Utils.insertMessagesRow(game))
        .then(function(results){
+         after(function(){ //Deletes All Rows From Test
+           db.run("DELETE FROM HanabiGames WHERE id = "+results.tableIds.gameId)
+           db.run("DELETE FROM Messages WHERE id = "+results.tableIds.messagesId)
+         });
       
         db.get("SELECT * FROM Messages WHERE id = $id",  
                  {$id: results.tableIds.messagesId},
@@ -328,27 +335,28 @@ describe("Utils", function(){
                   assert.notOk(err)
                   assert.ok(row)
                   assert.equal(row.id, results.tableIds.messagesId)
+                  done();
                         
                 });
           
-          //Deletes All Rows From Test
-         db.run("DELETE FROM HanabiGames WHERE id = "+results.tableIds.gameId)
-         db.run("DELETE FROM Messages WHERE id = "+results.tableIds.messagesId)
-         done();
         });
     });
   });
-  describe.skip(".insertPlayerRows", function(){
+  describe(".insertPlayerRows", function(){
     it("should insert a new rows in Players Table (2-players)", function(done){
         var gameObject = Defaults.gameSettings2Player()
-        var expectedPlayer1Card2 = "orange|3";
-        var expectedPlayer2Card5 = "orange|2";    
+        var expectedPlayer1Card2 = "orange|3|";
+        var expectedPlayer2Card5 = "orange|2|";    
        
         // Adds Rows to Players Table Row Id saved to: results.tableIds.playerId[i] 
         // HanabiGame Row is Created as well to retrieve a GameId to Insert into the Players gameId
         Utils.insertHanabiGameRow(gameObject)
        .then(game => Utils.insertPlayersRows(game))
        .then(function(results){
+        after(function(){  //Deletes All Rows From Test
+         db.run("DELETE FROM HanabiGames WHERE id = "+results.tableIds.gameId)
+         db.run("DELETE FROM Players WHERE gameId = "+results.tableIds.gameId)
+        });
       
         db.get("SELECT * FROM Players WHERE id = $id",  
                  {$id: results.tableIds.playersId[0]},
@@ -379,14 +387,10 @@ describe("Utils", function(){
                   done();      
                 });
           
-          //Deletes All Rows From Test
-         db.run("DELETE FROM HanabiGames WHERE id = "+results.tableIds.gameId)
-         db.run("DELETE FROM Players WHERE id = "+results.tableIds.playersId[0])
-         db.run("DELETE FROM Players WHERE id = "+results.tableIds.playersId[1])
         });
     });
   });
-  describe.skip(".updateHanabiGameRow", function(){
+  describe(".updateHanabiGameRow", function(){
     it("Updates hints and lives in Hanabi Game Row", function(done){
        var gameObject = Defaults.gameSettings2Player()
        var expectedHintsLeft = 4 
@@ -395,6 +399,10 @@ describe("Utils", function(){
        Utils.insertHanabiGameRow(gameObject)// Adds Row to HanabiGame Table
        .catch(function(e){ console.log(e.message)})
        .then(function(results){
+           after(function(){ //Delete Inserted rows
+             db.run("DELETE FROM HanabiGames WHERE id ="+results.tableIds.gameId);
+           });
+         
            results.hintsLeft = 4
            results.livesLeft = 1
         
@@ -409,7 +417,6 @@ describe("Utils", function(){
                 assert.equal(row.livesLeft, expectedLivesLeft)
                done()
                
-               db.run("DELETE FROM HanabiGames WHERE id ="+results.tableIds.gameId);
               });
        });
     });
