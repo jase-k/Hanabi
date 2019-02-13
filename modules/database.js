@@ -232,26 +232,37 @@ const Utils = {
    });  
   },
   //This function updates Tables: PlayingDeck, DiscardedCards, & PlayedCards
-  updateDeck(array, id, tableName){
-    var deckLength = 25 //Max Length of decks
-    if(tableName === 'PlayingDeck'){
-      deckLength = 50
-    }
+  updateDeck(object, tableName){
+   return new Promise((resolve, reject) => { 
+      var deckLength = 25 //Max Length of decks
+      var array = [];
+     
+      if(tableName === 'PlayingDeck'){
+        deckLength = 50
+        array = object.playingDeck
+      }
+       else if(tableName === 'PlayedCards'){
+         array = object.playedCards
+       }else{
+         array = object.discardedCards
+       }
     
-    var setString =  convertCardArrayForUpdate(array, deckLength) //Converts Array to a Valid SQL String 
+      var setString =  convertCardArrayForUpdate(array, deckLength) //Converts Array to a Valid SQL String 
     
-    var sql = `UPDATE ${tableName}
-               SET ${setString}
-               WHERE gameId = ${id}`
+      var sql = `UPDATE ${tableName}
+                 SET ${setString}
+                 WHERE gameId = ${object.tableIds.gameId}`
     
-    db.run(sql, function (err){
-      if(err){
-      console.log("Error at updateDeck "+tableName, sql, err)
-        throw err
-        }
-      });
+      db.run(sql, function (err){
+        if(err){
+        console.log("Error at updateDeck "+tableName, sql, err)
+          throw err
+          }
+        });
+     });
     },
   updateMessages(object){
+  return new Promise((resolve, reject) => { 
        var sql = `UPDATE Messages
                SET Messages = "${object.messages.join()}"
                WHERE gameId = ${object.tableIds.gameId}`
@@ -260,7 +271,10 @@ const Utils = {
       if(err){
         console.log("Error at Updating Messages")
         throw err
-      }
+        
+        resolve(object)
+        }
+      });
     });
   },
   //This function takes an individual playerObject as an argument and updates the row. 
@@ -294,16 +308,18 @@ const Database = {
   //Updates All Tables with Current Object. Returns the same Object
   update(object){
     return new Promise((resolve, reject) => { 
-     Utils.updateHanabiGameRow(object)
-     Utils.updateDeck(object.playingDeck, object.tableIds.gameId, "PlayingDeck")
-     Utils.updateDeck(object.discardedCards, object.tableIds.gameId, "DiscardedCards")
-     Utils.updateDeck(object.playedCards, object.tableIds.gameId, "PlayedCards")
-     Utils.updateMessages(object)
-     object.players.forEach(function(player){
-       Utils.updatePlayerRow(player)
-     });
-     resolve(object) 
-    });  
+      Utils.updateHanabiGameRow(object)
+      .then(object => Utils.updateDeck(object, "PlayingDeck"))
+      .then(object => Utils.updateDeck(object, "DiscardedCards"))
+      .then(object => Utils.updateDeck(object, "PlayedCards"))
+      .then(object => Utils.updateMessages(object))
+      .then(function(object){
+           object.players.forEach(function(player){
+             Utils.updatePlayerRow(player)
+           });
+           resolve(object) 
+         });  
+      }); 
   },
 };
 
