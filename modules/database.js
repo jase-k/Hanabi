@@ -27,7 +27,7 @@ var i;
 const Helper = {
   //table: STRING columns: ARRAY values: ARRAY
   createInsertSQLString(table, values){ 
-    var SQL = `INSERT INTO ${table}(${values.map(value => ) VALUES()`
+    var SQL = `INSERT INTO ${table}(${values.map(value => value.column).join()}) VALUES("${values.map(value => value.value).join('","')}")`
     
     return SQL 
   }

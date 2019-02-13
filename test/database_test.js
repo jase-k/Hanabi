@@ -640,18 +640,18 @@ describe("Helper", function(){
     it("returns a valid SQL String with 12 column/value pairs", function(done){
       var table = "OriginalDeck"
       var values = [
-        {column: "card1", value: "red|4"},
-        {column: "card2", value: "red|4"},
-        {column: "card3", value: "red|4"},
+        {column: "card1", value: "red|1"},
+        {column: "card2", value: "red|2"},
+        {column: "card3", value: "red|3"},
         {column: "card4", value: "red|4"},
-        {column: "card5", value: "red|4"},
-        {column: "card6", value: "red|4"},
-        {column: "card7", value: "red|4"},
-        {column: "card8", value: "red|4"},
-        {column: "card9", value: "red|4"},
-        {column: "card10", value: "red|4"},
-        {column: "card11", value: "red|4"},
-        {column: "card12", value: "red|4"}
+        {column: "card5", value: "red|5"},
+        {column: "card6", value: "red|6"},
+        {column: "card7", value: "red|7"},
+        {column: "card8", value: "red|8"},
+        {column: "card9", value: "red|9"},
+        {column: "card10", value: "red|10"},
+        {column: "card11", value: "red|11"},
+        {column: "card12", value: "red|12"}
         ]
       var expectedResult = 'INSERT INTO OriginalDeck(card1,card2,card3,card4,card5,card6,card7,card8,card9,card10,card11,card12) VALUES("red|1","red|2","red|3","red|4","red|5","red|6","red|7","red|8","red|9","red|10","red|11","red|12")'
       var string = Helper.createInsertSQLString(table, values);
