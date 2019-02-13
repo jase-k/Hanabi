@@ -675,12 +675,31 @@ describe("Helper", function(){
   describe("createSQL", function(){
     it("returns a valid SQL with correct columns for Insert HanabiGame", function(){
       var table = "HanabiGame"
-      var expectedColumns = ['numberOfPlayers','hintsLeft']
+      var expectedColumns = ['numberOfPlayers','hintsLeft', 'livesLeft', 'score', 'dateCreated']
       var object = Defaults.gameSettings2Player()
       
       var string = Helper.createSQL(table, object);
       
       assert.include(string, table)
+      assert.include(string, expectedColumns[0]);
+      assert.include(string, expectedColumns[1]);
+      assert.include(string, expectedColumns[2]);
+      assert.include(string, expectedColumns[3])
+      assert.include(string, expectedColumns[4])
+    });
+    it("returns a valid SQL with correct values for Insert HanabiGame", function(){
+      var table = "HanabiGame"
+      var object = Defaults.gameSettings2Player()
+      var expectedValues = [object.numberOfPlayers, object.dateCreated, object.hintsLeft, object.livesLeft, object.score ]
+      
+      var string = Helper.createSQL(table, object);
+      
+      assert.include(string, table)
+      assert.include(string, expectedValues[0]);
+      assert.include(string, expectedValues[1]);
+      assert.include(string, expectedValues[2]);
+      assert.include(string, expectedValues[3])
+      assert.include(string, expectedValues[4])
     });
   });
 });

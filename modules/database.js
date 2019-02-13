@@ -33,6 +33,12 @@ const Helper = {
   },
   //table: STRING object: GAME OBJECT
   createSQL(table, object){
+    var values = [
+      {column: "numberOfPlayers", valu
+    ]
+    
+    var SQL = this.createInsertSQLString(table, values)
+    return SQL
   }
 }
 
