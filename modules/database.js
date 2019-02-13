@@ -277,25 +277,28 @@ const Utils = {
       if(err){
         console.log("Error at Updating Messages")
         throw err
-        
-        resolve(object)
         }
+        resolve(object)
       });
     });
   },
   //This function takes an individual playerObject as an argument and updates the row. 
-  updatePlayerRow(playerObject){
-      console.log("updating Players")
-    var setString = convertCardArrayForUpdate(playerObject.hand, playerObject.hand.length)
-    var sql = `UPDATE Players
-              SET  ${setString}, active = ${playerObject.active}
-              WHERE id = ${playerObject.id}`
-      console.log(sql)
-    db.run(sql, function(err){
-      if(err){
-        console.log("Error at Player "+playerObject.id+" Updating Table")
-      }
-    })
+  updatePlayerRow(playerObject, object){
+     console.log("updating Players")
+    
+   return new Promise((resolve, reject) => { 
+     var setString = convertCardArrayForUpdate(playerObject.hand, playerObject.hand.length)
+     var sql = `UPDATE Players
+               SET  ${setString}, active = ${playerObject.active}
+               WHERE id = ${playerObject.id}`
+       console.log(sql)
+     db.run(sql, function(err){
+       if(err){
+         console.log("Error at Player "+playerObject.id+" Updating Table", err)
+       }
+       resolve(object)
+     }) 
+   })
   }
 };
 
@@ -321,10 +324,11 @@ const Database = {
       .then(object => Utils.updateDeck(object, "DiscardedCards"))
       .then(object => Utils.updateMessages(object))
       .then(function(object){
-           object.players.forEach(function(player){
-             Utils.updatePlayerRow(player)
+        var promises = []   
+        object.players.forEach(async function(player){
+            Utils.updatePlayerRow(player, object)
            });
-           resolve(object) 
+        resolve(object)
          });  
       }); 
   },
