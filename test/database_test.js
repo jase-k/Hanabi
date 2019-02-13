@@ -585,7 +585,7 @@ describe("Utils", function(){
 
 describe("Helper", function(){
   describe("createInsertSQLStrings", function(){
-    it("returns a valid SQL string including the table name (HanabiGames)", function(){
+    it("returns a valid SQL string including the table name (HanabiGame)", function(){
       var table = "HanabiGame"
       var values = [
         {column: "numberOfPlayers", value: 3},
@@ -593,14 +593,12 @@ describe("Helper", function(){
         {column: "livesLeft", value: 3},
         {column: "hintsLeft", value: 8},
       ]
-      var expectedResults = 'INSERT INTO HanabiGames(numberOfPlayers,dateCreated,livesLeft,hintsLeft) VALUES(3,"'+new Date()+'",3,8)'
-
       
       var string = Helper.createInsertSQLString(table, values);
       
-      assert.equal(string, expectedResults)
+      assert.include(string, table)
     });
-    it("returns a valid SQL string including the table name (PlayingDeck)", function(){
+    it("returns a string including the table name (PlayingDeck)", function(){
       var table = "PlayingDeck"
       var values = [
         {column: "numberOfPlayers", value: 3},
@@ -608,13 +606,36 @@ describe("Helper", function(){
         {column: "livesLeft", value: 3},
         {column: "hintsLeft", value: 8},
       ]
-      var expectedResults = 'INSERT INTO PlayingDeck(numberOfPlayers,dateCreated,livesLeft,hintsLeft) VALUES(3,"'+new Date()+'",3,8)'
 
       
       var string = Helper.createInsertSQLString(table, values);
       
-      assert.includes(string, expectedResults)
+      assert.include(string, table)
     });
-    it("returns a valid 
+    it("returns a valid SQL String with 4 column/value pairs", function(done){
+      var table = "OriginalDeck"
+      var values = [
+        {column: "card1", value: "red|4"},
+        {column: "card2", value: "red|4"},
+        {column: "card3", value: "red|4"},
+        {column: "card4", value: "red|4"},
+        ]
+      var string = Helper.createInsertSQLString(table, values);
+      
+      db.run(string, function(err){
+        if(err){
+          console.log(err)
+        }  
+        var id = this.lastID
+        
+      console.log(id)
+        assert.notOk(err)
+        assert.ok(this.lastID)
+        
+        db.run("DELETE FROM "+table+" WHERE id = "+id);
+        done();
+      });
+      
+    });
   });
 });
