@@ -802,6 +802,20 @@ describe("Helper", function(){
     });
   });
   describe(".convertCardArrayForUpdate", function(){
-  
+    it("converts a CardObject Array to a string in the format card1='string'", function(){
+      var array = [
+        {color: "red", hints: ["not white", "3"], number: 3},
+        {color: "red", hints: ["not white", "3"], number: 3},
+        {color: "red", hints: ["not white", "not 3"], number: 1},
+        {color: "white", hints: ["white", "not 3"], number: 2},
+        {color: "white", hints: ["white", "not 3"], number: 5},
+      ]
+      var expectedResult = 'card1="red|3|not white,3",card2="red|3|not white,3",card3="red|1|not white,not 3",card4="white|2|white,not 3",card5="white|5|white,not 3",card6="null"'
+    
+      var result = Helper.convertCardArrayForUpdate(array, 6)
+      
+      assert.equal(result, expectedResult)
+      
+    })
   });
 });
