@@ -585,7 +585,7 @@ describe("Utils", function(){
 
 describe("Helper", function(){
   describe("createInsertSQLStrings", function(){
-    it("returns a string including the table name", function(){
+    it("returns a valid SQL string including the table name (HanabiGames)", function(){
       var table = "HanabiGame"
       var values = [
         {column: "numberOfPlayers", value: 3},
@@ -599,6 +599,22 @@ describe("Helper", function(){
       var string = Helper.createInsertSQLString(table, values);
       
       assert.equal(string, expectedResults)
-    })
+    });
+    it("returns a valid SQL string including the table name (PlayingDeck)", function(){
+      var table = "PlayingDeck"
+      var values = [
+        {column: "numberOfPlayers", value: 3},
+        {column: "dateCreated", value: new Date()},
+        {column: "livesLeft", value: 3},
+        {column: "hintsLeft", value: 8},
+      ]
+      var expectedResults = 'INSERT INTO PlayingDeck(numberOfPlayers,dateCreated,livesLeft,hintsLeft) VALUES(3,"'+new Date()+'",3,8)'
+
+      
+      var string = Helper.createInsertSQLString(table, values);
+      
+      assert.includes(string, expectedResults)
+    });
+    it("returns a valid 
   });
 });
