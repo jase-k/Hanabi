@@ -18,7 +18,7 @@ const assert = require('chai').assert
 const {GamePlay} = require('../modules/game_play.js');
 const Defaults = require('./defaults.js')
 
-describe.skip("GamePlay", function(){
+describe("GamePlay", function(){
   
   describe(".createDeck", function(){
     it("Creates and Returns an Array of 50 Card Objects for the OriginalDeck", function(){

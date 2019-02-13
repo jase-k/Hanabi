@@ -265,7 +265,6 @@ describe("Database", function(){
   });
 });
 
-
 describe("Utils", function(){
   describe(".insertHanabiGameRow", function(){
    it("Should insert a new row in HanabiGames Table", function(done){   
@@ -959,9 +958,6 @@ describe("Utils", function(){
         Utils.getPlayers(results)  
         .then(function(results){
       
-          console.log("results:", JSON.stringify(results.players[1].hand))
-          console.log("Expected:", JSON.stringify(expectedPlayers[1].hand))
-          
           assert.deepEqual(results.players[1].hand, expectedPlayers[1].hand)
           assert.equal(results.players[0].name, expectedPlayers[0].name)
           done()

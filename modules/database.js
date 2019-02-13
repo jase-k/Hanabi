@@ -91,7 +91,6 @@ const Utils = {
         
            object.tableIds.gameId= this.lastID
            object.id = this.lastID
-           console.log("HanabiGame ID", this.lastID)
            resolve(object)
         })
     });
@@ -234,7 +233,6 @@ const Utils = {
 },
   //This function updates score, livesLeft, hintsLeft
   updateHanabiGameRow(gameObject){
-    console.log("Updating HanabiGame")
    return new Promise((resolve, reject) => { 
     var sql = `UPDATE HanabiGames
             SET score = ${gameObject.score}, hintsLeft = ${gameObject.hintsLeft}, livesLeft = ${gameObject.livesLeft}
@@ -250,7 +248,6 @@ const Utils = {
   },
   //This function updates Tables: PlayingDeck, DiscardedCards, & PlayedCards
   updateDeck(object, tableName){
-    console.log("Updating"+tableName)
    return new Promise((resolve, reject) => { 
       var deckLength = 25 //Max Length of decks
       var array = [];
@@ -283,7 +280,6 @@ const Utils = {
      });
     },
   updateMessages(object){
-    console.log("updating Messages")
   return new Promise((resolve, reject) => { 
        var sql = `UPDATE Messages
                SET Messages = "${object.messages.join()}"
@@ -301,14 +297,11 @@ const Utils = {
   //This function takes an individual playerObject as an argument and updates the row. 
   //gameObject is included to pass data to the next call in Database.update
   updatePlayerRow(playerObject, gameObject){
-     console.log("updating Players")
-    
-   return new Promise((resolve, reject) => { 
+    return new Promise((resolve, reject) => { 
      var setString = Helper.convertCardArrayForUpdate(playerObject.hand, playerObject.hand.length)
      var sql = `UPDATE Players
                SET  ${setString}, active = ${playerObject.active}
                WHERE id = ${playerObject.id}`
-       console.log(sql)
      db.run(sql, function(err){
        if(err){
          console.log("Error at Player "+playerObject.id+" Updating Table", err)
@@ -372,14 +365,15 @@ const Utils = {
   getPlayedCards(object){
     return new Promise ((resolve, reject) => {
       object.playedCards = []
+      var array = []
       db.get('SELECT * FROM PlayedCards WHERE gameId ='+object.id, 
         function(err, row){
           if(err){throw err}
     
          for(var i = 1; i <= 25; i++){
-           object.playedCards.push(Helper.cardStringToObject(row['card'+i]))
+           array.push(Helper.cardStringToObject(row['card'+i]))
           }
-        
+        object.playedCards = array.filter(card => card)
         resolve(object)
     });
   })
