@@ -584,122 +584,23 @@ describe("Utils", function(){
 });
 
 describe("Helper", function(){
-  describe("createInsertSQLStrings", function(){
-    it("returns a valid SQL string including the table name (HanabiGame)", function(){
-      var table = "HanabiGame"
-      var values = [
-        {column: "numberOfPlayers", value: 3},
-        {column: "dateCreated", value: new Date()},
-        {column: "livesLeft", value: 3},
-        {column: "hintsLeft", value: 8},
-      ]
+  describe(".createCardString", function(){
+    it("creates a valid card column string for 5 cards", function(){
+      var expectedResult = 'card1,card2,card3,card4,card5'
       
-      var string = Helper.createInsertSQLString(table, values);
+      var result = Helper.createCardString(5);
       
-      assert.include(string, table)
+      assert.equal(result, expectedResult);
     });
-    it("returns a string including the table name (PlayingDeck)", function(){
-      var table = "PlayingDeck"
-      var values = [
-        {column: "numberOfPlayers", value: 3},
-        {column: "dateCreated", value: new Date()},
-        {column: "livesLeft", value: 3},
-        {column: "hintsLeft", value: 8},
-      ]
-
+    it("creates a valid card column string for 15 cards", function(){
+      var expectedResult = 'card1,card2,card3,card4,card5,card6,card7,card8,card9,card10,card11,card12,card13,card14,card15'
       
-      var string = Helper.createInsertSQLString(table, values);
+      var result = Helper.createCardString(15);
       
-      assert.include(string, table)
-    });
-    it("returns a valid SQL String with 4 column/value pairs", function(done){
-      var table = "OriginalDeck"
-      var values = [
-        {column: "card1", value: "red|4"},
-        {column: "card2", value: "red|4"},
-        {column: "card3", value: "red|4"},
-        {column: "card4", value: "red|4"},
-        ]
-      var string = Helper.createInsertSQLString(table, values);
-      
-      db.run(string, function(err){
-        if(err){
-          console.log(err)
-        }  
-        var id = this.lastID
-        
-      console.log(id)
-        assert.notOk(err)
-        assert.ok(this.lastID)
-        
-        db.run("DELETE FROM "+table+" WHERE id = "+id);
-        done();
-      });
-      
-    });
-    it("returns a valid SQL String with 12 column/value pairs", function(done){
-      var table = "OriginalDeck"
-      var values = [
-        {column: "card1", value: "red|1"},
-        {column: "card2", value: "red|2"},
-        {column: "card3", value: "red|3"},
-        {column: "card4", value: "red|4"},
-        {column: "card5", value: "red|5"},
-        {column: "card6", value: "red|6"},
-        {column: "card7", value: "red|7"},
-        {column: "card8", value: "red|8"},
-        {column: "card9", value: "red|9"},
-        {column: "card10", value: "red|10"},
-        {column: "card11", value: "red|11"},
-        {column: "card12", value: "red|12"}
-        ]
-      var expectedResult = 'INSERT INTO OriginalDeck(card1,card2,card3,card4,card5,card6,card7,card8,card9,card10,card11,card12) VALUES("red|1","red|2","red|3","red|4","red|5","red|6","red|7","red|8","red|9","red|10","red|11","red|12")'
-      var string = Helper.createInsertSQLString(table, values);
-      
-      assert.equal(string, expectedResult)
-      
-      db.run(string, function(err){
-        if(err){
-          console.log(err)
-        }  
-        var id = this.lastID
-        
-        assert.notOk(err)
-        assert.ok(this.lastID)
-        
-        db.run("DELETE FROM "+table+" WHERE id = "+id);
-        done();
-      });
+      assert.equal(result, expectedResult);
     });
   });
   describe("createSQL", function(){
-    it("returns a valid SQL with correct columns for Insert HanabiGame", function(){
-      var table = "HanabiGame"
-      var expectedColumns = ['numberOfPlayers','hintsLeft', 'livesLeft', 'score', 'dateCreated']
-      var object = Defaults.gameSettings2Player()
-      
-      var string = Helper.createSQL(table, object);
-      
-      assert.include(string, table)
-      assert.include(string, expectedColumns[0]);
-      assert.include(string, expectedColumns[1]);
-      assert.include(string, expectedColumns[2]);
-      assert.include(string, expectedColumns[3])
-      assert.include(string, expectedColumns[4])
-    });
-    it("returns a valid SQL with correct values for Insert HanabiGame", function(){
-      var table = "HanabiGame"
-      var object = Defaults.gameSettings2Player()
-      var expectedValues = [object.numberOfPlayers, object.dateCreated, object.hintsLeft, object.livesLeft, object.score ]
-      
-      var string = Helper.createSQL(table, object);
-      
-      assert.include(string, table)
-      assert.include(string, expectedValues[0]);
-      assert.include(string, expectedValues[1]);
-      assert.include(string, expectedValues[2]);
-      assert.include(string, expectedValues[3])
-      assert.include(string, expectedValues[4])
-    });
+  
   });
 });

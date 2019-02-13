@@ -37,6 +37,7 @@ const Helper = {
    
   return string
 },
+  //input Array of {color: STRING, hints: [STRINGS], number: STRING}
  convertCardArray(array){
   var string = ''
   
@@ -94,7 +95,7 @@ const Utils = {
   },
   insertOriginalDeckRow(object){
  return new Promise((resolve, reject) =>{
-  db.run('INSERT INTO OriginalDeck (gameId,'+createCardString(50)+') VALUES('+object.tableIds.gameId+','+Helper.convertCardArray(object.originalDeck)+') ', {}, 
+  db.run('INSERT INTO OriginalDeck (gameId,'+Helper.createCardString(50)+') VALUES('+object.tableIds.gameId+','+Helper.convertCardArray(object.originalDeck)+') ', {}, 
              function(err){
                 if(err){throw err}
               object.tableIds.originalDeckId = this.lastID
@@ -105,7 +106,7 @@ const Utils = {
 },
   insertPlayingDeckRow(object){
   return new Promise((resolve, reject) =>{
-    db.run('INSERT INTO PlayingDeck (gameId,'+createCardString(object.playingDeck.length)+') VALUES('+object.tableIds.gameId+','+Helper.convertCardArray(object.playingDeck)+') ', {}, 
+    db.run('INSERT INTO PlayingDeck (gameId,'+Helper.createCardString(object.playingDeck.length)+') VALUES('+object.tableIds.gameId+','+Helper.convertCardArray(object.playingDeck)+') ', {}, 
              function(err){
                 if(err){throw err}
               object.tableIds.playingDeckId = this.lastID
@@ -154,7 +155,7 @@ const Utils = {
       object.tableIds.playersId = []
       var i = 1
       var number = object.players[i].hand.length
-    db.run('INSERT INTO Players (gameId, name, active,  '+createCardString(number)+') VALUES('+object.tableIds.gameId+',"'+object.players[0].name+'", 1 ,'+Helper.convertCardArray(object.players[i-1].hand)+') ', {}, 
+    db.run('INSERT INTO Players (gameId, name, active,  '+Helper.createCardString(number)+') VALUES('+object.tableIds.gameId+',"'+object.players[0].name+'", 1 ,'+Helper.convertCardArray(object.players[i-1].hand)+') ', {}, 
              function(err){
                 if(err){
                   console.log("Error at insertMessagesRow Player 1")
@@ -167,7 +168,7 @@ const Utils = {
         resolve(object)
       }else{ i++
           
-    db.run('INSERT INTO Players (gameId,'+createCardString(number)+') VALUES('+object.tableIds.gameId+','+Helper.convertCardArray(object.players[i-1].hand)+') ', {}, 
+    db.run('INSERT INTO Players (gameId,'+Helper.createCardString(number)+') VALUES('+object.tableIds.gameId+','+Helper.convertCardArray(object.players[i-1].hand)+') ', {}, 
       function(err){
         if(err){
           console.log("Error at insertMessagesRow Player 2")
@@ -179,7 +180,7 @@ const Utils = {
         if(i == object.players.length){
           resolve(object)
           }else{  i++
-            db.run('INSERT INTO Players (gameId,'+createCardString(number)+') VALUES('+object.tableIds.gameId+','+Helper.convertCardArray(object.players[i-1].hand)+') ', {}, 
+            db.run('INSERT INTO Players (gameId,'+Helper.createCardString(number)+') VALUES('+object.tableIds.gameId+','+Helper.convertCardArray(object.players[i-1].hand)+') ', {}, 
                function(err){
                 if(err){
                   console.log("Error at insertMessagesRow Player 3")
@@ -191,7 +192,7 @@ const Utils = {
                 if(i == object.players.length){
                 resolve(object)
                 }else{  i++
-                  db.run('INSERT INTO Players (gameId,'+createCardString(number)+') VALUES('+object.tableIds.gameId+','+Helper.convertCardArray(object.players[i-1].hand)+') ', {}, 
+                  db.run('INSERT INTO Players (gameId,'+Helper.createCardString(number)+') VALUES('+object.tableIds.gameId+','+Helper.convertCardArray(object.players[i-1].hand)+') ', {}, 
                    function(err){
                     if(err){
                       console.log("Error at insertMessagesRow Player 4")
@@ -204,7 +205,7 @@ const Utils = {
                     if(i == object.players.length){
                     resolve(object)
                     }else{  i++
-                      db.run('INSERT INTO Players (gameId,'+createCardString(number)+') VALUES('+object.tableIds.gameId+','+Helper.convertCardArray(object.players[i-1].hand)+') ', {}, 
+                      db.run('INSERT INTO Players (gameId,'+Helper.createCardString(number)+') VALUES('+object.tableIds.gameId+','+Helper.convertCardArray(object.players[i-1].hand)+') ', {}, 
                        function(err){
                         if(err){
                           console.log("Error at insertMessagesRow Player 5")
@@ -301,47 +302,6 @@ const Database = {
 
 module.exports = {Database, Utils, Helper}
 
-function createCardString(number){
- var string = '' 
-  for(var i = 1; i <= number; i++){
-    if(i !== number){ 
-    string += 'card'+i+','
-      }else{string += 'card'+i}
-    }
-  return string
-}
-
-function convertCardArray(array){
-  var string = ''
-  for(var i = 0; i < array.length; i++){  
-    if(array[i]){
-      string += '"'+array[i].color+'|'+array[i].number
-      for(var j = 0; j < array[i].hints.length; j++){
-        string += '|'+array[i].hints[j]
-        }
-    if(i !== array.length-1){
-           string += '",'
-        }else{string += '"'}
-    }
-  }
-  return string
-}
-
-function cardStringToObject(string){
-var object;
-  if(string){
-var array = string.split("|")
-object = {
-    color: array[0],
-    number: array[1],
-    hints: []    
-  }
-for(var i = 2; i <array.length; i++){
-    object.hints.push(array[i])
-    }  
-  }
-  return object
-}
  
 
 //+++++++++++++++++++++++++++++
