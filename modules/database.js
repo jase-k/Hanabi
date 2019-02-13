@@ -38,12 +38,12 @@ const Helper = {
   return string
 },
   //input Array of {color: STRING, hints: [STRINGS], number: STRING}
-  //output: "color|number|hints, color|number|hints"
+  //output: "'color|number|hints', 'color|number|hints'"
  convertCardArray(array){
   var stringArray = array.map(card => card.color+"|"+card.number+"|"+card.hints.join())
   
   var string = '"'+stringArray.join('","')+'"'
-
+   
   return string
 },
 //input: "color|number|hints"
@@ -59,7 +59,31 @@ const Helper = {
         }
     }
     return object
-  } 
+  },
+//input: array: [CARD OBJECTS] length: INTEGER (Length of Max Array Length)
+//output: 'card1="card.color|card.number|card.hints", card2="card.color|card.number|card.hints"'    
+ convertCardArrayForUpdate(array, length){
+    var string = ''
+    var stringArray = array.map((card, index) => car 
+    for(var i = 0; i < length; i++){  //Converts Each Array Object to String format to be inserted into the Table 
+      if(array[i]){
+        string += 'card'+(i+1)+'="'+array[i].color+'|'+array[i].number
+          for(var j = 0; j < array[i].hints.length; j++){
+            string += '|'+array[i].hints[j]
+              } 
+          if(i === length-1){
+          string += '"'
+            }else{ string +='",'}
+          
+      }else if(i < length-1){ //Changes the Last spots to null to clear the table of those cards
+          string += 'card'+(i+1)+'=null,'
+    
+      }else{ 
+        string += 'card'+(i+1)+'=null'
+      };
+   };
+    return string
+  }
 }
 
 const Utils = {
@@ -326,9 +350,9 @@ const Database = {
       .then(function(object){
         var promises = []   
         object.players.forEach(async function(player){
-            Utils.updatePlayerRow(player, object)
+            promises.push(Utils.updatePlayerRow(player, object))
            });
-        resolve(object)
+        Promise.all(promises).then(objects => resolve(objects[0]))
          });  
       }); 
   },
@@ -369,27 +393,7 @@ Output: String = "color|number|hint[0] hint[1] hint[2],"
 
 */
 
-function convertCardArrayForUpdate(array, length){
-  var string = ''
-  for(var i = 0; i < length; i++){  //Converts Each Array Object to String format to be inserted into the Table 
-    if(array[i]){
-      string += 'card'+(i+1)+'="'+array[i].color+'|'+array[i].number
-        for(var j = 0; j < array[i].hints.length; j++){
-          string += '|'+array[i].hints[j]
-            } 
-        if(i === length-1){
-        string += '"'
-          }else{ string +='",'}
-        
-    }else if(i < length-1){ //Changes the Last spots to null to clear the table of those cards
-        string += 'card'+(i+1)+'=null,'
-    
-    }else{ 
-      string += 'card'+(i+1)+'=null'
-    };
- };
-  return string
-}; 
+ 
 
 
 //This function takes an individual playerObject as an argument and updates the row. 
