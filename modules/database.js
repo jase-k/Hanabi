@@ -61,11 +61,16 @@ const Helper = {
     return object
   },
 //input: array: [CARD OBJECTS] length: INTEGER (Length of Max Array Length)
-//output: 'card1="card.color|card.number|card.hints", card2="card.color|card.number|card.hints"'    
+//output: 'card1="card.color|card.number|card.hints",card2="card.color|card.number|card.hints", card[length+1...n]=null'    
  convertCardArrayForUpdate(array, length){
     var string = ''
-    var stringArray = array.map((card, index) => car 
-    for(var i = 0; i < length; i++){  //Converts Each Array Object to String format to be inserted into the Table 
+    var stringArray = array.map((card, index) => 'card'+(index+1)+'="'+card.color+'|'+card.number+'|'+card.hints.join()+'"') 
+    for(var i = array.length; i = length; i++){
+      stringArray.push('card'+i+'="null"')
+    }  
+    console.log("String Array:", stringArray)
+   
+   for(var i = 0; i < length; i++){  //Converts Each Array Object to String format to be inserted into the Table 
       if(array[i]){
         string += 'card'+(i+1)+'="'+array[i].color+'|'+array[i].number
           for(var j = 0; j < array[i].hints.length; j++){
@@ -273,7 +278,7 @@ const Utils = {
          array = object.discardedCards
        }
     
-      var setString =  convertCardArrayForUpdate(array, deckLength) //Converts Array to a Valid SQL String 
+      var setString =  Helper.convertCardArrayForUpdate(array, deckLength) //Converts Array to a Valid SQL String 
     
       var sql = `UPDATE ${tableName}
                  SET ${setString}
@@ -311,7 +316,7 @@ const Utils = {
      console.log("updating Players")
     
    return new Promise((resolve, reject) => { 
-     var setString = convertCardArrayForUpdate(playerObject.hand, playerObject.hand.length)
+     var setString = Helper.convertCardArrayForUpdate(playerObject.hand, playerObject.hand.length)
      var sql = `UPDATE Players
                SET  ${setString}, active = ${playerObject.active}
                WHERE id = ${playerObject.id}`
@@ -398,7 +403,7 @@ Output: String = "color|number|hint[0] hint[1] hint[2],"
 
 //This function takes an individual playerObject as an argument and updates the row. 
 function updatePlayers(playerObject){
-  var setString = convertCardArrayForUpdate(playerObject.hand, playerObject.hand.length)
+  var setString = Helper.convertCardArrayForUpdate(playerObject.hand, playerObject.hand.length)
   var sql = `UPDATE Players
             SET  ${setString}, active = ${playerObject.active}
             WHERE id = ${playerObject.id}`
