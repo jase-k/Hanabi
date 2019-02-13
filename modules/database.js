@@ -55,8 +55,8 @@ const Helper = {
       var array = string.split("|")
       object = {
         color: array[0],
-        number: array[1],
-        hints: array[2].split(',')    
+        hints: array[2].split(',') ? array[2].split,
+        number: array[1]
         }
     }
     return object
@@ -340,13 +340,13 @@ const Utils = {
         function(err, row){
           if(err){throw err}
     
- for(var i = 1; i <= 50; i++){
-     object.playingDeck.push(cardStringToObject(row['card'+i]))
-    }
-        resolve(object)
-    });//ENDS db All
-  })    
-}
+          for(var i = 1; i <= 50; i++){
+             object.playingDeck.push(Helper.cardStringToObject(row['card'+i]))
+          }
+          resolve(object)
+      });
+    })    
+  }
 };
 
 const Database = {
