@@ -29,8 +29,8 @@ const Defaults = {
                         { color: 'white', hints: [], number: 1 },
                           ]
                   },{
-                    active: 0,
-                    name: "Jane Doe", 
+                    active: null,
+                    name: null, 
                     hand: [
                         { color: 'white', hints: [], number: 4 },
                         { color: 'blue', hints: [], number: 1 },

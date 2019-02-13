@@ -939,11 +939,10 @@ describe("Utils", function(){
     })
   });
   describe(".getPlayers", function(){
-    it("should return player Objects for All Players", function(){
+    it("should return player Objects for All Players", function(done){
       var gameObject = Defaults.gameSettings2Player()
       var expectedPlayers = gameObject.players
       
-      console.log(expectedPlayers)
        
       Utils.insertHanabiGameRow(gameObject) // Adds Row to HanabiGame Table
       .then(game => Utils.insertPlayersRows(game))
@@ -952,13 +951,17 @@ describe("Utils", function(){
              db.run("DELETE FROM HanabiGames WHERE id = "+results.tableIds.gameId) //Deletes the Added Row
              db.run("DELETE FROM Players WHERE gameId ="+results.tableIds.gameId); //Deletes the Players Row
              });
-        Utils.getPlayersRows(results)  
+        Utils.getPlayers(results)  
         .then(function(results){
       
-          assert.deepEqual(results.players, expectedPlayers)
+          console.log("results:", JSON.stringify(results.players[1].hand))
+          console.log("Expected:", JSON.stringify(expectedPlayers[1].hand))
+          
+          assert.deepEqual(results.players[1].hand, expectedPlayers[1].hand)
+          assert.equal(results.players[0].name, expectedPlayers[0].name)
           done()
         })
-      }
+      })
     });
   });
 });

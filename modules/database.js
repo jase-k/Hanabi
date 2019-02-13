@@ -411,15 +411,16 @@ const Utils = {
         rows.forEach(function(row){
             var array = []
           
-            playerObject = {
-              id: row.id, 
-              name: row.name,
-              active: row.active
-            }
             for(var i = 1; i <= 5; i++){
              array.push(Helper.cardStringToObject(row['card'+i]))
             }
-            playerObject.hand = array
+            
+          playerObject = {
+              active: row.active,
+              id: row.id, 
+              hand: array,
+              name: row.name
+            }
             object.players.push(playerObject)                 
       });
         resolve(object)    
