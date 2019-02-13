@@ -780,7 +780,7 @@ describe("Utils", function(){
     });
   });
   describe(".getPlayingDeck", function(){
-    it("should retrieve the correct Playing Deck Row with 50 values", function(done){
+    it("should retrieve the correct Playing Deck Row check card1 and card40", function(done){
       var gameObject = Defaults.gameSettings2Player()
        var expectedCard1 = {color: "red", hints:[], number:"3"}
        var expectedCard40 = {color: "blue", hints:[], number: "4" }
@@ -805,13 +805,71 @@ describe("Utils", function(){
             assert.ok(results)
             assert.deepEqual(results.playingDeck[0], expectedCard1, "Card 1 Failed")
             assert.deepEqual(results.playingDeck[39], expectedCard40, "Card 40 Failed")
-            assert.equal(results.playingDeck.length, 50)  
             
             done()
           })
         
         });
     });
+    it("should retrieve the correct Playing Deck Row with a length of 40", function(done){
+      var gameObject = Defaults.gameSettings2Player()
+       var expectedLength = 40
+       
+        // Adds Row to PlayingDeck Table Row Id saved to: results.tableIds.playingDeckId 
+        // HanabiGame Row is Created as well to retrieve a GameId to Insert into the Playing Deck gameId
+        Utils.insertHanabiGameRow(gameObject)
+       .then(game => Utils.insertPlayingDeckRow(game))
+       .then(function(results){
+       
+        after(function(){ //Deletes the Added Rows
+           db.run("DELETE FROM HanabiGames WHERE id = "+results.tableIds.gameId)
+           db.run("DELETE FROM PlayingDeck WHERE gameId = "+results.tableIds.gameId)
+         });
+        var object = {
+          id: results.tableIds.gameId
+        }
+        Utils.getPlayingDeck(object)
+         .then(function(results){
+            
+            assert.ok(results)
+            assert.equal(results.playingDeck.length, 40)  
+            
+            done()
+          })
+        
+        });
+    });
+  });
+  describe(".getDiscardedCards", function(){
+    it("should retrieve the Correct DiscardedCards Row (check card1)", function(done){
+      var gameObject = Defaults.gameSettings2Player()
+          gameObject.discardedCards = ["SampleCard"]
+      var expectedCard1 = "SampleCard"
+      var expectedLength = 1
+      
+      
+      Utils.insertHanabiGameRow(gameObject)
+       .then(game => Utils.insertDiscardedCardsRow(game))
+       .then(function(results){
+       
+        after(function(){ //Deletes the Added Rows
+           db.run("DELETE FROM HanabiGames WHERE id = "+results.tableIds.gameId)
+           db.run("DELETE FROM DiscardedCards WHERE gameId = "+results.tableIds.gameId)
+         });
+        var object = {
+          id: results.tableIds.gameId
+        }
+        Utils.getPlayingDeck(object)
+         .then(function(results){
+            
+            assert.ok(results)
+            assert.deepEqual(results.playingDeck[0], expectedCard1, "Card 1 Failed")
+            
+            done()
+          })
+        
+        });
+    })
   });
 });
 
