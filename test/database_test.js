@@ -155,12 +155,12 @@ describe("Database", function(){
          results.hintsLeft = 1; //changes HanabiGames
          results.discardedCards.push(results.playingDeck.shift()) //Alters DiscardedCards and PlayingDeck
          results.playedCards.push({color: "blue", hints: ["not orange"], number: "3"} ) //Alters PlayedCards  
-         results.messages = "Success! Jase played a blue 4!" //Alters Messages
+         results.messages.push = "Success! Jase played a blue 4!" //Alters Messages
          results.players[4].active = 1; //changes Players
         
          Database.update(results)
-         .then(function(results){
-           db.get("SELECT * FROM HanabiGames WHERE id = $id", 
+         
+         db.get("SELECT * FROM HanabiGames WHERE id = $id", 
                {$id:results.tableIds.gameId},
                function(err, row){
                   if(err){
@@ -219,12 +219,9 @@ describe("Database", function(){
                    console.log(err)
                    console.log("message", err.message)
                    }
-                  assert.equal(row.active, expectedActive)
+                  assert.equal(row.active, 1)
                 });      
-        done();
-         
-         });
-         
+        done();         
       });
     });
   });

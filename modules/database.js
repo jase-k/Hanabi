@@ -266,7 +266,7 @@ const Utils = {
     var sql = `UPDATE Players
               SET  ${setString}, active = ${playerObject.active}
               WHERE id = ${playerObject.id}`
-
+      console.log(sql)
     db.run(sql, function(err){
       if(err){
         console.log("Error at Player "+playerObject.id+" Updating Table")
@@ -287,7 +287,18 @@ const Database = {
       .then(object => Utils.insertPlayersRows(object))
       .then(object => resolve(object))
     });
-  }
+  },
+  //Updates All Tables with Current Object. Returns the same Object
+  update(object){
+     Utils.updateHanabiGameRow(object)
+     Utils.updateDeck(object.playingDeck, object.tableIds.gameId, "PlayingDeck")
+     Utils.updateDeck(object.discardedCards, object.tableIds.gameId, "DiscardedCards")
+     Utils.updateDeck(object.playedCards, object.tableIds.gameId, "PlayedCards")
+     Utils.updateMessages(object)
+     object.players.forEach(function(player){
+       Utils.updatePlayerRow(player)
+     });
+  },
 };
 
 module.exports = {Database, Utils, Helper}
