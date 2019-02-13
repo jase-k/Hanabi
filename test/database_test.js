@@ -601,7 +601,7 @@ describe("Helper", function(){
     });
   });
   describe("convertCardArray", function(){
-    it("returns a cardObjectArray to format: 'card.color|card.number|card.hints'", function(){
+    it("returns a String from a CARD OBJECT ARRAY to format: 'card.color|card.number|card.hints' (5cards)", function(){
       var array = [
         {color: "red", hints: ["not white", "3"], number: 3},
         {color: "red", hints: ["not white", "3"], number: 3},
@@ -611,8 +611,63 @@ describe("Helper", function(){
       ]
       var expectedResult = '"red|3|not white,3","red|3|not white,3","red|1|not white,not 3","white|2|white,not 3","white|5|white,not 3"'
       
-      var result = Helper.convertCardArray(array)
+      var result = Helper.convertCardArray(array);
       
+      assert.equal(result, expectedResult)
+    });
+    it("returns a String from a CARD OBJECT ARRAY to format: 'card.color|card.number|card.hints' (10 cards)", function(){
+      var array = [
+        {color: "red", hints: ["not white", "3"], number: 3},
+        {color: "red", hints: ["not white", "3"], number: 3},
+        {color: "red", hints: ["not white", "not 3"], number: 1},
+        {color: "white", hints: ["white", "not 3"], number: 2},
+        {color: "white", hints: ["white", "not 3"], number: 5},
+        {color: "red", hints: ["not white", "3"], number: 3},
+        {color: "red", hints: ["not white", "3"], number: 3},
+        {color: "red", hints: ["not white", "not 3"], number: 1},
+        {color: "white", hints: ["white", "not 3"], number: 2},
+        {color: "white", hints: ["white", "not 3"], number: 5},
+      ]
+      var expectedResult = '"red|3|not white,3","red|3|not white,3","red|1|not white,not 3","white|2|white,not 3","white|5|white,not 3","red|3|not white,3","red|3|not white,3","red|1|not white,not 3","white|2|white,not 3","white|5|white,not 3"'
+      
+      var result = Helper.convertCardArray(array);
+      
+      assert.equal(result, expectedResult)
+    });
+  });
+  describe("cardStringToObject", function(){
+    it("returns a cardObjectArray from format: 'card.color|card.number|card.hints' (5cards)", function(){
+      var expectedResult = [
+        {color: "red", hints: ["not white", "3"], number: 3},
+        {color: "red", hints: ["not white", "3"], number: 3},
+        {color: "red", hints: ["not white", "not 3"], number: 1},
+        {color: "white", hints: ["white", "not 3"], number: 2},
+        {color: "white", hints: ["white", "not 3"], number: 5},
+      ]
+      var string = '"red|3|not white,3","red|3|not white,3","red|1|not white,not 3","white|2|white,not 3","white|5|white,not 3"'
+      
+      var result = Helper.cardStringToObject(string);
+      
+      assert.deepEqual(result, expectedResult)
+    });
+    it("returns a cardObjectArray from format: 'card.color|card.number|card.hints' (10 cards)", function(){
+      var expectedResult = [
+        {color: "red", hints: ["not white", "3"], number: 3},
+        {color: "red", hints: ["not white", "3"], number: 3},
+        {color: "red", hints: ["not white", "not 3"], number: 1},
+        {color: "white", hints: ["white", "not 3"], number: 2},
+        {color: "white", hints: ["white", "not 3"], number: 5},
+        {color: "red", hints: ["not white", "3"], number: 3},
+        {color: "red", hints: ["not white", "3"], number: 3},
+        {color: "red", hints: ["not white", "not 3"], number: 1},
+        {color: "white", hints: ["white", "not 3"], number: 2},
+        {color: "white", hints: ["white", "not 3"], number: 5},
+      ]
+      var string = '"red|3|not white,3","red|3|not white,3","red|1|not white,not 3","white|2|white,not 3","white|5|white,not 3","red|3|not white,3","red|3|not white,3","red|1|not white,not 3","white|2|white,not 3","white|5|white,not 3"'
+      
+      var result = Helper.cardStringToObject(string);
+      
+      assert.deepEqual(result, expectedResult)
     });
   });
 });

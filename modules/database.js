@@ -40,11 +40,14 @@ const Helper = {
   //input Array of {color: STRING, hints: [STRINGS], number: STRING}
   //output: "color|number|hints, color|number|hints"
  convertCardArray(array){
-  var string = ''
   var stringArray = array.map(card => card.color+"|"+card.number+"|"+card.hints.join())
+  
+  var string = '"'+stringArray.join('","')+'"'
 
-  return stringArray
+  return string
 },
+//input: "color|number|hints, color|number|hints"
+//output Array of {color: STRING, hints: [STRINGS], number: STRING}
  cardStringToObject(string){
   var object;
     if(string){
