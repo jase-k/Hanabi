@@ -756,7 +756,7 @@ describe("Utils", function(){
     });
   });
   describe(".getHanabiGame", function(){
-    it("should retrieve row with correct Key: Value Pairs", function(done){
+    it("should retrieve row with correct Key:Value Pairs", function(done){
       var gameObject = Defaults.gameSettings2Player()
        
       Utils.insertHanabiGameRow(gameObject) // Adds Row to HanabiGame Table
@@ -766,19 +766,17 @@ describe("Utils", function(){
              })
         Utils.getHanabiGameRow(results.tableIds.gameId)  
         .then(function(results){
-          db.get("SELECT * FROM HanabiGames WHERE id = $id", 
-            {$id:results.tableIds.gameId},
-            function(err, row){
-   
-            
-              if(err){
-                   console.log(err)
-                   console.log("message", err.message)
-                     done();
-                   }
-              assert.notOk(err)   
-              done();
-                 });          
+          
+              assert.ok(results) 
+              assert.equal(results.hintsLeft, gameObject.hintsLeft)
+              assert.equal(results.livesLeft,gameObject.livesLeft)
+              assert.equal(results.numberOfPlayers, gameObject.numberOfPlayers)
+              assert.equal(results.score, gameObject.score, "Score is Not Equal")
+           if(err){
+             done(err)
+           }   
+          done();
+            });
          })
     });
   });
