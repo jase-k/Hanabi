@@ -23,7 +23,7 @@ const Defaults = require('./defaults.js')
 
 
 describe("Database", function(){
-  describe(".insert", function(){
+  describe.skip(".insert", function(){
     it("should insert new rows in All Tables: 5 players", function(done){
        var gameObject = Defaults.gameSettings5Player()
         
@@ -536,7 +536,7 @@ describe("Utils", function(){
          var id = results.tableIds.gameId 
              results.playingDeck.shift()
          
-         Utils.updateDeck(results.playingDeck, id, "PlayingDeck") // Updates Table with New Playing Deck Array
+         Utils.updateDeck(results, "PlayingDeck") // Updates Table with New Playing Deck Array
          
          db.get("SELECT * FROM PlayingDeck WHERE gameId = $id",  // Retrieves Row
                     {$id: results.tableIds.gameId},
@@ -569,7 +569,7 @@ describe("Utils", function(){
               results.playedCards.push({color: 'red', hints: [], number: 1}) //add Card Object to Array
          
          
-         Utils.updateDeck(results.playedCards, id, "PlayedCards") // Updates Table with New Played Cards Array
+         Utils.updateDeck(results, "PlayedCards") // Updates Table with New Played Cards Array
          
          db.get("SELECT * FROM PlayedCards WHERE gameId = $id",  // Retrieves Row
               {$id: results.tableIds.gameId},
@@ -601,7 +601,7 @@ describe("Utils", function(){
               results.discardedCards.push({color: 'red', hints: [], number: 1}) //add Card Object to Array
           
          
-         Utils.updateDeck(results.discardedCards, id, "DiscardedCards") // Updates Table with New Played Cards Array
+         Utils.updateDeck(results, "DiscardedCards") // Updates Table with New Played Cards Array
          
          db.get("SELECT * FROM DiscardedCards WHERE gameId = $id",  // Retrieves Row
              {$id: results.tableIds.gameId},

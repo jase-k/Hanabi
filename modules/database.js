@@ -218,6 +218,7 @@ const Utils = {
   
   //This function updates score, livesLeft, hintsLeft
   updateHanabiGameRow(gameObject){
+    console.log("Updating HanabiGame")
    return new Promise((resolve, reject) => { 
     var sql = `UPDATE HanabiGames
             SET score = ${gameObject.score}, hintsLeft = ${gameObject.hintsLeft}, livesLeft = ${gameObject.livesLeft}
@@ -233,6 +234,7 @@ const Utils = {
   },
   //This function updates Tables: PlayingDeck, DiscardedCards, & PlayedCards
   updateDeck(object, tableName){
+    console.log("Updating"+tableName)
    return new Promise((resolve, reject) => { 
       var deckLength = 25 //Max Length of decks
       var array = [];
@@ -255,13 +257,17 @@ const Utils = {
     
       db.run(sql, function (err){
         if(err){
-        console.log("Error at updateDeck "+tableName, sql, err)
+         reject(console.log("Error at updateDeck "+tableName, sql, err))
           throw err
+          }
+        else{
+          resolve(object)
           }
         });
      });
     },
   updateMessages(object){
+    console.log("updating Messages")
   return new Promise((resolve, reject) => { 
        var sql = `UPDATE Messages
                SET Messages = "${object.messages.join()}"
@@ -279,6 +285,7 @@ const Utils = {
   },
   //This function takes an individual playerObject as an argument and updates the row. 
   updatePlayerRow(playerObject){
+      console.log("updating Players")
     var setString = convertCardArrayForUpdate(playerObject.hand, playerObject.hand.length)
     var sql = `UPDATE Players
               SET  ${setString}, active = ${playerObject.active}
@@ -310,8 +317,8 @@ const Database = {
     return new Promise((resolve, reject) => { 
       Utils.updateHanabiGameRow(object)
       .then(object => Utils.updateDeck(object, "PlayingDeck"))
-      .then(object => Utils.updateDeck(object, "DiscardedCards"))
       .then(object => Utils.updateDeck(object, "PlayedCards"))
+      .then(object => Utils.updateDeck(object, "DiscardedCards"))
       .then(object => Utils.updateMessages(object))
       .then(function(object){
            object.players.forEach(function(player){
