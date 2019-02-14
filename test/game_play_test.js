@@ -252,10 +252,11 @@ describe("GamePlay", function(){
   describe(".playCard", function(){
     it("should copy the played card to the .playedCards array (card[0])", function(){
       var game = Defaults.gameSettings2Player(),
-          cardPlayed = { color: 'white', hints: [], number: "3" },
+          cardPlayed = { color: 'white', hints: [], number: "1" },
           cardIndex = 0,
           playerOfCard = "Legalos"
           
+      game.players[0].hand[0] = cardPlayed
       
       GamePlay.playCard(game, cardIndex, playerOfCard)
       
@@ -286,12 +287,28 @@ describe("GamePlay", function(){
     it("should return false if the played card doesn't Play", function(){
       var game = Defaults.gameSettings2Player(),
           replacementCard = {color: 'red', hints: [], number: 3 },
-          cardIndex = 4,
+          cardIndex = 3,
           playerOfCard = "Legalos"
           
       var torf = GamePlay.playCard(game, cardIndex, playerOfCard)
       
       assert.notOk(torf)
+    });
+    it("should increase hints if a 5 is played", function(){
+      var game = Defaults.gameSettings2Player(),
+          expectedHints = 9,
+          cardToPlay = {color: "red", hints:[], number: "5"},
+          playedCards = [ 
+            {color: "red", hints:[], number: "1"},
+            {color: "red", hints:[], number: "2"},
+            {color: "red", hints:[], number: "3"},
+            {color: "red", hints:[], number: "4"},
+          ]
+      game.playedCards = playedCards
+      game.players[0].hand[0] = cardToPlay
+      
+      
+      
     });
   });
   describe(".discard", function(){});

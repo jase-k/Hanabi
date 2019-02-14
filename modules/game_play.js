@@ -100,7 +100,6 @@ var GamePlay = {
       
     return object
   },
-  doesCardPlay(card, playedCards){},
   
 /*=========== Public ===================*/  
   newGame(numberOfPlayers){
@@ -141,11 +140,11 @@ var GamePlay = {
     return gameObject
   },
   playCard(gameObject, cardIndex, playerOfCard){
-    var plays = Simulate, 
-        playerIndex = gameObject.players.findIndex(player => player.name === playerOfCard),
+    var playerIndex = gameObject.players.findIndex(player => player.name === playerOfCard),
         player = gameObject.players[playerIndex], 
-        card =  player.hand[cardIndex]
-    
+        card =  player.hand[cardIndex],
+        plays = Simulate.doesCardPlay(card, gameObject.playedCards) 
+        console.log(plays)
     if(plays){
         gameObject.playedCards.push(card) 
     
