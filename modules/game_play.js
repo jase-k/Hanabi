@@ -138,8 +138,9 @@ var GamePlay = {
   },
   playCard(gameObject, cardIndex, playerOfCard){
     
-    var player = gameObject.players.find(player => player.name === playerOfCard),
-        card = player.hand[cardIndex]
+    var playerIndex = gameObject.players.findIndex(player => player.name === playerOfCard),
+        player = gameObject.players[playerIndex], 
+        card =  player.hand[cardIndex]
     
         gameObject.playedCards.push(card) 
     
