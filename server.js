@@ -31,12 +31,7 @@ var db = new sqlite3.Database(dbFile);
 
 // if ./.data/sqlite.db does not exist, create it, otherwise print records to console
 
-/*
-db.all('SELECT * from Players', function(err, rows){
-  if(err){throw err}
-  rows.forEach(function(row){console.log('record:', row)})
-});
- */
+
 
 // http://expressjs.com/en/starter/basic-routing.html
 app.get('/', function(request, response) {

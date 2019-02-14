@@ -218,6 +218,16 @@ describe("GamePlay", function(){
       assert.equal(gameObject.score, expectedSettings.score, "Score should start out at 0")
     });
   });
+  describe(".joinGame", function(){
+    it("it should add playerName to the next available spot in the game Object", function(){
+      var name = "Frodo"
+      var game = Defaults.gameSettings2Player()
+  
+      GamePlay.joinGame(game, name)
+      
+      assert.equal(game.players[1].name, name)
+    });
+  });
   describe(".playCard", function(){
   });
   describe(".discard", function(){});
@@ -227,3 +237,10 @@ describe("GamePlay", function(){
 describe.skip("Modify Deck", function(){
  });
 
+/*
+= GAME FLOW =
+GamePlay.newGame() => Database.insert(results) 
+GamePlay.joinGame() => Database.update(results)
+GamePlay.
+
+*/

@@ -109,8 +109,8 @@ var GamePlay = {
       numberOfPlayers: numberOfPlayers, 
       // Creates and Shuffles Original Deck
       originalDeck: this.shufflesDeck(this.createDeck()),
-      playedCards: [],
-      players: [], 
+      playedCards: [], //updated below
+      players: [], //updated below
       playingDeck: [],
       score: 0,
       tableIds: [],
@@ -124,9 +124,15 @@ var GamePlay = {
      gameObject.players = dealtGame.players
     
     return gameObject
+  },
+  joinGame(gameObject, name){
+    gameObject.players[1].name = name
+    return gameObject
   }
 }
 
 
 
 module.exports = {GamePlay}
+
+
