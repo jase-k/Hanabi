@@ -250,14 +250,27 @@ describe("GamePlay", function(){
     });
   });
   describe(".playCard", function(){
-    it("should copy the played card to the .playedCards array", function(){
+    it("should copy the played card to the .playedCards array (card[0])", function(){
       var game = Defaults.gameSettings2Player(),
-          cardPlayed,
-          indexOfCard,
-          playerOfCard
+          cardPlayed = { color: 'white', hints: [], number: "3" },
+          cardIndex = 0,
+          playerOfCard = "Legalos"
           
       
-      GamePlay.playCard()
+      GamePlay.playCard(game, cardIndex, playerOfCard)
+      
+      assert.deepEqual(game.playedCards[0], cardPlayed)
+    });
+    it("should copy the played card to the .playedCards array (card[4])", function(){
+      var game = Defaults.gameSettings2Player(),
+          cardPlayed = { color: 'white', hints: [], number: "1" },
+          cardIndex = 4,
+          playerOfCard = "Legalos"
+          
+      
+      GamePlay.playCard(game, cardIndex, playerOfCard)
+      
+      assert.deepEqual(game.playedCards[4], cardPlayed)
     });
     it("should replace the played card in the .hand with the first card in the .playingDeck", function(){});
     it("should copy the played card to the .discardedCards if card doesn't Play", function(){});
