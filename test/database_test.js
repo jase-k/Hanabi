@@ -22,7 +22,7 @@ const {Database, Utils, Helper} = require('../modules/database.js')
 const Defaults = require('./defaults.js')
 
 
-describe("Database", function(){
+describe.skip("Database", function(){
   describe(".insert", function(){
     it("should insert new rows in All Tables: 5 players", function(done){
        var gameObject = Defaults.gameSettings5Player()
@@ -690,7 +690,7 @@ describe("Utils", function(){
        });
     });
   });
-  describe(".updatesPlayerRow", function(){
+  describe.skip(".updatesPlayerRow", function(){
     it("Updates One Player in Players Tables (2-player)", function(done){
       var gameObject = Defaults.gameSettings2Player()
       var expectedCard1 = "orange|5|"
@@ -942,7 +942,7 @@ describe("Utils", function(){
       });
     })
   });
-  describe(".getPlayers", function(){
+  describe.skip(".getPlayers", function(){
     it("should return player Objects for All Players", function(done){
       var gameObject = Defaults.gameSettings2Player()
       var expectedPlayers = gameObject.players

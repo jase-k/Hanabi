@@ -165,9 +165,22 @@ const Utils = {
       var promises = []
       
       object.players.forEach(function(player, index){
-        
-      });
+        console.log("Player"+index, player)
+        promises.push( 
+          db.run('INSERT INTO Players (gameId, name, active,  '+Helper.createCardString(number)+') VALUES('+object.tableIds.gameId+',"'+player.name+'", '+player.active+' ,'+Helper.convertCardArray(player.hand)+') ', {}, 
+            function(err){
+               if(err){
+                 console.log("Error at insertMessagesRow Player "+index)
+                 throw err
+               }
       
+               object.tableIds.playersId.push(this.lastID)
+               object.players[index].id = this.lastID
+          })  
+        );
+      })
+     Promise.all(promises).then(resolve(object))
+    /*  
     db.run('INSERT INTO Players (gameId, name, active,  '+Helper.createCardString(number)+') VALUES('+object.tableIds.gameId+',"'+object.players[0].name+'", 1 ,'+Helper.convertCardArray(object.players[i-1].hand)+') ', {}, 
       function(err){
        if(err){
@@ -235,6 +248,7 @@ const Utils = {
         });
       }
     });   
+  */
   });
 },
   //This function updates score, livesLeft, hintsLeft
