@@ -75,7 +75,28 @@ const Helper = {
    string = stringArray.join() 
    
    return string
-  }
+  },
+  
+  insertPlayerRow(playerObject, gameObject){
+  return new Promise((resolve, reject) => {
+      gameObject.tableIds.playersId = []
+      var promises = []
+      
+          db.run('INSERT INTO Players (gameId, name, active,  '+Helper.createCardString(playerObject.hand.length)+') VALUES('+gameObject.tableIds.gameId+',"'+playerObject.name+'", '+playerObject.active+' ,'+Helper.convertCardArray(playerObject.hand)+') ', {}, 
+            function(err){
+               if(err){
+                 console.log("Error at insertMessagesRow Player")
+                 throw err
+               }
+              var playerIdsArray = gameObject.tableIds.playersId  
+                  playerIdsArray.push(this.lastID)
+              
+               gameObject.players[playerIdsArray.length-1].id = this.lastID //Sets the Current Players id. 
+            
+            resolve(gameObject)
+          })  
+  });
+},
 }
 
 const Utils = {
@@ -165,101 +186,13 @@ const Utils = {
       var promises = []
       
       object.players.forEach(function(player, index){
-        console.log("Player"+index, player)
         promises.push(Utils.insertPlayerRow(player, object));
       })
       
      Promise.all(promises).then(function(objects){
-       console.log("++++++++Results of Promises+++++++", objects)
-       resolve(objects[0])
+       resolve(objects.pop())
      })
-    /*  
-    db.run('INSERT INTO Players (gameId, name, active,  '+Helper.createCardString(number)+') VALUES('+object.tableIds.gameId+',"'+object.players[0].name+'", 1 ,'+Helper.convertCardArray(object.players[i-1].hand)+') ', {}, 
-      function(err){
-       if(err){
-         console.log("Error at insertMessagesRow Player 1")
-         throw err
-       }
-      
-       object.tableIds.playersId.push(this.lastID)
-       object.players[i-1].id = this.lastID
-         
-      if(i == object.players.length){
-        resolve(object)
-      }else{ i++
-          
-    db.run('INSERT INTO Players (gameId,'+Helper.createCardString(number)+') VALUES('+object.tableIds.gameId+','+Helper.convertCardArray(object.players[i-1].hand)+') ', {}, 
-      function(err){
-        if(err){
-          console.log("Error at insertMessagesRow Player "+i)
-          throw err}
-        object.tableIds.playersId.push(this.lastID)
-        object.players[i-1].id = this.lastID
-       
-        if(i == object.players.length){
-          resolve(object)
-          }else{  i++
-            db.run('INSERT INTO Players (gameId,'+Helper.createCardString(number)+') VALUES('+object.tableIds.gameId+','+Helper.convertCardArray(object.players[i-1].hand)+') ', {}, 
-               function(err){
-                if(err){
-                  console.log("Error at insertMessagesRow Player 3")
-                  throw err}
-                object.tableIds.playersId.push(this.lastID)
-                object.players[i-1].id = this.lastID
-            
-                if(i == object.players.length){
-                resolve(object)
-                }else{  i++
-                  db.run('INSERT INTO Players (gameId,'+Helper.createCardString(number)+') VALUES('+object.tableIds.gameId+','+Helper.convertCardArray(object.players[i-1].hand)+') ', {}, 
-                   function(err){
-                    if(err){
-                      console.log("Error at insertMessagesRow Player 4")
-                      throw err}
-                    
-                    object.tableIds.playersId.push(this.lastID)
-                    object.players[i-1].id = this.lastID
-
-                    if(i == object.players.length){
-                    resolve(object)
-                    }else{  i++
-                      db.run('INSERT INTO Players (gameId,'+Helper.createCardString(number)+') VALUES('+object.tableIds.gameId+','+Helper.convertCardArray(object.players[i-1].hand)+') ', {}, 
-                       function(err){
-                        if(err){
-                          console.log("Error at insertMessagesRow Player 5")
-                          throw err
-                        };
-                        object.tableIds.playersId.push(this.lastID)
-                        object.players[i-1].id = this.lastID
-
-                        resolve(object)
-                      });
-                    };
-                  });
-                 }
-              });
-           }
-        });
-      }
-    });   
-  */
-  });
-},
-  insertPlayerRow(playerObject, gameObject){
-  return new Promise((resolve, reject) => {
-      gameObject.tableIds.playersId = []
-      var promises = []
-      
-        console.log("Adding Player"+ playerObject.name)
-          db.run('INSERT INTO Players (gameId, name, active,  '+Helper.createCardString(playerObject.hand.length)+') VALUES('+gameObject.tableIds.gameId+',"'+playerObject.name+'", '+playerObject.active+' ,'+Helper.convertCardArray(playerObject.hand)+') ', {}, 
-            function(err){
-               if(err){
-                 console.log("Error at insertMessagesRow Player")
-                 throw err
-               }
-                
-               gameObject.tableIds.playersId.push(this.lastID)
-               // gameObject.players[].id = this.lastID
-          })  
+    
   });
 },
   //This function updates score, livesLeft, hintsLeft

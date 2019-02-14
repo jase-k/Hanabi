@@ -22,7 +22,7 @@ const {Database, Utils, Helper} = require('../modules/database.js')
 const Defaults = require('./defaults.js')
 
 
-describe.skip("Database", function(){
+describe("Database", function(){
   describe(".insert", function(){
     it("should insert new rows in All Tables: 5 players", function(done){
        var gameObject = Defaults.gameSettings5Player()
@@ -488,7 +488,6 @@ describe("Utils", function(){
          db.run("DELETE FROM HanabiGames WHERE id = "+results.tableIds.gameId)
          db.run("DELETE FROM Players WHERE gameId = "+results.tableIds.gameId)
         });
-       console.log("results", JSON.stringify(results))
         db.get("SELECT * FROM Players WHERE id = $id",  
                  {$id: results.tableIds.playersId[0]},
                  function(err, row){
