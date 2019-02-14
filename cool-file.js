@@ -42,6 +42,8 @@ from that operation will be set as it's cardsLeftToPlay value. Then we iterate
 through the array subtracting 1 from cardsToPlay with each card (without going below zero).
 When a card has a cardsLeftToPlay value we add it a cardToPlay value. If at the end of the iteration
 cardsToPlay has a value greater than zero, the gameDeck is unwinnable.
+
+This Function will Return True or False
 */
   var matched = null;
   
@@ -50,8 +52,8 @@ cardsToPlay has a value greater than zero, the gameDeck is unwinnable.
 //sets cardsLeftToPlay.value for array
     for(var i= 0; i < array.length; i++){
       if(firstInstance.length == 0){
-      firstInstance.push(array[i])
-      setCardsLeftToPlayValue(array[i])
+        firstInstance.push(array[i])
+        setCardsLeftToPlayValue(array[i])
       }
 //If any Matches Sets matched.value to True
       for(var j = 0; j < firstInstance.length; j++){
@@ -88,7 +90,7 @@ var totalHandSize;
         cardToPlay--
           }
       }
-      cardToPlay += array.cardsLeftToPlay  
+      cardToPlay += array[i].cardsLeftToPlay  
     }
     
 //returns True if the Game is Winnable and False if it is impossible to Win.   

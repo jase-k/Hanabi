@@ -218,7 +218,8 @@ describe("GamePlay", function(){
       assert.equal(gameObject.score, expectedSettings.score, "Score should start out at 0")
     });
   });
-  describe(".playCard", function(){});
+  describe(".playCard", function(){
+  });
   describe(".discard", function(){});
   describe(".giveHint", function(){});
 });

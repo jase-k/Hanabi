@@ -25,8 +25,7 @@ var db = new sqlite3.Database(dbFile);
 
 //Declare variables
 var i;
-const Helper = {
-  
+const Helper = { 
  createCardString(number){
    var string = '' 
    
@@ -75,9 +74,8 @@ const Helper = {
    string = stringArray.join() 
    
    return string
-  },
-  
-  insertPlayerRow(playerObject, gameObject){
+  }, 
+ insertPlayerRow(playerObject, gameObject){
   return new Promise((resolve, reject) => {
       gameObject.tableIds.playersId = []
       var promises = []
@@ -186,7 +184,7 @@ const Utils = {
       var promises = []
       
       object.players.forEach(function(player, index){
-        promises.push(Utils.insertPlayerRow(player, object));
+        promises.push(Helper.insertPlayerRow(player, object));
       })
       
      Promise.all(promises).then(function(objects){
