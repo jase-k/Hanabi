@@ -39,6 +39,9 @@ var i;
 const colors = ["black", "blue", "orange", "red", "white"]
 const numbers = [1,1,1,2,2,3,3,4,4,5]
 
+//Import other Modules
+const Simulate = require('./game_simulation.js')
+
 var GamePlay = {
 /*=============== Private =============== */  
   createDeck(){
@@ -138,7 +141,7 @@ var GamePlay = {
     return gameObject
   },
   playCard(gameObject, cardIndex, playerOfCard){
-    var plays = true, 
+    var plays = Simulate, 
         playerIndex = gameObject.players.findIndex(player => player.name === playerOfCard),
         player = gameObject.players[playerIndex], 
         card =  player.hand[cardIndex]

@@ -278,10 +278,10 @@ describe("GamePlay", function(){
           cardIndex = 4,
           playerOfCard = "Legalos"
           
+      GamePlay.playCard(game, cardIndex, playerOfCard)
       
-      var torf = GamePlay.playCard(game, cardIndex, playerOfCard)
+      assert.deepEqual(game.players[0].hand[4], replacementCard)
       
-      assert.notOk(torf)
     });
     it("should return false if the played card doesn't Play", function(){
       var game = Defaults.gameSettings2Player(),
@@ -289,10 +289,9 @@ describe("GamePlay", function(){
           cardIndex = 4,
           playerOfCard = "Legalos"
           
+      var torf = GamePlay.playCard(game, cardIndex, playerOfCard)
       
-      GamePlay.playCard(game, cardIndex, playerOfCard)
-      
-      assert.deepEqual(game.players[0].hand[4], replacementCard)
+      assert.notOk(torf)
     });
   });
   describe(".discard", function(){});

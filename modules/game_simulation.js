@@ -51,18 +51,20 @@ PlayersTurn:
       return playedCards
   },
   doesCardPlay(cardToCheck, playedCards){
+    
     var playedCardColorPile = playedCards.filter(function(card){
       return card.color == cardToCheck.color
     })
+    
     // (...) is needed below for Math.max to recognize the array as numbers instead of an object
     var highestCardInPile = Math.max(...playedCardColorPile.map(card => card.number)) 
     
     if(cardToCheck.number == highestCardInPile+1){ 
-      return true
+       return true
       }else if(highestCardInPile == -Infinity && cardToCheck.number == 1){
        return true 
       }else{
-      return false
+       return false
     }
   },
   doesAnyCardPlay(player, playedCards, playingDeck){
