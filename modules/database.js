@@ -166,20 +166,13 @@ const Utils = {
       
       object.players.forEach(function(player, index){
         console.log("Player"+index, player)
-        promises.push( 
-          db.run('INSERT INTO Players (gameId, name, active,  '+Helper.createCardString(number)+') VALUES('+object.tableIds.gameId+',"'+player.name+'", '+player.active+' ,'+Helper.convertCardArray(player.hand)+') ', {}, 
-            function(err){
-               if(err){
-                 console.log("Error at insertMessagesRow Player "+index)
-                 throw err
-               }
-                
-               object.tableIds.playersId.push(this.lastID)
-               object.players[index].id = this.lastID
-          })  
-        );
+        promises.push(Utils.insertPlayerRow(player, object));
       })
-     Promise.all(promises).then(resolve(object))
+      
+     Promise.all(promises).then(function(objects){
+       console.log("++++++++Results of Promises+++++++", objects)
+       resolve(objects[0])
+     })
     /*  
     db.run('INSERT INTO Players (gameId, name, active,  '+Helper.createCardString(number)+') VALUES('+object.tableIds.gameId+',"'+object.players[0].name+'", 1 ,'+Helper.convertCardArray(object.players[i-1].hand)+') ', {}, 
       function(err){
@@ -254,16 +247,13 @@ const Utils = {
   insertPlayerRow(playerObject, gameObject){
   return new Promise((resolve, reject) => {
       gameObject.tableIds.playersId = []
-      var i = 1
-      var number = object.players[i].hand.length
       var promises = []
       
-        console.log("Player"+index, player)
-          db.run('INSERT INTO Players (gameId, name, active,  '+Helper.createCardString(number)+') 
-                 VALUES('+gameObject.tableIds.gameId+',"'+playerObjec.name+'", '+playerObject.active+' ,'+Helper.convertCardArray(player.hand)+') ', {}, 
+        console.log("Adding Player"+ playerObject.name)
+          db.run('INSERT INTO Players (gameId, name, active,  '+Helper.createCardString(playerObject.hand.length)+') VALUES('+gameObject.tableIds.gameId+',"'+playerObject.name+'", '+playerObject.active+' ,'+Helper.convertCardArray(playerObject.hand)+') ', {}, 
             function(err){
                if(err){
-                 console.log("Error at insertMessagesRow Player "+index)
+                 console.log("Error at insertMessagesRow Player")
                  throw err
                }
                 
