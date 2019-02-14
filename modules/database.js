@@ -162,6 +162,12 @@ const Utils = {
       object.tableIds.playersId = []
       var i = 1
       var number = object.players[i].hand.length
+      var promises = []
+      
+      object.players.forEach(function(player, index){
+        
+      });
+      
     db.run('INSERT INTO Players (gameId, name, active,  '+Helper.createCardString(number)+') VALUES('+object.tableIds.gameId+',"'+object.players[0].name+'", 1 ,'+Helper.convertCardArray(object.players[i-1].hand)+') ', {}, 
       function(err){
        if(err){
@@ -179,7 +185,7 @@ const Utils = {
     db.run('INSERT INTO Players (gameId,'+Helper.createCardString(number)+') VALUES('+object.tableIds.gameId+','+Helper.convertCardArray(object.players[i-1].hand)+') ', {}, 
       function(err){
         if(err){
-          console.log("Error at insertMessagesRow Player 2")
+          console.log("Error at insertMessagesRow Player "+i)
           throw err}
         object.tableIds.playersId.push(this.lastID)
         object.players[i-1].id = this.lastID
