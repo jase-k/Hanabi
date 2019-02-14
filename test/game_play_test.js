@@ -307,7 +307,9 @@ describe("GamePlay", function(){
       game.playedCards = playedCards
       game.players[0].hand[0] = cardToPlay
       
+      GamePlay.playCard(game, 0, "Legalos")
       
+      assert.equal(game.hintsLeft, expectedHints)
       
     });
   });

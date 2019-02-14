@@ -144,12 +144,14 @@ var GamePlay = {
         player = gameObject.players[playerIndex], 
         card =  player.hand[cardIndex],
         plays = Simulate.doesCardPlay(card, gameObject.playedCards) 
-        console.log(plays)
+
     if(plays){
         gameObject.playedCards.push(card) 
     
         gameObject.players[playerIndex].hand[cardIndex] = gameObject.playingDeck.shift();
-    
+       
+        if(card.number == 5){ gameObject.hintsLeft++ }
+      
       return gameObject
       
     }else{
