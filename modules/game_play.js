@@ -97,6 +97,7 @@ var GamePlay = {
       
     return object
   },
+  doesCardPlay(card, playedCards){},
   
 /*=========== Public ===================*/  
   newGame(numberOfPlayers){
@@ -137,16 +138,21 @@ var GamePlay = {
     return gameObject
   },
   playCard(gameObject, cardIndex, playerOfCard){
-    
-    var playerIndex = gameObject.players.findIndex(player => player.name === playerOfCard),
+    var plays = true, 
+        playerIndex = gameObject.players.findIndex(player => player.name === playerOfCard),
         player = gameObject.players[playerIndex], 
         card =  player.hand[cardIndex]
     
+    if(plays){
         gameObject.playedCards.push(card) 
     
-        card = gameObject.playingDeck.shift();
-        
-    return gameObject
+        gameObject.players[playerIndex].hand[cardIndex] = gameObject.playingDeck.shift();
+    
+      return gameObject
+      
+    }else{
+      return false 
+    }
   },
 }
 

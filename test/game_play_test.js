@@ -279,11 +279,21 @@ describe("GamePlay", function(){
           playerOfCard = "Legalos"
           
       
+      var torf = GamePlay.playCard(game, cardIndex, playerOfCard)
+      
+      assert.notOk(torf)
+    });
+    it("should return false if the played card doesn't Play", function(){
+      var game = Defaults.gameSettings2Player(),
+          replacementCard = {color: 'red', hints: [], number: 3 },
+          cardIndex = 4,
+          playerOfCard = "Legalos"
+          
+      
       GamePlay.playCard(game, cardIndex, playerOfCard)
       
       assert.deepEqual(game.players[0].hand[4], replacementCard)
     });
-    it("should copy the played card to the .discardedCards if card doesn't Play", function(){});
   });
   describe(".discard", function(){});
   describe(".giveHint", function(){});
