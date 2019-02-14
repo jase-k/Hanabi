@@ -244,14 +244,23 @@ describe("GamePlay", function(){
       var expectedResult = JSON.parse(JSON.stringify(game))
       
       GamePlay.joinGame(game, name)
-      console.log(game.players)
-      console.log(expectedResult.players)
       
       assert.deepEqual(game.players, expectedResult.players)
       
     });
   });
   describe(".playCard", function(){
+    it("should copy the played card to the .playedCards array", function(){
+      var game = Defaults.gameSettings2Player(),
+          cardPlayed,
+          indexOfCard,
+          playerOfCard
+          
+      
+      GamePlay.playCard()
+    });
+    it("should replace the played card in the .hand with the first card in the .playingDeck", function(){});
+    it("should copy the played card to the .discardedCards if card doesn't Play", function(){});
   });
   describe(".discard", function(){});
   describe(".giveHint", function(){});
