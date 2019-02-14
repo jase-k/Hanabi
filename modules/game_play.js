@@ -137,8 +137,15 @@ var GamePlay = {
     return gameObject
   },
   playCard(gameObject, cardIndex, playerOfCard){
-    var player = gameObject.players.find(player => player.name === playerOfCard);
-        gameObject.playedCards.push(player.hand[cardIndex]) 
+    
+    var player = gameObject.players.find(player => player.name === playerOfCard),
+        card = player.hand[cardIndex]
+    
+        gameObject.playedCards.push(card) 
+    
+        card = gameObject.playingDeck.shift();
+        
+    return gameObject
   },
 }
 
