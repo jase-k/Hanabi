@@ -488,7 +488,7 @@ describe("Utils", function(){
          db.run("DELETE FROM HanabiGames WHERE id = "+results.tableIds.gameId)
          db.run("DELETE FROM Players WHERE gameId = "+results.tableIds.gameId)
         });
-      
+       console.log("results", JSON.stringify(results))
         db.get("SELECT * FROM Players WHERE id = $id",  
                  {$id: results.tableIds.playersId[0]},
                  function(err, row){
