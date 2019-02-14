@@ -126,7 +126,13 @@ var GamePlay = {
     return gameObject
   },
   joinGame(gameObject, name){
-    gameObject.players[1].name = name
+    
+    for(var i = 0; i < gameObject.players.length; i++){
+      if(!gameObject.players[i].name){
+        gameObject.players[i].name = name
+      } 
+    }
+    
     return gameObject
   }
 }

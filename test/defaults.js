@@ -83,7 +83,7 @@ const Defaults = {
                           ]
                   },{
                     active: 0,
-                    name: "Jane Doe", 
+                    name: null, 
                     hand: [{
                         color: "blue", 
                         hints: [],
@@ -108,7 +108,7 @@ const Defaults = {
                           ]
                   },{
                     active: 0,
-                    name: "Marlin Doe", 
+                    name: null, 
                     hand: [{
                         color: "blue", 
                         hints: [],
@@ -133,7 +133,7 @@ const Defaults = {
                           ]
                   },{
                     active: 0,
-                    name: "Howard Duck", 
+                    name: null, 
                     hand: [{
                         color: "blue", 
                         hints: [],
@@ -158,7 +158,7 @@ const Defaults = {
                           ]
                   },{
                     active: 0,
-                    name: "Buck Doe", 
+                    name: null,  
                     hand: [{
                         color: "blue", 
                         hints: [],

@@ -219,13 +219,32 @@ describe("GamePlay", function(){
     });
   });
   describe(".joinGame", function(){
-    it("it should add playerName to the next available spot in the game Object", function(){
+    it("it should add playerName to the next available spot in the game Object (2-player)", function(){
       var name = "Frodo"
       var game = Defaults.gameSettings2Player()
   
       GamePlay.joinGame(game, name)
       
       assert.equal(game.players[1].name, name)
+    });
+    it("it should add playerName to the next available spot in the game Object (5-player)", function(){
+      var name = "Frodo"
+      var game = Defaults.gameSettings5Player()
+          game.players[1].name = "Sam Wise" //set the second name to mimic the second player already joining
+      
+      GamePlay.joinGame(game, name)
+      
+      assert.equal(game.players[2].name, name)//Checks the third name
+    });
+    it("should return the same gameObject if the name is already in the game Object", function(){
+      var name = "Pippen"
+      var game = Defaults.gameSettings5Player();
+          game.players[1].name = "Pippen"
+      
+      GamePlay.joinGame(game, name)
+      
+      assert.deepEqual(game, 
+      
     });
   });
   describe(".playCard", function(){
