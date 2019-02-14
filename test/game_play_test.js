@@ -241,9 +241,13 @@ describe("GamePlay", function(){
       var game = Defaults.gameSettings5Player();
           game.players[1].name = "Pippen"
       
-      GamePlay.joinGame(game, name)
+      var expectedResult = JSON.parse(JSON.stringify(game))
       
-      assert.deepEqual(game, 
+      GamePlay.joinGame(game, name)
+      console.log(game.players)
+      console.log(expectedResult.players)
+      
+      assert.deepEqual(game.players, expectedResult.players)
       
     });
   });

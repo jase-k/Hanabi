@@ -128,8 +128,9 @@ var GamePlay = {
   joinGame(gameObject, name){
     
     for(var i = 0; i < gameObject.players.length; i++){
-      if(!gameObject.players[i].name){
+      if(!gameObject.players[i].name || gameObject.players[i].name === name){
         gameObject.players[i].name = name
+        break;
       } 
     }
     
