@@ -312,6 +312,19 @@ describe("GamePlay", function(){
       assert.equal(game.hintsLeft, expectedHints)
       
     });
+    it("should correctly play a red 3 if a red 2 is in the PlayedCards array", function(){
+      var game = Defaults.gameSettings2Player();
+          game.playedCards = [
+            {color: "red", hints: [], number: "1"},
+            {color: "red", hints: [], number: "2"},
+            ]
+          game.players[0].hand[1] = {color: "red", hints:[], number: "3"}
+      
+     var results =  GamePlay.playCard(game, 1, "Legolas")
+      
+      assert.ok(results)            
+        
+    });
   });
   describe(".discard", function(){});
   describe(".giveHint", function(){});
