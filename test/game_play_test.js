@@ -377,6 +377,24 @@ describe("GamePlay", function(){
       
       assert.deepEqual(game.players[0].hand[1], replacementCard)
     })
+    it("should increase hintsLeft by 1", function(){
+      var game = Defaults.gameSettings2Player()
+          
+      GamePlay.discard(game, 0, "Legolas");
+      
+      assert.equal(game.hintsLeft, 9)
+    });
+    it("should update messages array with NAME discarded CARD COLOR NUMBER", function(){
+      var game = Defaults.gameSettings2Player(),
+          card = {color: "red", hints:[], number: "2"},
+          expectedMessage = "Legolas discarded a red 2"
+      game.players[0].hand[0] = card
+      
+      GamePlay.discard(game, 0, "Legolas")
+      
+      assert.equal(game.messages[0], expectedMessage)
+      
+    });
   });
   describe(".giveHint", function(){});
 });

@@ -167,6 +167,8 @@ var GamePlay = {
     
     gameObject.players[playerIndex].hand[cardIndex] = gameObject.playingDeck.shift();
 
+    gameObject.hintsLeft++
+    
     return gameObject
   },
 }
