@@ -101,9 +101,17 @@ var GamePlay = {
     return object
   },
   setHint(card, hint){
-    if(card.color == hint){  
+    if(card.color == hint || card.number == hint){  
+      card.hints = []
       card.hints.push(hint)
     }else{
+      card.hints.push(`not ${hint}`)
+    }
+  },
+  removeHints(array, hint){
+    if(numbers.include(hint)){
+      array.map
+    }
   },
   
 /*=========== Public ===================*/  

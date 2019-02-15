@@ -435,7 +435,7 @@ describe("GamePlay", function(){
     });
   });
   describe(".setHint", function(){
-    it("should add hint to array if it matches the card", function(){
+    it("should add hint to array if it matches the card color", function(){
       var card = {color: "red", hints:[], number: "1"},
           hint = "red"
       
@@ -444,7 +444,7 @@ describe("GamePlay", function(){
       assert.equal(card.hints[0], hint)
         
     });
-    it("should add NOT hint to the array if card does not match the hint", function(){
+    it("should add NOT hint to the array if card does not match the hint (color)", function(){
       var card = {color: "red", hints:[], number: "1"}, 
           hint = "blue"
       
@@ -452,7 +452,32 @@ describe("GamePlay", function(){
       
       assert.equal(card.hints[0], "not "+hint)
     });
-    it("should remove NOT HINT TYPE's in array if card matches HINT", function(){});
+        it("should add hint to array if it matches the card number", function(){
+      var card = {color: "red", hints:[], number: "1"},
+          hint = "1"
+      
+      GamePlay.setHint(card, hint)
+      
+      assert.equal(card.hints[0], hint)
+        
+    });
+    it("should add NOT hint to the array if card does not match the hint (number)", function(){
+      var card = {color: "red", hints:[], number: "1"}, 
+          hint = "2"
+      
+      GamePlay.setHint(card, hint)
+      
+      assert.equal(card.hints[0], "not "+hint)
+    });
+    it("should remove NOT HINT TYPE's in array if card matches HINT", function(){
+      var card = {color: "red", hints:["not 1", "not red"], number: "2"}, 
+          hint = "2",
+          expectedArray = ["2", "not red"]
+      
+      GamePlay.setHint(card, hint)
+      
+      assert.deepEqual(card.hints, expectedArray)
+    });
     it("should not add the same hint to the array if already present", function(){});
   });
 });
