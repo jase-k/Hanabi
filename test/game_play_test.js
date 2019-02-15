@@ -434,6 +434,27 @@ describe("GamePlay", function(){
       
     });
   });
+  describe(".setHint", function(){
+    it("should add hint to array if it matches the card", function(){
+      var card = {color: "red", hints:[], number: "1"},
+          hint = "red"
+      
+      GamePlay.setHint(card, hint)
+      
+      assert.equal(card.hints[0], hint)
+        
+    });
+    it("should add NOT hint to the array if card does not match the hint", function(){
+      var card = {color: "red", hints:[], number: "1"}, 
+          hint = "blue"
+      
+      GamePlay.setHint(card, hint)
+      
+      assert.equal(card.hints[0], "not "+hint)
+    });
+    it("should remove NOT HINT TYPE's in array if card matches HINT", function(){});
+    it("should not add the same hint to the array if already present", function(){});
+  });
 });
 
 describe.skip("Modify Deck", function(){

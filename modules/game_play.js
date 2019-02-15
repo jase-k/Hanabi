@@ -100,6 +100,11 @@ var GamePlay = {
       
     return object
   },
+  setHint(card, hint){
+    if(card.color == hint){  
+      card.hints.push(hint)
+    }else{
+  },
   
 /*=========== Public ===================*/  
   newGame(numberOfPlayers){
@@ -183,7 +188,7 @@ var GamePlay = {
   
 
     gameObject.players[receiverIndex].hand.forEach(function(card){
-        card.hints.push(hint)
+        GamePlay.setHint(card, hint)
     })
   },
 }
