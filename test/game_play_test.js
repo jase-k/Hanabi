@@ -333,10 +333,22 @@ describe("GamePlay", function(){
           ]
           game.players[0].hand[1]
       
-      GamePlay.playCard(game, 
+      var results = GamePlay.playCard(game, 1, "Legolas")
+      
+      assert.notOk(results)
     });
   });
-  describe(".discard", function(){});
+  describe(".discard", function(){
+    it("should copy the discarded card to the .discardedCards array (card[0])", function(){
+      var game = Defaults.gameSettings2Player(),
+          card = {color: "black", hints:[], number: "1"}
+          game.players[0].hand[1] = card
+          
+      GamePlay.discard(game, 1, "Legolas")
+      
+      assert.deepEqual(game.discardedCards[0], card)
+    });
+  });
   describe(".giveHint", function(){});
 });
 

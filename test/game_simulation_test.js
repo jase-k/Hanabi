@@ -3,37 +3,40 @@
 This Tests the Module Simulate from '/modules/game_simulation.js
 */
 
-const assert = require('chai');
+const assert = require('chai').assert;
 
 const Simulate = require('../modules/game_simulation.js')
   
-describe.skip("Simulate", function(){
+describe("Simulate", function(){
   describe("doesCardPlay", function(){
       it("returns true if card can play blue 3", function(){
         var card = {color: "blue", hints:[], number: 3}
         var playedCards = [{color: "blue", hints:[], number: 1}, {color: "blue", hints:[], number: 2}]
      
         var torf = Simulate.doesCardPlay(card, playedCards)
-        assert.isOk(torf)
+        
+        assert.ok(torf)
         })
-      it("returns false if card cannot play blue 3", function(){
+      it("returns false if try play blue 3 with a red 1 & 2 already played", function(){
         var card = {color: "blue", hints:[], number: 3}
         var playedCards = [{color: "red", hints:[], number: 1}, {color: "red", hints:[], number: 2}]
      
         var torf = Simulate.doesCardPlay(card, playedCards)
-        assert.isNotOk(torf)
+        
+        assert.notOk(torf)
+        
         });
       it("returns true if card can play red 1", function(){
         var card = {color: "red", hints:[], number: 1}
         var playedCards = [{color: "blue", hints:[], number: 1}, {color: "blue", hints:[], number: 2}]
      
         var torf = Simulate.doesCardPlay(card, playedCards)
-        console.log(torf)
-        assert.isOk(torf)
+
+        assert.ok(torf)
         
       });
     });
-  describe("doesAnyCardPlay", function(){
+  describe.skip("doesAnyCardPlay", function(){
       it("should return true if one card can play:", function(){
         var player ={ 
           name: "John",
@@ -128,9 +131,9 @@ describe.skip("Simulate", function(){
         assert.deepEqual(playingDeck[0], expectedFirstCard[0])
          });
     });
-  describe("shouldItBeDiscarded", function(){
+  describe.skip("shouldItBeDiscarded", function(){
     
   });
-  describe("shouldAnyBeDiscarded", function(){
+  describe.skip("shouldAnyBeDiscarded", function(){
   });
 });

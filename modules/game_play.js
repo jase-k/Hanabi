@@ -158,6 +158,12 @@ var GamePlay = {
       return false 
     }
   },
+  discard(gameObject, cardIndex, playerOfCard){
+    var playerIndex = gameObject.players.findIndex(player => player.name == playerOfCard),
+        card = gameObject.players[playerIndex].hand[cardIndex]
+    
+    
+  },
 }
 
 
