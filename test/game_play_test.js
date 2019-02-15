@@ -419,7 +419,21 @@ describe("GamePlay", function(){
       assert.equal(game.messages[0], expectedMessage)
     });
   });
-  describe(".giveHint", function(){});
+  describe(".giveHint", function(){
+    it("should update hints for Recieving Player's hand", function(){
+      var game = Defaults.gameSettings2Player(),
+          hint = '1',
+          name = "Gimli"
+      
+      game.players[1].name = name;
+      
+      GamePlay.giveHint(game, hint, name, "Legolas")
+    
+      assert.equal(game.players[1].hand[0].hints.length, 1) 
+      assert.equal(game.players[1].hand[4].hints.length, 1)
+      
+    });
+  });
 });
 
 describe.skip("Modify Deck", function(){

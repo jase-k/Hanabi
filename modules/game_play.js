@@ -178,7 +178,14 @@ var GamePlay = {
     
     return gameObject
   },
-  giveHint(gae
+  giveHint(gameObject, hint, hintReciever, hintGiver){
+  var receiverIndex = gameObject.players.findIndex(player => player.name == hintReciever)
+  
+
+    gameObject.players[receiverIndex].hand.forEach(function(card){
+        card.hints.push(hint)
+    })
+  },
 }
 
 
