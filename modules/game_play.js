@@ -100,6 +100,7 @@ var GamePlay = {
       
     return object
   },
+  replaceHand
   
 /*=========== Public ===================*/  
   newGame(numberOfPlayers){
@@ -155,6 +156,7 @@ var GamePlay = {
       return gameObject
       
     }else{
+      gameObject.livesLeft--
       return false 
     }
   },
@@ -162,7 +164,11 @@ var GamePlay = {
     var playerIndex = gameObject.players.findIndex(player => player.name == playerOfCard),
         card = gameObject.players[playerIndex].hand[cardIndex]
     
+    gameObject.discardedCards.push(card)
     
+    gameObject.players[playerIndex].hand[cardIndex] = gameObject.playingDeck.shift();
+
+    return gameObject
   },
 }
 

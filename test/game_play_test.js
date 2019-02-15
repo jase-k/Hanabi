@@ -337,9 +337,27 @@ describe("GamePlay", function(){
       
       assert.notOk(results)
     });
+    it("should reduce livesLeft by 1 if card does not play", function(){
+      var game = Defaults.gameSettings2Player(),
+          card = {color: "black", hints:[], number: "2"}
+          game.players[0].hand[0] = card
+      
+      GamePlay.playCard(game, 0, "Legolas")
+
+        assert.equal(game.livesLeft, 2)
+    });
   });
   describe(".discard", function(){
     it("should copy the discarded card to the .discardedCards array (card[0])", function(){
+      var game = Defaults.gameSettings2Player(),
+          card = {color: "black", hints:[], number: "1"}
+          game.players[0].hand[0] = card
+          
+      GamePlay.discard(game, 0, "Legolas")
+      
+      assert.deepEqual(game.discardedCards[0], card)
+    });
+    it("should copy the discarded card to the .discardedCards array (card[1])", function(){
       var game = Defaults.gameSettings2Player(),
           card = {color: "black", hints:[], number: "1"}
           game.players[0].hand[1] = card
@@ -348,6 +366,17 @@ describe("GamePlay", function(){
       
       assert.deepEqual(game.discardedCards[0], card)
     });
+    it("should replace the the discarded card with the first card in the .playingDeck array", function(){
+      var game = Defaults.gameSettings2Player(),
+          card = {color: "black", hints:[], number: "1"},
+          replacementCard = {color: "blue", hints:[], number: "4"}        
+          game.players[0].hand[1] = card
+          game.playingDeck[0] = replacementCard
+          
+      GamePlay.discard(game, 1, "Legolas")
+      
+      assert.deepEqual(game.players[0].hand[1], replacementCard)
+    })
   });
   describe(".giveHint", function(){});
 });
