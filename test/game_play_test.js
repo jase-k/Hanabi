@@ -471,7 +471,7 @@ describe("GamePlay", function(){
     });
     it("should remove NOT HINT TYPE's in array if card matches HINT", function(){
       var card = {color: "red", hints:["not 1", "not red"], number: "2"}, 
-          hint = "2",
+          hint = "red",
           expectedArray = ["2", "not red"]
       
       GamePlay.setHint(card, hint)
