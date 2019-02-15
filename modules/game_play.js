@@ -146,16 +146,21 @@ var GamePlay = {
         plays = Simulate.doesCardPlay(card, gameObject.playedCards) 
 
     if(plays){
-        gameObject.playedCards.push(card) 
-    
-        gameObject.players[playerIndex].hand[cardIndex] = gameObject.playingDeck.shift();
-       
         if(card.number == 5){ gameObject.hintsLeft++ }
+    
+        gameObject.playedCards.push(card) 
+       
+        gameObject.players[playerIndex].hand[cardIndex] = gameObject.playingDeck.shift();
       
+        gameObject.messages.push(`Success! ${playerOfCard} played a ${card.color} ${card.number}`)
+          
       return gameObject
       
     }else{
       gameObject.livesLeft--
+      
+      gameObject.messages.push(`Whoops! ${playerOfCard} tried playing a ${card.color} ${card.number} and it did not play`)
+      
       return false 
     }
   },
@@ -169,8 +174,11 @@ var GamePlay = {
 
     gameObject.hintsLeft++
     
+    gameObject.messages.push(`${playerOfCard} discarded a ${card.color} ${card.number}`)
+    
     return gameObject
   },
+  giveHint(gae
 }
 
 

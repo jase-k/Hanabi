@@ -346,6 +346,30 @@ describe("GamePlay", function(){
 
         assert.equal(game.livesLeft, 2)
     });
+    it("should update messages array with Success! NAME played a CARD COLOR NUMBER with a successfulPlay", function(){
+      var game = Defaults.gameSettings2Player(),
+          card = {color: "red", hints:[], number: "1"},
+          expectedMessage = "Success! Legolas played a red 1"
+      
+      game.players[0].hand[0] = card
+      
+      GamePlay.playCard(game, 0, "Legolas")
+      
+      assert.equal(game.messages[0], expectedMessage)
+      
+    });
+    it("should update messages array with Whoops! NAME tried playing a CARD COLOR NUMBER and it did not play  with a successfulPlay", function(){
+      var game = Defaults.gameSettings2Player(),
+          card = {color: "red", hints:[], number: "2"},
+          expectedMessage = "Whoops! Legolas tried playing a red 2 and it did not play"
+      
+      game.players[0].hand[0] = card
+      
+      GamePlay.playCard(game, 0, "Legolas")
+      
+      assert.equal(game.messages[0], expectedMessage)
+      
+    });
   });
   describe(".discard", function(){
     it("should copy the discarded card to the .discardedCards array (card[0])", function(){
@@ -393,7 +417,6 @@ describe("GamePlay", function(){
       GamePlay.discard(game, 0, "Legolas")
       
       assert.equal(game.messages[0], expectedMessage)
-      
     });
   });
   describe(".giveHint", function(){});
