@@ -100,7 +100,6 @@ var GamePlay = {
       
     return object
   },
-  replaceHand
   
 /*=========== Public ===================*/  
   newGame(numberOfPlayers){
