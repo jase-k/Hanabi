@@ -101,10 +101,10 @@ var GamePlay = {
     return object
   },
   setHint(card, hint){
+    if(card.hints.includes(hint)){ return }
+    
     if(card.color == hint || card.number == hint){  
-      var array = card.hints.filter(hint =>  numbers.includes(hint) || colors.includes(hint))
-          array.push(hint)
-      card.hints = array
+      card.hints.push(hint)
     }else{
       card.hints.push(`not ${hint}`)
     }

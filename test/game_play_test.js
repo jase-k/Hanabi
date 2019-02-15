@@ -469,16 +469,25 @@ describe("GamePlay", function(){
       
       assert.equal(card.hints[0], "not "+hint)
     });
-    it("should remove NOT HINT TYPE's in array if card matches HINT", function(){
+    it.skip("should remove NOT HINT TYPE's in array if card matches HINT", function(){
       var card = {color: "red", hints:["not 1", "not red"], number: "2"}, 
-          hint = "red",
+          hint = "2",
           expectedArray = ["2", "not red"]
       
       GamePlay.setHint(card, hint)
       
       assert.deepEqual(card.hints, expectedArray)
     });
-    it("should not add the same hint to the array if already present", function(){});
+    it("should not add the same hint to the array if already present", function(){
+      var card = {color: "red", hints: ["2"], number: "2"},
+          hint = "2", 
+          expectedArray = ["2"]
+      
+      GamePlay.setHint(card, hint)
+      
+      assert.deepEqual(card.hints, expectedArray)
+      
+    });
   });
 });
 
