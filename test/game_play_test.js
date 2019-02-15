@@ -254,7 +254,7 @@ describe("GamePlay", function(){
       var game = Defaults.gameSettings2Player(),
           cardPlayed = { color: 'white', hints: [], number: "1" },
           cardIndex = 0,
-          playerOfCard = "Legalos"
+          playerOfCard = "Legolas"
           
       game.players[0].hand[0] = cardPlayed
       
@@ -266,7 +266,7 @@ describe("GamePlay", function(){
       var game = Defaults.gameSettings2Player(),
           cardPlayed = { color: 'white', hints: [], number: "1" },
           cardIndex = 4,
-          playerOfCard = "Legalos"
+          playerOfCard = "Legolas"
           
       
       GamePlay.playCard(game, cardIndex, playerOfCard)
@@ -277,7 +277,7 @@ describe("GamePlay", function(){
       var game = Defaults.gameSettings2Player(),
           replacementCard = {color: 'red', hints: [], number: 3 },
           cardIndex = 4,
-          playerOfCard = "Legalos"
+          playerOfCard = "Legolas"
           
       GamePlay.playCard(game, cardIndex, playerOfCard)
       
@@ -288,7 +288,7 @@ describe("GamePlay", function(){
       var game = Defaults.gameSettings2Player(),
           replacementCard = {color: 'red', hints: [], number: 3 },
           cardIndex = 3,
-          playerOfCard = "Legalos"
+          playerOfCard = "Legolas"
           
       var torf = GamePlay.playCard(game, cardIndex, playerOfCard)
       
@@ -307,7 +307,7 @@ describe("GamePlay", function(){
       game.playedCards = playedCards
       game.players[0].hand[0] = cardToPlay
       
-      GamePlay.playCard(game, 0, "Legalos")
+      GamePlay.playCard(game, 0, "Legolas")
       
       assert.equal(game.hintsLeft, expectedHints)
       
@@ -324,6 +324,16 @@ describe("GamePlay", function(){
       
       assert.ok(results)            
         
+    });
+    it("should not play a red 3 if a white 2 is in the .playedCards array", function(){
+      var game = Defaults.gameSettings2Player();
+          game.playedCards = [
+            {color: "white", hints:[], number: "1"},
+            {color: "white", hints:[], number: "2"}
+          ]
+          game.players[0].hand[1]
+      
+      GamePlay.playCard(game, 
     });
   });
   describe(".discard", function(){});

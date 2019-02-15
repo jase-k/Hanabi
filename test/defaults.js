@@ -20,7 +20,7 @@ const Defaults = {
                 playedCards: [],
                 players: [{
                     active: 1,
-                    name: "Legalos", 
+                    name: "Legolas", 
                     hand: [
                         { color: 'white', hints: [], number: "3" },
                         { color: 'orange', hints: [], number: "3" },
