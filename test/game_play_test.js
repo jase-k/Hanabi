@@ -510,8 +510,13 @@ describe("GamePlay", function(){
           
     });
     it("should update messages to 'PLAYER, gave NAME a hint about his/her HINT", function(){
-      var game = Defaults.gameSettings2Player()
+      var game = Defaults.gameSettings2Player(),
+          hint = '1',
+          name = 'Gimli'
       
+      game.players[1].name = name
+      
+      GamePlay.giveHint(game, hint, name, "Legolas")
       
       assert.equal(game.messages, "Legolas gave Gimli a hint about his/her 1's")
     });

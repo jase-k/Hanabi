@@ -213,13 +213,17 @@ var GamePlay = {
     
     return gameObject
   },
-  giveHint(gameObject, hint, hintReciever, hintGiver){
-    var receiverIndex = gameObject.players.findIndex(player => player.name == hintReciever)
+  giveHint(gameObject, hint, hintReceiver, hintGiver){
+    var receiverIndex = gameObject.players.findIndex(player => player.name == hintReceiver)
+    
     gameObject.hintsLeft--
 
     gameObject.players[receiverIndex].hand.forEach(function(card){
         GamePlay.setHint(card, hint)
     })
+    
+    gameObject.messages.push(`${hintGiver} gave ${hintReceiver} a hint about his/her ${hint}'s`)
+    
   },
 }
 
