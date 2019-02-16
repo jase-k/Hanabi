@@ -8,18 +8,9 @@ https://puddle-catcher.glitch.me/
 */
 
 describe("NEW GAME: /newgame/:numberOfPlayers?name=NAME", function(){
-  it("should add a new game to the database", function(){
-    const xhr = new XMLHttpRequest
-    var url = 'https://puddle-catcher.glitch.me/newgame/2/Jase'
+  it("should add a new game to the database", function(done){
     
-      xhr.responseType= "json";
-      xhr.onreadystatechange = () => {
-        if(xhr.readState === XMLHttpRequest.DONE){
-          console.log(xhr.response)
-        }
-      }
-    xhr.open('GET', url)
-    xhr.send()
+
     
     })
 });
