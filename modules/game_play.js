@@ -110,6 +110,7 @@ var GamePlay = {
     var hintType = this.getHintType(hint)
     
     if(card[hintType] == hint){ 
+    
       for(i =0; i < card.hints.length; ){
         var remove = hintOptions[hintType].findIndex(hintOption => card.hints[i].includes(hintOption))  
         
@@ -119,7 +120,8 @@ var GamePlay = {
           i++
         }
       };
-      card.hints.push(hint)
+      
+     card.hints.push(hint)
     }else{
       card.hints.push(`not ${hint}`)
     }

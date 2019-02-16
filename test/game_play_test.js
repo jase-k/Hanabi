@@ -433,6 +433,24 @@ describe("GamePlay", function(){
       assert.equal(game.players[1].hand[4].hints.length, 1)
       
     });
+    it("should set 'not HINT' for non matching cards", function(){
+      var game = Defaults.gameSettings2Player(),
+          hint = '1', 
+          name = "Aragon",
+          hand = [
+          {color: "red", hints:[], number: "1"},
+          {color: "red", hints:[], number: "1"},
+          {color: "red", hints:[], number: "1"},
+          {color: "red", hints:[], number: "1"},
+          {color: "red", hints:[], number: "1"}
+          ]
+      
+      game.players[1].name = name
+      
+      GamePlay.giveHint(game, hint, name, "Legolas")
+      
+      assert.equal
+    }); 
   });
   describe(".setHint", function(){
     it("should add hint to array if it matches the card color", function(){
