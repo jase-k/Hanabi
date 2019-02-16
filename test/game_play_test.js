@@ -433,24 +433,75 @@ describe("GamePlay", function(){
       assert.equal(game.players[1].hand[4].hints.length, 1)
       
     });
-    it("should set 'not HINT' for non matching cards", function(){
+    it("should set 'not HINT' for non matching cards (number hints)", function(){
       var game = Defaults.gameSettings2Player(),
           hint = '1', 
           name = "Aragon",
           hand = [
           {color: "red", hints:[], number: "1"},
-          {color: "red", hints:[], number: "1"},
-          {color: "red", hints:[], number: "1"},
-          {color: "red", hints:[], number: "1"},
-          {color: "red", hints:[], number: "1"}
+          {color: "white", hints:[], number: "2"},
+          {color: "blue", hints:[], number: "3"},
+          {color: "black", hints:[], number: "4"},
+          {color: "orange", hints:[], number: "5"}
           ]
       
       game.players[1].name = name
+      game.players[1].hand = hand
       
       GamePlay.giveHint(game, hint, name, "Legolas")
       
-      assert.equal
+      var playerHand = game.players[1].hand
+      assert.equal(playerHand[0].hints, '1')
+      assert.equal(playerHand[1].hints, 'not 1')
+      
+    });
+    it("should set 'not HINT' for non matching cards(color hints)", function(){
+      var game = Defaults.gameSettings2Player(),
+          hint = 'blue', 
+          name = "Aragon",
+          hand = [
+          {color: "red", hints:[], number: "1"},
+          {color: "white", hints:[], number: "2"},
+          {color: "blue", hints:[], number: "3"},
+          {color: "black", hints:[], number: "4"},
+          {color: "orange", hints:[], number: "5"}
+          ]
+      
+      game.players[1].name = name
+      game.players[1].hand = hand
+      
+      GamePlay.giveHint(game, hint, name, "Legolas")
+      
+      var playerHand = game.players[1].hand
+      assert.equal(playerHand[2].hints, 'blue')
+      assert.equal(playerHand[1].hints, 'not blue')
+      
+    });
+    it("should remove unneccessary hints", function(){
+      var game = Defaults.gameSettings2Player(),
+          hint = '1', 
+          name = "Aragon",
+          hand = [
+          {color: "red", hints:["not 5", "red", "not 3"], number: "1"},
+          {color: "white", hints:[], number: "2"},
+          {color: "blue", hints:[], number: "3"},
+          {color: "black", hints:[], number: "4"},
+          {color: "orange", hints:[], number: "5"}
+          ]
+      
+      game.players[1].name = name
+      game.players[1].hand = hand
+      
+      GamePlay.giveHint(game, hint, name, "Legolas")
+      
+      var playerHand = game.players[1].hand
+      
+      assert.deepEqual(playerHand[0].hints, ['red', '1'])
+      
     }); 
+    it("should reduce hintsLeft by 1", function(){
+      var game = 
+    });
   });
   describe(".setHint", function(){
     it("should add hint to array if it matches the card color", function(){

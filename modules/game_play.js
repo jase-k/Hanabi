@@ -125,6 +125,7 @@ var GamePlay = {
     }else{
       card.hints.push(`not ${hint}`)
     }
+    return card
   },
   getHintType(hint){
     if(colors.includes(hint)){
