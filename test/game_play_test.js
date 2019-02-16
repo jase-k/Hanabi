@@ -472,7 +472,16 @@ describe("GamePlay", function(){
     it("should remove NOT HINT TYPE's in array if card matches HINT", function(){
       var card = {color: "red", hints:["not 1", "not 3", "not blue"], number: "2"}, 
           hint = "2",
-          expectedArray = ["2", "not blue"]
+          expectedArray = ["not blue", "2"]
+      
+      GamePlay.setHint(card, hint)
+      
+      assert.deepEqual(card.hints, expectedArray)
+    });
+    it("should remove NOT HINT TYPE's in array if card matches HINT", function(){
+      var card = {color: "red", hints:["not 1", "not white", "not blue"], number: "2"}, 
+          hint = "red",
+          expectedArray = ["not 1", "red"]
       
       GamePlay.setHint(card, hint)
       

@@ -111,15 +111,14 @@ var GamePlay = {
     
     if(card[hintType] == hint){ 
       for(i =0; i < card.hints.length; ){
-        var remove = hintOptions[hintType].filter(hintOption => card.hints[i].includes(hintOption))  
-        if(remove !== false){
-        console.log(card.hints)
-        console.log(remove)
+        var remove = hintOptions[hintType].findIndex(hintOption => card.hints[i].includes(hintOption))  
+        
+        if(remove !== -1){
           card.hints.splice(i, 1)
         }else{
           i++
         }
-      }
+      };
       card.hints.push(hint)
     }else{
       card.hints.push(`not ${hint}`)
