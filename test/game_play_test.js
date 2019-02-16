@@ -452,7 +452,7 @@ describe("GamePlay", function(){
       
       assert.equal(card.hints[0], "not "+hint)
     });
-        it("should add hint to array if it matches the card number", function(){
+    it("should add hint to array if it matches the card number", function(){
       var card = {color: "red", hints:[], number: "1"},
           hint = "1"
       
@@ -470,9 +470,9 @@ describe("GamePlay", function(){
       assert.equal(card.hints[0], "not "+hint)
     });
     it("should remove NOT HINT TYPE's in array if card matches HINT", function(){
-      var card = {color: "red", hints:["not 1", "not red"], number: "2"}, 
+      var card = {color: "red", hints:["not 1", "not 3", "not blue"], number: "2"}, 
           hint = "2",
-          expectedArray = ["2", "not red"]
+          expectedArray = ["2", "not blue"]
       
       GamePlay.setHint(card, hint)
       
