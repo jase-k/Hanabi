@@ -7,4 +7,4 @@ https://puddle-catcher.glitch.me/
 
 */
 
-//Import Default 
+describe("NEW GAME: /newgame/:numberOfPlayers?name=NAME", function()
