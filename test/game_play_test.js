@@ -19,7 +19,6 @@ const {GamePlay} = require('../modules/game_play.js');
 const Defaults = require('./defaults.js')
 
 describe("GamePlay", function(){
-  
   describe(".createDeck", function(){
     it("Creates and Returns an Array of 50 Card Objects for the OriginalDeck", function(){
       const expectedResult = 50 
@@ -500,7 +499,18 @@ describe("GamePlay", function(){
       
     }); 
     it("should reduce hintsLeft by 1", function(){
-      var game = 
+      var game = Defaults.gameSettings2Player(),
+          hint = 'red',
+          name = 'Gandolf'
+      game.players[1].name = name
+      
+      GamePlay.giveHint(game, hint, name, "Legolas")
+      
+      assert.equal(game.hintsLeft, 7)
+          
+    });
+    it("should update messages to 'PLAYER, gave NAME a hint about his/her HINT", function(){
+      assert.equal(game.messages, "Legolas gave 
     });
   });
   describe(".setHint", function(){

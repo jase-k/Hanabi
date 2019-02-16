@@ -214,8 +214,8 @@ var GamePlay = {
     return gameObject
   },
   giveHint(gameObject, hint, hintReciever, hintGiver){
-  var receiverIndex = gameObject.players.findIndex(player => player.name == hintReciever)
-  
+    var receiverIndex = gameObject.players.findIndex(player => player.name == hintReciever)
+    gameObject.hintsLeft--
 
     gameObject.players[receiverIndex].hand.forEach(function(card){
         GamePlay.setHint(card, hint)
