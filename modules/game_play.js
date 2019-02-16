@@ -38,6 +38,10 @@ Sample PlayerObject: {
 var i;
 const colors = ["black", "blue", "orange", "red", "white"]
 const numbers = [1,1,1,2,2,3,3,4,4,5]
+const hintOptions = {
+      color: colors,
+      number: ["1","2","3","4","5"]
+}
 
 //Import other Modules
 const Simulate = require('./game_simulation.js')
@@ -105,7 +109,14 @@ var GamePlay = {
     
     var hintType = this.getHintType(hint)
     
-    if(card[hintType] == hint){  
+    if(card[hintType] == hint){ 
+      for(i =0; i < card.hints.length; ){
+        if(hintOptions[hintType].includes(hint)){
+          card.hints.splice(i, 1)
+        }else{
+          i++
+        }
+      }
       card.hints.push(hint)
     }else{
       card.hints.push(`not ${hint}`)
