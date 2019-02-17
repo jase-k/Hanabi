@@ -15,16 +15,17 @@ const Defaults = require('./defaults');
 
 describe("NEW GAME: /newgame/:numberOfPlayers?name=NAME", function(){
   it("should add a new game to the database", function(done){
-    var game = Defaults.gameSettings2Player();
-    var url = 'https://puddle-catcher.glitch.me/newgame/2?name=Frodo'
+    const expectedObjectKeys = ["numberOfPlayers, "],
+                         url = 'https://puddle-catcher.glitch.me/newgame/2?name=Frodo'
     
     rp(url)
     .then(function(results){
       console.log(results)
       var object = JSON.parse(results)
-      assert.equal(object.numberOfPlayers, 2)
-      done();
+      var objectKeys = Object.keys(object)
+      assert.deepEqual(objectKeys, expectedObjectKeys, ""+objectKeys+" should equal "+expectedObjectKeys)
       assert.ok(results)
+      done();
       
     })
     
