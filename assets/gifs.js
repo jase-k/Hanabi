@@ -22,6 +22,19 @@ const WinningGifs = [
   },
   {
     url: "https://cdn.glitch.com/2f645685-fc7e-4ed3-a61f-f16db85bfe59%2Fduck1.gif?1550361607026",
-    alt: "Go A"
+    alt: "Go Ahead and party. You're a winner and everyone know it!"
+  },
+  {
+    url: "https://cdn.glitch.com/2f645685-fc7e-4ed3-a61f-f16db85bfe59%2Forangatang.gif?1550361607148",
+    alt: "Not sure what he's doing, but you just won!"
+  },
+  {
+    url: "https://cdn.glitch.com/2f645685-fc7e-4ed3-a61f-f16db85bfe59%2Fdog.gif?1550361607212",
+    alt: "Tiptoed to the top you did. Now you can call yourself a winner!",
+  },
+  {
+    url: "https://cdn.glitch.com/2f645685-fc7e-4ed3-a61f-f16db85bfe59%2Fzebra.gif?1550361608842",
   }
 ]
+
+module.exports = WinningGifs

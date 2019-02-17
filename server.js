@@ -6,15 +6,18 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const app = express();
 app.use(bodyParser.urlencoded({ extended: true }));
+
+//import Modules
 const gameCreation = require('./cool-file.js')
 const Database = require('./database.js')
-const ReactDOM = require('react-dom')
-const React = require('react')
+const WinningGifs = require('./assets/gifs.js')
+
 const colors = ['white', 'red', 'black', 'orange', 'blue']
 const numbers = [1,2,3,4,5]
 const hintOptions = {}
-hintOptions.color = colors
-hintOptions.number = numbers
+      hintOptions.color = colors
+      hintOptions.number = numbers
+
 const cors = require('cors')
 
 app.use(cors());
@@ -38,6 +41,11 @@ app.get('/', function(request, response) {
   response.sendFile(__dirname + '/views/index.html');
 });
 
+app.get('/winner', function(request, response){
+  var gif = WinningGifs[Math.floor(Math.random()*WinningGifs.length)]
+  
+  response.json(gif)
+});
 
 app.get('/newgame/:numberOfPlayers', function(request, response) {
 //  console.log(request)
