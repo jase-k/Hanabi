@@ -34,6 +34,35 @@ const WinningGifs = [
   },
   {
     url: "https://cdn.glitch.com/2f645685-fc7e-4ed3-a61f-f16db85bfe59%2Fzebra.gif?1550361608842",
+    alt: "Looks like you won! Might be time to have a zebra in your life..."
+  },
+  {
+    url: "https://cdn.glitch.com/2f645685-fc7e-4ed3-a61f-f16db85bfe59%2Fgroundhog.gif?1550361609125",
+    alt: "Time to practice your dancing skillz, because you just WON!"
+  },
+  {
+    url: "https://cdn.glitch.com/2f645685-fc7e-4ed3-a61f-f16db85bfe59%2Fpowerrangers.gif?1550361609519",
+    alt: "Let them hear it! You Won!"
+  },
+  {
+    url: "https://cdn.glitch.com/2f645685-fc7e-4ed3-a61f-f16db85bfe59%2Fparrot.gif?1550361610053", 
+    alt: "Oh Baby did you ever Win!"
+  },
+  {
+    url: "https://cdn.glitch.com/2f645685-fc7e-4ed3-a61f-f16db85bfe59%2Fduck.gif?1550361610130",
+    alt: "If you aren't excited now, you should be because you just won!"
+  },
+  {
+    url: "https://cdn.glitch.com/2f645685-fc7e-4ed3-a61f-f16db85bfe59%2Fhamster.gif?1550361613717",
+    alt: "Doesn't take a genius to figure out you just won.",
+  },
+  {
+    url: "https://cdn.glitch.com/2f645685-fc7e-4ed3-a61f-f16db85bfe59%2Fgorilla.gif?1550361615561",
+    alt: "Usually we say don't try this a home, but go ahead. You just won, I can't stop you"
+  },
+  {
+    url: "https://cdn.glitch.com/2f645685-fc7e-4ed3-a61f-f16db85bfe59%2Fgorilla1.gif?1550361616293",
+    alt: "This gorilla is pretty happy, but unlike you, he didn't even win a game of Hanabi!"
   }
 ]
 
