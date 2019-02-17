@@ -63,7 +63,7 @@ app.get('/newgame/:numberOfPlayers', function(request, response) {
     
   console.log('<<CREATING A NEW GAME>>', GamePlay, Database)
 
-  var newGame = GamePlay.newGame(numberOfPlayers)
+  var newGame = GamePlay.newGame(numberOfPlayers, name)
   
   
   //Sends the Object Created above to set the table data for the New Game 

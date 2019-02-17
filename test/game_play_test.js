@@ -15,7 +15,7 @@ const assert = require('chai').assert
 
 // Import Modules
 
-const {GamePlay} = require('../modules/game_play.js');
+const GamePlay = require('../modules/game_play.js');
 const Defaults = require('./defaults.js')
 
 describe("GamePlay", function(){
@@ -215,6 +215,14 @@ describe("GamePlay", function(){
       assert.equal(gameObject.livesLeft, expectedSettings.livesLeft, "Lives Left always starts at 3")
       assert.equal(gameObject.numberOfPlayers, expectedSettings.numberOfPlayers, "Number of Players should equal 3")
       assert.equal(gameObject.score, expectedSettings.score, "Score should start out at 0")
+    });
+    it("should set game.players[0].name to NAME", function(){
+      const name = 'Frodo';
+      const expectedResult = name; 
+      
+      const newGameObject = GamePlay.newGame(3, name)
+      
+      assert.equal(newGameObject.players[0].name, name)
     });
   });
   describe(".joinGame", function(){

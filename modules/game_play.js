@@ -137,7 +137,7 @@ var GamePlay = {
   },
   
 /*=========== Public ===================*/  
-  newGame(numberOfPlayers){
+  newGame(numberOfPlayers, name){
   var gameObject = {
       dateCreated: new Date(),
       discardedCards: [], 
@@ -160,6 +160,7 @@ var GamePlay = {
 
      gameObject.playingDeck = dealtGame.playingDeck
      gameObject.players = dealtGame.players
+     gameObject.players[0].name = name
     
     return gameObject
   },
