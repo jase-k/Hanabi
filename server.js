@@ -12,6 +12,9 @@ const gameCreation = require('./cool-file.js')
 const Database = require('./database.js')
 const WinningGifs = require('./assets/gifs.js')
 
+//import New Modules
+const GamePlay = require('./modules/game_play.js')
+
 const colors = ['white', 'red', 'black', 'orange', 'blue']
 const numbers = [1,2,3,4,5]
 const hintOptions = {}
@@ -58,24 +61,10 @@ app.get('/newgame/:numberOfPlayers', function(request, response) {
   
   var newDeck = gameCreation.createDeck(numberOfPlayers);
     
-  console.log('<<CREATING A NEW GAME>>')
+  console.log('<<CREATING A NEW GAME>>', GamePlay, Database)
 
-  var newGame = {};
-newGame.numberOfPlayers = numberOfPlayers;
-newGame.dateCreated = new Date();
-newGame.score = null;
-newGame.hintsLeft = 8;
-newGame.livesLeft = 3;
-newGame.originalDeck = newDeck.slice();
-
-//deals Hand and Returns the rest of the Deck array and Player Hands
-var dealtGame = gameCreation.dealHand(newDeck, numberOfPlayers, name);
-
-newGame.playingDeck = dealtGame.deck;
-newGame.discardedCards = [];
-newGame.playedCards = [];
-newGame.messages = [];
-newGame.players = dealtGame.players;  
+  var newGame = GamePlay.newGame(numberOfPlayers)
+  
   
   //Sends the Object Created above to set the table data for the New Game 
   //The function below (found in database.js) Inserts New Rows in the Tables with the starting Data. 

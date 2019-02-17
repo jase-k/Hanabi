@@ -229,6 +229,6 @@ var GamePlay = {
 
 
 
-module.exports = {GamePlay}
+module.exports = GamePlay
 
 

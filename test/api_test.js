@@ -34,13 +34,13 @@ describe("NEW GAME: /newgame/:numberOfPlayers?name=NAME", function(){
     rp(url)
     .then(function(results){
         after(function(){
-            db.run("DELETE FROM HanabiGames WHERE id = "+results.tableIds.gameId)
-            db.run("DELETE FROM OriginalDeck WHERE gameId = "+results.tableIds.gameId)
-            db.run("DELETE FROM PlayingDeck WHERE gameId = "+results.tableIds.gameId)
-            db.run("DELETE FROM DiscardedCards WHERE gameId = "+results.tableIds.gameId)
-            db.run("DELETE FROM PlayedCards WHERE gameId = "+results.tableIds.gameId)
-            db.run("DELETE FROM Messages WHERE gameId = "+results.tableIds.gameId)
-            db.run("DELETE FROM Players WHERE gameId = "+results.tableIds.gameId)
+            db.run("DELETE FROM HanabiGames WHERE id = "+object.tableIds.gameId)
+            db.run("DELETE FROM OriginalDeck WHERE gameId = "+object.tableIds.gameId)
+            db.run("DELETE FROM PlayingDeck WHERE gameId = "+object.tableIds.gameId)
+            db.run("DELETE FROM DiscardedCards WHERE gameId = "+object.tableIds.gameId)
+            db.run("DELETE FROM PlayedCards WHERE gameId = "+object.tableIds.gameId)
+            db.run("DELETE FROM Messages WHERE gameId = "+object.tableIds.gameId)
+            db.run("DELETE FROM Players WHERE gameId = "+object.tableIds.gameId)
          });
       
       var object = JSON.parse(results)
