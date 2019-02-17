@@ -21,7 +21,8 @@ describe("NEW GAME: /newgame/:numberOfPlayers?name=NAME", function(){
     rp(url)
     .then(function(results){
       console.log(results)
-      assert.equal(results.numberOfPlayers, 2)
+      var object = JSON.parse(results)
+      assert.equal(object.numberOfPlayers, 2)
       done();
       assert.ok(results)
       
