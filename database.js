@@ -299,7 +299,7 @@ return new Promise((resolve, reject) =>{
     });
   })
 }
-Database.createRows = function(object){
+database.createRows = function(object){
   return new Promise((resolve, reject) =>{
   InsertHanabiRow(object)
   .then(object => InsertOriginalDeckRow(object))
@@ -455,7 +455,7 @@ function getMessages(object){
   });
 }
 
-Database.getCurrentGame = (gameId) => {
+database.getCurrentGame = (gameId) => {
 return new Promise((resolve, reject) => { 
   var gameObject = {
     id: gameId
@@ -472,7 +472,7 @@ return new Promise((resolve, reject) => {
 //===========================================
 // Join a Game 
 //===========================================
-Database.addPlayer = (gameId, name) => {
+database.addPlayer = (gameId, name) => {
   var playerId;
   db.each('SELECT * FROM Players WHERE gameId = $id', 
           {$id: gameId}, 
@@ -504,7 +504,7 @@ if(row.name !== name){
 //  Update Game
 //=======================================
 
-Database.updateGame = (object) =>{
+database.updateGame = (object) =>{
  updateDeck(object.playingDeck, object.id, 'PlayingDeck') 
  updateDeck(object.playedCards, object.id, 'PlayedCards')
  updateDeck(object.discardedCards, object.id, 'DiscardedCards')
@@ -593,5 +593,5 @@ function updateMessages(object){
   })
 }
 
-module.exports = Database
+module.exports = database
 
