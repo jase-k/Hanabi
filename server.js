@@ -9,12 +9,12 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 //import Modules
 const gameCreation = require('./cool-file.js')
-const Database = require('./database.js')
+// const Database = require('./database.js')
 const WinningGifs = require('./assets/gifs.js')
 
 //import New Modules
 const GamePlay = require('./modules/game_play.js')
-const {Database as dataBase} = require('./modules/database.js')
+const {Database} = require('./modules/database.js')
 
 const colors = ['white', 'red', 'black', 'orange', 'blue']
 const numbers = [1,2,3,4,5]
@@ -55,19 +55,16 @@ app.get('/newgame/:numberOfPlayers', function(request, response) {
 
   var numberOfPlayers = request.params.numberOfPlayers
   var name = request.query.name
+  var newGame = GamePlay.newGame(numberOfPlayers, name)
 
   if(numberOfPlayers == null || numberOfPlayers > 5){
       response.send("Error: Must have 2-5 players")
   }
   
   console.log('<<CREATING A NEW GAME>>')
-
-  var newGame = GamePlay.newGame(numberOfPlayers, name)
-  
-  
-  //Sends the Object Created above to set the table data for the New Game 
-  //The function below (found in database.js) Inserts New Rows in the Tables with the starting Data. 
-Database.createRows(newGame).then(results => response.json(results))
+ 
+   Database.insert(newGame)
+  .then(results => response.json(results))
   
 });
 
