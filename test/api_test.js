@@ -90,6 +90,7 @@ describe('SERVER JS:', function(){
           })
       });
     })
+  });
   describe("GET '/game/:gameId/:name'", function(){
     it("should return a game object from the database", function(done){
       const expectedObjectKeys = [ 'dateCreated',  'discardedCards', 'hintsLeft', 
@@ -126,6 +127,46 @@ describe('SERVER JS:', function(){
           })
       });
     })
-  });
+    });
+  describe("PLAYCARD '/game/:gameId/:name/playcard?cardIndex=INTEGER'", function(){
+    it("should play a card and return a object from the database", function(done){
+      const expectedObjectKeys = [ 'dateCreated',  'discardedCards', 'hintsLeft', 
+                                    'livesLeft', 'messages', 'numberOfPlayers', 'originalDeck', 'playedCards',
+                                    'players', 'playingDeck', 'score', 'tableIds', 'id']
+      const expectedPlayedCards = [
+        {color: "blue", hints:[], number:"1"}
+      ]
+    /*
+      var url = 'https://puddle-catcher.glitch.me/newgame/2?name=Frodo'
+    
+      rp(url)
+      .then(function(results){
+          after(function(){
+              db.run("DELETE FROM HanabiGames WHERE id = "+object.tableIds.gameId)
+              db.run("DELETE FROM OriginalDeck WHERE gameId = "+object.tableIds.gameId)
+              db.run("DELETE FROM PlayingDeck WHERE gameId = "+object.tableIds.gameId)
+              db.run("DELETE FROM DiscardedCards WHERE gameId = "+object.tableIds.gameId)
+              db.run("DELETE FROM PlayedCards WHERE gameId = "+object.tableIds.gameId)
+              db.run("DELETE FROM Messages WHERE gameId = "+object.tableIds.gameId)
+              db.run("DELETE FROM Players WHERE gameId = "+object.tableIds.gameId)
+           });
+        
+        var object = JSON.parse(results)
+        var objectKeys = Object.keys(object)
+        
+        var url = 'https://puddle-catcher.glitch.me/game/'+object.tableIds.gameId+'/Frodo'
+        
+        rp(url)
+        .then(function(results){
+          var object = JSON.parse(results)
+          var objectKeys = Object.keys(object)
+                
+            assert.equal(object.players[0].name, 'Frodo')
+            assert.ok(results)
+            done();
+          })
+      })
+        */
+    });
   });
 })
