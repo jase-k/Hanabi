@@ -114,16 +114,19 @@ var name = request.params.name
 var cardIndex = request.query.cardIndex
 var gameId = request.params.gameid
 
- Database.get(gameId).then(function(results){
-    console.log(JSON.stringify(results))    
+ Database.get(gameId).then(function(game){
+    console.log(JSON.stringify(game))    
     
-   GamePlay.playcard()
-
+   var game = GamePlay.playCard(game, cardIndex, name)
     
-    
-
-  Database.update(results)
-  response.send(results)
+   if(game){
+      Database.update(game)
+      response.send(game)
+   }else{
+     GamePlay.discard(game)
+     Database.update(game)
+     response.json(game)
+   }
   })
 });
 
