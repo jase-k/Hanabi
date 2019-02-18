@@ -397,6 +397,16 @@ describe("GamePlay", function(){
       assert.equal(game.messages[0], expectedMessage)
       
     });
+    it("should switch active to 0 for player and switch active to 1 to the next Player", function(){
+      var game = Defaults.gameSettings2Player(),
+          card = {color: "black", hints:[], number: "2"}
+          game.players[0].hand[0] = card
+      
+        GamePlay.playCard(game, 0, "Legolas")
+
+        assert.equal(game.players[0].active, 0)
+        assert.equal(game.players[1].active, 1)
+    });
   });
   describe(".discard", function(){
     it("should copy the discarded card to the .discardedCards array (card[0])", function(){

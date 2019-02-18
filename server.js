@@ -114,7 +114,7 @@ var name = request.params.name
 var cardIndex = request.query.cardIndex
 var gameId = request.params.gameid
 
- database.getCurrentGame(gameId).then(function(results){
+ Database.get(gameId).then(function(results){
     console.log(JSON.stringify(results))
     
 //==== Replace the First Card undefined Card in the Played Cards Array========//  

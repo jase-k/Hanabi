@@ -135,6 +135,10 @@ var GamePlay = {
        }
     
   },
+  switchActivePlayer(game, numberOfPlayers, playerIndex){
+    game.players[playerIndex].active = 0 
+    game.players[playerIndex+1].active = 1
+  },
   
 /*=========== Public ===================*/  
   newGame(numberOfPlayers, name){
@@ -188,6 +192,8 @@ var GamePlay = {
         card =  player.hand[cardIndex],
         plays = Simulate.doesCardPlay(card, gameObject.playedCards) 
 
+    this.switchActivePlayer(gameObject, gameObject.numberOfPlayers, playerIndex)
+    
     if(plays){
         if(card.number == 5){ gameObject.hintsLeft++ }
     
