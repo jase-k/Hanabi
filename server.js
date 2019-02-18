@@ -14,6 +14,7 @@ const WinningGifs = require('./assets/gifs.js')
 
 //import New Modules
 const GamePlay = require('./modules/game_play.js')
+const {Database as dataBase} = require('./modules/database.js')
 
 const colors = ['white', 'red', 'black', 'orange', 'blue']
 const numbers = [1,2,3,4,5]
@@ -51,17 +52,15 @@ app.get('/winner', function(request, response){
 });
 
 app.get('/newgame/:numberOfPlayers', function(request, response) {
-//  console.log(request)
+
   var numberOfPlayers = request.params.numberOfPlayers
   var name = request.query.name
 
   if(numberOfPlayers == null || numberOfPlayers > 5){
-  response.send("Error: Must have 2-5 players")
+      response.send("Error: Must have 2-5 players")
   }
   
-  var newDeck = gameCreation.createDeck(numberOfPlayers);
-    
-  console.log('<<CREATING A NEW GAME>>', GamePlay, Database)
+  console.log('<<CREATING A NEW GAME>>')
 
   var newGame = GamePlay.newGame(numberOfPlayers, name)
   
