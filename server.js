@@ -72,18 +72,18 @@ app.get('/newgame/:numberOfPlayers', function(request, response) {
 app.get('/joingame/:gameid', function(request, response){
   var name = request.query.name
   var gameId = request.params.gameid
-  Database.addPlayer(gameId, name) 
-  Database.getCurrentGame(gameId).then(function(results){
-     results.message = 'Success!'
-  var failedName = true
-    for(var i = 0; i< results.players.length; i++){
-   if(results.players[i].name == name){ failedName = false}
-  }  
-   if(failedName){
-     results.message = 'Name Not Found in the Game!'
-     response.json(results)} else {response.json(results)}
+  var gameObject = {}
+  
+  Database.get(gameId)
+  .then(function(results){
+    
+    GamePlay.joinGame(results, name)
+    
+    Database.update(results)
+    
+    response
   })
-  });
+});
 
 
 app.get('/game/:gameid/:name', function(request, response){

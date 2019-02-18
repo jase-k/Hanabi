@@ -56,7 +56,7 @@ describe('SERVER JS:', function(){
     })
   });
   describe("JOIN GAME '/joingame/:gameid?name=NAME'", function(){
-    it("should add a new game to the database", function(done){
+    it("should add a new Player and return the game", function(done){
       const expectedObjectKeys = [ 'dateCreated',  'discardedCards', 'hintsLeft', 
                                     'livesLeft', 'messages', 'numberOfPlayers', 'originalDeck', 'playedCards',
                                     'players', 'playingDeck', 'score', 'tableIds', 'id']
@@ -78,11 +78,17 @@ describe('SERVER JS:', function(){
         var object = JSON.parse(results)
         var objectKeys = Object.keys(object)
       
-        assert.deepEqual(objectKeys, expectedObjectKeys, ""+objectKeys+" should equal "+expectedObjectKeys)
-        assert.equal(object.players[0].name, 'Frodo')
-        assert.ok(results)
+        var url = 'https://puddle-catcher.glitch.me/joingame/'+object.tableIds.gameId+'?name=Sam'
+        
+        rp(url)
+        .then(function(object){
+          var object = JSON.parse(results)
+          var objectKeys = Object.keys(object)
       
-        done();
+            assert.equal(object.players[1].name, 'Sam')
+            assert.ok(results)
+            done();
+          })
       });
     })
   });
