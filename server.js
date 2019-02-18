@@ -9,7 +9,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 //import Modules
 const gameCreation = require('./cool-file.js')
-// const Database = require('./database.js')
+const database = require('./database.js')
 const WinningGifs = require('./assets/gifs.js')
 
 //import New Modules
@@ -94,7 +94,7 @@ app.get('/game/:gameid/:name', function(request, response){
   console.log('Returning Game')
   
   //Returning the Game Object and Adding a Failure Message for Debugging 
-  Database.getCurrentGame(gameId).then(function(results){
+  database.getCurrentGame(gameId).then(function(results){
      results.message = 'Success!'
     var failedName = true
     for(var i = 0; i< results.players.length; i++){
@@ -115,7 +115,7 @@ var name = request.params.name
 var cardIndex = request.query.cardIndex
 var gameId = request.params.gameid
 
- Database.getCurrentGame(gameId).then(function(results){
+ database.getCurrentGame(gameId).then(function(results){
     console.log(JSON.stringify(results))
     
 //==== Replace the First Card undefined Card in the Played Cards Array========//  
@@ -164,7 +164,7 @@ var newIndex = (playerIndex+1) % results.players.length
     results.players[newIndex].active = 1
     
 
-  Database.updateGame(results)
+  database.updateGame(results)
   response.send(results)
   })
 });
@@ -179,7 +179,7 @@ var name = request.params.name
 var cardIndex = request.query.cardIndex
 var gameId = request.params.gameid
 
-  Database.getCurrentGame(gameId).then(function(results){
+  database.getCurrentGame(gameId).then(function(results){
     console.log(JSON.stringify(results))
     
 
@@ -216,7 +216,7 @@ var nextPlayersIndex = (playerIndex+1) % results.players.length
 // === Sends Message to What Card was Discarded ===//
    results.messages.push(name+" discarded a "+card.color+" "+card.number)
     
-  Database.updateGame(results)
+  database.updateGame(results)
   response.send(results)
   })
 });
@@ -231,7 +231,7 @@ var gameId = request.params.gameid
 
   
 //=== Getting Data from the DataBase==//
- Database.getCurrentGame(gameId).then(function(results){
+ database.getCurrentGame(gameId).then(function(results){
     console.log(JSON.stringify(results))
    
   var nameIndex = results.players.findIndex(i => i.name === name)
@@ -322,7 +322,7 @@ var newIndex = (nameIndex+1) % results.players.length
    results.messages.push(`${name} gave ${player} a hint about their ${hint}'s`) 
     console.log("Messages", results.messages)
 results.hintsLeft -= 1;  
-Database.updateGame(results)
+database.updateGame(results)
 response.send(results)
  
  });

@@ -64,7 +64,7 @@ var objectnew = cardStringToObject(newstring);
 //console.log(newstring)
 //console.log(objectnew)
 
-const Database ={};
+const database ={};
 
  //db.run('CREATE TABLE Messages(id INTEGER PRIMARY KEY, gameId INTEGER, Messages TEXT)') 
 
