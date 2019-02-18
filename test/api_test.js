@@ -136,7 +136,7 @@ describe('SERVER JS:', function(){
       const expectedPlayedCards = [
         {color: "blue", hints:[], number:"1"}
       ]
-    /*
+    
       var url = 'https://puddle-catcher.glitch.me/newgame/2?name=Frodo'
     
       rp(url)
@@ -154,19 +154,27 @@ describe('SERVER JS:', function(){
         var object = JSON.parse(results)
         var objectKeys = Object.keys(object)
         
-        var url = 'https://puddle-catcher.glitch.me/game/'+object.tableIds.gameId+'/Frodo'
+        object.players[0].active = 1
+        object.players[1].name = 'Sam'
+        object.players[0].hand[0] = {color: "blue", hints:[], number:"1"}
+        
+        Database.update(object);
+        
+        var url = 'https://puddle-catcher.glitch.me/game/'+object.tableIds.gameId+'/Frodo/playcard?cardIndex=0'
         
         rp(url)
         .then(function(results){
+          console.log(results)
+          
           var object = JSON.parse(results)
           var objectKeys = Object.keys(object)
                 
-            assert.equal(object.players[0].name, 'Frodo')
+            assert.deepEqual(object.playedCards, expectedPlayedCards)
             assert.ok(results)
             done();
           })
       })
-        */
+        
     });
   });
 })

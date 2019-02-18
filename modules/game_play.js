@@ -161,6 +161,7 @@ var GamePlay = {
      gameObject.playingDeck = dealtGame.playingDeck
      gameObject.players = dealtGame.players
      gameObject.players[0].name = name
+     gameObject.players[0].active = 1
     
     return gameObject
   },

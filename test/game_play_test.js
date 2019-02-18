@@ -224,6 +224,14 @@ describe("GamePlay", function(){
       
       assert.equal(newGameObject.players[0].name, name)
     });
+    it("should set game.players[0].active to 1", function(){
+      const name = 'Frodo';
+      const expectedActive = 1; 
+      
+      const newGameObject = GamePlay.newGame(3, name)
+      
+      assert.equal(newGameObject.players[0].active, expectedActive)
+    });
   });
   describe(".joinGame", function(){
     it("it should add playerName to the next available spot in the game Object (2-player)", function(){
