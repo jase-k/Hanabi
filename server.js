@@ -115,55 +115,14 @@ var cardIndex = request.query.cardIndex
 var gameId = request.params.gameid
 
  Database.get(gameId).then(function(results){
-    console.log(JSON.stringify(results))
+    console.log(JSON.stringify(results))    
     
-//==== Replace the First Card undefined Card in the Played Cards Array========//  
-  var playerIndex = results.players.findIndex(i => i.name === name);
-    console.log("player index", playerIndex)
-  if(playerIndex == -1){
-    response.send("Couldn't Find Player!")
-    return; 
-   }
-    if(!results.players[playerIndex].active){ response.send("Sorry, it's not your Turn!"); return;} //Returns if name isn't active
-    
-// ==== Checks to see if the Card Plays ===== //
-  var card = results.players[playerIndex].hand[cardIndex]
-
-  //Filters out the color of the played Cards
-  console.log("Color of Card", card.color)
-  var colorArray = results.playedCards.filter(playedcard => playedcard).filter(playedcard => playedcard.color === card.color)
-  console.log("colorArray", colorArray)
-  var max =  Math.max.apply(null, colorArray.map(element => element.number))
-    
-  console.log("Max:", max)
-  if(max == -Infinity){ max = 0 }
-    
- if(max+1 == card.number){ 
-  var playedCardIndex = results.playedCards.indexOf(undefined)
-   results.playedCards.splice(playedCardIndex, 1, card)
-   results.messages.push("Success! "+name+" played  a "+card.color+" "+card.number+"!")
-   results.score++
-   if(card.number == 5){results.hintsLeft++}
- }else{
-    var discardedCardIndex = results.discardedCards.indexOf(undefined)
-   results.discardedCards.splice(discardedCardIndex, 1, results.players[playerIndex].hand[cardIndex])
-   results.livesLeft--   
-   results.messages.push("Whoop! "+name+" tried playing a "+card.color+" "+card.number+" and it didn't play")
- }
-    
-//==== Replace the Hand Card with the Next Card from the Deck ===//
-  var nextCard = results.playingDeck.shift()
-      results.players[playerIndex].hand.splice(cardIndex, 1, nextCard)    
+   GamePlay.playcard()
 
     
     
-//===== Switch the Active Player ====//
-    results.players[playerIndex].active = 0
-var newIndex = (playerIndex+1) % results.players.length
-    results.players[newIndex].active = 1
-    
 
-  database.updateGame(results)
+  Database.update(results)
   response.send(results)
   })
 });

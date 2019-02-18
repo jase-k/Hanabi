@@ -136,8 +136,10 @@ var GamePlay = {
     
   },
   switchActivePlayer(game, numberOfPlayers, playerIndex){
+    var nextIndex = (playerIndex + 1) % numberOfPlayers
+    
     game.players[playerIndex].active = 0 
-    game.players[playerIndex+1].active = 1
+    game.players[nextIndex].active = 1
   },
   
 /*=========== Public ===================*/  

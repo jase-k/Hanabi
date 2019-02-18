@@ -134,6 +134,34 @@ describe("GamePlay", function(){
     
     });
   });
+  describe(".switchActivePlayer", function(){
+    it("should swith active player from first player the second player", function(){
+      var game = {
+        players : [
+          {active: 1},
+          {active: 0}
+        ]
+      }
+      
+      GamePlay.switchActivePlayer(game, 2, 0)
+      
+      assert.equal(game.players[0].active, 0)
+      assert.equal(game.players[1].active, 1)
+    });
+    it("should swith active player from second player the first player", function(){
+      var game = {
+        players : [
+          {active: 0},
+          {active: 1}
+        ]
+      }
+      
+      GamePlay.switchActivePlayer(game, 2, 1)
+      
+      assert.equal(game.players[0].active, 1)
+      assert.equal(game.players[1].active, 0)
+    });
+  });
   describe(".newGame", function(){
     it("Should create a game Object with correct Keys", function(){
       const numberOfPlayers = 2; 
