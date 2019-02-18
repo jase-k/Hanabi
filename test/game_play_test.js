@@ -255,6 +255,18 @@ describe("GamePlay", function(){
       assert.deepEqual(game.players, expectedResult.players)
       
     });
+    it("should return false if the name slots are full and the name is not found", function(){
+      var name = "Mary"
+      var game = Defaults.gameSettings2Player();
+          game.players[1].name = "Pippen"
+      
+      var expectedResult = false
+      
+      var results = GamePlay.joinGame(game, name)
+      
+      assert.equal(results, expectedResult)
+      
+    });
   });
   describe(".playCard", function(){
     it("should copy the played card to the .playedCards array (card[0])", function(){

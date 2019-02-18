@@ -165,15 +165,21 @@ var GamePlay = {
     return gameObject
   },
   joinGame(gameObject, name){
+    var foundName = false
     
     for(var i = 0; i < gameObject.players.length; i++){
       if(!gameObject.players[i].name || gameObject.players[i].name === name){
         gameObject.players[i].name = name
+        foundName = true
         break;
       } 
     }
+    if(foundName){
+      return gameObject
+    }else{
+      return false
+    }
     
-    return gameObject
   },
   playCard(gameObject, cardIndex, playerOfCard){
     var playerIndex = gameObject.players.findIndex(player => player.name === playerOfCard),

@@ -91,20 +91,19 @@ app.get('/joingame/:gameid', function(request, response){
 app.get('/game/:gameid/:name', function(request, response){
   var gameId = request.params.gameid
   var name = request.params.name
-  console.log('Returning Game')
   
-  //Returning the Game Object and Adding a Failure Message for Debugging 
-  database.getCurrentGame(gameId).then(function(results){
-     results.message = 'Success!'
-    var failedName = true
-    for(var i = 0; i< results.players.length; i++){
-   if(results.players[i].name == name){ failedName = false}
-  }  
-   if(failedName){
-     results.message = 'Name Not Found in the Game!'
-     response.json(results)} else {response.json(results)}
-  })
-  
+  Database.get(gameId)
+  .then(function(results){
+    
+    var gameObject = GamePlay.joinGame(results, name)
+    
+    if(gameObject){
+      Database.update(gameObject)
+      response.json(gameObject)
+    }else{
+      response.send("Game is full and couldn't Find Player in Game")
+    }
+  });
 });
 
 
