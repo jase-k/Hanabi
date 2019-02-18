@@ -84,7 +84,6 @@ describe('SERVER JS:', function(){
         .then(function(results){
           var object = JSON.parse(results)
           var objectKeys = Object.keys(object)
-          console.log("Results from join game:", results)
       
             assert.equal(object.players[1].name, 'Sam')
             assert.ok(results)

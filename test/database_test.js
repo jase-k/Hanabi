@@ -265,7 +265,7 @@ describe("Database", function(){
   });
 });
 
-describe.skip("Utils", function(){
+describe("Utils", function(){
   describe(".insertHanabiGameRow", function(){
    it("Should insert a new row in HanabiGames Table", function(done){   
       var gameObject = Defaults.gameSettings2Player()
@@ -689,7 +689,7 @@ describe.skip("Utils", function(){
        });
     });
   });
-  describe.skip(".updatesPlayerRow", function(){
+  describe(".updatesPlayerRow", function(){
     it("Updates One Player in Players Tables (2-player)", function(done){
       var gameObject = Defaults.gameSettings2Player()
       var expectedCard1 = "orange|5|"
@@ -941,7 +941,7 @@ describe.skip("Utils", function(){
       });
     })
   });
-  describe.skip(".getPlayers", function(){
+  describe(".getPlayers", function(){
     it("should return player Objects for All Players", function(done){
       var gameObject = Defaults.gameSettings2Player()
       var expectedPlayers = gameObject.players
@@ -966,7 +966,7 @@ describe.skip("Utils", function(){
   });
 });
 
-describe.skip("Helper", function(){
+describe("Helper", function(){
   describe(".createCardString", function(){
     it("creates a valid card column string for 5 cards", function(){
       var expectedResult = 'card1,card2,card3,card4,card5'

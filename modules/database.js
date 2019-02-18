@@ -110,6 +110,7 @@ const Utils = {
         
            object.tableIds.gameId= this.lastID
            object.id = this.lastID
+
            resolve(object)
         })
     });
@@ -198,7 +199,7 @@ const Utils = {
    return new Promise((resolve, reject) => { 
     var sql = `UPDATE HanabiGames
                SET score = ${gameObject.score}, hintsLeft = ${gameObject.hintsLeft}, livesLeft = ${gameObject.livesLeft}
-               WHERE id = ${gameObject.tablesId.gameId}`
+               WHERE id = ${gameObject.tableIds.gameId}`
     
     db.run(sql, function(err){
      if(err){
