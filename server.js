@@ -79,9 +79,11 @@ app.get('/joingame/:gameid', function(request, response){
     
     GamePlay.joinGame(results, name)
     
+    console.log(results)
+    
     Database.update(results)
     
-    response
+    response.json(results)
   })
 });
 

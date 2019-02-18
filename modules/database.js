@@ -197,11 +197,12 @@ const Utils = {
   updateHanabiGameRow(gameObject){
    return new Promise((resolve, reject) => { 
     var sql = `UPDATE HanabiGames
-            SET score = ${gameObject.score}, hintsLeft = ${gameObject.hintsLeft}, livesLeft = ${gameObject.livesLeft}
-            WHERE id = ${gameObject.tableIds.gameId}`
+               SET score = ${gameObject.score}, hintsLeft = ${gameObject.hintsLeft}, livesLeft = ${gameObject.livesLeft}
+               WHERE id = ${gameObject.tableIds.gameId}`
+    
     db.run(sql, function(err){
      if(err){
-      console.log("Error at updateDeck at Hanabi Game Table", sql)
+        reject("Error at updateDeck at Hanabi Game Table", sql)
         throw err
         }
       resolve(gameObject)
