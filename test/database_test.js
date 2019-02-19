@@ -152,7 +152,7 @@ describe("Database", function(){
   });
   });
   describe(".update", function(){
-    it.skip("Updates All Tables for an Updated Game Object", function(done){
+    it("Updates All Tables for an Updated Game Object", function(done){
       var gameObject = Defaults.gameSettings5Player()
       var expectedHints = 1
       var expectedDiscard = "white|3|"
@@ -232,8 +232,8 @@ describe("Database", function(){
                   assert.notOk(err)
                   assert.equal(row.Messages, expectedMessage)
                 });
-        db.get("SELECT * FROM Players WHERE id = $id",  
-                 {$id: results.tableIds.playersId[4]},
+        db.get("SELECT * FROM Players WHERE gameId = $id",  
+                 {$id: results.tableIds.gameId},
                  function(err, row){
                   if(err){
                    console.log(err)
@@ -262,7 +262,7 @@ describe("Database", function(){
          
       Database.update(results)
       .then(function(results){   
-        console.log("ASSERTION RESULTS:", results)
+        
          assert.equal(results.playedCards.length, 0)
          assert.equal(results.players[0].hand.length, 4, "Hands should only have 4 cards instead it equal:"+JSON.stringify(results.players[0].hand))
           done()

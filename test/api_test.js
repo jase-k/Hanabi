@@ -206,45 +206,35 @@ describe('SERVER JS:', function(){
         let object = JSON.parse(results)
         
         object.players[0].active = 1
-        object.players[1].name = 'Sam'
         object.players[0].hand[0] = {color: "blue", hints:[], number:"1"}
         
-        console.log("OBJECT BEFORE UPDATE", object)
         Database.update(object) //Updating the Database with Sample Values
         .then(function(results){
-      console.log("UPDATE RESULTS:", results)
-          let url = 'https://puddle-catcher.glitch.me/game/'+object.tableIds.gameId+'/Frodo'
-        
-          rp(url) // Retrieving the Game from the Database
-           .then(function(results){
-              let object = JSON.parse(results)
-        console.log("GET RESULTS:", results)
-              let url = 'https://puddle-catcher.glitch.me/game/'+object.tableIds.gameId+'/Frodo/discard?cardIndex=0'
+            let object = JSON.parse(results)
+
+            let url = 'https://puddle-catcher.glitch.me/game/'+object.tableIds.gameId+'/Frodo/discard?cardIndex=0'
           
         
           rp(url) // Executing Discard Card Action and Updating 
           .then(function(results){
- console.log("Execution RESULTS:", results)
 
             let object = JSON.parse(results)
-            var objectKeys = Object.keys(object)
                 
               assert.deepEqual(object.discardedCards, expectedDiscardedCards)
               assert.ok(results)
               done();
-            })
           })
         })
       });   
     });
   });
-  describe.skip("GIVE HINT '/game/:gameId/:name/givehint?hint=INTEGER&player=STRING'", function(){
+  describe("GIVE HINT '/game/:gameId/:name/givehint?hint=INTEGER&player=STRING'", function(){
     it("should update hints on cards and return a object from the database", function(done){
       
       const card = [
         {color: "blue", hints:[], number:"1"}
       ]
-      const expectedHintArray = ["not orange"]
+      const expectedHintArray = ["not red"]
     
       let url = 'https://puddle-catcher.glitch.me/newgame/2?name=Frodo'
     
@@ -270,10 +260,6 @@ describe('SERVER JS:', function(){
         .then(function(results){
           console.log("Updating Results", results.players)
 
-          let url = 'https://puddle-catcher.glitch.me/game/'+object.tableIds.gameId+'/Frodo'
-        
-          rp(url) // Retrieving the Game from the Database
-           .then(function(results){
               let object = JSON.parse(results)
         
               console.log("GET RESULTS", object.players)
@@ -291,7 +277,6 @@ describe('SERVER JS:', function(){
               assert.deepEqual(object.players[1].hand[0].hints, expectedHintArray)
               assert.ok(results)
               done();
-            })
           })
         })
       });   
