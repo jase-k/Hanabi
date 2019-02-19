@@ -174,7 +174,7 @@ describe('SERVER JS:', function(){
           .then(function(results){
             console.log("PLAY CARD RESULTS", results)
           
-            var object = JSON.parse(results)
+            let object = JSON.parse(results)
             var objectKeys = Object.keys(object)
                 
               assert.deepEqual(object.playedCards, expectedPlayedCards)

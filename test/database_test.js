@@ -146,7 +146,7 @@ describe("Database", function(){
          });
          assert.equal(results.playedCards.length, 0)
          assert.equal(results.players[0].hand.length, 4)
-         
+         done();
     });
    
   });
@@ -245,7 +245,6 @@ describe("Database", function(){
         }); 
       });
     });
-  });
     it("should return an object with the correct Array Lengths", function(done){
        var gameObject = Defaults.gameSettings5Player()
         
@@ -265,9 +264,11 @@ describe("Database", function(){
       .then(function(results){   
          assert.equal(results.playedCards.length, 0)
          assert.equal(results.players[0].hand.length, 4)
+          done()
       });
      })
-  });
+    });
+  });  
   describe(".get", function(){
     it("Should create a game Object with correct Keys", function(done){
       const expectedObjectKeys = ["numberOfPlayers", "hintsLeft", "livesLeft", "score", "dateCreated", "playingDeck",

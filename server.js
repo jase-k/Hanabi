@@ -123,9 +123,9 @@ var gameId = request.params.gameid
       response.send(game)
       Database.update(game)
    }else{
-     response.json(game)
      GamePlay.discard(game)
      Database.update(game)
+     response.json(game)
    }
   })
 });
