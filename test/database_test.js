@@ -781,7 +781,6 @@ describe("Utils", function(){
          
            results.players[0].hand.splice(0, 1, {color: "orange", hints: [], number: 5}) //add Switch out Card Object
            results.players[0].active = 1 
-           results.players[0].name = 'Jase'
          
          Utils.updatePlayerRow(results.players[0], results)// Updates Table with New Player Data
          .then(function(results){
@@ -793,7 +792,7 @@ describe("Utils", function(){
                   assert.ok(row, "The Table Row was undefined!")
                   assert.equal(row.card1, expectedCard1, "card 1 String is incorrect!") 
                   assert.equal(row.active, expectedActive, "Player Active is incorrect!")
-                  assert.equal(row.name, 'Jase')
+                  assert.equal(row.name, 'Legolas')
                    done()
               });
          });

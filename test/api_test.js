@@ -90,7 +90,7 @@ describe('SERVER JS:', function(){
       });
     })
   });
-  describe("GET '/game/:gameId/:name'", function(){
+  describe.skip("GET '/game/:gameId/:name'", function(){
     it("should return a game object from the database", function(done){
       const expectedObjectKeys = [ 'dateCreated',  'discardedCards', 'hintsLeft', 
                                     'livesLeft', 'messages', 'numberOfPlayers', 'originalDeck', 'playedCards',
@@ -127,7 +127,7 @@ describe('SERVER JS:', function(){
       });
     })
     });
-  describe("PLAYCARD '/game/:gameId/:name/playcard?cardIndex=INTEGER'", function(){
+  describe.skip("PLAYCARD '/game/:gameId/:name/playcard?cardIndex=INTEGER'", function(){
     it("should play a card and return a object from the database", function(done){
      
       const expectedPlayedCards = [
@@ -182,7 +182,7 @@ describe('SERVER JS:', function(){
       });   
     });
   });
-  describe("DISCARD '/game/:gameId/:name/discard?cardIndex=INTEGER'", function(){
+  describe.skip("DISCARD '/game/:gameId/:name/discard?cardIndex=INTEGER'", function(){
     it("should discard a card and return a object from the database", function(done){
       
       const expectedDiscardedCards = [
@@ -228,7 +228,7 @@ describe('SERVER JS:', function(){
       });   
     });
   });
-  describe("GIVE HINT '/game/:gameId/:name/givehint?hint=INTEGER&player=STRING'", function(){
+  describe.skip("GIVE HINT '/game/:gameId/:name/givehint?hint=INTEGER&player=STRING'", function(){
     it("should update hints on cards and return a object from the database", function(done){
       
       const card = [

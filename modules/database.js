@@ -436,7 +436,8 @@ const Database = {
     });
   },
   joinGame(name, playerId){
-     var sql = `UPDATE Players
+    return new Promise((resolve, reject) => { 
+    var sql = `UPDATE Players
                SET  name = ${name}
                WHERE id = ${playerId}`
      db.run(sql, function(err){
@@ -444,6 +445,7 @@ const Database = {
          console.log("Error at Player "+playerId+" Updating Table", err)
        }
        }) 
+    })
   }
 };
 

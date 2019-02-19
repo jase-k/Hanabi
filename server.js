@@ -77,9 +77,10 @@ app.get('/joingame/:gameid', function(request, response){
   Database.get(gameId)
   .then(function(results){
     
-    GamePlay.joinGame(results, name)
+    let playerId = GamePlay.joinGame(results, name)
     
-    Database.update(results)
+    Database.joinGame(name, playerId)
+    .then(results => Database.get(results.id))
     .then(results =>   response.json(results))
   })
 });

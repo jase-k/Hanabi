@@ -172,17 +172,17 @@ var GamePlay = {
     return gameObject
   },
   joinGame(gameObject, name){
-    var foundName = false
-    
+    var playerId = 0
+        
     for(var i = 0; i < gameObject.players.length; i++){
       if(!gameObject.players[i].name || gameObject.players[i].name === name){
         gameObject.players[i].name = name
-        foundName = true
+        playerId = gameObject.players[i].id
         break;
       } 
     }
-    if(foundName){
-      return gameObject
+    if(playerId){
+      return playerId
     }else{
       return false
     }
