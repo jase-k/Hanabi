@@ -228,8 +228,7 @@ var GamePlay = {
     gameObject.messages.push(`${playerOfCard} discarded a ${card.color} ${card.number}`) //Adds Message
     
     this.switchActivePlayer(gameObject, gameObject.numberOfPlayers, playerIndex) //Ends Players Turn and activates next
-    
-    return gameObject
+
   },
   giveHint(gameObject, hint, hintReceiver, hintGiver){
     var receiverIndex = gameObject.players.findIndex(player => player.name === hintReceiver)
