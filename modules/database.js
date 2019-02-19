@@ -420,7 +420,8 @@ const Database = {
         object.players.forEach(async function(player){
             promises.push(Utils.updatePlayerRow(player, object))
            });
-        Promise.all(promises).then(objects => resolve(objects[0]))
+        Promise.all(promises).then(objects => Database.get(objects[0].tableIds.gameId))
+          .then(results => resolve(results))
          });  
       }); 
   },

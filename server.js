@@ -80,8 +80,7 @@ app.get('/joingame/:gameid', function(request, response){
     GamePlay.joinGame(results, name)
     
     Database.update(results)
-    
-    response.json(results)
+    .then(results =>   response.json(results))
   })
 });
 
@@ -97,7 +96,7 @@ app.get('/game/:gameid/:name', function(request, response){
     
     if(gameObject){
       Database.update(gameObject)
-      response.json(gameObject)
+     .then(results =>   response.json(results))
     }else{
       response.send("Game is full and couldn't Find Player in Game")
     }
@@ -118,12 +117,13 @@ var gameId = request.params.gameid
    var game = GamePlay.playCard(game, cardIndex, name)
     
    if(game){
-      response.send(game)
       Database.update(game)
+      .then(results =>   response.json(results))
+
    }else{
      GamePlay.discard(game)
      Database.update(game)
-     response.json(game)
+     .then(results =>   response.json(results))
    }
   })
 });
@@ -143,7 +143,7 @@ var gameId = request.params.gameid
     GamePlay.discard(results, cardIndex, name)
  
     Database.update(results)
-    response.send(results)
+    .then(results =>  response.json(results))
   })
 });
  
@@ -163,7 +163,7 @@ var gameId = request.params.gameid
   GamePlay.giveHint(results, hint, player, name)
    
   Database.update(results)
-  response.send(results)
+  .then(results => response.json(results))
  
  });
 });
