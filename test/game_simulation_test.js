@@ -196,13 +196,24 @@ describe("Simulate", function(){
     })
     it("should return 'can't wint' if a five is discarded", function(){
       var game = Defaults.gameSettings2Player()
-      game.discaredCards = [
+      game.discardedCards = [
         {color: "black", hints:[], number: "5"}
       ]
       
       var result = Simulate.isGameOver(game)
       
       assert.equal(result, "can't win")
+    });
+  });
+  describe(".lossByDiscard", function(){
+    it("should return true if 5 is in the discard", function(){
+      var discards = [
+         {color: "black", hints:[], number: "5"}
+      ]
+      
+      var results = Simulate.lossByDiscard(discards)
+      
+      assert.equal(results, true)
     });
   });
 });

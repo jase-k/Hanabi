@@ -96,8 +96,11 @@ PlayersTurn:
   lossByDiscard(discardedCards){
     var loss = false
     for(let i = 0; i < discardedCards.length; i++){
-      if(discardedCards.
+      if(discardedCards[i].number == 5){
+        loss = true
+      }
     }
+    return loss
   },
 }
 
