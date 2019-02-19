@@ -22,7 +22,7 @@ const {Database, Utils, Helper} = require('../modules/database.js')
 const Defaults = require('./defaults.js')
 
 
-describe("Database", function(){
+describe.skip("Database", function(){
   describe(".insert", function(){
     it("should insert new rows in All Tables: 5 players", function(done){
        var gameObject = Defaults.gameSettings5Player()

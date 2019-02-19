@@ -23,7 +23,7 @@ const {Database, Utils, Helper} = require('../modules/database.js')
 const GamePlay = require('../modules/game_play.js')
 const Defaults = require('./defaults.js')
 
-describe('SERVER JS:', function(){
+describe.skip('SERVER JS:', function(){
   describe("NEW GAME: /newgame/:numberOfPlayers?name=NAME", function(){
     it("should add a new game to the database", function(done){
       const expectedObjectKeys = [ 'dateCreated',  'discardedCards', 'hintsLeft', 

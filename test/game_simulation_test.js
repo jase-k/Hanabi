@@ -141,9 +141,51 @@ describe("Simulate", function(){
       var game = Defaults.gameSettings2Player()
       game.playedCards = [
         {color:"red", hints:[], number: "1"},
-        {color:"red", hints:[], number: "1"},
-        {color:"red", hints:[], number: "1"},
+        {color:"red", hints:[], number: "2"},
+        {color:"red", hints:[], number: "3"},
+        {color:"red", hints:[], number: "4"},
+        {color:"red", hints:[], number: "5"},
+        {color:"white", hints:[], number: "1"},
+        {color:"white", hints:[], number: "2"},
+        {color:"white", hints:[], number: "3"},
+        {color:"white", hints:[], number: "4"},
+        {color:"white", hints:[], number: "5"},
+        {color:"orange", hints:[], number: "1"},
+        {color:"orange", hints:[], number: "2"},
+        {color:"orange", hints:[], number: "3"},
+        {color:"orange", hints:[], number: "4"},
+        {color:"orange", hints:[], number: "5"},
+        {color:"black", hints:[], number: "1"},
+        {color:"black", hints:[], number: "2"},
+        {color:"black", hints:[], number: "3"},
+        {color:"black", hints:[], number: "4"},
+        {color:"black", hints:[], number: "5"},
+        {color:"blue", hints:[], number: "1"},
+        {color:"blue", hints:[], number: "2"},
+        {color:"blue", hints:[], number: "3"},
+        {color:"blue", hints:[], number: "4"},
+        {color:"blue", hints:[], number: "5"},
       ]
+      
+      var result = Simulate.isGameOver(game)
+      
+      assert.equal(result, 'won')
     });
+    it("should return 'lost' if livesLeft are 0", function(){
+      var game = Defaults.gameSettings2Player()
+      game.livesLeft = 0 
+      
+      var result = Simulate.isGameOver(game)
+      
+      assert.equal(result, 'lost')
+    })
+    it("should return 'in progress' if lost and won criteria are not met", function(){
+      var game = Defaults.gameSettings2Player()
+      
+      var result = Simulate.isGameOver(game)
+      
+      assert.equal(result, 'in progress')
+    });
+    
   });
 });

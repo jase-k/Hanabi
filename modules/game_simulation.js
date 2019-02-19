@@ -80,7 +80,15 @@ PlayersTurn:
     return false
   },
   isGameOver(gameObject){
-  
+    if(gameObject.playedCards.length === 25){
+      return 'won'
+    }
+    else if(gameObject.livesLeft == 0){
+      return 'lost'
+    }
+    else {
+      return 'in progress'
+    }
   }
 }
 
