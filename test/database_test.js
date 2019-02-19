@@ -130,7 +130,24 @@ describe("Database", function(){
        });
       
     });
+    it.skip("should return an object with the correct Array Lengths", function(done){
+       var gameObject = Defaults.gameSettings5Player()
+        
+       Database.insert(gameObject)
+      .then(function(results){
+         after(function(){
+            db.run("DELETE FROM HanabiGames WHERE id = "+results.tableIds.gameId)
+            db.run("DELETE FROM OriginalDeck WHERE gameId = "+results.tableIds.gameId)
+            db.run("DELETE FROM PlayingDeck WHERE gameId = "+results.tableIds.gameId)
+            db.run("DELETE FROM DiscardedCards WHERE gameId = "+results.tableIds.gameId)
+            db.run("DELETE FROM PlayedCards WHERE gameId = "+results.tableIds.gameId)
+            db.run("DELETE FROM Messages WHERE gameId = "+results.tableIds.gameId)
+            db.run("DELETE FROM Players WHERE gameId = "+results.tableIds.gameId)
+         });
+    });
+   
   });
+  
   describe(".update", function(){
     it("Updates All Tables for an Updated Game Object", function(done){
       var gameObject = Defaults.gameSettings5Player()
@@ -519,8 +536,8 @@ describe("Utils", function(){
           
         });
     });
-  });
-  it("should return only 4 card array for a 4-5 player game", function(done){
+
+    it("should return only 4 card array for a 4-5 player game", function(done){
           var gameObject = Defaults.gameSettings5Player()
         var expectedHandLength = 4;
     
@@ -544,7 +561,7 @@ describe("Utils", function(){
                   assert.notOk(err)
                   assert.ok(row)
                   assert.equal(results.players[0].hand.length, expectedHandLength)
-                  ;      
+                  done();      
                 });
             });
         });

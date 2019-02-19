@@ -75,20 +75,12 @@ const Defaults = {
                         color: "orange", 
                         hints: [],
                         number: 4
-                      },{
-                        color: "red", 
-                        hints: [],
-                        number: 5
                       },
                           ]
                   },{
                     active: 0,
                     name: null, 
                     hand: [{
-                        color: "blue", 
-                        hints: [],
-                        number: 1
-                      },{
                         color: "black", 
                         hints: [],
                         number: 2
@@ -114,10 +106,6 @@ const Defaults = {
                         hints: [],
                         number: 1
                       },{
-                        color: "black", 
-                        hints: [],
-                        number: 2
-                      },{
                         color: "white", 
                         hints: [],
                         number: 3
@@ -142,10 +130,6 @@ const Defaults = {
                         color: "black", 
                         hints: [],
                         number: 2
-                      },{
-                        color: "white", 
-                        hints: [],
-                        number: 3
                       },{
                         color: "orange", 
                         hints: [],
@@ -171,10 +155,6 @@ const Defaults = {
                         color: "white", 
                         hints: [],
                         number: 3
-                      },{
-                        color: "orange", 
-                        hints: [],
-                        number: 4
                       },{
                         color: "red", 
                         hints: [],
