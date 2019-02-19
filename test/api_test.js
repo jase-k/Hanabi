@@ -153,22 +153,24 @@ describe('SERVER JS:', function(){
         
         let object = JSON.parse(results)
         
-        let url = 'https://puddle-catcher.glitch.me/game/'+object.tableIds.gameId+'/Frodo'
-        
-      rp(url) // Retrieving the Game from the Database
-     .then(function(results){
-        let object = JSON.parse(results)
-        
         object.players[0].active = 1
         object.players[1].name = 'Sam'
         object.players[0].hand[0] = {color: "blue", hints:[], number:"1"}
-        console.log("GET RESULTS", object.players[0].hand)
         
         Database.update(object) //Updating the Database with Sample Values
         .then(function(results){
+              console.log("Updating Results", results.players[0].hand)
+
+          let object = results
+          let url = 'https://puddle-catcher.glitch.me/game/'+object.tableIds.gameId+'/Frodo'
         
-          let url = 'https://puddle-catcher.glitch.me/game/'+object.tableIds.gameId+'/Frodo/playcard?cardIndex=0'
+          rp(url) // Retrieving the Game from the Database
+           .then(function(results){
+              let object = JSON.parse(results)
         
+              console.log("GET RESULTS", object.players[0].hand)
+              let url = 'https://puddle-catcher.glitch.me/game/'+object.tableIds.gameId+'/Frodo/playcard?cardIndex=0'
+          
         
           rp(url) // Executing Played Card Action and Updating 
           .then(function(results){
