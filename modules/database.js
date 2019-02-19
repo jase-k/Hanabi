@@ -340,7 +340,7 @@ const Utils = {
          for(var i = 1; i <= 25; i++){
            array.push(Helper.cardStringToObject(row['card'+i]))
           }
-        object.playedCards = array.filter(card => card)
+        object.playedCards = array.filter(card => card.color)
         resolve(object)
     });
   })
