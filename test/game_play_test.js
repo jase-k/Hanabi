@@ -339,15 +339,17 @@ describe("GamePlay", function(){
       assert.deepEqual(game.players[0].hand[4], replacementCard)
       
     });
-    it("should return false if the played card doesn't Play", function(){
+    it("should discard card if the played card doesn't Play", function(){
       var game = Defaults.gameSettings2Player(),
-          replacementCard = {color: 'red', hints: [], number: 3 },
           cardIndex = 3,
           playerOfCard = "Legolas"
           
-      var torf = GamePlay.playCard(game, cardIndex, playerOfCard)
+      var expectedCard = {color: 'red', hints: [], number: "3" }
+      game.players[0].hand[3] = expectedCard
+          
+       GamePlay.playCard(game, cardIndex, playerOfCard)
       
-      assert.notOk(torf)
+      assert.deepEqual(game.discardedCards[0], expectedCard)
     });
     it("should increase hints if a 5 is played", function(){
       var game = Defaults.gameSettings2Player(),
@@ -381,16 +383,18 @@ describe("GamePlay", function(){
         
     });
     it("should not play a red 3 if a white 2 is in the .playedCards array", function(){
-      var game = Defaults.gameSettings2Player();
-          game.playedCards = [
+      var game = Defaults.gameSettings2Player(),
+          expectedArray = [
             {color: "white", hints:[], number: "1"},
             {color: "white", hints:[], number: "2"}
           ]
+          game.playedCards = expectedArray
+      
           game.players[0].hand[1]
       
-      var results = GamePlay.playCard(game, 1, "Legolas")
+      GamePlay.playCard(game, 1, "Legolas")
       
-      assert.notOk(results)
+      assert.deepEqual(game.playedCards, expectedArray )
     });
     it("should reduce livesLeft by 1 if card does not play", function(){
       var game = Defaults.gameSettings2Player(),

@@ -200,20 +200,22 @@ var GamePlay = {
         if(card.number == 5){ gameObject.hintsLeft++ }
     
         gameObject.playedCards.push(card) 
-       
-        gameObject.players[playerIndex].hand[cardIndex] = gameObject.playingDeck.shift();
       
         gameObject.messages.push(`Success! ${playerOfCard} played a ${card.color} ${card.number}`)
           
-      return gameObject
       
     }else{
       gameObject.livesLeft--
       
-      gameObject.messages.push(`Whoops! ${playerOfCard} tried playing a ${card.color} ${card.number} and it did not play`)
+      gameObject.discardedCards.push(card) //Adds card to discard
       
-      return false 
+      gameObject.messages.push(`Whoops! ${playerOfCard} tried playing a ${card.color} ${card.number} and it did not play`)
+
     }
+    
+      gameObject.players[playerIndex].hand[cardIndex] = gameObject.playingDeck.shift();
+    
+      return gameObject    
   },
   discard(gameObject, cardIndex, playerOfCard){
     var playerIndex = gameObject.players.findIndex(player => player.name == playerOfCard),
