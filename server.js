@@ -128,11 +128,6 @@ var gameId = request.params.gameid
   })
 });
 
-
-//=============================================
-// Discard Card
-//============================================
-
 app.get('/game/:gameid/:name/discard', function(request, response){
 var name = request.params.name
 var cardIndex = request.query.cardIndex

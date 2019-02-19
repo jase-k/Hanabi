@@ -263,9 +263,8 @@ const Utils = {
   updatePlayerRow(playerObject, gameObject){
     return new Promise((resolve, reject) => { 
      var setString = Helper.convertCardArrayForUpdate(playerObject.hand, playerObject.hand.length)
-     var name = playerObject.name ? playerObject.name : null
      var sql = `UPDATE Players
-               SET  ${setString}, active = ${playerObject.active}, name = '${name}'
+               SET  ${setString}, active = ${playerObject.active}
                WHERE id = ${playerObject.id}`
      db.run(sql, function(err){
        if(err){
@@ -435,6 +434,16 @@ const Database = {
       .then(object => Utils.getPlayers(object))
       .then(object => resolve(object))
     });
+  },
+  joinGame(name, playerId){
+     var sql = `UPDATE Players
+               SET  name = ${name}
+               WHERE id = ${playerId}`
+     db.run(sql, function(err){
+       if(err){
+         console.log("Error at Player "+playerId+" Updating Table", err)
+       }
+       }) 
   }
 };
 
