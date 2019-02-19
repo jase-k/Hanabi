@@ -58,7 +58,7 @@ const Helper = {
         number: array[1]
         }
    }
-   if(!object){
+   if(object){
     object = null
    }  
     return object
@@ -345,7 +345,7 @@ const Utils = {
            array.push(Helper.cardStringToObject(row['card'+i]))
            array.filter(card => card)
           }
-        object.playedCards = array.filter(card => card)
+        object.playedCards = array.filter(card => card) 
         resolve(object)
     });
   })

@@ -79,8 +79,6 @@ app.get('/joingame/:gameid', function(request, response){
     
     GamePlay.joinGame(results, name)
     
-    console.log(results)
-    
     Database.update(results)
     
     response.json(results)
@@ -115,7 +113,7 @@ var cardIndex = request.query.cardIndex
 var gameId = request.params.gameid
 
  Database.get(gameId).then(function(game){
-    console.log(game)    
+    console.log("PLAY CARD GAME:", game)    
     
    var game = GamePlay.playCard(game, cardIndex, name)
     
