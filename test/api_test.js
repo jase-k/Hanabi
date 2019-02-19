@@ -266,7 +266,7 @@ console.log("AFTER EXECUTING RESULTS", results)
             let object = JSON.parse(results)
             var objectKeys = Object.keys(object)
                 
-              assert.deepEqual(object.players[1].hand[0].hints.length, 1)
+              assert.equal(object.players[1].hand[0].hints.length, 1, "expected "+object.players[1].hand[0].hints+"'s length to be 1")
               assert.ok(results)
               done();
           })
