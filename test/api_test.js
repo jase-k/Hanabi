@@ -210,13 +210,14 @@ describe('SERVER JS:', function(){
         
         Database.update(object) //Updating the Database with Sample Values
         .then(function(results){
+console.log("AFTER Updating RESULTS", results)
           
             let url = 'https://puddle-catcher.glitch.me/game/'+object.tableIds.gameId+'/Frodo/discard?cardIndex=0'
           
         
           rp(url) // Executing Discard Card Action and Updating 
           .then(function(results){
-console.log("AFTER EXECUTING RESULTS", results
+console.log("AFTER EXECUTING RESULTS", results)
             let object = JSON.parse(results)
                 
               assert.deepEqual(object.discardedCards, expectedDiscardedCards, object.discardedCards[0]+'should equal'+expectedDiscardedCards[0])
@@ -240,13 +241,13 @@ console.log("AFTER EXECUTING RESULTS", results
       rp(url) // Inserting New Game to Database
       .then(function(results){ 
           after(function(){
-              db.run("DELETE FROM HanabiGames WHERE id = "+object.tableIds.gameId)
-              db.run("DELETE FROM OriginalDeck WHERE gameId = "+object.tableIds.gameId)
-              db.run("DELETE FROM PlayingDeck WHERE gameId = "+object.tableIds.gameId)
-              db.run("DELETE FROM DiscardedCards WHERE gameId = "+object.tableIds.gameId)
-              db.run("DELETE FROM PlayedCards WHERE gameId = "+object.tableIds.gameId)
-              db.run("DELETE FROM Messages WHERE gameId = "+object.tableIds.gameId)
-              db.run("DELETE FROM Players WHERE gameId = "+object.tableIds.gameId)
+              db.run("DELETE FROM HanabiGames WHERE id = "+gameObject.tableIds.gameId)
+              db.run("DELETE FROM OriginalDeck WHERE gameId = "+gameObject.tableIds.gameId)
+              db.run("DELETE FROM PlayingDeck WHERE gameId = "+gameObject.tableIds.gameId)
+              db.run("DELETE FROM DiscardedCards WHERE gameId = "+gameObject.tableIds.gameId)
+              db.run("DELETE FROM PlayedCards WHERE gameId = "+gameObject.tableIds.gameId)
+              db.run("DELETE FROM Messages WHERE gameId = "+gameObject.tableIds.gameId)
+              db.run("DELETE FROM Players WHERE gameId = "+gameObject.tableIds.gameId)
            });
         
         let gameObject = JSON.parse(results)
