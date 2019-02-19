@@ -130,10 +130,63 @@ describe('SERVER JS:', function(){
     });
   describe("PLAYCARD '/game/:gameId/:name/playcard?cardIndex=INTEGER'", function(){
     it("should play a card and return a object from the database", function(done){
-      const expectedObjectKeys = [ 'dateCreated',  'discardedCards', 'hintsLeft', 
-                                    'livesLeft', 'messages', 'numberOfPlayers', 'originalDeck', 'playedCards',
-                                    'players', 'playingDeck', 'score', 'tableIds', 'id']
+     
       const expectedPlayedCards = [
+        {color: "blue", hints:[], number:"1"}
+      ]
+    
+      let url = 'https://puddle-catcher.glitch.me/newgame/2?name=Frodo'
+    
+      rp(url) // Inserting New Game to Database
+      .then(function(results){ 
+          after(function(){
+              db.run("DELETE FROM HanabiGames WHERE id = "+object.tableIds.gameId)
+              db.run("DELETE FROM OriginalDeck WHERE gameId = "+object.tableIds.gameId)
+              db.run("DELETE FROM PlayingDeck WHERE gameId = "+object.tableIds.gameId)
+              db.run("DELETE FROM DiscardedCards WHERE gameId = "+object.tableIds.gameId)
+              db.run("DELETE FROM PlayedCards WHERE gameId = "+object.tableIds.gameId)
+              db.run("DELETE FROM Messages WHERE gameId = "+object.tableIds.gameId)
+              db.run("DELETE FROM Players WHERE gameId = "+object.tableIds.gameId)
+           });
+        
+        let object = JSON.parse(results)
+        
+        object.players[0].active = 1
+        object.players[1].name = 'Sam'
+        object.players[0].hand[0] = {color: "blue", hints:[], number:"1"}
+        
+        Database.update(object) //Updating the Database with Sample Values
+        .then(function(results){
+            
+          let object = results
+          let url = 'https://puddle-catcher.glitch.me/game/'+object.tableIds.gameId+'/Frodo'
+        
+          rp(url) // Retrieving the Game from the Database
+           .then(function(results){
+              let object = JSON.parse(results)
+        
+              let url = 'https://puddle-catcher.glitch.me/game/'+object.tableIds.gameId+'/Frodo/playcard?cardIndex=0'
+          
+        
+          rp(url) // Executing Played Card Action and Updating 
+          .then(function(results){
+          
+            let object = JSON.parse(results)
+            var objectKeys = Object.keys(object)
+                
+              assert.deepEqual(object.playedCards, expectedPlayedCards)
+              assert.ok(results)
+              done();
+            })
+          })
+        })
+      });   
+    });
+  });
+  describe("DISCARD '/game/:gameId/:name/discard?cardIndex=INTEGER'", function(){
+    it("should discard a card and return a object from the database", function(done){
+      
+      const expectedDiscardedCards = [
         {color: "blue", hints:[], number:"1"}
       ]
     
@@ -169,17 +222,17 @@ describe('SERVER JS:', function(){
               let object = JSON.parse(results)
         
               console.log("GET RESULTS", object.players[0].hand)
-              let url = 'https://puddle-catcher.glitch.me/game/'+object.tableIds.gameId+'/Frodo/playcard?cardIndex=0'
+              let url = 'https://puddle-catcher.glitch.me/game/'+object.tableIds.gameId+'/Frodo/discard?cardIndex=0'
           
         
           rp(url) // Executing Played Card Action and Updating 
           .then(function(results){
-            console.log("PLAY CARD RESULTS", results)
+            console.log("Discarded CARD RESULTS", results)
           
             let object = JSON.parse(results)
             var objectKeys = Object.keys(object)
                 
-              assert.deepEqual(object.playedCards, expectedPlayedCards)
+              assert.deepEqual(object.discardedCards, expectedDiscardedCards)
               assert.ok(results)
               done();
             })

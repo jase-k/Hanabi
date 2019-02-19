@@ -483,6 +483,14 @@ describe("GamePlay", function(){
       
       assert.equal(game.messages[0], expectedMessage)
     });
+    it("should switch active to 0 for player and switch active to 1 to the next Player", function(){
+      var game = Defaults.gameSettings2Player()
+      
+        GamePlay.discard(game, 0, "Legolas")
+
+        assert.equal(game.players[0].active, 0)
+        assert.equal(game.players[1].active, 1)
+    });
   });
   describe(".giveHint", function(){
     it("should update hints for Recieving Player's hand", function(){
@@ -585,6 +593,14 @@ describe("GamePlay", function(){
       GamePlay.giveHint(game, hint, name, "Legolas")
       
       assert.equal(game.messages, "Legolas gave Gimli a hint about his/her 1's")
+    });
+    it("should switch active to 0 for player and switch active to 1 to the next Player", function(){
+      var game = Defaults.gameSettings2Player()
+          game.players[1].name = "Gimli"
+        GamePlay.giveHint(game, '1', "Gimli", "Legolas")
+
+        assert.equal(game.players[0].active, 0)
+        assert.equal(game.players[1].active, 1)
     });
   });
   describe(".setHint", function(){

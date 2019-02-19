@@ -1116,9 +1116,9 @@ describe("Helper", function(){
       
       assert.deepEqual(result, expectedResult)
     });
-    it("returns null if card.color is null", function(){
+    it("returns null if card is null", function(){
       var expectedResult = null
-      var string = "||"
+      var string = null
       
       var result = Helper.cardStringToObject(string)
       
