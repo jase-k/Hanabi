@@ -66,10 +66,10 @@ var objectnew = cardStringToObject(newstring);
 
 const database ={};
 
- //db.run('CREATE TABLE Messages(id INTEGER PRIMARY KEY, gameId INTEGER, Messages TEXT)') 
 
 /*
 db.serialize(() => { 
+ //db.run('CREATE TABLE Messages(id INTEGER PRIMARY KEY, gameId INTEGER, Messages TEXT)') 
 
  db.run('CREATE TABLE Players(id INTEGER PRIMARY KEY, gameId TEXT, name TEXT, active INTEGER, '+createCardString(5)+')');
   
