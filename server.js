@@ -14,7 +14,7 @@ const WinningGifs = require('./assets/gifs.js')
 
 //import New Modules
 const GamePlay = require('./modules/game_play.js')
-const {Database} = require('./modules/database.js')
+const {Database, Helper} = require('./modules/database.js')
 
 const colors = ['white', 'red', 'black', 'orange', 'blue']
 const numbers = [1,2,3,4,5]
@@ -38,6 +38,56 @@ var db = new sqlite3.Database(dbFile);
 
 // if ./.data/sqlite.db does not exist, create it, otherwise print records to console
 
+db.serialize(() => { 
+  
+ db.run('DROP TABLE IF EXISTS Messages', error => {
+    if (error) {
+      throw error;
+    }
+  })
+  
+ db.run('DROP TABLE IF EXISTS Players', error => {
+    if (error) {
+      throw error;
+    }
+  })
+
+ db.run('DROP TABLE IF EXISTS HanabiGames', error => {
+    if (error) {
+      throw error;
+    }
+  })
+ 
+
+  db.run('DROP TABLE IF EXISTS OriginalDeck', error => {
+    if (error) {
+      throw error;
+    }
+  })
+   db.run('DROP TABLE IF EXISTS PlayingDeck', error => {
+    if (error) {
+      throw error;
+    }
+  })
+   db.run('DROP TABLE IF EXISTS DiscardedCards', error => {
+    if (error) {
+      throw error;
+    }
+  })
+   db.run('DROP TABLE IF EXISTS PlayedCards', error => {
+    if (error) {
+      throw error;
+    }
+  })
+
+  db.run('CREATE TABLE OriginalDeck(id INTEGER PRIMARY KEY, gameId TEXT, '+Helper.createCardString(50)+')');
+  db.run('CREATE TABLE PlayingDeck(id INTEGER PRIMARY KEY, gameId TEXT, '+Helper.createCardString(50)+')');
+  db.run('CREATE TABLE DiscardedCards(id INTEGER PRIMARY KEY, gameId TEXT, '+Helper.createCardString(25)+')');
+  db.run('CREATE TABLE PlayedCards(id INTEGER PRIMARY KEY, gameId TEXT, '+Helper.createCardString(25)+')');
+ db.run('CREATE TABLE Messages(id INTEGER PRIMARY KEY, gameId INTEGER, Messages TEXT)') 
+ db.run('CREATE TABLE Players(id INTEGER PRIMARY KEY, gameId TEXT, name TEXT, active INTEGER, '+Helper.createCardString(5)+')');
+ db.run('CREATE TABLE HanabiGames (id INTEGER PRIMARY KEY, numberOfPlayers INTEGER NOT NULL, dateCreated DATE, score INTEGER, hintsLeft INTEGER, livesLeft INTEGER)');
+  
 
 
 // http://expressjs.com/en/starter/basic-routing.html
