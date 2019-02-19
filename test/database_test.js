@@ -1032,7 +1032,7 @@ describe("Helper", function(){
       
       assert.deepEqual(result, expectedResult)
     });
-    it("returns a cardObjectArray from format: 'card.color|card.number|card.hints' (10 cards)", function(){
+    it("returns a cardObject from format: 'card.color|card.number|card.hints' (10 cards)", function(){
       var expectedResult =  {
         color: "white", 
         hints: ["white", "not 3"], 
@@ -1043,6 +1043,14 @@ describe("Helper", function(){
       var result = Helper.cardStringToObject(string);
       
       assert.deepEqual(result, expectedResult)
+    });
+    it("returns null if card.color is null", function(){
+      var expectedResult = null
+      var string = "||"
+      
+      var result = Helper.cardStringToObject(string)
+      
+      assert.ok(result === expectedResult)
     });
   });
   describe(".convertCardArrayForUpdate", function(){
