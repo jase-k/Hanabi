@@ -138,45 +138,12 @@ var name = request.params.name
 var cardIndex = request.query.cardIndex
 var gameId = request.params.gameid
 
-  database.getCurrentGame(gameId).then(function(results){
-    console.log(JSON.stringify(results))
+  Database.get(gameId).then(function(results){
     
-
-//==== Replace the First Card undefined Card in the Discarded Cards Array========//  
-  var playerIndex = results.players.findIndex(i => i.name === name);
-     if(playerIndex == -1){ response.send("Couldn't Find Player!"); return; } // Returns if name isn't Found
-     if(!results.players[playerIndex].active){ response.send("Sorry, it's not your Turn!"); return;} //Returns if name isn't active
-
-    var card = results.players[playerIndex].hand[cardIndex]
-    console.log('=====Discarded Card===========', card) 
-    
-  var discardedCardIndex = results.discardedCards.indexOf(undefined)
-  results.discardedCards.splice(discardedCardIndex, 1, card)
-
-
-//==== Replace the Hand Card with the Next Card from the Deck ===//
-  var nextCard = results.playingDeck.shift()
-  
-  
-    results.players[playerIndex].hand.splice(cardIndex, 1, nextCard)    
-  
-  
-
-//===== Switch the Active Player ====//
-    results.players[playerIndex].active = 0
-    
-var nextPlayersIndex = (playerIndex+1) % results.players.length
-    
-    results.players[nextPlayersIndex].active = 1
-  
-//=== Add a Hint After Discarding ==//
-    results.hintsLeft++
-   
-// === Sends Message to What Card was Discarded ===//
-   results.messages.push(name+" discarded a "+card.color+" "+card.number)
-    
-  database.updateGame(results)
-  response.send(results)
+    GamePlay.discard(results, cardIndex, name)
+ 
+    Database.update(results)
+    response.send(results)
   })
 });
  

@@ -219,26 +219,31 @@ var GamePlay = {
     var playerIndex = gameObject.players.findIndex(player => player.name == playerOfCard),
         card = gameObject.players[playerIndex].hand[cardIndex]
     
-    gameObject.discardedCards.push(card)
+    gameObject.discardedCards.push(card) //Adds card to discard
     
-    gameObject.players[playerIndex].hand[cardIndex] = gameObject.playingDeck.shift();
+    gameObject.players[playerIndex].hand[cardIndex] = gameObject.playingDeck.shift(); // Replaces card with card from deck
 
-    gameObject.hintsLeft++
+    gameObject.hintsLeft++ //increases hints left
     
-    gameObject.messages.push(`${playerOfCard} discarded a ${card.color} ${card.number}`)
+    gameObject.messages.push(`${playerOfCard} discarded a ${card.color} ${card.number}`) //Adds Message
+    
+    this.switchActivePlayer(gameObject, gameObject.numberOfPlayers, playerIndex) //Ends Players Turn and activates next
     
     return gameObject
   },
   giveHint(gameObject, hint, hintReceiver, hintGiver){
-    var receiverIndex = gameObject.players.findIndex(player => player.name == hintReceiver)
+    var receiverIndex = gameObject.players.findIndex(player => player.name === hintReceiver)
+    var giverIndex = gameObject.players.findIndex(player => player.name === hintGiver)
     
-    gameObject.hintsLeft--
+    gameObject.hintsLeft-- //decreases hints left
 
-    gameObject.players[receiverIndex].hand.forEach(function(card){
+    gameObject.players[receiverIndex].hand.forEach(function(card){ // Update hint arrays and players cards
         GamePlay.setHint(card, hint)
     })
     
-    gameObject.messages.push(`${hintGiver} gave ${hintReceiver} a hint about his/her ${hint}'s`)
+    gameObject.messages.push(`${hintGiver} gave ${hintReceiver} a hint about his/her ${hint}'s`) //Updates Messages
+    
+    this.switchActivePlayer(gameObject, gameObject.numberOfPlayers, giverIndex)
     
   },
 }
