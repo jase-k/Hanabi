@@ -264,7 +264,7 @@ describe("Database", function(){
       .then(function(results){   
         console.log("ASSERTION RESULTS:", results)
          assert.equal(results.playedCards.length, 0)
-         assert.equal(results.players[0].hand.length, 4)
+         assert.equal(results.players[0].hand.length, 4, "Hands should only have 4 cards instead it equal:"+JSON.stringify(results.players[0].hand))
           done()
       });
      })

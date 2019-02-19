@@ -377,13 +377,12 @@ const Utils = {
           
             for(var i = 1; i <= 5; i++){
              array.push(Helper.cardStringToObject(row['card'+i]))
-             array.filter(card => card)
             }
             
           playerObject = {
               active: row.active,
               id: row.id, 
-              hand: array,
+              hand: array.filter(card => card),
               name: row.name
             }
             object.players.push(playerObject)                 

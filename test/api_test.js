@@ -209,6 +209,7 @@ describe('SERVER JS:', function(){
         object.players[1].name = 'Sam'
         object.players[0].hand[0] = {color: "blue", hints:[], number:"1"}
         
+        console.log("OBJECT BEFORE UPDATE", object)
         Database.update(object) //Updating the Database with Sample Values
         .then(function(results){
       console.log("UPDATE RESULTS:", results)
