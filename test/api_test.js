@@ -214,7 +214,64 @@ describe('SERVER JS:', function(){
         .then(function(results){
               console.log("Updating Results", results.players[0].hand)
 
-          let object = results
+          let url = 'https://puddle-catcher.glitch.me/game/'+object.tableIds.gameId+'/Frodo'
+        
+          rp(url) // Retrieving the Game from the Database
+           .then(function(results){
+              let object = JSON.parse(results)
+        
+              console.log("GET RESULTS", object.players[0].hand)
+              let url = 'https://puddle-catcher.glitch.me/game/'+object.tableIds.gameId+'/Frodo/discard?cardIndex=0'
+          
+        
+          rp(url) // Executing Played Card Action and Updating 
+          .then(function(results){
+            console.log("Discarded CARD RESULTS", results)
+          
+            let object = JSON.parse(results)
+            var objectKeys = Object.keys(object)
+                
+              assert.deepEqual(object.discardedCards, expectedDiscardedCards)
+              assert.ok(results)
+              done();
+            })
+          })
+        })
+      });   
+    });
+  });
+  describe("GIVE HINT '/game/:gameId/:name/givehint?hint=INTEGER&player=STRING'", function(){
+    it("should update hints on cards and return a object from the database", function(done){
+      
+      const card = [
+        {color: "blue", hints:[], number:"1"}
+      ]
+      const expectedHintArray = ["not orange"]
+    
+      let url = 'https://puddle-catcher.glitch.me/newgame/2?name=Frodo'
+    
+      rp(url) // Inserting New Game to Database
+      .then(function(results){ 
+          after(function(){
+              db.run("DELETE FROM HanabiGames WHERE id = "+object.tableIds.gameId)
+              db.run("DELETE FROM OriginalDeck WHERE gameId = "+object.tableIds.gameId)
+              db.run("DELETE FROM PlayingDeck WHERE gameId = "+object.tableIds.gameId)
+              db.run("DELETE FROM DiscardedCards WHERE gameId = "+object.tableIds.gameId)
+              db.run("DELETE FROM PlayedCards WHERE gameId = "+object.tableIds.gameId)
+              db.run("DELETE FROM Messages WHERE gameId = "+object.tableIds.gameId)
+              db.run("DELETE FROM Players WHERE gameId = "+object.tableIds.gameId)
+           });
+        
+        let object = JSON.parse(results)
+        
+        object.players[0].active = 1
+        object.players[1].name = 'Sam'
+        object.players[0].hand[0] = {color: "blue", hints:[], number:"1"}
+        
+        Database.update(object) //Updating the Database with Sample Values
+        .then(function(results){
+              console.log("Updating Results", results.players[0].hand)
+
           let url = 'https://puddle-catcher.glitch.me/game/'+object.tableIds.gameId+'/Frodo'
         
           rp(url) // Retrieving the Game from the Database
