@@ -152,7 +152,7 @@ describe("Database", function(){
   });
   });
   describe(".update", function(){
-    it("Updates All Tables for an Updated Game Object", function(done){
+    it.skip("Updates All Tables for an Updated Game Object", function(done){
       var gameObject = Defaults.gameSettings5Player()
       var expectedHints = 1
       var expectedDiscard = "white|3|"
@@ -262,6 +262,7 @@ describe("Database", function(){
          
       Database.update(results)
       .then(function(results){   
+        console.log("ASSERTION RESULTS:", results)
          assert.equal(results.playedCards.length, 0)
          assert.equal(results.players[0].hand.length, 4)
           done()

@@ -211,19 +211,20 @@ describe('SERVER JS:', function(){
         
         Database.update(object) //Updating the Database with Sample Values
         .then(function(results){
-
+      console.log("UPDATE RESULTS:", results)
           let url = 'https://puddle-catcher.glitch.me/game/'+object.tableIds.gameId+'/Frodo'
         
           rp(url) // Retrieving the Game from the Database
            .then(function(results){
               let object = JSON.parse(results)
-        
+        console.log("GET RESULTS:", results)
               let url = 'https://puddle-catcher.glitch.me/game/'+object.tableIds.gameId+'/Frodo/discard?cardIndex=0'
           
         
           rp(url) // Executing Discard Card Action and Updating 
           .then(function(results){
-          
+ console.log("Execution RESULTS:", results)
+
             let object = JSON.parse(results)
             var objectKeys = Object.keys(object)
                 
@@ -236,7 +237,7 @@ describe('SERVER JS:', function(){
       });   
     });
   });
-  describe("GIVE HINT '/game/:gameId/:name/givehint?hint=INTEGER&player=STRING'", function(){
+  describe.skip("GIVE HINT '/game/:gameId/:name/givehint?hint=INTEGER&player=STRING'", function(){
     it("should update hints on cards and return a object from the database", function(done){
       
       const card = [
