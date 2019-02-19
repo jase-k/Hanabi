@@ -6,7 +6,7 @@ This Tests the Module Simulate from '/modules/game_simulation.js
 const assert = require('chai').assert;
 
 const Simulate = require('../modules/game_simulation.js')
-  
+const Defaults = require('./defaults.js')
 describe("Simulate", function(){
   describe("doesCardPlay", function(){
       it("returns true if card can play blue 3", function(){
@@ -135,5 +135,15 @@ describe("Simulate", function(){
     
   });
   describe.skip("shouldAnyBeDiscarded", function(){
+  });
+  describe(".isGameOver", function(){
+    it("should return 'won' if played Cards are 25", function(){
+      var game = Defaults.gameSettings2Player()
+      game.playedCards = [
+        {color:"red", hints:[], number: "1"},
+        {color:"red", hints:[], number: "1"},
+        {color:"red", hints:[], number: "1"},
+      ]
+    });
   });
 });

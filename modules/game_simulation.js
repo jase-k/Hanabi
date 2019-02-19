@@ -79,7 +79,9 @@ PlayersTurn:
     }
     return false
   },
+  isGameOver(gameObject){
   
+  }
 }
 
 module.exports = Simulate; 
