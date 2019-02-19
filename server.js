@@ -113,17 +113,11 @@ var gameId = request.params.gameid
  Database.get(gameId).then(function(game){
     console.log("PLAY CARD GAME:", game)    
     
-   var game = GamePlay.playCard(game, cardIndex, name)
+  GamePlay.playCard(game, cardIndex, name)
     
-   if(game){
+   
       Database.update(game)
       .then(results =>   response.json(results))
-
-   }else{
-     GamePlay.discard(game)
-     Database.update(game)
-     .then(results =>   response.json(results))
-   }
   })
 });
 
