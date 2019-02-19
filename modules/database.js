@@ -50,14 +50,15 @@ const Helper = {
 //output {color: STRING, hints: [STRINGS], number: STRING}
  cardStringToObject(string){
   var object;
-  var array = string.split("|")
-      console.log(array)
+   if(string){
+      let array = string.split("|")
       object = {
         color: array[0],
         hints: array[2] ? array[2].split(',') : [],
         number: array[1]
         }
-   if(!object.color){
+   }
+   if(!object){
     object = null
    }  
     return object
@@ -324,6 +325,7 @@ const Utils = {
     
           for(var i = 1; i <= 25; i++){
            array.push(Helper.cardStringToObject(row['card'+i]))
+           array.filter(card => card)
           }
         object.discardedCards = array.filter(card => card)
         
@@ -341,6 +343,7 @@ const Utils = {
     
          for(var i = 1; i <= 25; i++){
            array.push(Helper.cardStringToObject(row['card'+i]))
+           array.filter(card => card)
           }
         object.playedCards = array.filter(card => card)
         resolve(object)
@@ -376,6 +379,7 @@ const Utils = {
           
             for(var i = 1; i <= 5; i++){
              array.push(Helper.cardStringToObject(row['card'+i]))
+             array.filter(card => card)
             }
             
           playerObject = {

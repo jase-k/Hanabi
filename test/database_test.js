@@ -520,6 +520,35 @@ describe("Utils", function(){
         });
     });
   });
+  it("should return only 4 card array for a 4-5 player game", function(done){
+          var gameObject = Defaults.gameSettings5Player()
+        var expectedHandLength = 4;
+    
+        // Adds Rows to Players Table Row Id saved to: results.tableIds.playerId[i] 
+        // HanabiGame Row is Created as well to retrieve a GameId to Insert into the Players gameId
+        Utils.insertHanabiGameRow(gameObject)
+       .then(game => Utils.insertPlayersRows(game))
+       .then(function(results){
+        after(function(){  //Deletes All Rows From Test
+         db.run("DELETE FROM HanabiGames WHERE id = "+results.tableIds.gameId)
+         db.run("DELETE FROM Players WHERE gameId = "+results.tableIds.gameId)
+        });
+        db.get("SELECT * FROM Players WHERE id = $id",  
+                 {$id: results.tableIds.playersId[0]},
+                 function(err, row){
+                  if(err){
+                   console.log(err)
+                   console.log("message", err.message)
+                     done();
+                   }
+                  assert.notOk(err)
+                  assert.ok(row)
+                  assert.equal(results.players[0].hand.length, expectedHandLength)
+                  ;      
+                });
+            });
+        });
+  });
   
   describe(".updateHanabiGameRow", function(){
     it("Updates hints and lives in Hanabi Game Row", function(done){
