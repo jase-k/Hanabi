@@ -47,21 +47,18 @@ const Helper = {
   return string
 },
 //input: "color|number|hints"
-//output {color: STRING, hints: [STRINGS], number: STRING}
+//output {color: STRING, hints: [STRINGS], number: STRING} || null
  cardStringToObject(string){
-  var object;
+  let object = null
    if(string){
-      let array = string.split("|")
+    var array = string.split("|")
       object = {
         color: array[0],
         hints: array[2] ? array[2].split(',') : [],
         number: array[1]
         }
    }
-   if(object){
-    object = null
-   }  
-    return object
+     return object
   },
 //input: array: [CARD OBJECTS] length: INTEGER (Length of Max Array Length)
 //output: 'card1="card.color|card.number|card.hints",card2="card.color|card.number|card.hints", card[length+1...n]=null'    
@@ -71,7 +68,7 @@ const Helper = {
     var stringArray = array.map((card, index) => 'card'+(index+1)+'="'+card.color+'|'+card.number+'|'+card.hints.join()+'"') 
     
     for(var i = array.length; i < length; i++){
-      stringArray.push('card'+(i+1)+'="null"')
+      stringArray.push('card'+(i+1)+'=null')
     }  
     
    string = stringArray.join() 

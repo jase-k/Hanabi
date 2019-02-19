@@ -1134,7 +1134,7 @@ describe("Helper", function(){
         {color: "white", hints: ["white", "not 3"], number: 2},
         {color: "white", hints: ["white", "not 3"], number: 5},
       ]
-      var expectedResult = 'card1="red|3|not white,3",card2="red|3|not white,3",card3="red|1|not white,not 3",card4="white|2|white,not 3",card5="white|5|white,not 3",card6="null"'
+      var expectedResult = 'card1="red|3|not white,3",card2="red|3|not white,3",card3="red|1|not white,not 3",card4="white|2|white,not 3",card5="white|5|white,not 3",card6=null'
     
       var result = Helper.convertCardArrayForUpdate(array, 6)
       
