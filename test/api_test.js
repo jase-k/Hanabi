@@ -112,7 +112,6 @@ describe('SERVER JS:', function(){
            });
         
         var object = JSON.parse(results)
-        var objectKeys = Object.keys(object)
         
         let url = 'https://puddle-catcher.glitch.me/game/'+object.tableIds.gameId+'/Frodo'
         
@@ -140,8 +139,8 @@ describe('SERVER JS:', function(){
     
       let url = 'https://puddle-catcher.glitch.me/newgame/2?name=Frodo'
     
-      rp(url)
-      .then(function(results){
+      rp(url) // Inserting New Game to Database
+      .then(function(results){ 
           after(function(){
               db.run("DELETE FROM HanabiGames WHERE id = "+object.tableIds.gameId)
               db.run("DELETE FROM OriginalDeck WHERE gameId = "+object.tableIds.gameId)
@@ -153,37 +152,38 @@ describe('SERVER JS:', function(){
            });
         
         let object = JSON.parse(results)
-        let objectKeys = Object.keys(object)
         
         let url = 'https://puddle-catcher.glitch.me/game/'+object.tableIds.gameId+'/Frodo'
         
-      rp(url)
+      rp(url) // Retrieving the Game from the Database
      .then(function(results){
-        
         let object = JSON.parse(results)
-        let objectKeys = Object.keys(object)
         
         object.players[0].active = 1
         object.players[1].name = 'Sam'
         object.players[0].hand[0] = {color: "blue", hints:[], number:"1"}
+        console.log("GET RESULTS", object.players[0].hand)
         
-        Database.update(object);
-        
-        var url = 'https://puddle-catcher.glitch.me/game/'+object.tableIds.gameId+'/Frodo/playcard?cardIndex=0'
-        
-        rp(url)
+        Database.update(object) //Updating the Database with Sample Values
         .then(function(results){
-          console.log(results)
-          
-          var object = JSON.parse(results)
-          var objectKeys = Object.keys(object)
-                
-            assert.deepEqual(object.playedCards, expectedPlayedCards)
-            assert.ok(results)
-            done();
-          })
-      })
         
+          let url = 'https://puddle-catcher.glitch.me/game/'+object.tableIds.gameId+'/Frodo/playcard?cardIndex=0'
+        
+        
+          rp(url) // Executing Played Card Action and Updating 
+          .then(function(results){
+            console.log("PLAY CARD RESULTS", results)
+          
+            var object = JSON.parse(results)
+            var objectKeys = Object.keys(object)
+                
+              assert.deepEqual(object.playedCards, expectedPlayedCards)
+              assert.ok(results)
+              done();
+            })
+          })
+        })
+      });   
     });
   });
 })

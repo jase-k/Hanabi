@@ -130,7 +130,7 @@ describe("Database", function(){
        });
       
     });
-    it.skip("should return an object with the correct Array Lengths", function(done){
+    it("should return an object with the correct Array Lengths", function(done){
        var gameObject = Defaults.gameSettings5Player()
         
        Database.insert(gameObject)
@@ -144,6 +144,9 @@ describe("Database", function(){
             db.run("DELETE FROM Messages WHERE gameId = "+results.tableIds.gameId)
             db.run("DELETE FROM Players WHERE gameId = "+results.tableIds.gameId)
          });
+         assert.equal(results.playedCards.length, 0)
+         assert.equal(results.players[0].hand.length, 4)
+         
     });
    
   });
@@ -242,6 +245,28 @@ describe("Database", function(){
         }); 
       });
     });
+  });
+    it("should return an object with the correct Array Lengths", function(done){
+       var gameObject = Defaults.gameSettings5Player()
+        
+       Database.insert(gameObject)
+      .then(function(results){
+         after(function(){
+            db.run("DELETE FROM HanabiGames WHERE id = "+results.tableIds.gameId)
+            db.run("DELETE FROM OriginalDeck WHERE gameId = "+results.tableIds.gameId)
+            db.run("DELETE FROM PlayingDeck WHERE gameId = "+results.tableIds.gameId)
+            db.run("DELETE FROM DiscardedCards WHERE gameId = "+results.tableIds.gameId)
+            db.run("DELETE FROM PlayedCards WHERE gameId = "+results.tableIds.gameId)
+            db.run("DELETE FROM Messages WHERE gameId = "+results.tableIds.gameId)
+            db.run("DELETE FROM Players WHERE gameId = "+results.tableIds.gameId)
+         });
+         
+      Database.update(results)
+      .then(function(results){   
+         assert.equal(results.playedCards.length, 0)
+         assert.equal(results.players[0].hand.length, 4)
+      });
+     })
   });
   describe(".get", function(){
     it("Should create a game Object with correct Keys", function(done){
