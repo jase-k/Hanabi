@@ -147,7 +147,7 @@ describe("Database", function(){
     });
    
   });
-  
+  });
   describe(".update", function(){
     it("Updates All Tables for an Updated Game Object", function(done){
       var gameObject = Defaults.gameSettings5Player()

@@ -120,12 +120,12 @@ var gameId = request.params.gameid
    var game = GamePlay.playCard(game, cardIndex, name)
     
    if(game){
-      Database.update(game)
       response.send(game)
+      Database.update(game)
    }else{
+     response.json(game)
      GamePlay.discard(game)
      Database.update(game)
-     response.json(game)
    }
   })
 });

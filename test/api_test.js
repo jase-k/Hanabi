@@ -97,7 +97,7 @@ describe('SERVER JS:', function(){
                                     'livesLeft', 'messages', 'numberOfPlayers', 'originalDeck', 'playedCards',
                                     'players', 'playingDeck', 'score', 'tableIds', 'id']
     
-      var url = 'https://puddle-catcher.glitch.me/newgame/2?name=Frodo'
+      let url = 'https://puddle-catcher.glitch.me/newgame/2?name=Frodo'
     
       rp(url)
       .then(function(results){
@@ -114,7 +114,7 @@ describe('SERVER JS:', function(){
         var object = JSON.parse(results)
         var objectKeys = Object.keys(object)
         
-        var url = 'https://puddle-catcher.glitch.me/game/'+object.tableIds.gameId+'/Frodo'
+        let url = 'https://puddle-catcher.glitch.me/game/'+object.tableIds.gameId+'/Frodo'
         
         rp(url)
         .then(function(results){
@@ -122,6 +122,7 @@ describe('SERVER JS:', function(){
           var objectKeys = Object.keys(object)
                 
             assert.equal(object.players[0].name, 'Frodo')
+            assert.equal(object.playedCards.length, 0)
             assert.ok(results)
             done();
           })
@@ -137,7 +138,7 @@ describe('SERVER JS:', function(){
         {color: "blue", hints:[], number:"1"}
       ]
     
-      var url = 'https://puddle-catcher.glitch.me/newgame/2?name=Frodo'
+      let url = 'https://puddle-catcher.glitch.me/newgame/2?name=Frodo'
     
       rp(url)
       .then(function(results){
@@ -151,8 +152,16 @@ describe('SERVER JS:', function(){
               db.run("DELETE FROM Players WHERE gameId = "+object.tableIds.gameId)
            });
         
-        var object = JSON.parse(results)
-        var objectKeys = Object.keys(object)
+        let object = JSON.parse(results)
+        let objectKeys = Object.keys(object)
+        
+        let url = 'https://puddle-catcher.glitch.me/game/'+object.tableIds.gameId+'/Frodo'
+        
+      rp(url)
+     .then(function(results){
+        
+        let object = JSON.parse(results)
+        let objectKeys = Object.keys(object)
         
         object.players[0].active = 1
         object.players[1].name = 'Sam'
