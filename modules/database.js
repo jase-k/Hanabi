@@ -263,8 +263,9 @@ const Utils = {
   updatePlayerRow(playerObject, gameObject){
     return new Promise((resolve, reject) => { 
      var setString = Helper.convertCardArrayForUpdate(playerObject.hand, playerObject.hand.length)
+     var name = playerObject.name ? playerObject.name : null
      var sql = `UPDATE Players
-               SET  ${setString}, active = ${playerObject.active}
+               SET  ${setString}, active = ${playerObject.active}, name = ${name}
                WHERE id = ${playerObject.id}`
      db.run(sql, function(err){
        if(err){

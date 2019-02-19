@@ -267,7 +267,7 @@ describe('SERVER JS:', function(){
         
         Database.update(object) //Updating the Database with Sample Values
         .then(function(results){
-              console.log("Updating Results", results.players[0].hand)
+          console.log("Updating Results", results.players)
 
           let url = 'https://puddle-catcher.glitch.me/game/'+object.tableIds.gameId+'/Frodo'
         
@@ -275,7 +275,8 @@ describe('SERVER JS:', function(){
            .then(function(results){
               let object = JSON.parse(results)
         
-              console.log("GET RESULTS", object.players[0].hand)
+              console.log("GET RESULTS", object.players)
+            
               let url = 'https://puddle-catcher.glitch.me/game/'+object.tableIds.gameId+'/Frodo/givehint?hint=orange&player=Sam'
           
         
