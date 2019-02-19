@@ -157,99 +157,13 @@ var gameId = request.params.gameid
 
   
 //=== Getting Data from the DataBase==//
- database.getCurrentGame(gameId).then(function(results){
-    console.log(JSON.stringify(results))
-   
-  var nameIndex = results.players.findIndex(i => i.name === name)
-    if(nameIndex == -1){ response.send("Couldn't Find You!");  return; } // Returns if name isn't found
-    if(!results.players[nameIndex].active){ response.send("Sorry, it's not your Turn!"); return;} //Returns if name isn't active
-   
-  var playerIndex = results.players.findIndex(i => i.name === player);
-    if(playerIndex == -1){    response.send("Couldn't Find Player!");  return; } // Returns if player isn't found
-   
-   var hand = results.players[playerIndex].hand
-   console.log('hand', hand)
- 
-//==== Parsing the hint ====//
-var hintType = determineHintType(hint)
- 
-function determineHintType(string){
-  var type = ''
-  for(var i = 0; i < colors.length; i++){
-     if(string.includes(colors[i]) || string === colors[i]){
-      type = 'color'
-     break;
-      }else{ type = 'number'}
-   }
-  return type
-}
-   
-console.log('hintType', hintType) 
- 
-for(var i =0; i < hand.length; i++){
-     var card = hand[i]
-  appendHints(hintType, card)
-     }
-       
+ Database.get(gameId).then(function(results){
+  console.log(JSON.stringify(results))
   
-function appendHints(hintType, card){  
-     console.log("card:", card)
-      console.log("hint:", hint)
-
-  if(card){ //makes sure the card is not null
-
-    if(card[hintType] == hint){ //The Card.color or card.number is a match with the hint 
-       
-    for(var index = 0; index < card.hints.length;){  //Removes all Other Hints of the hintType before adding the new hint
-        for(var j = 0; j < hintOptions[hintType].length; j++){
-            console.log('index', index)
-              if(card.hints[index].includes(hintOptions[hintType][j])){ //Does this hint include the newhint Type?
-                  card.hints.splice(index, 1)
-                index--
-                break;
-              }
-            console.log(card.hints)
-          }
-      index++
-    }
-      
-      card.hints.push(hint) //After all the hints with the same type are removed the new hint is added. 
-      
-      
-      }else{ //if the hint matches the card value push the hint
-       var addHint = true;  
-        
-        card.hints.forEach(function(cardhint){
-           var type = determineHintType(cardhint)
-          if(cardhint === 'not '+hint){ addHint = false}
-          
-          if(!cardhint.includes('not') && type === hintType){ //if the hint doesn't contain not and the 
-            addHint = false
-          }
-        }) //Sets addHint to false if any of the old hints meet the criteria
-        
-        if(addHint){
-        card.hints.push('not '+hint)
-        }
-      }
-    
-  }
-  console.log("new card:", card)
-}
-
-  
+  GamePlay.giveHint(results, hint, player, name)
    
-//===== Switch the Active Player ====//
-    results.players[nameIndex].active = 0
-var newIndex = (nameIndex+1) % results.players.length
-    results.players[newIndex].active = 1
-   
-//==== Adds to Messages ====//
-   results.messages.push(`${name} gave ${player} a hint about their ${hint}'s`) 
-    console.log("Messages", results.messages)
-results.hintsLeft -= 1;  
-database.updateGame(results)
-response.send(results)
+  Database.update(results)
+  response.send(results)
  
  });
 });

@@ -212,7 +212,6 @@ describe('SERVER JS:', function(){
         
         Database.update(object) //Updating the Database with Sample Values
         .then(function(results){
-              console.log("Updating Results", results.players[0].hand)
 
           let url = 'https://puddle-catcher.glitch.me/game/'+object.tableIds.gameId+'/Frodo'
         
@@ -220,13 +219,11 @@ describe('SERVER JS:', function(){
            .then(function(results){
               let object = JSON.parse(results)
         
-              console.log("GET RESULTS", object.players[0].hand)
               let url = 'https://puddle-catcher.glitch.me/game/'+object.tableIds.gameId+'/Frodo/discard?cardIndex=0'
           
         
-          rp(url) // Executing Played Card Action and Updating 
+          rp(url) // Executing Discard Card Action and Updating 
           .then(function(results){
-            console.log("Discarded CARD RESULTS", results)
           
             let object = JSON.parse(results)
             var objectKeys = Object.keys(object)
@@ -266,7 +263,7 @@ describe('SERVER JS:', function(){
         
         object.players[0].active = 1
         object.players[1].name = 'Sam'
-        object.players[0].hand[0] = {color: "blue", hints:[], number:"1"}
+        object.players[1].hand[0] = {color: "blue", hints:[], number:"1"}
         
         Database.update(object) //Updating the Database with Sample Values
         .then(function(results){
@@ -279,17 +276,17 @@ describe('SERVER JS:', function(){
               let object = JSON.parse(results)
         
               console.log("GET RESULTS", object.players[0].hand)
-              let url = 'https://puddle-catcher.glitch.me/game/'+object.tableIds.gameId+'/Frodo/discard?cardIndex=0'
+              let url = 'https://puddle-catcher.glitch.me/game/'+object.tableIds.gameId+'/Frodo/givehint?hint=orange&player=Sam'
           
         
-          rp(url) // Executing Played Card Action and Updating 
+          rp(url) // Executing Give Hint Action and Updating 
           .then(function(results){
-            console.log("Discarded CARD RESULTS", results)
+            console.log("Give Hint CARD RESULTS", results)
           
             let object = JSON.parse(results)
             var objectKeys = Object.keys(object)
                 
-              assert.deepEqual(object.discardedCards, expectedDiscardedCards)
+              assert.deepEqual(object.players[1].hand[0].hints, expectedHintArray)
               assert.ok(results)
               done();
             })
