@@ -83,13 +83,22 @@ PlayersTurn:
     if(gameObject.playedCards.length === 25){
       return 'won'
     }
-    else if(gameObject.livesLeft == 0){
+    else if(gameObject.livesLeft == 0 || gameObject.playingDeck.length === 0){
       return 'lost'
+    }
+    else if(this.lossByDiscard(gameObject.discardedCards)){
+      return "can't win"
     }
     else {
       return 'in progress'
     }
-  }
+  },
+  lossByDiscard(discardedCards){
+    var loss = false
+    for(let i = 0; i < discardedCards.length; i++){
+      if(discardedCards.
+    }
+  },
 }
 
 module.exports = Simulate; 

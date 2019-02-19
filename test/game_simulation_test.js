@@ -186,6 +186,23 @@ describe("Simulate", function(){
       
       assert.equal(result, 'in progress')
     });
-    
+    it("should return 'lost' if playingDeck.length == 0 and playedCards.length !== 25", function(){
+      var game = Defaults.gameSettings2Player()
+      game.playingDeck = []
+      
+      var result = Simulate.isGameOver(game)
+      
+      assert.equal(result, 'lost')
+    })
+    it("should return 'can't wint' if a five is discarded", function(){
+      var game = Defaults.gameSettings2Player()
+      game.discaredCards = [
+        {color: "black", hints:[], number: "5"}
+      ]
+      
+      var result = Simulate.isGameOver(game)
+      
+      assert.equal(result, "can't win")
+    });
   });
 });
