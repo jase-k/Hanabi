@@ -202,7 +202,8 @@ describe('SERVER JS:', function(){
               db.run("DELETE FROM Messages WHERE gameId = "+object.tableIds.gameId)
               db.run("DELETE FROM Players WHERE gameId = "+object.tableIds.gameId)
            });
-        
+        console.log("after Insertion RESULTS", results)
+
         let object = JSON.parse(results)
         
         object.players[0].active = 1
@@ -210,7 +211,7 @@ describe('SERVER JS:', function(){
         
         Database.update(object) //Updating the Database with Sample Values
         .then(function(results){
-console.log("AFTER Updating RESULTS", results)
+console.log("AFTER Updating RESULTS", JSON.stringify(results))
           
             let url = 'https://puddle-catcher.glitch.me/game/'+object.tableIds.gameId+'/Frodo/discard?cardIndex=0'
           
