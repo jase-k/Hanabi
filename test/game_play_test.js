@@ -669,8 +669,7 @@ describe("GamePlay", function(){
   });
 });
 
-describe.skip("Modify Deck", function(){
- });
+
 
 /*
 = GAME FLOW =

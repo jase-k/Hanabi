@@ -83,7 +83,6 @@ describe('SERVER JS:', function(){
         .then(function(results){
           var object = JSON.parse(results)
           var objectKeys = Object.keys(object)
-      
             assert.equal(object.players[1].name, 'Sam')
             assert.ok(results)
             done();
