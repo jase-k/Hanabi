@@ -95,10 +95,12 @@ PlayersTurn:
   },
   lossByDiscard(discardedCards){
     var loss = false
+    var array; 
     for(let i = 0; i < discardedCards.length; i++){
       if(discardedCards[i].number == 5){
         loss = true
       }
+      array = discardedCards.filter(card => discardedCards[i].color === card.color && discardedCards[i].color === card.color)
     }
     return loss
   },
