@@ -215,5 +215,15 @@ describe("Simulate", function(){
       
       assert.equal(results, true)
     });
+    it("should return true if two 3's are discarded", function(){
+      var discards = [
+        {color: "red", hints:[], number: "3"},
+        {color: "red", hints:[], number: "3"}
+      ]
+      
+      var results = Simulate.lossByDiscard(discards)
+      
+      assert.equal(results, true)
+    });
   });
 });
