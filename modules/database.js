@@ -435,15 +435,16 @@ const Database = {
       .then(object => resolve(object))
     });
   },
-  joinGame(name, playerId){
-    return new Promise((resolve, reject) => { 
-    var sql = `UPDATE Players
-               SET  name = ${name}
-               WHERE id = ${playerId}`
-     db.run(sql, function(err){
-       if(err){
-         console.log("Error at Player "+playerId+" Updating Table", err)
-       }
+  joinGame(gameObject, name, playerId){
+   return new Promise((resolve, reject) => { 
+      var sql = `UPDATE Players
+                 SET  name = '${name}'
+                 WHERE id = ${playerId}`
+       db.run(sql, function(err){
+         if(err){
+           console.log("Error at Player "+playerId+" Updating Table", err)
+         }
+         resolve(gameObject)
        }) 
     })
   }

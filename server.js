@@ -75,14 +75,20 @@ app.get('/joingame/:gameid', function(request, response){
   var gameObject = {}
   
   Database.get(gameId)
-  .then(function(results){
+  .then(function(gameObject){
     
-    let playerId = GamePlay.joinGame(results, name)
-    
-    Database.joinGame(name, playerId)
-    .then(results => Database.get(results.id))
-    .then(results =>   response.json(results))
-  })
+    let playerId = GamePlay.joinGame(gameObject, name)
+   
+    if(playerId){
+      
+      Database.joinGame(gameObject, name, playerId)
+      .then(gameObject => Database.get(gameObject.id))
+      .then(results =>   response.json(results))
+      
+    }else{
+      response.send("Sorry Game is Full")
+      }
+    })
 });
 
 
@@ -92,15 +98,7 @@ app.get('/game/:gameid/:name', function(request, response){
   
   Database.get(gameId)
   .then(function(results){
-    
-    var gameObject = GamePlay.joinGame(results, name)
-    
-    if(gameObject){
-      Database.update(gameObject)
-     .then(results =>   response.json(results))
-    }else{
-      response.send("Game is full and couldn't Find Player in Game")
-    }
+      response.json(results)
   });
 });
 
