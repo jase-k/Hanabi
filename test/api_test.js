@@ -10,7 +10,6 @@ https://puddle-catcher.glitch.me/
 const rp = require('request-promise');
 const assert = require('chai').assert;
 
-//Import Local Modules
 //Import Database
 var fs = require('fs');
 var dbFile = './.data/sqlite.db';
@@ -21,6 +20,7 @@ var db = new sqlite3.Database(dbFile);
 
 //Import Module:
 const {Database, Utils, Helper} = require('../modules/database.js')
+const GamePlay = require('../modules/game_play.js')
 const Defaults = require('./defaults.js')
 
 describe('SERVER JS:', function(){
@@ -210,17 +210,16 @@ describe('SERVER JS:', function(){
         
         Database.update(object) //Updating the Database with Sample Values
         .then(function(results){
-            let object = JSON.parse(results)
-
+          
             let url = 'https://puddle-catcher.glitch.me/game/'+object.tableIds.gameId+'/Frodo/discard?cardIndex=0'
           
         
           rp(url) // Executing Discard Card Action and Updating 
           .then(function(results){
-
+console.log("AFTER EXECUTING RESULTS", results
             let object = JSON.parse(results)
                 
-              assert.deepEqual(object.discardedCards, expectedDiscardedCards)
+              assert.deepEqual(object.discardedCards, expectedDiscardedCards, object.discardedCards[0]+'should equal'+expectedDiscardedCards[0])
               assert.ok(results)
               done();
           })
@@ -250,27 +249,22 @@ describe('SERVER JS:', function(){
               db.run("DELETE FROM Players WHERE gameId = "+object.tableIds.gameId)
            });
         
-        let object = JSON.parse(results)
-        
-        object.players[0].active = 1
-        object.players[1].name = 'Sam'
-        object.players[1].hand[0] = {color: "blue", hints:[], number:"1"}
-        
-        Database.update(object) //Updating the Database with Sample Values
+        let gameObject = JSON.parse(results)
+        let playerId = GamePlay.joinGame(gameObject, 'Sam')
+      
+      Database.joinGame(gameObject, 'Sam' , playerId)
         .then(function(results){
-          console.log("Updating Results", results.players)
 
-              let url = 'https://puddle-catcher.glitch.me/game/'+object.tableIds.gameId+'/Frodo/givehint?hint=orange&player=Sam'
+              let url = 'https://puddle-catcher.glitch.me/game/'+gameObject.tableIds.gameId+'/Frodo/givehint?hint=orange&player=Sam'
           
         
           rp(url) // Executing Give Hint Action and Updating 
           .then(function(results){
-            console.log("Give Hint CARD RESULTS", results)
           
             let object = JSON.parse(results)
             var objectKeys = Object.keys(object)
                 
-              assert.deepEqual(object.players[1].hand[0].hints, expectedHintArray)
+              assert.deepEqual(object.players[1].hand[0].hints.length, 1)
               assert.ok(results)
               done();
           })
