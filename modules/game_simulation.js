@@ -89,6 +89,9 @@ PlayersTurn:
     else if(this.lossByDiscard(gameObject.discardedCards)){
       return "can't win"
     }
+    else if(gameObject.playingDeck.length < 24 - gameObject.score){
+      return "can't win"
+    }
     else {
       return 'in progress'
     }

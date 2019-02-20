@@ -194,11 +194,22 @@ describe("Simulate", function(){
       
       assert.equal(result, 'lost')
     })
-    it("should return 'can't wint' if a lossByDiscard is true", function(){
+    it("should return 'can't win' if a lossByDiscard is true", function(){
       var game = Defaults.gameSettings2Player()
       game.discardedCards = [
         {color: "black", hints:[], number: "5"}
       ]
+      
+      var result = Simulate.isGameOver(game)
+      
+      assert.equal(result, "can't win")
+    });
+    it("should return 'can't win' if playingDeck.length < 25-score", function(){
+      var game = Defaults.gameSettings2Player()
+      game.playingDeck = [
+        {color: "black", hints:[], number: "5"}
+      ]
+      game.score = 22
       
       var result = Simulate.isGameOver(game)
       
