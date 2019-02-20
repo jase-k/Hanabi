@@ -11,6 +11,7 @@ Database.getGame(GAMEID)
 Sample GameObject: {
    dateCreated: STRING *new Date()*,  
    discardedCards: [/ARRAY *Max Length: 25* of CARD OBJECTS/],
+   gameProgress: STRING,
    hintsLeft: INTEGER *Default Start: 8*, 
    livesLeft: INTEGER *Default Start: 3*, 
    messages: [ARRAY OF STRINGS], 
@@ -147,6 +148,7 @@ var GamePlay = {
   var gameObject = {
       dateCreated: new Date(),
       discardedCards: [], 
+      gameProgress: "starting",
       hintsLeft: 8, //Game Always Starts with 8 Hints 
       livesLeft: 3, //Game Always Begins with 3 lives
       messages: [],
