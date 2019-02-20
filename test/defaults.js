@@ -12,6 +12,7 @@ const Defaults = {
      return {
                 dateCreated: new Date(), 
                 discardedCards: [],
+                gameProgress: "starting",
                 hintsLeft: 8, 
                 livesLeft: 3, 
                 messages: [],
@@ -49,6 +50,7 @@ const Defaults = {
      return {
                 dateCreated: new Date(), 
                 discardedCards: [],
+                gameProgress: "starting",
                 hintsLeft: 8, 
                 livesLeft: 3, 
                 messages: [],

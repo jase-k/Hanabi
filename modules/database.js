@@ -102,7 +102,7 @@ const Utils = {
   insertHanabiGameRow(object) { //Insert Row and Return Object with Game ID
     return new Promise((resolve, reject) => {
       object.tableIds = {}
-      db.run('INSERT INTO HanabiGames(numberOfPlayers, dateCreated, hintsLeft, livesLeft, score) VALUES('+object.numberOfPlayers+',"'+object.dateCreated+'",'+ object.hintsLeft+','+object.livesLeft+','+object.score+')',
+      db.run('INSERT INTO HanabiGames(numberOfPlayers, dateCreated, hintsLeft, livesLeft, score, gameProgress) VALUES('+object.numberOfPlayers+',"'+object.dateCreated+'",'+ object.hintsLeft+','+object.livesLeft+','+object.score+','+object.gameProgress+')',
          {}, 
          function(err){
            if(err){ 

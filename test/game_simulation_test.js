@@ -204,7 +204,7 @@ describe("Simulate", function(){
       
       assert.equal(result, "can't win")
     });
-    it("should return 'can't win' if playingDeck.length < 25-score", function(){
+    it("should return 'can't win' if playingDeck.length < 24-score", function(){
       var game = Defaults.gameSettings2Player()
       game.playingDeck = [
         {color: "black", hints:[], number: "5"}

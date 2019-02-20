@@ -354,6 +354,7 @@ describe("Utils", function(){
                    }
                   assert.equal(row.hintsLeft, gameObject.hintsLeft, "Expected hintsLeft to Equal")
                   assert.equal(row.livesLeft, gameObject.livesLeft, "Expected livesLeft to Equal")
+                  assert.equal(row.gameProgres, 'starting', "Expected gameProgress to equal 'starting'")
                   done();
                 });          
          });
@@ -619,6 +620,7 @@ describe("Utils", function(){
                 assert.ok(row)
                 assert.equal(row.hintsLeft, expectedHintsLeft) 
                 assert.equal(row.livesLeft, expectedLivesLeft)
+                assert.equal(row.gameProgress, 'in progress',)
                done()
            });       
          });
@@ -851,6 +853,7 @@ describe("Utils", function(){
               assert.equal(results.livesLeft,gameObject.livesLeft)
               assert.equal(results.numberOfPlayers, gameObject.numberOfPlayers)
               assert.equal(results.score, gameObject.score, "Score is Not Equal")
+              assert.equal(results.gameProgress, gameObject.gameProgress)
              
              done();
            
