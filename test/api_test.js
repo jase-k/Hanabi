@@ -210,7 +210,7 @@ describe('SERVER JS:', function(){
           rp(url) // Executing Discard Card Action and Updating 
           .then(function(results3){
             let object = JSON.parse(results3)
-              assert.deepEqual(object.discardedCards, expectedDiscardedCards, object.discardedCards[0]+'should equal'+expectedDiscardedCards[0]+"results 1:"+JSON.stringify(results1)+" n\ results2:"+results2+" n\ results3:"+JSON.stringify(results3))
+              assert.deepEqual(object.discardedCards, expectedDiscardedCards, JSON.stringify(object.discardedCards[0])+'should equal'+JSON.stringify(expectedDiscardedCards[0])+"results 1:"+JSON.stringify(JSON.parse(results1))+" n\ results2:"+JSON.stringify(results2)+" n\ results3:"+JSON.stringify(JSON.parse(results3)))
               assert.ok(results3)
               done();
           })
@@ -224,7 +224,7 @@ describe('SERVER JS:', function(){
       const card = [
         {color: "blue", hints:[], number:"1"}
       ]
-      const expectedHintArray = ["not red"]
+      const expectedHintArray = ["not orange"]
     
       let url = 'https://puddle-catcher.glitch.me/newgame/2?name=Frodo'
     
