@@ -205,7 +205,7 @@ const Utils = {
     db.run(sql, function(err){
      if(err){
         reject("Error at updateDeck at Hanabi Game Table", sql)
-        throw err
+        console.log(err, sql)
         }
       resolve(gameObject)
     })

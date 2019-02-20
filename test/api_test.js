@@ -148,25 +148,25 @@ describe('SERVER JS:', function(){
         object.players[0].hand[0] = {color: "blue", hints:[], number:"1"}
         
         Database.update(object) //Updating the Database with Sample Values
-        .then(function(results){
+        .then(function(results1){
             
-          let object = results
+          let object = results1
           let url = 'https://puddle-catcher.glitch.me/game/'+object.tableIds.gameId+'/Frodo'
         
           rp(url) // Retrieving the Game from the Database
-           .then(function(results){
-              let object = JSON.parse(results)
+           .then(function(results2){
+              let object = JSON.parse(results2)
         
               let url = 'https://puddle-catcher.glitch.me/game/'+object.tableIds.gameId+'/Frodo/playcard?cardIndex=0'
           
         
           rp(url) // Executing Played Card Action and Updating 
-          .then(function(results){
+          .then(function(results3){
           
-            let object = JSON.parse(results)
+            let object = JSON.parse(results3)
             var objectKeys = Object.keys(object)
                 
-              assert.deepEqual(object.playedCards, expectedPlayedCards)
+              assert.deepEqual(object.playedCards, expectedPlayedCards, "expected"+JSON.stringify(object.playedCards)+"to deeply Equal"+JSON.stringify(expectedPlayedCards)+"results 1:"++" n\ results2:"++" n\ results3:"+js+")
               assert.ok(results)
               done();
             })
