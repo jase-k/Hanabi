@@ -166,7 +166,7 @@ describe('SERVER JS:', function(){
             let object = JSON.parse(results3)
             var objectKeys = Object.keys(object)
                 
-              assert.deepEqual(object.playedCards, expectedPlayedCards, "expected"+JSON.stringify(object.playedCards)+"to deeply Equal"+JSON.stringify(expectedPlayedCards)+"results 1:"++" n\ results2:"++" n\ results3:"+js+")
+              assert.deepEqual(object.playedCards, expectedPlayedCards, "expected"+JSON.stringify(object.playedCards)+"to deeply Equal"+JSON.stringify(expectedPlayedCards)+"results 1:"+JSON.stringify(results1)+" n\ results2:"+JSON.stringify(results2)+" n\ results3:"+JSON.stringify(results3))
               assert.ok(results)
               done();
             })
@@ -185,7 +185,7 @@ describe('SERVER JS:', function(){
       let url = 'https://puddle-catcher.glitch.me/newgame/2?name=Frodo'
     
       rp(url) // Inserting New Game to Database
-      .then(function(results){ 
+      .then(function(results1){ 
           after(function(){
               db.run("DELETE FROM HanabiGames WHERE id = "+object.tableIds.gameId)
               db.run("DELETE FROM OriginalDeck WHERE gameId = "+object.tableIds.gameId)
@@ -195,27 +195,23 @@ describe('SERVER JS:', function(){
               db.run("DELETE FROM Messages WHERE gameId = "+object.tableIds.gameId)
               db.run("DELETE FROM Players WHERE gameId = "+object.tableIds.gameId)
            });
-        console.log("after Insertion RESULTS", results)
 
-        let object = JSON.parse(results)
+        let object = JSON.parse(results1)
         
         object.players[0].active = 1
         object.players[0].hand[0] = {color: "blue", hints:[], number:"1"}
         
         Database.update(object) //Updating the Database with Sample Values
-        .then(function(results){
-console.log("AFTER Updating RESULTS", JSON.stringify(results))
+        .then(function(results2){
           
             let url = 'https://puddle-catcher.glitch.me/game/'+object.tableIds.gameId+'/Frodo/discard?cardIndex=0'
           
         
           rp(url) // Executing Discard Card Action and Updating 
-          .then(function(results){
-console.log("AFTER EXECUTING RESULTS", results)
-            let object = JSON.parse(results)
-                
-              assert.deepEqual(object.discardedCards, expectedDiscardedCards, object.discardedCards[0]+'should equal'+expectedDiscardedCards[0])
-              assert.ok(results)
+          .then(function(results3){
+            let object = JSON.parse(results3)
+              assert.deepEqual(object.discardedCards, expectedDiscardedCards, object.discardedCards[0]+'should equal'+expectedDiscardedCards[0]+"results 1:"+JSON.stringify(results1)+" n\ results2:"+results2+" n\ results3:"+JSON.stringify(results3))
+              assert.ok(results3)
               done();
           })
         })
