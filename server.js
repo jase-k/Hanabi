@@ -8,11 +8,7 @@ const app = express();
 app.use(bodyParser.urlencoded({ extended: true }));
 
 //import Modules
-const gameCreation = require('./cool-file.js')
-const database = require('./database.js')
 const WinningGifs = require('./assets/gifs.js')
-
-//import New Modules
 const GamePlay = require('./modules/game_play.js')
 const {Database, Helper} = require('./modules/database.js')
 
@@ -36,10 +32,9 @@ var exists = fs.existsSync(dbFile);
 var sqlite3 = require('sqlite3').verbose();
 var db = new sqlite3.Database(dbFile);
 
-// if ./.data/sqlite.db does not exist, create it, otherwise print records to console
 
 db.serialize(() => { 
-  
+ /* 
   db.run('DROP TABLE IF EXISTS Messages', error => {
     if (error) {
       throw error;
@@ -75,7 +70,7 @@ db.serialize(() => {
       throw error;
     }
   })
-
+*/
   db.run('CREATE TABLE IF NOT EXISTS OriginalDeck(id INTEGER PRIMARY KEY, gameId TEXT, '+Helper.createCardString(50)+')');
   db.run('CREATE TABLE IF NOT EXISTS PlayingDeck(id INTEGER PRIMARY KEY, gameId TEXT, '+Helper.createCardString(50)+')');
   db.run('CREATE TABLE IF NOT EXISTS DiscardedCards(id INTEGER PRIMARY KEY, gameId TEXT, '+Helper.createCardString(25)+')');
@@ -115,7 +110,6 @@ app.get('/newgame/:numberOfPlayers', function(request, response) {
   
 });
 
-
 app.get('/joingame/:gameid', function(request, response){
   var name = request.query.name
   var gameId = request.params.gameid
@@ -137,7 +131,6 @@ app.get('/joingame/:gameid', function(request, response){
       }
     })
 });
-
 
 app.get('/game/:gameid/:name', function(request, response){
   var gameId = request.params.gameid
