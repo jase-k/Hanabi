@@ -206,16 +206,16 @@ var GamePlay = {
         gameObject.messages.push(`Success! ${playerOfCard} played a ${card.color} ${card.number}`)
           
       
-    }else{
-      gameObject.livesLeft--
+      }else{
+        gameObject.livesLeft--
       
-      gameObject.discardedCards.push(card) //Adds card to discard
+        gameObject.discardedCards.push(card) //Adds card to discard
       
-      gameObject.messages.push(`Whoops! ${playerOfCard} tried playing a ${card.color} ${card.number} and it did not play`)
+        gameObject.messages.push(`Whoops! ${playerOfCard} tried playing a ${card.color} ${card.number} and it did not play`)
 
     }
     
-      gameObject.players[playerIndex].hand[cardIndex] = gameObject.playingDeck.shift();
+      gameObject.players[playerIndex].hand[cardIndex] = gameObject.playingDeck.shift(); //Replaces card in hand with card from deck
     
       gameObject.gameProgress = Simulate.isGameOver(gameObject)
     
@@ -232,6 +232,8 @@ var GamePlay = {
     gameObject.hintsLeft++ //increases hints left
     
     gameObject.messages.push(`${playerOfCard} discarded a ${card.color} ${card.number}`) //Adds Message
+    
+    gameObject.gameProgress = Simulate.isGameOver(gameObject) //Updated Game Progess
     
     this.switchActivePlayer(gameObject, gameObject.numberOfPlayers, playerIndex) //Ends Players Turn and activates next
 

@@ -23,10 +23,10 @@ const {Database, Utils, Helper} = require('../modules/database.js')
 const GamePlay = require('../modules/game_play.js')
 const Defaults = require('./defaults.js')
 
-describe.skip('SERVER JS:', function(){
+describe('SERVER JS:', function(){
   describe("NEW GAME: /newgame/:numberOfPlayers?name=NAME", function(){
     it("should add a new game to the database", function(done){
-      const expectedObjectKeys = [ 'dateCreated',  'discardedCards', 'hintsLeft', 
+      const expectedObjectKeys = [ 'dateCreated',  'discardedCards', 'gameProgress', 'hintsLeft', 
                                     'livesLeft', 'messages', 'numberOfPlayers', 'originalDeck', 'playedCards',
                                     'players', 'playingDeck', 'score', 'tableIds', 'id']
     
@@ -57,10 +57,7 @@ describe.skip('SERVER JS:', function(){
   });
   describe("JOIN GAME '/joingame/:gameid?name=NAME'", function(){
     it("should add a new Player and return the game", function(done){
-      const expectedObjectKeys = [ 'dateCreated',  'discardedCards', 'hintsLeft', 
-                                    'livesLeft', 'messages', 'numberOfPlayers', 'originalDeck', 'playedCards',
-                                    'players', 'playingDeck', 'score', 'tableIds', 'id']
-    
+  
       var url = 'https://puddle-catcher.glitch.me/newgame/2?name=Frodo'
     
       rp(url)
@@ -82,7 +79,7 @@ describe.skip('SERVER JS:', function(){
         rp(url)
         .then(function(results){
           var object = JSON.parse(results)
-          var objectKeys = Object.keys(object)
+          
             assert.equal(object.players[1].name, 'Sam')
             assert.ok(results)
             done();
@@ -92,10 +89,7 @@ describe.skip('SERVER JS:', function(){
   });
   describe("GET '/game/:gameId/:name'", function(){
     it("should return a game object from the database", function(done){
-      const expectedObjectKeys = [ 'dateCreated',  'discardedCards', 'hintsLeft', 
-                                    'livesLeft', 'messages', 'numberOfPlayers', 'originalDeck', 'playedCards',
-                                    'players', 'playingDeck', 'score', 'tableIds', 'id']
-    
+  
       let url = 'https://puddle-catcher.glitch.me/newgame/2?name=Frodo'
     
       rp(url)
@@ -117,7 +111,6 @@ describe.skip('SERVER JS:', function(){
         rp(url)
         .then(function(results){
           var object = JSON.parse(results)
-          var objectKeys = Object.keys(object)
                 
             assert.equal(object.players[0].name, 'Frodo')
             assert.equal(object.playedCards.length, 0)
@@ -264,7 +257,6 @@ console.log("AFTER EXECUTING RESULTS", results)
           .then(function(results){
           
             let object = JSON.parse(results)
-            var objectKeys = Object.keys(object)
                 
               assert.equal(object.players[1].hand[0].hints.length, 1, "expected "+object.players[1].hand[0].hints+"'s length to be 1")
               assert.ok(results)

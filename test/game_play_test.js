@@ -503,6 +503,14 @@ describe("GamePlay", function(){
         assert.equal(game.players[0].active, 0)
         assert.equal(game.players[1].active, 1)
     });
+    it("should update gameProgress based on 'Simulate.isGameOver' results", function(){
+      var game = Defaults.gameSettings2Player(),
+          expectedGameProgress = 'in progress'
+      
+        GamePlay.discard(game, 0, "Legolas")
+
+        assert.equal(game.gameProgress, expectedGameProgress)
+    });
   });
   describe(".giveHint", function(){
     it("should update hints for Recieving Player's hand", function(){
