@@ -97,10 +97,22 @@ PlayersTurn:
     var loss = false
     var array; 
     for(let i = 0; i < discardedCards.length; i++){
+      array = discardedCards.filter(card => discardedCards[i].color === card.color && discardedCards[i].color === card.color)
+      
       if(discardedCards[i].number == 5){
         loss = true
+        break;
       }
-      array = discardedCards.filter(card => discardedCards[i].color === card.color && discardedCards[i].color === card.color)
+      
+      if(array.length === 2 && discardedCards[i].number !== '1'){
+        loss = true
+        break;
+      }
+      
+      if(array.length === 3){
+        loss = true
+        break;
+      }
     }
     return loss
   },

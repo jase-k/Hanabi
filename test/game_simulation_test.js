@@ -194,7 +194,7 @@ describe("Simulate", function(){
       
       assert.equal(result, 'lost')
     })
-    it("should return 'can't wint' if a five is discarded", function(){
+    it("should return 'can't wint' if a lossByDiscard is true", function(){
       var game = Defaults.gameSettings2Player()
       game.discardedCards = [
         {color: "black", hints:[], number: "5"}
@@ -215,10 +215,31 @@ describe("Simulate", function(){
       
       assert.equal(results, true)
     });
-    it("should return true if two 3's are discarded", function(){
+    it("should return true if two 3's of the same color are discarded", function(){
       var discards = [
         {color: "red", hints:[], number: "3"},
         {color: "red", hints:[], number: "3"}
+      ]
+      
+      var results = Simulate.lossByDiscard(discards)
+      
+      assert.equal(results, true)
+    });
+    it("should return false if only two 1's of the same color are discarded", function(){
+      var discards = [
+        {color: "red", hints:[], number: "1"},
+        {color: "red", hints:[], number: "1"}
+      ]
+      
+      var results = Simulate.lossByDiscard(discards)
+      
+      assert.equal(results, false)
+    });
+    it("should return true if three 1's of the same color are discarded", function(){
+      var discards = [
+        {color: "red", hints:[], number: "1"},
+        {color: "red", hints:[], number: "1"},
+        {color: "red", hints:[], number: "1"}
       ]
       
       var results = Simulate.lossByDiscard(discards)
