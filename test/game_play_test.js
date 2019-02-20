@@ -439,6 +439,14 @@ describe("GamePlay", function(){
         assert.equal(game.players[0].active, 0)
         assert.equal(game.players[1].active, 1)
     });
+    it("should update gameProgress based on 'Simulate.isGameOver' results", function(){
+      var game = Defaults.gameSettings2Player(),
+          expectedGameProgress = 'in progress'
+      
+        GamePlay.playCard(game, 0, "Legolas")
+
+        assert.equal(game.gameProgress, expectedGameProgress)
+    });
   });
   describe(".discard", function(){
     it("should copy the discarded card to the .discardedCards array (card[0])", function(){

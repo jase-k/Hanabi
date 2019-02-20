@@ -217,7 +217,9 @@ var GamePlay = {
     
       gameObject.players[playerIndex].hand[cardIndex] = gameObject.playingDeck.shift();
     
-      return gameObject    
+      gameObject.gameProgress = Simulate.isGameOver(gameObject)
+    
+    return gameObject    
   },
   discard(gameObject, cardIndex, playerOfCard){
     var playerIndex = gameObject.players.findIndex(player => player.name == playerOfCard),

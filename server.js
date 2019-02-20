@@ -83,16 +83,7 @@ db.serialize(() => {
   db.run('CREATE TABLE IF NOT EXISTS Messages(id INTEGER PRIMARY KEY, gameId INTEGER, Messages TEXT)') 
   db.run('CREATE TABLE IF NOT EXISTS Players(id INTEGER PRIMARY KEY, gameId TEXT, name TEXT, active INTEGER, '+Helper.createCardString(5)+')');
   db.run('CREATE TABLE IF NOT EXISTS HanabiGames (id INTEGER PRIMARY KEY, numberOfPlayers INTEGER NOT NULL, dateCreated DATE, score INTEGER, hintsLeft INTEGER, livesLeft INTEGER, gameProgress TEXT)');
-  db.run('INSERT INTO HanabiGames (numberOfPlayers, gameProgress)  VALUES(5, "starting")')
   
-  db.each('SELECT * from HanabiGames', function(err, row) {
- console.log('HanabiGames')
-    if(err){
-    throw err}
-  if(row){
-    console.log('record:', row) 
-    }
-  });
 })
 
 

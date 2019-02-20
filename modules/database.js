@@ -102,7 +102,7 @@ const Utils = {
   insertHanabiGameRow(object) { //Insert Row and Return Object with Game ID
     return new Promise((resolve, reject) => {
       object.tableIds = {}
-      db.run('INSERT INTO HanabiGames(numberOfPlayers, dateCreated, hintsLeft, livesLeft, score, gameProgress) VALUES('+object.numberOfPlayers+',"'+object.dateCreated+'",'+ object.hintsLeft+','+object.livesLeft+','+object.score+','+object.gameProgress+')',
+      db.run('INSERT INTO HanabiGames(numberOfPlayers, dateCreated, hintsLeft, livesLeft, score, gameProgress) VALUES('+object.numberOfPlayers+',"'+object.dateCreated+'",'+ object.hintsLeft+','+object.livesLeft+','+object.score+',"'+object.gameProgress+'")',
          {}, 
          function(err){
            if(err){ 
@@ -199,7 +199,7 @@ const Utils = {
   updateHanabiGameRow(gameObject){
    return new Promise((resolve, reject) => { 
     var sql = `UPDATE HanabiGames
-               SET score = ${gameObject.score}, hintsLeft = ${gameObject.hintsLeft}, livesLeft = ${gameObject.livesLeft}, gameProgress = ${gameObject.gameProgress}
+               SET score = ${gameObject.score}, hintsLeft = ${gameObject.hintsLeft}, livesLeft = ${gameObject.livesLeft}, gameProgress = '${gameObject.gameProgress}'
                WHERE id = ${gameObject.tableIds.gameId}`
     
     db.run(sql, function(err){

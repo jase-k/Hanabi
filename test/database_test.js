@@ -354,7 +354,7 @@ describe("Utils", function(){
                    }
                   assert.equal(row.hintsLeft, gameObject.hintsLeft, "Expected hintsLeft to Equal")
                   assert.equal(row.livesLeft, gameObject.livesLeft, "Expected livesLeft to Equal")
-                  assert.equal(row.gameProgres, 'starting', "Expected gameProgress to equal 'starting'")
+                  assert.equal(row.gameProgress, 'starting', "Expected gameProgress to equal 'starting'")
                   done();
                 });          
          });
@@ -594,9 +594,8 @@ describe("Utils", function(){
             });
         });
   });
-  
   describe(".updateHanabiGameRow", function(){
-    it("Updates hints and lives in Hanabi Game Row", function(done){
+    it("Updates hints and lives and gameProgress in Hanabi Game Row", function(done){
        var gameObject = Defaults.gameSettings2Player()
        var expectedHintsLeft = 4 
        var expectedLivesLeft = 1
@@ -610,6 +609,7 @@ describe("Utils", function(){
          
            results.hintsLeft = 4
            results.livesLeft = 1
+           results.gameProgress = "in progress"
         
          Utils.updateHanabiGameRow(results) // Updates Table with New Hints and Lives
          .then(function(results){
