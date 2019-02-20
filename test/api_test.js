@@ -254,7 +254,7 @@ describe('SERVER JS:', function(){
           
             let object = JSON.parse(results)
                 
-              assert.equal(object.players[1].hand[0].hints.length, 1, "expected "+object.players[1].hand[0].hints+"'s length to be 1")
+              assert.equal(object.players[1].hand[0].hints.length, 1, "expected "+object.players[1].hand[0].hints+"'s length to be 1. FULL OBJECT:"+JSON.stringify(object))
               assert.ok(results)
               done();
           })
