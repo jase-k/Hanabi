@@ -113,7 +113,7 @@ describe('SERVER JS:', function(){
           var object = JSON.parse(results)
                 
             assert.equal(object.players[0].name, 'Frodo')
-            assert.equal(object.playedCards.length, 0)
+            assert.equal(object.playedCards.length, 0, "expected PlayedCards to be empty not:"+JSON.stringify(object.playedCards))
             assert.ok(results)
             done();
           })
