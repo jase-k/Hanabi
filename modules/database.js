@@ -446,7 +446,12 @@ const Database = {
          if(err){
            console.log("Error at Player "+playerId+" Updating Table", err)
          }
-         resolve(gameObject)
+         db.run("INSERT INTO HanabiGames (gameProgress) Values("+gameObject.gameProgress+")", function(err){
+           if(err){
+             console.log("Error at HanabiGames "+gameObject.gameProgress+" didn't update")
+           }
+             resolve(gameObject)
+           });
        }) 
     })
   }

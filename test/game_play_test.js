@@ -303,6 +303,16 @@ describe("GamePlay", function(){
       assert.equal(results, expectedResult)
       
     });
+    it("should switch gameProgress to 'in progress' after last person joins", function(){
+      var name = "Mary"
+      var game = Defaults.gameSettings2Player();
+        
+      var expectedResult = 'in progress'
+      
+      var results = GamePlay.joinGame(game, name)
+      
+      assert.equal(game.gameProgress, expectedResult)
+    });
   });
   describe(".playCard", function(){
     it("should copy the played card to the .playedCards array (card[0])", function(){

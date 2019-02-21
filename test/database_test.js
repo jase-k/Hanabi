@@ -307,6 +307,14 @@ describe("Database", function(){
       
     });
   });
+  describe(".joingame", function(){
+    it("should update player's name in players row", function(){
+      var game = Defaults.gameSettings2Player()
+             Utils.insertHanabiGameRow(gameObject) // Adds Row to HanabiGame Table
+
+    });
+    it("should update gameProgress in the HanabiGame row", function(){});
+  });
 });
 
 describe("Utils", function(){
