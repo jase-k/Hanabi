@@ -23,7 +23,7 @@ const Defaults = require('./defaults.js')
 const GamePlay = require('../modules/game_play.js')
 
 
-describe("Database", function(){
+describe.skip("Database", function(){
   describe(".insert", function(){
     it("should insert new rows in All Tables: 5 players", function(done){
        var gameObject = Defaults.gameSettings5Player()
@@ -362,7 +362,7 @@ describe("Database", function(){
   });
 });
 
-describe("Utils", function(){
+describe.skip("Utils", function(){
   describe(".insertHanabiGameRow", function(){
    it("Should insert a new row in HanabiGames Table", function(done){   
       var gameObject = Defaults.gameSettings2Player()
@@ -1096,7 +1096,7 @@ describe("Utils", function(){
   });
 });
 
-describe("Helper", function(){
+describe.skip("Helper", function(){
   describe(".createCardString", function(){
     it("creates a valid card column string for 5 cards", function(){
       var expectedResult = 'card1,card2,card3,card4,card5'
