@@ -180,6 +180,11 @@ var GamePlay = {
       if(!gameObject.players[i].name || gameObject.players[i].name === name){
         gameObject.players[i].name = name
         playerId = gameObject.players[i].id
+        
+        if(i = gameObject.players.length-1){ // Sets Game in progress after last person joins.
+          gameObject.gameProgress = "in progress" 
+        }
+        
         break;
       } 
     }
