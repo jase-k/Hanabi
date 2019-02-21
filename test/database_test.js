@@ -20,6 +20,7 @@ var db = new sqlite3.Database(dbFile);
 //Import Module:
 const {Database, Utils, Helper} = require('../modules/database.js')
 const Defaults = require('./defaults.js')
+const GamePlay = require('../modules/game_play.js')
 
 
 describe("Database", function(){
@@ -315,7 +316,7 @@ describe("Database", function(){
        .then(game => Utils.insertPlayersRows(game))
        .then(function(results){
         after(function(){  //Deletes All Rows From Test
-         db.run("DELETE FROM HanabiGames WHERE id = "+results.tableIds.gameId)
+         db.run("DELETE FROM HanabiGames WHERE id = "+results.id)
          db.run("DELETE FROM Players WHERE gameId = "+results.tableIds.gameId)
         });
          GamePlay.joinGame(results, 'Mary')
@@ -327,10 +328,11 @@ describe("Database", function(){
              if(err){
                console.log("Error at Database.joinGame GET", err)
              }
-             assert.equal(game.players[2].name, "Mary")
+             assert.equal(game.players[1].name, "Mary")
              
             })
-        })
+         })
+       })
     });
     it("should update gameProgress in the HanabiGame row", function(){
       var gameObject = Defaults.gameSettings2Player()
@@ -356,6 +358,7 @@ describe("Database", function(){
             })
          })
       });
+  });
   });
 });
 

@@ -34,7 +34,7 @@ var db = new sqlite3.Database(dbFile);
 
 
 db.serialize(() => { 
- /* 
+  
   db.run('DROP TABLE IF EXISTS Messages', error => {
     if (error) {
       throw error;
@@ -70,14 +70,14 @@ db.serialize(() => {
       throw error;
     }
   })
-*/
+
   db.run('CREATE TABLE IF NOT EXISTS OriginalDeck(id INTEGER PRIMARY KEY, gameId TEXT, '+Helper.createCardString(50)+')');
   db.run('CREATE TABLE IF NOT EXISTS PlayingDeck(id INTEGER PRIMARY KEY, gameId TEXT, '+Helper.createCardString(50)+')');
   db.run('CREATE TABLE IF NOT EXISTS DiscardedCards(id INTEGER PRIMARY KEY, gameId TEXT, '+Helper.createCardString(25)+')');
   db.run('CREATE TABLE IF NOT EXISTS PlayedCards(id INTEGER PRIMARY KEY, gameId TEXT, '+Helper.createCardString(25)+')');
   db.run('CREATE TABLE IF NOT EXISTS Messages(id INTEGER PRIMARY KEY, gameId INTEGER, Messages TEXT)') 
   db.run('CREATE TABLE IF NOT EXISTS Players(id INTEGER PRIMARY KEY, gameId TEXT, name TEXT, active INTEGER, '+Helper.createCardString(5)+')');
-  db.run('CREATE TABLE IF NOT EXISTS HanabiGames (id INTEGER PRIMARY KEY, numberOfPlayers INTEGER NOT NULL, dateCreated DATE, score INTEGER, hintsLeft INTEGER, livesLeft INTEGER, gameProgress TEXT)');
+  db.run('CREATE TABLE IF NOT EXISTS HanabiGames (id INTEGER PRIMARY KEY, numberOfPlayers INTEGER, dateCreated DATE, score INTEGER, hintsLeft INTEGER, livesLeft INTEGER, gameProgress TEXT)');
   
 })
 
