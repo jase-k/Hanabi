@@ -609,7 +609,7 @@ describe("GamePlay", function(){
           hand = [
           {color: "red", hints:["not 5", "red", "not 3"], number: "1"},
           {color: "white", hints:["not 5", "not red", "not 3", "white"], number: "2"},
-          {color: "blue", hints:["not 5", "not red", "3", "not white"], number: "3"},
+          {color: "blue", hints:["not red", "3", "not white"], number: "3"},
           {color: "black", hints:["not 5", "not red", "not 3", "not white"], number: "4"},
           {color: "orange", hints:["not 5", "not red", "not 3", "not white"], number: "1"}
           ]

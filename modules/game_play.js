@@ -108,21 +108,23 @@ var GamePlay = {
   setHint(card, hint){
     if(card.hints.includes(hint)){ return }
     
+    var shouldAddHint = hintOptions[hintType].includes(hint)
     var hintType = this.getHintType(hint)
     
     if(card[hintType] == hint){ 
     
-      for(i =0; i < card.hints.length; ){
+      for(i =0; i < card.hints.length; ){ // Removes Unnessary hints
         var remove = hintOptions[hintType].findIndex(hintOption => card.hints[i].includes(hintOption))  
-        
+      
         if(remove !== -1){
           card.hints.splice(i, 1)
         }else{
           i++
         }
       };
-      
+  if(!hintOptions[hintType].includes(hint)){
      card.hints.push(hint)
+    }
     }else{
       card.hints.push(`not ${hint}`)
     }
