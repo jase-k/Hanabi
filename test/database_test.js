@@ -309,11 +309,53 @@ describe("Database", function(){
   });
   describe(".joingame", function(){
     it("should update player's name in players row", function(){
-      var game = Defaults.gameSettings2Player()
-             Utils.insertHanabiGameRow(gameObject) // Adds Row to HanabiGame Table
+      var gameObject = Defaults.gameSettings2Player()
 
+       Utils.insertHanabiGameRow(gameObject)
+       .then(game => Utils.insertPlayersRows(game))
+       .then(function(results){
+        after(function(){  //Deletes All Rows From Test
+         db.run("DELETE FROM HanabiGames WHERE id = "+results.tableIds.gameId)
+         db.run("DELETE FROM Players WHERE gameId = "+results.tableIds.gameId)
+        });
+         GamePlay.joinGame(results, 'Mary')
+         
+         Database.joinGame(results, 'Mary', results.players[1].id)
+         .then(function(game){
+         
+           db.get("SELECT * FROM Players WHERE id = "+game.players[1].id, function(err, row){
+             if(err){
+               console.log("Error at Database.joinGame GET", err)
+             }
+             assert.equal(game.players[2].name, "Mary")
+             
+            })
+        })
     });
-    it("should update gameProgress in the HanabiGame row", function(){});
+    it("should update gameProgress in the HanabiGame row", function(){
+      var gameObject = Defaults.gameSettings2Player()
+
+       Utils.insertHanabiGameRow(gameObject)
+       .then(game => Utils.insertPlayersRows(game))
+       .then(function(results){
+        after(function(){  //Deletes All Rows From Test
+         db.run("DELETE FROM HanabiGames WHERE id = "+results.tableIds.gameId)
+         db.run("DELETE FROM Players WHERE gameId = "+results.tableIds.gameId)
+        });
+         GamePlay.joinGame(results, 'Mary')
+         
+         Database.joinGame(results, 'Mary', results.players[1].id)
+         .then(function(game){
+         
+           db.get("SELECT * FROM HanabiGames WHERE id = "+game.id, function(err, row){
+             if(err){
+               console.log("Error at Database.joinGame GET", err)
+             }
+             assert.equal(game.gameProgress, "in progress")
+             
+            })
+         })
+      });
   });
 });
 
