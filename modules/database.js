@@ -446,7 +446,7 @@ const Database = {
          if(err){
            console.log("Error at Player "+playerId+" Updating Table", err)
          }
-         sql = `UPDATE Players
+         sql = `UPDATE HanabiGames
                  SET  gameProgress = '${gameObject.gameProgress}'
                  WHERE id = ${gameObject.id}`
          db.run(sql, function(err){
