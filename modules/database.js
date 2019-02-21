@@ -446,10 +446,14 @@ const Database = {
          if(err){
            console.log("Error at Player "+playerId+" Updating Table", err)
          }
-         db.run("INSERT INTO HanabiGames (gameProgress) Values('"+gameObject.gameProgress+"')", function(err){
+         sql = `UPDATE Players
+                 SET  gameProgress = '${gameObject.gameProgress}'
+                 WHERE id = ${gameObject.id}`
+         db.run(sql, function(err){
            if(err){
-             console.log("Error at HanabiGames "+gameObject.gameProgress+" didn't update", err)
+             console.log("Error at HanabiGames "+gameObject.gameProgress+" didn't update", err, sql)
            }
+             console.log(gameObject.gameProgress)
              resolve(gameObject)
            });
        }) 

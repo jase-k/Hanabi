@@ -34,7 +34,7 @@ var db = new sqlite3.Database(dbFile);
 
 
 db.serialize(() => { 
-/*  
+ 
   db.run('DROP TABLE IF EXISTS Messages', error => {
     if (error) {
       throw error;
@@ -70,7 +70,7 @@ db.serialize(() => {
       throw error;
     }
   })
-*/
+
   db.run('CREATE TABLE IF NOT EXISTS OriginalDeck(id INTEGER PRIMARY KEY, gameId TEXT, '+Helper.createCardString(50)+')');
   db.run('CREATE TABLE IF NOT EXISTS PlayingDeck(id INTEGER PRIMARY KEY, gameId TEXT, '+Helper.createCardString(50)+')');
   db.run('CREATE TABLE IF NOT EXISTS DiscardedCards(id INTEGER PRIMARY KEY, gameId TEXT, '+Helper.createCardString(25)+')');
