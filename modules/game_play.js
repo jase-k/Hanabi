@@ -106,11 +106,15 @@ var GamePlay = {
     return object
   },
   setHint(card, hint){
-    if(card.hints.includes(hint)){ return }
+    if(card.hints.includes(hint)){ return } // Stops the function if the hint already exists on this card. 
     var shouldAddHint;
     var hintType = this.getHintType(hint)
     
-    if(card[hintType] == hint){ 
+    console.lo
+    if(HintOptions[hintType].includes)
+    
+    // Removes Hints and Adds Hints
+    if(card[hintType] == hint){  
     
       for(i =0; i < card.hints.length; ){ // Removes Unnessary hints
         var remove = hintOptions[hintType].findIndex(hintOption => card.hints[i].includes(hintOption))  
@@ -120,16 +124,9 @@ var GamePlay = {
           i++
         }
       };
-      for(i =0; i < card.hints.length; i++){ // Determines whether the hint is neccessary to add
-        shouldAddHint = hintOptions[hintType].includes(card.hints[i])
-        console.log(`${hint} is ${shouldAddHint} the hint type: ${hintType}`)
-        if(shouldAddHint !== false){
-          break;
-        }
-      }
-  if(shouldAddHint !== 1){
+  
      card.hints.push(hint)
-    }
+    
     }else{
       card.hints.push(`not ${hint}`)
     }
