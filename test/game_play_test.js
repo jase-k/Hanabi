@@ -586,10 +586,10 @@ describe("GamePlay", function(){
           name = "Aragon",
           hand = [
           {color: "red", hints:["not 5", "red", "not 3"], number: "1"},
-          {color: "white", hints:[], number: "2"},
-          {color: "blue", hints:[], number: "3"},
-          {color: "black", hints:[], number: "4"},
-          {color: "orange", hints:[], number: "5"}
+          {color: "white", hints:["not 5", "not red", "not 3", "white"], number: "2"},
+          {color: "blue", hints:["not 5", "not red", "3", "not white"], number: "3"},
+          {color: "black", hints:["not 5", "not red", "not 3", "not white"], number: "4"},
+          {color: "orange", hints:["not 5", "not red", "not 3", "not white"], number: "1"}
           ]
       
       game.players[1].name = name
@@ -599,8 +599,30 @@ describe("GamePlay", function(){
       
       var playerHand = game.players[1].hand
       
-      assert.deepEqual(playerHand[0].hints, ['red', '1'])
+      assert.deepEqual(playerHand[0].hints, ["red", "1"])
+      assert.deepEqual(playerHand[4].hints, ["not red", "not white", "1"])
+    }); 
+    it("should remove unneccessary hints (colors)", function(){
+      var game = Defaults.gameSettings2Player(),
+          hint = 'blue', 
+          name = "Aragon",
+          hand = [
+          {color: "red", hints:["not 5", "red", "not 3"], number: "1"},
+          {color: "white", hints:["not 5", "not red", "not 3", "white"], number: "2"},
+          {color: "blue", hints:["not 5", "not red", "3", "not white"], number: "3"},
+          {color: "black", hints:["not 5", "not red", "not 3", "not white"], number: "4"},
+          {color: "orange", hints:["not 5", "not red", "not 3", "not white"], number: "1"}
+          ]
       
+      game.players[1].name = name
+      game.players[1].hand = hand
+      
+      GamePlay.giveHint(game, hint, name, "Legolas")
+      
+      var playerHand = game.players[1].hand
+      
+      assert.deepEqual(playerHand[0].hints, ["not 5", "red", "not 3"])
+      assert.deepEqual(playerHand[2].hints, ["3", "blue"])
     }); 
     it("should reduce hintsLeft by 1", function(){
       var game = Defaults.gameSettings2Player(),
