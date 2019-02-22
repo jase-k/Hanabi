@@ -186,9 +186,10 @@ describe("Simulate", function(){
       
       assert.equal(result, 'in progress')
     });
-    it("should return 'lost' if playingDeck.length == 0 and playedCards.length !== 25", function(){
+    it("should return 'lost' if playingDeck.length == 0 and score < 24", function(){
       var game = Defaults.gameSettings2Player()
       game.playingDeck = []
+      game.score = 23
       
       var result = Simulate.isGameOver(game)
       

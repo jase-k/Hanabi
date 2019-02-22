@@ -83,7 +83,7 @@ PlayersTurn:
     if(gameObject.playedCards.length === 25){
       return 'won'
     }
-    else if(gameObject.livesLeft == 0 || gameObject.playingDeck.length === 0){
+    else if(gameObject.livesLeft == 0 || (gameObject.playingDeck.length === 0 && gameObject.score < 24)){
       return 'lost'
     }
     else if(this.lossByDiscard(gameObject.discardedCards)){
