@@ -457,6 +457,19 @@ describe("GamePlay", function(){
 
         assert.equal(game.gameProgress, expectedGameProgress)
     });
+    it("should update score", function(){
+      var game = Defaults.gameSettings2Player(),
+          expectedScore = 3;
+          game.playedCards = [
+            {color: "red", hints: [], number: "1"},
+            {color: "red", hints: [], number: "2"},
+            ]
+          game.players[0].hand[1] = {color: "red", hints:[], number: "3"}
+      
+     var results =  GamePlay.playCard(game, 1, "Legolas")
+      
+      assert.equal(results.score, expectedScore) 
+    });
   });
   describe(".discard", function(){
     it("should copy the discarded card to the .discardedCards array (card[0])", function(){

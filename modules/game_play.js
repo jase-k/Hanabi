@@ -107,11 +107,17 @@ var GamePlay = {
   },
   setHint(card, hint){
     if(card.hints.includes(hint)){ return } // Stops the function if the hint already exists on this card. 
-    var shouldAddHint;
+    var shouldAddHint = true;
     var hintType = this.getHintType(hint)
     
-    console.lo
-    if(HintOptions[hintType].includes)
+   for(i = 0; i < card.hints.length; i++){ 
+      if(hintOptions[hintType].includes(card.hints[i])){
+        shouldAddHint = false
+        break;
+      }
+   }
+    if(!shouldAddHint){ return } //Stops the function if the hint should not be added
+    
     
     // Removes Hints and Adds Hints
     if(card[hintType] == hint){  
@@ -225,6 +231,8 @@ var GamePlay = {
     }
     
       gameObject.players[playerIndex].hand[cardIndex] = gameObject.playingDeck.shift(); //Replaces card in hand with card from deck
+    
+      gameObject.score = gameObject.playedCards.length
     
       gameObject.gameProgress = Simulate.isGameOver(gameObject)
     
