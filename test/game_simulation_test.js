@@ -258,5 +258,16 @@ describe("Simulate", function(){
       
       assert.equal(results, true)
     });
+    it("should return false if two blacks of different numbers are discarded (not a 5)", function(){
+      var discards = [
+        {color: "red", hints:[], number: "1"},
+        {color: "black", hints:[], number: "3"},
+        {color: "black", hints:[], number: "2"}
+      ]
+      
+      var results = Simulate.lossByDiscard(discards)
+      
+      assert.equal(results, false)
+    });
   });
 });

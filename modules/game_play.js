@@ -13,6 +13,7 @@ Sample GameObject: {
    discardedCards: [/ARRAY *Max Length: 25* of CARD OBJECTS/],
    gameProgress: STRING,
    hintsLeft: INTEGER *Default Start: 8*, 
+   id: INTEGER
    livesLeft: INTEGER *Default Start: 3*, 
    messages: [ARRAY OF STRINGS], 
    numberOfPlayers: INTEGER (2-5),
