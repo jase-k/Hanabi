@@ -362,8 +362,8 @@ describe.skip("Database", function(){
   });
 });
 
-describe.skip("Utils", function(){
-  describe(".insertHanabiGameRow", function(){
+describe("Utils", function(){
+  describe.skip(".insertHanabiGameRow", function(){
    it("Should insert a new row in HanabiGames Table", function(done){   
       var gameObject = Defaults.gameSettings2Player()
        Utils.insertHanabiGameRow(gameObject) // Adds Row to HanabiGame Table
@@ -413,7 +413,7 @@ describe.skip("Utils", function(){
          });
     });
   });
-  describe(".insertOriginalDeckRow", function(){
+  describe.skip(".insertOriginalDeckRow", function(){
     it("Should insert gameObject.OriginalDeck Deck Row into OriginalDeck Table",function(done){
        var gameObject = Defaults.gameSettings2Player()
        
@@ -442,7 +442,7 @@ describe.skip("Utils", function(){
             });
          });
     });
-  describe(".insertPlayingDeckRow", function(){
+  describe.skip(".insertPlayingDeckRow", function(){
     it("Should insert gameObject.PlayingDeck into PlayingDeck Table", function(done){
        var gameObject = Defaults.gameSettings2Player()
        var expectedFirstCard = "red|3|"
@@ -477,7 +477,7 @@ describe.skip("Utils", function(){
         });
     });
   });
-  describe(".insertDiscardedCardsRow", function(){
+  describe.skip(".insertDiscardedCardsRow", function(){
     it("should insert a new row in DescardedCards Table", function(done){
       var gameObject = Defaults.gameSettings2Player()
        
@@ -508,7 +508,7 @@ describe.skip("Utils", function(){
         });
     });
   });
-  describe(".insertPlayedCardsRow", function(){
+  describe.skip(".insertPlayedCardsRow", function(){
     it("should insert a new row in PlayedCards Table", function(done){
       var gameObject = Defaults.gameSettings2Player()
        
@@ -539,7 +539,7 @@ describe.skip("Utils", function(){
         });
     });
   });
-  describe(".insertMessagesRow", function(){
+  describe.skip(".insertMessagesRow", function(){
     it("should insert a new row in Messages Table", function(done){
         var gameObject = Defaults.gameSettings2Player()
        
@@ -571,7 +571,7 @@ describe.skip("Utils", function(){
         });
     });
   });
-  describe(".insertPlayerRows", function(){
+  describe.skip(".insertPlayerRows", function(){
     it("should insert a new rows in Players Table (2-players)", function(done){
         var gameObject = Defaults.gameSettings2Player()
         var expectedPlayer1Card2 = "orange|3|";
@@ -662,7 +662,7 @@ describe.skip("Utils", function(){
          
            results.hintsLeft = 4
            results.livesLeft = 1
-           results.gameProgress = "in progress"
+           results.gameProgress = "test"
         
          Utils.updateHanabiGameRow(results) // Updates Table with New Hints and Lives
          .then(function(results){
@@ -673,7 +673,7 @@ describe.skip("Utils", function(){
                 assert.ok(row)
                 assert.equal(row.hintsLeft, expectedHintsLeft) 
                 assert.equal(row.livesLeft, expectedLivesLeft)
-                assert.equal(row.gameProgress, 'in progress',)
+                assert.equal(row.gameProgress, 'test')
                done()
            });       
          });
@@ -1096,7 +1096,7 @@ describe.skip("Utils", function(){
   });
 });
 
-describe("Helper", function(){
+describe.skip("Helper", function(){
   describe(".createCardString", function(){
     it("creates a valid card column string for 5 cards", function(){
       var expectedResult = 'card1,card2,card3,card4,card5'
