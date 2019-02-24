@@ -80,7 +80,7 @@ PlayersTurn:
     return false
   },
   isGameOver(gameObject){
-    if(gameObject.playedCards.length === 25){
+    if(gameObject.score === 25){
       return 'won'
     }
     else if(gameObject.livesLeft == 0 || (gameObject.playingDeck.length === 0 && gameObject.score < 24)){

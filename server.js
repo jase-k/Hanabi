@@ -196,7 +196,8 @@ var gameId = request.params.gameid
  });
 });
 
-
+//db.run("UPDATE HanabiGames SET gameProgress = 'win' WHERE id = 25")
+ db.get("SELECT * FROM HanabiGames WHERE id = 25", function(err, row){  console.log(row)});
 // listen for requests :)
 var listener = app.listen(process.env.PORT, function() {
   console.log('Your app is listening on port ' + listener.address().port);

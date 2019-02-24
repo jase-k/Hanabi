@@ -196,7 +196,7 @@ var GamePlay = {
         gameObject.players[i].name = name
         playerId = gameObject.players[i].id
         
-        if(i = gameObject.players.length-1){ // Sets Game in progress after last person joins.
+        if(i = gameObject.players.length-1 && gameObject.gameProgress == 'starting'){ // Sets Game in progress after last person joins.
           gameObject.gameProgress = "in progress" 
         }
         
