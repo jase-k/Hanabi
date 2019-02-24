@@ -1096,7 +1096,7 @@ describe.skip("Utils", function(){
   });
 });
 
-describe.skip("Helper", function(){
+describe("Helper", function(){
   describe(".createCardString", function(){
     it("creates a valid card column string for 5 cards", function(){
       var expectedResult = 'card1,card2,card3,card4,card5'
