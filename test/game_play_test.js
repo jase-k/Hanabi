@@ -731,6 +731,15 @@ describe("GamePlay", function(){
       assert.deepEqual(card.hints, expectedArray)
       
     });
+    it("should not add the same 'not hint' to the array if already present", function(){
+       var card = {color: "red", hints: ["not 2"], number: "3"},
+          hint = "2", 
+          expectedArray = ["not 2"]
+      
+      GamePlay.setHint(card, hint)
+      
+      assert.deepEqual(card.hints, expectedArray)
+    });
   });
 });
 
