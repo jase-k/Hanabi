@@ -116,6 +116,10 @@ var GamePlay = {
         shouldAddHint = false
         break;
       }
+     if(card.hints[i] === 'not '+hint){
+       shouldAddHint = false
+       break;
+     }
    }
     if(!shouldAddHint){ return } //Stops the function if the hint should not be added
     
